@@ -16,7 +16,7 @@ class TableBody extends Component {
           <tr key={row.id}>
             {columns.map((column) => (
               <td
-                className="align-middle text-center"
+                className="align-middle text-center text-nowrap"
                 key={column.path}
               >
                 {this.renderCell(row, column)}

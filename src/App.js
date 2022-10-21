@@ -31,6 +31,7 @@ import StaticsForm from "./components/statics/staticsForm";
 import Logout from "./components/forms/logout";
 import FtqReport from "./components/reports/ftqReport";
 import Repair from "./components/reports/repair";
+import Plan from "./components/forms/planForm";
 
 class App extends Component {
   state = {};
@@ -40,7 +41,7 @@ class App extends Component {
       const jwt = localStorage.getItem("token");
       const user = jwtDecode(jwt);
       this.setState({ user });
-    } catch (ex) { }
+    } catch (ex) {}
   }
 
   render() {
@@ -92,6 +93,7 @@ class App extends Component {
             <Route path="/statics" element={<StaticsForm />} />
             <Route path="/dashboard" element={<StaticsForm />} />
             <Route path="/ftq" element={<FtqReport />} />
+            <Route path="/plan" element={<Plan />} />
             <Route
               path="/machine-history/:machineId"
               element={<MachineHistory />}

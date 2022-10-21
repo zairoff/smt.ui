@@ -11,7 +11,6 @@ class Form extends Component {
     const { value } = input;
 
     const errors = { ...this.state.errors };
-
     //const error = await this.validateInput(input);
 
     //if (error) errors[input.id] = error;
@@ -20,7 +19,6 @@ class Form extends Component {
     delete errors[input.id];
     const fields = { ...this.state.fields };
     fields[input.id] = value;
-
     this.setState({ fields, errors });
   };
 

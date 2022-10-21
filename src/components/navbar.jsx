@@ -81,6 +81,25 @@ const NavBar = ({ user }) => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
+                Plans
+              </a>
+              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <NavLink to="/plan" className="dropdown-item">
+                  Plan
+                  </NavLink>
+                </li>
+              </ul>
+            </li>
+
+            <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
                 Reports
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
