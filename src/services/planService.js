@@ -40,6 +40,13 @@ export function getPlanByDate(date) {
   return http.get(query);
 }
 
+export function getPlanByLineAndDate(lineId, from, to) {
+  const query = endPoint.concat(
+    "/GetByLineAndDate?lineId=" + lineId + "&from=" + from + "&to=" + to
+  );
+  return http.get(query);
+}
+
 export function addPlan(plan) {
   return http.post(endPoint, plan);
 }

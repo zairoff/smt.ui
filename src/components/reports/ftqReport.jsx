@@ -1,7 +1,5 @@
-import React, { Component } from "react";
-import ListGroup from "../common/listGroup";
+import React from "react";
 import Form from "../forms/form";
-import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -13,6 +11,15 @@ import {
   Legend,
   Filler,
 } from "chart.js";
+import FtqPlanTable from "../tables/ftqPlanTable";
+import FtqDefectTable from "../tables/ftqDefectTable";
+import _ from "lodash";
+import { paginate } from "../../utils/paginate";
+import Pagination from "../common/pagination";
+import { getLines } from "../../services/lineService";
+import { toast } from "react-toastify";
+import { getByPlaceholderText } from "@testing-library/react";
+import { getPlanByLineAndDate } from "../../services/planService";
 
 ChartJS.register(
   CategoryScale,
@@ -27,45 +34,105 @@ ChartJS.register(
 
 class FtqReport extends Form {
   state = {
-    selectedListItem: "",
-    fields: { from: "", to: "" },
+    fields: {
+      from: "",
+      to: "",
+    },
+    lines: [],
+    plans: [],
+    defects: [],
+    errors: {},
+    loading: true,
+    sortColumn: { path: "", order: "asc" },
+    currentPage: 1,
+    pageSize: 15,
   };
 
-  handleListChange = (item) => {
-    this.setState({ selectedListItem: item });
+  handlePageChange = (page) => {
+    this.setState({ currentPage: page });
   };
+
+  handleSort = (sortColumn) => {
+    this.setState({ sortColumn });
+  };
+
+  currentPageCheck(data) {
+    const { pageSize } = this.state;
+
+    return data.length % pageSize == 0;
+  }
+
+  async componentDidMount() {
+    try {
+      const { data: lines } = await getLines();
+
+      this.setState({ lines, loading: false, fields: { from: "", to: "" } });
+    } catch (ex) {
+      this.setState({ loading: false });
+      toast.error(ex.message);
+    }
+  }
+
+  handleLineClick = async ({ id }) => {
+    const { fields } = this.state;
+    const { from, to } = fields;
+    if (from === null || from === "" || to === null || to === "") {
+      return;
+    }
+    this.setState({ loading: true });
+    try {
+      const { data: plans } = await getPlanByLineAndDate(
+        id,
+        fields.from,
+        fields.to
+      );
+
+      this.setState({ plans, loading: false });
+    } catch (ex) {
+      this.setState({ loading: false });
+      toast.error(ex.message);
+    }
+  };
+
+  handleDelete = async ({ id }) => {};
 
   render() {
-    const { fields, selectedListItem } = this.state;
-    const lines = [
-      { id: 1, name: "smt-1" },
-      { id: 2, name: "smt-2" },
-    ];
-    const reports = [];
+    const { fields, plans, defects, lines, sortColumn, currentPage, pageSize } =
+      this.state;
 
-    const data = {
-      labels: [
-        "12 July",
-        "13 July",
-        "14 July",
-        "15 July",
-        "16 July",
-        "17 July",
-      ],
-      datasets: [
-        {
-          label: "",
-          data: [33, 53, 85, 41, 44, 65],
-          fill: true,
-          backgroundColor: "rgba(75,192,192,0.2)",
-          borderColor: "rgba(75,192,192,1)",
-        },
-      ],
-    };
+    const totalPlan = plans.reduce(
+      (n, { requiredCount }) => n + requiredCount,
+      0
+    );
+
+    const totalProduced = plans.reduce(
+      (n, { producedCount }) => n + producedCount,
+      0
+    );
+
+    const planPersent = (totalProduced * 100) / totalPlan;
+
+    const totalPlanText = "Plan: " + totalPlan;
+    const totalProducedText = "Produced: " + totalProduced;
+    const planPersentText = planPersent.toFixed(2) + "%";
+
+    const sortedPlanRows = _.orderBy(
+      plans,
+      [sortColumn.path],
+      [sortColumn.order]
+    );
+    const planRows = paginate(sortedPlanRows, currentPage, pageSize);
+
+    const sortedDefectRows = _.orderBy(
+      defects,
+      [sortColumn.path],
+      [sortColumn.order]
+    );
+    const defectRows = paginate(sortedDefectRows, currentPage, pageSize);
 
     return (
       <>
-        <form className="row">
+        <form className="row m-2">
           <div className="col-3">
             {this.renderInput(
               "from",
@@ -77,7 +144,6 @@ class FtqReport extends Form {
               true,
               "date"
             )}
-            <p className="mt-2"></p>
             {this.renderInput(
               "to",
               "",
@@ -89,15 +155,90 @@ class FtqReport extends Form {
               "date"
             )}
             <p className="mt-4"></p>
-            <ListGroup
-              items={lines}
-              reports={reports}
-              selectedItem={selectedListItem}
-              onItemSelect={this.handleListChange}
-            ></ListGroup>
+            {lines.map((line) => (
+              <div key={line.id} className="mt-2">
+                {" "}
+                {this.renderButton(
+                  line.name,
+                  "button",
+                  () => this.handleLineClick(line),
+                  "btn btn-secondary btn-block btn-lg w-100 p-4"
+                )}
+              </div>
+            ))}
           </div>
-          <div className="col">
-            <Line data={data} />
+          <div className="col m-2">
+            <div className="container d-flex align-items-center justify-content-center">
+              <div>
+                <button
+                  type="button"
+                  className="btn btn-block btn-secondary rounded-circle mb-5 fw-bold fs-3"
+                  style={{ width: "120px", height: "120px" }}
+                >
+                  {planPersentText}
+                </button>
+              </div>
+            </div>
+            {this.renderButton(
+              totalPlanText,
+              "button",
+              null,
+              "btn btn-primary"
+            )}
+            {this.renderButton(
+              totalProducedText,
+              "button",
+              null,
+              "btn btn-success ms-2"
+            )}
+            <div className="mt-4">
+              <FtqPlanTable
+                rows={planRows}
+                sortColumn={sortColumn}
+                onDelete={this.handleDelete}
+                onSort={this.handleSort}
+              />
+              <Pagination
+                itemsCount={plans.length}
+                pageSize={pageSize}
+                currentPage={currentPage}
+                onPageChange={this.handlePageChange}
+              />
+            </div>
+          </div>
+          <div className="col m-2">
+            <div className="container d-flex align-items-center justify-content-center">
+              <div>
+                <button
+                  type="button"
+                  className="btn btn-block btn-secondary rounded-circle mb-5 fw-bold fs-3"
+                  style={{ width: "120px", height: "120px" }}
+                >
+                  98.17%
+                </button>
+              </div>
+            </div>
+            {this.renderButton("Defects: 74", "button", null, "btn btn-danger")}
+            {this.renderButton(
+              "Closed: 57",
+              "button",
+              null,
+              "btn btn-success ms-2"
+            )}
+            <div className="mt-4">
+              <FtqDefectTable
+                rows={defectRows}
+                sortColumn={sortColumn}
+                onDelete={this.handleDelete}
+                onSort={this.handleSort}
+              />
+              <Pagination
+                itemsCount={defects.length}
+                pageSize={pageSize}
+                currentPage={currentPage}
+                onPageChange={this.handlePageChange}
+              />
+            </div>
           </div>
         </form>
       </>

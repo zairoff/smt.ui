@@ -205,9 +205,9 @@ class Plan extends Form {
     const rows = paginate(sortedRows, currentPage, pageSize);
 
     return (
-      <form className="container m-2 row" onSubmit={this.handleSubmit}>
+      <form className="row" onSubmit={this.handleSubmit}>
         {loading && <ReactLoading className="test" type="spin" color="blue" />}
-        <div className="col mt-4">
+        <div className="col">
           <PlanTable
             rows={rows}
             sortColumn={sortColumn}
@@ -221,7 +221,7 @@ class Plan extends Form {
             onPageChange={this.handlePageChange}
           />
         </div>
-        <div className="col m-5">
+        <div className="col-4">
           {this.renderSelect("Product", products, "", this.handleSelectChange)}
           <p className="mt-2"> </p>
           {this.renderSelect("Brand", brands, "", this.handleSelectChange)}

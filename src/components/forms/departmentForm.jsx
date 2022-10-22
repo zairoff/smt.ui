@@ -91,7 +91,7 @@ class DepartmentForm extends Form {
   render() {
     const { fields, data, errors, loading } = this.state;
     return (
-      <form className="container m-2 row" onSubmit={this.handleSubmit}>
+      <form className="m-2 row" onSubmit={this.handleSubmit}>
         {loading && <ReactLoading className="test" type="spin" color="blue" />}
         <div className="col mt-4">
           <Department data={data} onClick={this.handleDepartmentSelect} />

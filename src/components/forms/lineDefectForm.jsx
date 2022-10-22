@@ -137,7 +137,7 @@ class LineDefectForm extends Form {
     const data = paginate(sortedData, currentPage, pageSize);
 
     return (
-      <form className="container m-2 row" onSubmit={this.handleSubmit}>
+      <form className="m-2 row" onSubmit={this.handleSubmit}>
         {loading && <ReactLoading className="test" type="spin" color="blue" />}
         <div className="col mt-4">
           <LineDefectTable

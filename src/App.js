@@ -50,7 +50,7 @@ class App extends Component {
       <React.Fragment>
         <ToastContainer />
         <NavBar user={user} />
-        <main className="container">
+        <main className="container mt-4">
           <Routes>
             {user ? (
               <>

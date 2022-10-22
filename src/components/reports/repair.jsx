@@ -11,7 +11,7 @@ import {
   updateReport,
 } from "../../services/reportService";
 import { getPcbRepairers } from "../../services/pcbRepairerService";
-import { format } from 'date-fns';
+import { format } from "date-fns";
 
 class Repair extends Form {
   state = {
@@ -35,7 +35,7 @@ class Repair extends Form {
   async componentDidMount() {
     try {
       const { data: repairers } = await getPcbRepairers();
-      const date = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
+      const date = format(new Date(), "yyyy-MM-dd HH:mm:ss");
       const { data } = await getReportByDate(date, true);
       this.setState({
         repairers,
@@ -107,13 +107,12 @@ class Repair extends Form {
     const filtered = clone.filter((r) => r.id != id);
     this.setState({ data: filtered, loading: true });
     try {
-      await updateReport(id,
-        {
-          status: false,
-          employeeId: '',
-          condition: '',
-          action: ''
-        });
+      await updateReport(id, {
+        status: false,
+        employeeId: "",
+        condition: "",
+        action: "",
+      });
     } catch (ex) {
       toast.error(ex.response.data.message);
       this.state({ data: clone });
@@ -127,7 +126,7 @@ class Repair extends Form {
       const searchDate = this.state.searchDate;
       this.setState({
         loading: true,
-        fields: { barcode: "", action: "", searchDate: '' },
+        fields: { barcode: "", action: "", searchDate: "" },
         model: "",
         line: "",
         defect: "",
@@ -143,13 +142,16 @@ class Repair extends Form {
             fields: {
               barcode: report.barcode,
               action: "",
-              searchDate: ''
+              searchDate: "",
             },
             reportId: report.id,
             model: report.model.name,
             defect: report.defect.name,
             line: report.line.name,
-            createdDate: format(Date.parse(report.createdDate), 'yyyy-MM-dd HH:mm:ss'),
+            createdDate: format(
+              Date.parse(report.createdDate),
+              "yyyy-MM-dd HH:mm:ss"
+            ),
           });
         }
       } catch (ex) {
@@ -162,7 +164,10 @@ class Repair extends Form {
 
   handleSearch = async () => {
     try {
-      const { data } = await getReportByDate(this.state.fields.searchDate, true);
+      const { data } = await getReportByDate(
+        this.state.fields.searchDate,
+        true
+      );
       this.setState({ data });
     } catch (ex) {
       toast.error(ex.response.data.message);
@@ -191,39 +196,11 @@ class Repair extends Form {
     const rows = paginate(sortedRows, currentPage, pageSize);
 
     return (
-      <div className="container mt-2 row">
+      <div className="mt-2 row">
         {loading && (
           <ReactLoading className="loading" type="spin" color="blue" />
         )}
         <div className="col m-2">
-          <div className="row mt-2 mb-2">
-            <div className="col">
-              {this.renderInput(
-                "searchDate",
-                "Date",
-                "",
-                fields.searchDate,
-                this.handleInputChange,
-                errors.searchDate,
-                false,
-                "date"
-              )}
-            </div>
-            <div className="col-4 mt-4">
-              {this.renderButton("SEARCH", "button", this.handleSearch)}
-            </div>
-          </div>
-
-          {rows.length > 0 && (
-            <PcbRepairTable
-              rows={rows}
-              onSort={this.handleSort}
-              sortColumn={sortColumn}
-              onDelete={this.handleDelete}
-            />
-          )}
-        </div>
-        <div className="col-4 m-2">
           {this.renderInput(
             "barcode",
             "Barcode",
@@ -279,7 +256,7 @@ class Repair extends Form {
             errors.repairers,
             this.handleSelectChange,
             "employee.fullName",
-            "employee.fullName",
+            "employee.fullName"
           )}
           {this.renderTextArea(
             "action",
@@ -298,6 +275,35 @@ class Repair extends Form {
           )}
           <p className="mt-2"> </p>
           {this.renderButton("Save", "button", this.handleSave)}
+        </div>
+
+        <div className="col m-2">
+          <div className="row mt-2 mb-2">
+            <div className="col">
+              {this.renderInput(
+                "searchDate",
+                "Date",
+                "",
+                fields.searchDate,
+                this.handleInputChange,
+                errors.searchDate,
+                false,
+                "date"
+              )}
+            </div>
+            <div className="col-4 mt-4">
+              {this.renderButton("SEARCH", "button", this.handleSearch)}
+            </div>
+          </div>
+
+          {rows.length > 0 && (
+            <PcbRepairTable
+              rows={rows}
+              onSort={this.handleSort}
+              sortColumn={sortColumn}
+              onDelete={this.handleDelete}
+            />
+          )}
         </div>
       </div>
     );

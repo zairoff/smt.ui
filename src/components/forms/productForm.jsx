@@ -98,7 +98,7 @@ class ProductForm extends Form {
     );
     const rows = paginate(sortedRows, currentPage, pageSize);
     return (
-      <form className="container m-2 row" onSubmit={this.handleSubmit}>
+      <form className="m-2 row" onSubmit={this.handleSubmit}>
         {loading && <ReactLoading className="test" type="spin" color="blue" />}
         <div className="col mt-4">
           <ProductTable

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Link, NavLink } from "react-router-dom";
 
 const NavBar = ({ user }) => {
@@ -20,7 +20,7 @@ const NavBar = ({ user }) => {
           <ul className="navbar-nav">
             <li className="nav-item dropdown">
               <a
-                className="nav-link dropdown-toggle" 
+                className="nav-link dropdown-toggle"
                 id="navbarDropdown"
                 role="button"
                 data-bs-toggle="dropdown"
@@ -86,7 +86,7 @@ const NavBar = ({ user }) => {
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
                   <NavLink to="/plan" className="dropdown-item">
-                  Plan
+                    Plan
                   </NavLink>
                 </li>
               </ul>

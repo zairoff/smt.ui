@@ -129,7 +129,7 @@ class EmployeeEdit extends Form {
     const { loading, imageFileName, fields, errors, departments } = this.state;
     return (
       <form
-        className="container mt-4 row "
+        className="mt-4 row "
         encType="multipart/form-data"
         onSubmit={this.handleSubmit}
       >
