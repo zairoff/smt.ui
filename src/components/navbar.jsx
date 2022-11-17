@@ -39,6 +39,11 @@ const NavBar = ({ user }) => {
                     Statics
                   </NavLink>
                 </li>
+                <li>
+                  <NavLink to="/ftq" className="dropdown-item">
+                    FTQ
+                  </NavLink>
+                </li>
               </ul>
             </li>
 

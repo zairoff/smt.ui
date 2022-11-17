@@ -27,3 +27,39 @@ export function getByDefect(from, to) {
   const query = endPoint + "/ByDefect?from=" + from + "&to=" + to;
   return http.get(query);
 }
+
+export function DefectsByLine(lineId, from, to) {
+  const query =
+    endPoint +
+    "/DefectsByLine?lineid=" +
+    lineId +
+    "&from=" +
+    from +
+    "&to=" +
+    to;
+  return http.get(query);
+}
+
+export function DefectCountByLine(lineId, from, to) {
+  const query =
+    endPoint +
+    "/DefectCountByLine?lineid=" +
+    lineId +
+    "&from=" +
+    from +
+    "&to=" +
+    to;
+  return http.get(query);
+}
+
+export function ClosedDefectCountByLine(lineId, from, to) {
+  const query =
+    endPoint +
+    "/ClosedDefectCountByLine?lineid=" +
+    lineId +
+    "&from=" +
+    from +
+    "&to=" +
+    to;
+  return http.get(query);
+}

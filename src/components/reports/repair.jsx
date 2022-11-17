@@ -30,6 +30,7 @@ class Repair extends Form {
     loading: true,
     employee: "",
     reportId: "",
+    psbStatus: true,
   };
 
   async componentDidMount() {
@@ -71,6 +72,9 @@ class Repair extends Form {
       case "Status":
         this.setState({ condition: value });
         break;
+      case "PcbStatus":
+        this.setState({ psbStatus: value });
+        break;
       default:
         break;
     }
@@ -78,6 +82,12 @@ class Repair extends Form {
 
   handleSave = async () => {
     const { employee, reportId, fields, condition } = this.state;
+
+    if (employee == "" || condition == "") {
+      toast.warning("Remontchi va xolatini tanlang!");
+      return;
+    }
+
     try {
       const { data: repair } = await updateReport(reportId, {
         status: true,
@@ -92,7 +102,6 @@ class Repair extends Form {
         model: "",
         line: "",
         defect: "",
-        condition: "",
         createdDate: "",
       });
     } catch (ex) {
@@ -130,9 +139,7 @@ class Repair extends Form {
         model: "",
         line: "",
         defect: "",
-        condition: "",
         createdDate: "",
-        employee: "",
         reportId: "",
       });
       try {
@@ -163,10 +170,11 @@ class Repair extends Form {
   };
 
   handleSearch = async () => {
+    const { psbStatus } = this.state;
     try {
       const { data } = await getReportByDate(
         this.state.fields.searchDate,
-        true
+        psbStatus
       );
       this.setState({ data });
     } catch (ex) {
@@ -280,6 +288,15 @@ class Repair extends Form {
         <div className="col m-2">
           <div className="row mt-2 mb-2">
             <div className="col">
+              {this.renderSelect(
+                "PcbStatus",
+                [
+                  { id: false, name: "Open" },
+                  { id: true, name: "Closed" },
+                ],
+                errors.repairers,
+                this.handleSelectChange
+              )}
               {this.renderInput(
                 "searchDate",
                 "Date",

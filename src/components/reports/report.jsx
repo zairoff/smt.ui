@@ -12,12 +12,13 @@ import {
   addReport,
   deleteReport,
   getReportByModelIdAndLineId,
+  updateReport,
 } from "../../services/reportService";
 import ReportTable from "../tables/reportTable";
 import Pagination from "../common/pagination";
 import _ from "lodash";
 import { paginate } from "../../utils/paginate";
-import { format } from 'date-fns';
+import { format } from "date-fns";
 
 class Report extends Form {
   barcodeRef = React.createRef();
@@ -36,6 +37,7 @@ class Report extends Form {
     data: [],
     errors: {},
     loading: true,
+    isActiveBarcode: false,
     sortColumn: { path: "", order: "asc" },
     currentPage: 1,
     pageSize: 15,
@@ -136,7 +138,8 @@ class Report extends Form {
             const { data } = await getReportByModelIdAndLineId(
               selectedItem.modelId,
               selectedItem.lineId,
-              format(new Date(), 'yyyy-MM-dd HH:mm:ss')
+              format(new Date(), "yyyy-MM-dd HH:mm:ss"),
+              false
             );
             this.setState({
               defects,
@@ -152,6 +155,16 @@ class Report extends Form {
       toast.error(ex.message);
       this.setState({ loading: false });
     }
+  };
+
+  handleCustomInputChange = async ({ currentTarget: input }) => {
+    const { value } = input;
+
+    const errors = { ...this.state.errors };
+    delete errors[input.id];
+    const fields = { ...this.state.fields };
+    fields[input.id] = value;
+    this.setState({ fields, errors, isActiveBarcode: false });
   };
 
   handleButtonClick = async (defect) => {
@@ -178,17 +191,58 @@ class Report extends Form {
       const { data } = await getReportByModelIdAndLineId(
         modelId,
         lineId,
-        format(new Date(), 'yyyy-MM-dd HH:mm:ss')
+        format(new Date(), "yyyy-MM-dd HH:mm:ss"),
+        false
       );
-      this.setState({ data, fields: { barcode: "" } });
+      this.setState({ data, isActiveBarcode: false, fields: { barcode: "" } });
     } catch (ex) {
-      this.setState({ data });
       this.catchExceptionMessage(ex, "barcode");
+
+      if (ex.response && ex.response.status == 409) {
+        this.setState({ data, isActiveBarcode: true });
+      } else {
+        this.setState({
+          data,
+          isActiveBarcode: false,
+          fields: { barcode: "" },
+        });
+      }
     }
   };
 
   handleButtonClear = () => {
     this.setState({ fields: { barcode: "" } });
+  };
+
+  handleButtonRemont = async () => {
+    const { fields, selectedItem, data } = this.state;
+    const { lineId } = selectedItem;
+
+    const reportId = data
+      .filter((d) => d.barcode == fields.barcode)
+      .map((d) => d.id);
+
+    try {
+      await updateReport(reportId, {
+        status: true,
+        employee: lineId,
+        condition: "OK",
+        action: "Payka qilindi",
+      });
+
+      const filteredData = data.filter((d) => d.barcode != fields.barcode);
+
+      this.setState({
+        data: filteredData,
+        fields: { barcode: "" },
+        isActiveBarcode: false,
+        errors: "",
+      });
+    } catch (ex) {
+      toast.error(ex.response.data.message);
+    } finally {
+      this.setState({ loading: false });
+    }
   };
 
   currentPageCheck(data) {
@@ -231,6 +285,7 @@ class Report extends Form {
       currentPage,
       pageSize,
       loading,
+      isActiveBarcode,
     } = this.state;
 
     const sortedRows = _.orderBy(data, [sortColumn.path], [sortColumn.order]);
@@ -260,20 +315,6 @@ class Report extends Form {
             {this.renderSelect("Line", lines, "", this.handleSelectChange)}
           </div>
           <div className="row mt-4">
-            <div className="col">
-              <ReportTable
-                rows={rows}
-                onSort={this.handleSort}
-                sortColumn={sortColumn}
-                onDelete={this.handleDelete}
-              />
-              <Pagination
-                itemsCount={data.length}
-                pageSize={pageSize}
-                currentPage={currentPage}
-                onPageChange={this.handlePageChange}
-              />
-            </div>
             <div className="col ms-4">
               <div className="row">
                 <div className="col">
@@ -282,7 +323,7 @@ class Report extends Form {
                     "",
                     "Barcode",
                     fields.barcode,
-                    this.handleInputChange,
+                    this.handleCustomInputChange,
                     errors.barcode,
                     true,
                     "text",
@@ -308,6 +349,14 @@ class Report extends Form {
                 </span>
               </div>
               <p> </p>
+              {isActiveBarcode &&
+                this.renderButton(
+                  "REMONT",
+                  "button",
+                  this.handleButtonRemont,
+                  "btn btn-warning text-white btn-block"
+                )}
+              <p> </p>
               {defects.map((defect) => (
                 <ButtonBadge
                   onClick={this.handleButtonClick}
@@ -317,6 +366,20 @@ class Report extends Form {
                   reports={data}
                 ></ButtonBadge>
               ))}
+            </div>
+            <div className="col">
+              <ReportTable
+                rows={rows}
+                onSort={this.handleSort}
+                sortColumn={sortColumn}
+                onDelete={this.handleDelete}
+              />
+              <Pagination
+                itemsCount={data.length}
+                pageSize={pageSize}
+                currentPage={currentPage}
+                onPageChange={this.handlePageChange}
+              />
             </div>
           </div>
         </div>

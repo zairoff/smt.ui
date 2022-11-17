@@ -7,22 +7,8 @@ const fileUrl = config.fileUrl;
 
 class FtqDefectTable extends Component {
   columns = [
-    { path: "defect", label: "DEFECT" },
+    { path: "name", label: "DEFECT" },
     { path: "count", label: "COUNT" },
-    {
-      path: "more",
-      content: (employee) => (
-        <Link
-          to={{
-            pathname: "/employee-edit/" + employee.id,
-          }}
-          state={{ data: employee }}
-          className="link"
-        >
-          More
-        </Link>
-      ),
-    },
   ];
   render() {
     const { rows, sortColumn, onSort } = this.props;
