@@ -215,17 +215,18 @@ class Report extends Form {
   };
 
   handleButtonRemont = async () => {
-    const { fields, selectedItem, data } = this.state;
-    const { lineId } = selectedItem;
+    const { fields, data } = this.state;
 
-    const reportId = data
-      .filter((d) => d.barcode == fields.barcode)
-      .map((d) => d.id);
+    const filteredData = data.filter((d) => d.barcode == fields.barcode);
+
+    const line = _.get(filteredData[0], "line.name");
+
+    const reportId = _.get(filteredData[0], "id");
 
     try {
       await updateReport(reportId, {
         status: true,
-        employee: lineId,
+        employee: line,
         condition: "OK",
         action: "Payka qilindi",
       });
