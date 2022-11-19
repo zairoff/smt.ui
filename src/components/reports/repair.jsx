@@ -89,15 +89,18 @@ class Repair extends Form {
     }
 
     try {
-      const { data: repair } = await updateReport(reportId, {
+      await updateReport(reportId, {
         status: true,
         employee,
         condition,
         action: fields.action,
       });
 
+      const date = format(new Date(), "yyyy-MM-dd HH:mm:ss");
+      const { data } = await getReportByDate(date, true);
+
       this.setState({
-        data: [repair, ...this.state.data],
+        data,
         fields: { barcode: "", action: "" },
         model: "",
         line: "",
@@ -208,111 +211,132 @@ class Repair extends Form {
         {loading && (
           <ReactLoading className="loading" type="spin" color="blue" />
         )}
-        <div className="col m-2">
-          {this.renderInput(
-            "barcode",
-            "Barcode",
-            "",
-            fields.barcode,
-            this.handleInputChange,
-            errors.barcode,
-            true,
-            "text",
-            undefined,
-            false,
-            this.handleInputKeyPress
-          )}
-          {this.renderInput(
-            "model",
-            "Model",
-            "",
-            model,
-            this.handleInputChange,
-            errors.model,
-            true
-          )}
-          {this.renderInput(
-            "line",
-            "Line",
-            "",
-            line,
-            this.handleInputChange,
-            errors.line,
-            true
-          )}
-          {this.renderInput(
-            "defect",
-            "Defect",
-            "",
-            defect,
-            this.handleInputChange,
-            errors.defect,
-            true
-          )}
-          {this.renderInput(
-            "date",
-            "Created date",
-            "",
-            createdDate,
-            this.handleInputChange,
-            errors.createdDate,
-            true
-          )}
-          {this.renderSelect(
-            "Repairer",
-            repairers,
-            errors.repairers,
-            this.handleSelectChange,
-            "employee.fullName",
-            "employee.fullName"
-          )}
-          {this.renderTextArea(
-            "action",
-            "Action",
-            fields.action,
-            this.handleInputChange
-          )}
-          {this.renderSelect(
-            "Status",
-            [
-              { id: 1, name: "Worked" },
-              { id: 2, name: "Not Worked" },
-            ],
-            errors.repairers,
-            this.handleSelectChange
-          )}
-          <p className="mt-2"> </p>
-          {this.renderButton("Save", "button", this.handleSave)}
+        <div className="mt-2 row">
+          <div className="col">
+            {this.renderInput(
+              "barcode",
+              "Barcode",
+              "",
+              fields.barcode,
+              this.handleInputChange,
+              errors.barcode,
+              true,
+              "text",
+              undefined,
+              false,
+              this.handleInputKeyPress
+            )}
+          </div>
+          <div className="col">
+            {this.renderInput(
+              "model",
+              "Model",
+              "",
+              model,
+              this.handleInputChange,
+              errors.model,
+              true
+            )}
+          </div>
+          <div className="col">
+            {this.renderInput(
+              "line",
+              "Line",
+              "",
+              line,
+              this.handleInputChange,
+              errors.line,
+              true
+            )}
+          </div>
+          <div className="col">
+            {this.renderInput(
+              "defect",
+              "Defect",
+              "",
+              defect,
+              this.handleInputChange,
+              errors.defect,
+              true
+            )}
+          </div>
         </div>
 
-        <div className="col m-2">
-          <div className="row mt-2 mb-2">
-            <div className="col">
-              {this.renderSelect(
-                "PcbStatus",
-                [
-                  { id: false, name: "Open" },
-                  { id: true, name: "Closed" },
-                ],
-                errors.repairers,
-                this.handleSelectChange
-              )}
-              {this.renderInput(
-                "searchDate",
-                "Date",
-                "",
-                fields.searchDate,
-                this.handleInputChange,
-                errors.searchDate,
-                false,
-                "date"
-              )}
-            </div>
-            <div className="col-4 mt-4">
-              {this.renderButton("SEARCH", "button", this.handleSearch)}
-            </div>
+        <div className="mt-2 row">
+          <div className="col">
+            {this.renderInput(
+              "date",
+              "Created date",
+              "",
+              createdDate,
+              this.handleInputChange,
+              errors.createdDate,
+              true
+            )}
           </div>
-
+          <div className="col">
+            {this.renderSelect(
+              "Repairer",
+              repairers,
+              errors.repairers,
+              this.handleSelectChange,
+              "employee.fullName",
+              "employee.fullName"
+            )}
+          </div>
+          <div className="col">
+            {this.renderSelect(
+              "Status",
+              [
+                { id: 1, name: "Worked" },
+                { id: 2, name: "Not Worked" },
+              ],
+              errors.repairers,
+              this.handleSelectChange
+            )}
+          </div>
+        </div>
+        <div className="mt-2 row">
+          <div className="col">
+            {this.renderTextArea(
+              "action",
+              "Action",
+              fields.action,
+              this.handleInputChange
+            )}
+            <p className="mt-2"> </p>
+            {this.renderButton("Save", "button", this.handleSave)}
+          </div>
+        </div>
+        <div className="mt-2 row">
+          <div className="col">
+            {this.renderSelect(
+              "PcbStatus",
+              [
+                { id: false, name: "Open" },
+                { id: true, name: "Closed" },
+              ],
+              errors.repairers,
+              this.handleSelectChange
+            )}
+          </div>
+          <div className="col">
+            {this.renderInput(
+              "searchDate",
+              "Date",
+              "",
+              fields.searchDate,
+              this.handleInputChange,
+              errors.searchDate,
+              false,
+              "date"
+            )}
+          </div>
+          <div className="col mt-4">
+            {this.renderButton("SEARCH", "button", this.handleSearch)}
+          </div>
+        </div>
+        <div className="col">
           {rows.length > 0 && (
             <PcbRepairTable
               rows={rows}
