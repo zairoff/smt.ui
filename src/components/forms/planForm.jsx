@@ -35,11 +35,8 @@ class Plan extends Form {
 
   async componentDidMount() {
     try {
-      const { data } = await getPlanByDate(
-        format(new Date(), "yyyy-MM-dd HH:mm:ss")
-      );
+      const { data } = await getPlanByDate(format(new Date(), "yyyy-MM-dd"));
 
-      console.log(data);
       const { data: products } = await getProducts();
 
       const { data: lines } = await getLines();
@@ -49,6 +46,34 @@ class Plan extends Form {
       this.setState({ loading: false });
       toast.error(ex.message);
     }
+  }
+
+  isDate = (date) => {
+    return new Date(date) !== "Invalid Date" && !isNaN(new Date(date));
+  };
+
+  handleDateChange = async ({ currentTarget: input }) => {
+    const { value } = input;
+
+    const errors = { ...this.state.errors };
+    delete errors[input.id];
+    const fields = { ...this.state.fields };
+    fields[input.id] = value;
+
+    if (this.isDate(value)) {
+      try {
+        const { data } = await getPlanByDate(value);
+
+        this.setState({ fields, errors, data, loading: false });
+      } catch (ex) {
+        this.setState({ loading: false });
+        toast.error(ex.message);
+      }
+    }
+  };
+
+  async componentDidUpdate() {
+    const { fields } = this.state;
   }
 
   handleDelete = async ({ id }) => {
@@ -80,22 +105,32 @@ class Plan extends Form {
     this.setState({ loading: true });
     try {
       switch (name) {
+        case "Line":
+          {
+            const { selectedItem, fields } = this.state;
+            selectedItem.lineId = id;
+            this.setState({
+              selectedItem,
+              fields: { planProduced: "", planRequired: "", date: fields.date },
+              loading: false,
+            });
+          }
+          break;
         case "Product":
           {
+            const { fields, selectedItem } = this.state;
             const { data: productBrands } = await getProductBrandByProductId(
               id
             );
             const brands = productBrands.map((p) => p.brand);
+            selectedItem.productId = id;
+            selectedItem.brandId = null;
+            selectedItem.modelId = null;
             this.setState({
-              fields: { planProduced: "", planRequired: "", date: "" },
+              fields: { planProduced: "", planRequired: "", date: fields.date },
               brands,
               productBrands,
-              selectedItem: {
-                productId: id,
-                brandId: "",
-                modelId: "",
-                lineId: "",
-              },
+              selectedItem,
               models: [],
               loading: false,
             });
@@ -103,7 +138,7 @@ class Plan extends Form {
           break;
         case "Brand":
           {
-            const { productBrands, selectedItem } = this.state;
+            const { productBrands, selectedItem, fields } = this.state;
             const productBrand = productBrands.filter(
               (pb) =>
                 pb.product.id == selectedItem.productId && pb.brand.id == id
@@ -115,10 +150,9 @@ class Plan extends Form {
 
             selectedItem.brandId = id;
             selectedItem.modelId = null;
-            selectedItem.lineId = null;
 
             this.setState({
-              fields: { planProduced: "", planRequired: "", date: "" },
+              fields: { planProduced: "", planRequired: "", date: fields.date },
               selectedItem,
               models,
               loading: false,
@@ -126,27 +160,15 @@ class Plan extends Form {
           }
           break;
         case "Model":
-          const { selectedItem } = this.state;
+          const { selectedItem, fields } = this.state;
 
           selectedItem.modelId = id;
-          selectedItem.lineId = null;
 
           this.setState({
             selectedItem,
-            fields: { planProduced: "", planRequired: "", date: "" },
+            fields: { planProduced: "", planRequired: "", date: fields.date },
             loading: false,
           });
-          break;
-        case "Line":
-          {
-            const { selectedItem } = this.state;
-            selectedItem.lineId = id;
-            this.setState({
-              selectedItem,
-              fields: { planProduced: "", planRequired: "", date: "" },
-              loading: false,
-            });
-          }
           break;
       }
     } catch (ex) {
@@ -170,7 +192,7 @@ class Plan extends Form {
       this.setState({
         data: newData,
         loading: false,
-        fields: { planRequired: "", planProduced: "", date: "" },
+        fields: { planRequired: "", planProduced: "", date: fields.date },
       });
     } catch (ex) {
       this.setState({ loading: false });
@@ -207,40 +229,27 @@ class Plan extends Form {
     return (
       <form className="row" onSubmit={this.handleSubmit}>
         {loading && <ReactLoading className="test" type="spin" color="blue" />}
-        <div className="col">
-          <PlanTable
-            rows={rows}
-            sortColumn={sortColumn}
-            onDelete={this.handleDelete}
-            onSort={this.handleSort}
-          />
-          <Pagination
-            itemsCount={data.length}
-            pageSize={pageSize}
-            currentPage={currentPage}
-            onPageChange={this.handlePageChange}
-          />
-        </div>
         <div className="col-4">
+          {this.renderInput(
+            "date",
+            "Date",
+            "",
+            fields.date,
+            this.handleDateChange,
+            errors.date,
+            true,
+            "date"
+          )}
+          <p className="mt-2"> </p>
+          {this.renderSelect("Line", lines, "", this.handleSelectChange)}
+          <p className="mt-2"> </p>
           {this.renderSelect("Product", products, "", this.handleSelectChange)}
           <p className="mt-2"> </p>
           {this.renderSelect("Brand", brands, "", this.handleSelectChange)}
           <p className="mt-2"> </p>
           {this.renderSelect("Model", models, "", this.handleSelectChange)}
           <p className="mt-2"></p>
-          {this.renderSelect("Line", lines, "", this.handleSelectChange)}
-          <p className="mt-2"> </p>
-          {this.renderInput(
-            "date",
-            "Date",
-            "",
-            fields.date,
-            this.handleInputChange,
-            errors.date,
-            true,
-            "date"
-          )}
-          <p className="mt-2"> </p>
+
           {this.renderInput(
             "planRequired",
             "Plan",
@@ -264,6 +273,20 @@ class Plan extends Form {
           )}
           <p className="mt-2"> </p>
           {this.renderButton("Save")}
+        </div>
+        <div className="col">
+          <PlanTable
+            rows={rows}
+            sortColumn={sortColumn}
+            onDelete={this.handleDelete}
+            onSort={this.handleSort}
+          />
+          <Pagination
+            itemsCount={data.length}
+            pageSize={pageSize}
+            currentPage={currentPage}
+            onPageChange={this.handlePageChange}
+          />
         </div>
       </form>
     );

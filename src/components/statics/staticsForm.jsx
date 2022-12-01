@@ -21,7 +21,7 @@ import Form from "../forms/form";
 import StaticsGroupedTable from "../tables/staticsGroupedTable";
 import StaticsTable from "../tables/staticsTable";
 import ReactLoading from "react-loading";
-import { format } from 'date-fns';
+import { format } from "date-fns";
 
 class StaticsForm extends Form {
   state = {
@@ -161,7 +161,7 @@ class StaticsForm extends Form {
     }
   };
 
-  handleFilterChange = async ({ target }) => {
+  /*handleFilterChange = async ({ target }) => {
     const { value: id } = target;
     const { from, to } = this.state.fields;
 
@@ -209,7 +209,7 @@ class StaticsForm extends Form {
       toast.error(ex.message);
       this.setState({ loading: false });
     }
-  };
+  };*/
 
   doSubmit = async () => {
     const {
@@ -256,14 +256,14 @@ class StaticsForm extends Form {
     const excel = isFiltered
       ? reports
       : reports.map((d) => ({
-        barcode: d.barcode,
-        product: d.model.productBrand.product.name,
-        brand: d.model.productBrand.brand.name,
-        model: d.model.name,
-        line: d.line.name,
-        defect: d.defect.name,
-        date: format(Date.parse(d.createdDate), 'yyyy-MM-dd HH:mm:ss'),
-      }));
+          barcode: d.barcode,
+          product: d.model.productBrand.product.name,
+          brand: d.model.productBrand.brand.name,
+          model: d.model.name,
+          line: d.line.name,
+          defect: d.defect.name,
+          date: format(Date.parse(d.createdDate), "yyyy-MM-dd HH:mm:ss"),
+        }));
     return (
       <>
         <form className="border p-4 mt-2 mb-4" onSubmit={this.handleSubmit}>
@@ -316,14 +316,14 @@ class StaticsForm extends Form {
                 "date"
               )}
             </div>
-            <div className="col">
+            {/*<div className="col">
               {this.renderSelect(
                 "Filter",
                 filters,
                 "",
                 this.handleFilterChange
               )}
-            </div>
+              </div>*/}
             <div className="col-2">
               <p className="mt-4"></p>
               {this.renderButton("Search")}
