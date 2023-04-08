@@ -1,7 +1,5 @@
 import _ from "lodash";
 import React from "react";
-import { getDepartmentByHierarchyId } from "../../services/departmentService";
-import { getEmployeeByDepartmentId } from "../../services/employeeService";
 import {
   addMachineRepair,
   deleteMachineRepair,
@@ -15,6 +13,7 @@ import MachineRepairTable from "../tables/machineRepairTable";
 import { getMachines } from "../../services/machineService";
 import { getMachineRepairers } from "../../services/machineRepairerService";
 import Pagination from "../common/pagination";
+import jwtDecode from "jwt-decode";
 
 class MachineRepairForm extends Form {
   state = {
@@ -29,6 +28,7 @@ class MachineRepairForm extends Form {
     loading: true,
     employeeId: "",
     machineId: "",
+    user: "",
   };
 
   async componentDidMount() {
@@ -36,7 +36,12 @@ class MachineRepairForm extends Form {
       const { data: machines } = await getMachines();
       const { data: repairers } = await getMachineRepairers();
       const { data } = await getMachineRepairs();
-      this.setState({ data, machines, repairers });
+      const jwt = localStorage.getItem("token");
+      let user = "";
+      if (jwt) {
+        user = jwtDecode(jwt);
+      }
+      this.setState({ data, machines, repairers, user });
     } catch (ex) {
       toast.error(ex.response.data.message);
     } finally {
@@ -128,6 +133,7 @@ class MachineRepairForm extends Form {
       errors,
       machines,
       fields,
+      user,
     } = this.state;
 
     const sortedRows = _.orderBy(data, [sortColumn.path], [sortColumn.order]);
@@ -138,7 +144,7 @@ class MachineRepairForm extends Form {
         {loading && (
           <ReactLoading className="loading" type="spin" color="blue" />
         )}
-        <div class="row shadow p-3 mb-5 bg-body rounded">
+        <div className="row shadow p-3 mb-5 bg-body rounded">
           <div className="col">
             {this.renderSelect(
               "Machine",
@@ -211,6 +217,7 @@ class MachineRepairForm extends Form {
               onSort={this.handleSort}
               sortColumn={sortColumn}
               onDelete={this.handleDelete}
+              user={user}
             />
           )}
           <Pagination

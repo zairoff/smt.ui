@@ -62,6 +62,7 @@ class Plan extends Form {
 
     if (this.isDate(value)) {
       try {
+        this.setState({ loading: true });
         const { data } = await getPlanByDate(value);
 
         this.setState({ fields, errors, data, loading: false });
@@ -249,7 +250,6 @@ class Plan extends Form {
           <p className="mt-2"> </p>
           {this.renderSelect("Model", models, "", this.handleSelectChange)}
           <p className="mt-2"></p>
-
           {this.renderInput(
             "planRequired",
             "Plan",
@@ -273,6 +273,7 @@ class Plan extends Form {
           )}
           <p className="mt-2"> </p>
           {this.renderButton("Save")}
+          <p className="mb-2"> </p>
         </div>
         <div className="col">
           <PlanTable
