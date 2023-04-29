@@ -30,6 +30,7 @@ import Logout from "./components/forms/logout";
 import FtqReport from "./components/reports/ftqReport";
 import Repair from "./components/reports/repair";
 import Plan from "./components/forms/planForm";
+import PlanActivityForm from "./components/forms/PlanActivityForm";
 
 class App extends Component {
   state = {};
@@ -96,6 +97,7 @@ class App extends Component {
               path="/machine-history/:machineId"
               element={<MachineHistory />}
             />
+            <Route path="/plan-activity" element={<PlanActivityForm />} />
           </Routes>
         </main>
       </React.Fragment>
