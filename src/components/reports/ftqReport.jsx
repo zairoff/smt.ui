@@ -43,6 +43,7 @@ class FtqReport extends Form {
       from: "",
       to: "",
     },
+    selectedLine: "",
     lines: [],
     plans: [],
     defects: [],
@@ -106,6 +107,7 @@ class FtqReport extends Form {
         loading: false,
         allDefectsCount: allDefects.count,
         closedDefectsCount: closedDefects.count,
+        selectedLine: id,
       });
     } catch (ex) {
       this.setState({ loading: false });
@@ -127,6 +129,7 @@ class FtqReport extends Form {
       allDefectsCount,
       closedDefectsCount,
       loading,
+      selectedLine,
     } = this.state;
 
     const totalPlan = plans.reduce(
@@ -139,17 +142,89 @@ class FtqReport extends Form {
       0
     );
 
+    const agingId = 7;
+    const agingPlanLim = 0;
+    const agingSifatLim = 0;
+
+    const pcb1 = 3;
+    const pcb1PlanLim = 100;
+    const pcb1SifatLim = 98.8;
+
+    const pcb2 = 4;
+    const pcb2PlanLim = 100;
+    const pcb2SifatLim = 98.5;
+
+    const qc1 = 5;
+    const qc1PlanLim = 100;
+    const qc1SifatLim = 99.6;
+
+    const qc2 = 6;
+    const qc2PlanLim = 100;
+    const qc2SifatLim = 99.7;
+
+    const smt1 = 1;
+    const smt1PlanLim = 100;
+    const smt1SifatLim = 99.3;
+
+    const smt2 = 2;
+    const smt2PlanLim = 100;
+    const smt2SifatLim = 99.5;
+
+    const smt3 = 8;
+    const smt3PlanLim = 100;
+    const smt3SifatLim = 99.9;
+
+    let planColor = true;
+    let sifatColor = true;
+
     let planPersent = 0;
     let planPersentText = "0%";
     let totalDefectsPersent = 0;
     if (totalPlan > 0 && totalProduced > 0) {
       planPersent = (totalProduced * 100) / totalPlan;
-      planPersentText = planPersent.toFixed(2) + "%";
+      planPersent = planPersent.toFixed(2);
+      planPersentText = planPersent + "%";
 
       totalDefectsPersent = (
         100 -
         (allDefectsCount * 100) / totalProduced
       ).toFixed(2);
+
+      if (selectedLine === pcb1) {
+        planColor = parseFloat(pcb1PlanLim) <= parseFloat(planPersent);
+        sifatColor =
+          parseFloat(pcb1SifatLim) <= parseFloat(totalDefectsPersent);
+      }
+
+      if (selectedLine == pcb2) {
+        planColor = pcb2PlanLim <= planPersent;
+        sifatColor = pcb2SifatLim <= totalDefectsPersent;
+      }
+
+      if (selectedLine == qc1) {
+        planColor = qc1PlanLim <= planPersent;
+        sifatColor = qc1SifatLim <= totalDefectsPersent;
+      }
+
+      if (selectedLine == qc2) {
+        planColor = qc2PlanLim <= planPersent;
+        sifatColor = qc2SifatLim <= totalDefectsPersent;
+      }
+
+      if (selectedLine == smt1) {
+        planColor = smt1PlanLim <= planPersent;
+        sifatColor = smt1SifatLim <= totalDefectsPersent;
+      }
+
+      if (selectedLine == smt2) {
+        planColor = smt2PlanLim <= planPersent;
+        sifatColor = smt2SifatLim <= totalDefectsPersent;
+      }
+
+      if (selectedLine == smt3) {
+        planColor = smt3PlanLim <= planPersent;
+        sifatColor = smt3SifatLim <= totalDefectsPersent;
+      }
     }
 
     const totalPlanText = "Plan: " + totalPlan;
@@ -217,7 +292,11 @@ class FtqReport extends Form {
               <div>
                 <button
                   type="button"
-                  className="btn btn-block btn-secondary rounded-circle mb-5 fw-bold fs-3"
+                  className={
+                    planColor
+                      ? "btn btn-block btn-success rounded-circle mb-5 fw-bold fs-3"
+                      : "btn btn-block btn-danger rounded-circle mb-5 fw-bold fs-3"
+                  }
                   style={{ width: "130px", height: "130px" }}
                 >
                   {planPersentText}
@@ -256,7 +335,11 @@ class FtqReport extends Form {
               <div>
                 <button
                   type="button"
-                  className="btn btn-block btn-secondary rounded-circle mb-5 fw-bold fs-3"
+                  className={
+                    sifatColor
+                      ? "btn btn-block btn-success rounded-circle mb-5 fw-bold fs-3"
+                      : "btn btn-block btn-danger rounded-circle mb-5 fw-bold fs-3"
+                  }
                   style={{ width: "130px", height: "130px" }}
                 >
                   {totalDefectsPersent + "%"}

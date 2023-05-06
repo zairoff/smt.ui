@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Table from "../common/table";
+import { Link } from "react-router-dom";
 
 class PlanActivityTable extends Component {
   columns = [
@@ -12,6 +13,20 @@ class PlanActivityTable extends Component {
     { path: "status", label: "STATUS" },
     { path: "date", label: "KIRITILGAN SANA" },
     { path: "expires", label: "MUDDAT" },
+    {
+      path: "edit",
+      content: (planActivity) => (
+        <Link
+          to={{
+            pathname: "/plan-activity/" + planActivity.id,
+          }}
+          state={{ data: planActivity }}
+          className="btn btn-primary"
+        >
+          Edit
+        </Link>
+      ),
+    },
     {
       path: "button",
       content: (productBrand) => (

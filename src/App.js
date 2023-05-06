@@ -31,6 +31,7 @@ import FtqReport from "./components/reports/ftqReport";
 import Repair from "./components/reports/repair";
 import Plan from "./components/forms/planForm";
 import PlanActivityForm from "./components/forms/PlanActivityForm";
+import PlanActivityEditForm from "./components/forms/planActivityEditForm";
 
 class App extends Component {
   state = {};
@@ -98,6 +99,10 @@ class App extends Component {
               element={<MachineHistory />}
             />
             <Route path="/plan-activity" element={<PlanActivityForm />} />
+            <Route
+              path="/plan-activity/:id"
+              element={<PlanActivityEditForm />}
+            />
           </Routes>
         </main>
       </React.Fragment>
