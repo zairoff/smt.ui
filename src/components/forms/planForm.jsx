@@ -3,10 +3,8 @@ import ReactLoading from "react-loading";
 import { paginate } from "../../utils/paginate";
 import Form from "./form";
 import Pagination from "../common/pagination";
-import { getModelByProductBrandId } from "../../services/modelService";
+import { getModels } from "../../services/modelService";
 import { addPlan, deletePlan, getPlanByDate } from "../../services/planService";
-import { getProductBrandByProductId } from "../../services/productBrandService";
-import { getProducts } from "../../services/productService";
 import PlanTable from "../tables/planTable";
 import { format } from "date-fns";
 import { getLines } from "../../services/lineService";
@@ -17,14 +15,16 @@ class Plan extends Form {
     fields: {
       planProduced: "",
       planRequired: "",
+      employee: "",
       date: "",
     },
-    products: [],
-    productBrands: [],
-    brands: [],
+    daynight: [
+      { id: "Den", name: "Den" },
+      { id: "Noch", name: "Noch" },
+    ],
     models: [],
     lines: [],
-    selectedItem: { productId: "", brandId: "", modelId: "", lineId: "" },
+    selectedItem: { modelId: "", lineId: "", day: "" },
     data: [],
     errors: {},
     loading: true,
@@ -37,11 +37,11 @@ class Plan extends Form {
     try {
       const { data } = await getPlanByDate(format(new Date(), "yyyy-MM-dd"));
 
-      const { data: products } = await getProducts();
+      const { data: models } = await getModels();
 
       const { data: lines } = await getLines();
 
-      this.setState({ data, products, lines, loading: false });
+      this.setState({ data, models, lines, loading: false });
     } catch (ex) {
       this.setState({ loading: false });
       toast.error(ex.message);
@@ -72,10 +72,6 @@ class Plan extends Form {
       }
     }
   };
-
-  async componentDidUpdate() {
-    const { fields } = this.state;
-  }
 
   handleDelete = async ({ id }) => {
     const clone = [...this.state.data];
@@ -117,49 +113,6 @@ class Plan extends Form {
             });
           }
           break;
-        case "Product":
-          {
-            const { fields, selectedItem } = this.state;
-            const { data: productBrands } = await getProductBrandByProductId(
-              id
-            );
-            const brands = productBrands.map((p) => p.brand);
-            selectedItem.productId = id;
-            selectedItem.brandId = null;
-            selectedItem.modelId = null;
-            this.setState({
-              fields: { planProduced: "", planRequired: "", date: fields.date },
-              brands,
-              productBrands,
-              selectedItem,
-              models: [],
-              loading: false,
-            });
-          }
-          break;
-        case "Brand":
-          {
-            const { productBrands, selectedItem, fields } = this.state;
-            const productBrand = productBrands.filter(
-              (pb) =>
-                pb.product.id == selectedItem.productId && pb.brand.id == id
-            );
-
-            const { data: models } = await getModelByProductBrandId(
-              productBrand[0].id
-            );
-
-            selectedItem.brandId = id;
-            selectedItem.modelId = null;
-
-            this.setState({
-              fields: { planProduced: "", planRequired: "", date: fields.date },
-              selectedItem,
-              models,
-              loading: false,
-            });
-          }
-          break;
         case "Model":
           const { selectedItem, fields } = this.state;
 
@@ -171,6 +124,21 @@ class Plan extends Form {
             loading: false,
           });
           break;
+
+        case "Day":
+          {
+            const { selectedItem, fields } = this.state;
+
+            selectedItem.day = id;
+
+            this.setState({
+              selectedItem,
+              fields: { date: fields.date },
+              loading: false,
+            });
+          }
+
+          break;
       }
     } catch (ex) {
       toast.error(ex.message);
@@ -180,11 +148,25 @@ class Plan extends Form {
 
   doSubmit = async () => {
     const { data, selectedItem, fields } = this.state;
+
+    if (
+      fields.planProduced === "" ||
+      fields.planRequired === "" ||
+      fields.date === "" ||
+      selectedItem.lineId === "" ||
+      selectedItem.modelId === "" ||
+      fields.employee === ""
+    ) {
+      return;
+    }
+
     this.setState({ loading: true });
     try {
       const { data: result } = await addPlan({
         lineId: selectedItem.lineId,
         modelId: selectedItem.modelId,
+        employee: fields.employee,
+        dayNight: selectedItem.day,
         requiredCount: fields.planRequired,
         producedCount: fields.planProduced,
         date: fields.date,
@@ -212,10 +194,9 @@ class Plan extends Form {
   render() {
     const {
       fields,
-      products,
-      brands,
       models,
       lines,
+      daynight,
       errors,
       data,
       sortColumn,
@@ -224,6 +205,7 @@ class Plan extends Form {
       loading,
     } = this.state;
 
+    console.log(data);
     const sortedRows = _.orderBy(data, [sortColumn.path], [sortColumn.order]);
     const rows = paginate(sortedRows, currentPage, pageSize);
 
@@ -244,11 +226,20 @@ class Plan extends Form {
           <p className="mt-2"> </p>
           {this.renderSelect("Line", lines, "", this.handleSelectChange)}
           <p className="mt-2"> </p>
-          {this.renderSelect("Product", products, "", this.handleSelectChange)}
-          <p className="mt-2"> </p>
-          {this.renderSelect("Brand", brands, "", this.handleSelectChange)}
-          <p className="mt-2"> </p>
           {this.renderSelect("Model", models, "", this.handleSelectChange)}
+          <p className="mt-2"></p>
+          {this.renderSelect("Day", daynight, "", this.handleSelectChange)}
+          <p className="mt-2"></p>
+          {this.renderInput(
+            "employee",
+            "Employee",
+            "",
+            fields.employee,
+            this.handleInputChange,
+            errors.employee,
+            true,
+            ""
+          )}
           <p className="mt-2"></p>
           {this.renderInput(
             "planRequired",

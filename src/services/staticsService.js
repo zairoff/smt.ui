@@ -28,7 +28,7 @@ export function getByDefect(from, to) {
   return http.get(query);
 }
 
-export function DefectsByLine(lineId, from, to) {
+export function getDefectsByLine(lineId, from, to) {
   const query =
     endPoint +
     "/DefectsByLine?lineid=" +
@@ -40,7 +40,7 @@ export function DefectsByLine(lineId, from, to) {
   return http.get(query);
 }
 
-export function DefectCountByLine(lineId, from, to) {
+export function getDefectCountByLine(lineId, from, to) {
   const query =
     endPoint +
     "/DefectCountByLine?lineid=" +
@@ -52,7 +52,7 @@ export function DefectCountByLine(lineId, from, to) {
   return http.get(query);
 }
 
-export function ClosedDefectCountByLine(lineId, from, to) {
+export function getClosedDefectCountByLine(lineId, from, to) {
   const query =
     endPoint +
     "/ClosedDefectCountByLine?lineid=" +

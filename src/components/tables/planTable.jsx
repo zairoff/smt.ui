@@ -6,6 +6,8 @@ class PlanTable extends Component {
     { path: "id", label: "ID" },
     { path: "line.name", label: "LINE" },
     { path: "model.name", label: "MODEL" },
+    { path: "dayNight", label: "DAY" },
+    { path: "employee", label: "Employee" },
     { path: "requiredCount", label: "PLAN" },
     { path: "producedCount", label: "PRODUCED" },
     { path: "date", label: "DATE" },

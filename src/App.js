@@ -3,7 +3,6 @@ import NavBar from "./components/navbar";
 import { Navigate, Route, Routes } from "react-router-dom";
 import ProductForm from "./components/forms/productForm";
 import ModelForm from "./components/forms/modelForm";
-import BrandForm from "./components/forms/brandForm";
 import ProductBrandForm from "./components/forms/productBrandForm";
 import Login from "./components/forms/login";
 import { ToastContainer } from "react-toastify";
@@ -55,7 +54,6 @@ class App extends Component {
             {user ? (
               <>
                 <Route path="/product" element={<ProductForm />} />
-                <Route path="/brand" element={<BrandForm />} />
                 <Route path="/productBrand" element={<ProductBrandForm />} />
                 <Route path="/model" element={<ModelForm />} />
                 <Route path="/defect" element={<DefectForm />} />

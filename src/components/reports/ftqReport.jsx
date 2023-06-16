@@ -21,9 +21,8 @@ import { toast } from "react-toastify";
 import ReactLoading from "react-loading";
 import { getPlanByLineAndDate } from "../../services/planService";
 import {
-  ClosedDefectCountByLine,
-  DefectCountByLine,
-  DefectsByLine,
+  getDefectCountByLine,
+  getDefectsByLine,
 } from "../../services/staticsService";
 
 ChartJS.register(
@@ -48,7 +47,6 @@ class FtqReport extends Form {
     plans: [],
     defects: [],
     allDefectsCount: "",
-    closedDefectsCount: "",
     errors: {},
     loading: true,
     sortColumn: { path: "", order: "asc" },
@@ -91,22 +89,15 @@ class FtqReport extends Form {
     try {
       const { data: plans } = await getPlanByLineAndDate(id, from, to);
 
-      const { data: defects } = await DefectsByLine(id, from, to);
+      const { data: defects } = await getDefectsByLine(id, from, to);
 
-      const { data: allDefects } = await DefectCountByLine(id, from, to);
-
-      const { data: closedDefects } = await ClosedDefectCountByLine(
-        id,
-        from,
-        to
-      );
+      const { data: allDefects } = await getDefectCountByLine(id, from, to);
 
       this.setState({
         plans,
         defects,
         loading: false,
         allDefectsCount: allDefects.count,
-        closedDefectsCount: closedDefects.count,
         selectedLine: id,
       });
     } catch (ex) {
@@ -114,8 +105,6 @@ class FtqReport extends Form {
       toast.error(ex.message);
     }
   };
-
-  handleDelete = async ({ id }) => {};
 
   render() {
     const {
@@ -127,7 +116,6 @@ class FtqReport extends Form {
       currentPage,
       pageSize,
       allDefectsCount,
-      closedDefectsCount,
       loading,
       selectedLine,
     } = this.state;
@@ -136,6 +124,14 @@ class FtqReport extends Form {
       (n, { requiredCount }) => n + requiredCount,
       0
     );
+
+    const totalPlanSize = plans.reduce((sum, curr) => {
+      return sum + curr.producedCount * curr.model.size;
+    }, 0);
+
+    const totalDefectSize = defects.reduce((sum, curr) => {
+      return sum + curr.size;
+    }, 0);
 
     const totalProduced = plans.reduce(
       (n, { producedCount }) => n + producedCount,
@@ -229,9 +225,10 @@ class FtqReport extends Form {
 
     const totalPlanText = "Plan: " + totalPlan;
     const totalProducedText = "Produced: " + totalProduced;
+    const totalPlanSizeText = "Size: " + totalPlanSize + " m2";
+    const totalDefectSizeText = "Size: " + totalDefectSize + " m2";
 
     const totalDefedctText = "Defects: " + allDefectsCount;
-    const totalClosedDefectsText = "Closed: " + closedDefectsCount;
 
     const sortedPlanRows = _.orderBy(
       plans,
@@ -315,6 +312,12 @@ class FtqReport extends Form {
               null,
               "btn btn-success ms-2"
             )}
+            {this.renderButton(
+              totalPlanSizeText,
+              "button",
+              null,
+              "btn btn-secondary ms-2"
+            )}
             <div className="mt-4">
               <FtqPlanTable
                 rows={planRows}
@@ -350,13 +353,13 @@ class FtqReport extends Form {
               totalDefedctText,
               "button",
               null,
-              "btn btn-danger"
+              "btn btn-danger ms-2"
             )}
             {this.renderButton(
-              totalClosedDefectsText,
+              totalDefectSizeText,
               "button",
               null,
-              "btn btn-success ms-2"
+              "btn btn-danger ms-2"
             )}
             <div className="mt-4">
               <FtqDefectTable

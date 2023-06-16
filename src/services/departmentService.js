@@ -21,6 +21,7 @@ export function getDepartmentByHierarchyId(hierarchyId) {
 }
 
 export function addDepartment(department) {
+  console.log(department);
   return http.post(endPoint, department);
 }
 

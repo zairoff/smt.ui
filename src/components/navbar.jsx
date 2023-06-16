@@ -116,37 +116,6 @@ const NavBar = ({ user }) => {
                     Report
                   </NavLink>
                 </li>
-                <li>
-                  <NavLink to="/pcb-report" className="dropdown-item">
-                    PCB-Report
-                  </NavLink>
-                </li>
-              </ul>
-            </li>
-
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Repairs
-              </a>
-              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                {user && (
-                  <li>
-                    <NavLink to="/pcb-repairer" className="dropdown-item">
-                      Repairer
-                    </NavLink>
-                  </li>
-                )}
-                <li>
-                  <NavLink to="/pcb-repair" className="dropdown-item">
-                    Repair
-                  </NavLink>
-                </li>
               </ul>
             </li>
 
@@ -201,21 +170,6 @@ const NavBar = ({ user }) => {
                   Settings
                 </a>
                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li>
-                    <NavLink to="/product" className="dropdown-item">
-                      Product
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/brand" className="dropdown-item">
-                      Brand
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/productBrand" className="dropdown-item">
-                      Product-Brand
-                    </NavLink>
-                  </li>
                   <li>
                     <NavLink to="/model" className="dropdown-item">
                       Model

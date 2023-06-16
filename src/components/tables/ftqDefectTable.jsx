@@ -1,9 +1,5 @@
 import React, { Component } from "react";
 import Table from "../common/table";
-import config from "../../config.json";
-import { Link } from "react-router-dom";
-
-const fileUrl = config.fileUrl;
 
 class FtqDefectTable extends Component {
   columns = [

@@ -1,19 +1,11 @@
-import React, { Component } from "react";
+import React from "react";
 import ReactLoading from "react-loading";
 import _ from "lodash";
 import Form from "./form";
 import ModelTable from "../tables/modelTable";
 import { paginate } from "../../utils/paginate";
 import Pagination from "../common/pagination";
-import {
-  addModel,
-  deleteModel,
-  getModelByProductBrandId,
-} from "../../services/modelService";
-import {
-  getProductBrandByProductAndBrandId,
-  getProductBrandByProductId,
-} from "../../services/productBrandService";
+import { addModel, deleteModel, getModels } from "../../services/modelService";
 import { toast } from "react-toastify";
 import { getProducts } from "../../services/productService";
 
@@ -22,12 +14,8 @@ class ModelForm extends Form {
     sortColumn: { path: "", order: "asc" },
     fields: {
       model: "",
+      size: "",
     },
-    productBrand: {},
-    products: [],
-    selectedProduct: "",
-    brands: [],
-    selectedBrand: "",
     currentPage: 1,
     selectedItem: { id: "", value: "" },
     pageSize: 15,
@@ -38,8 +26,8 @@ class ModelForm extends Form {
 
   async componentDidMount() {
     try {
-      const { data: products } = await getProducts();
-      this.setState({ products, loading: false });
+      const { data } = await getModels();
+      this.setState({ data, loading: false });
     } catch (ex) {
       this.setState({ loading: false });
       toast.error(ex.message);
@@ -70,46 +58,20 @@ class ModelForm extends Form {
     return data.length % pageSize == 0;
   }
 
-  handleSelectChange = async ({ target }) => {
-    const { name, value } = target;
-    if (!value) return;
-    // TODO: Need to find other way. Here extra server call occuring
-    try {
-      switch (name) {
-        case "Product":
-          const { data: response } = await getProductBrandByProductId(value);
-          const brands = response.map((p) => p.brand);
-          this.setState({
-            brands,
-            data: [],
-            selectedProduct: value,
-          });
-          break;
-        case "Brand":
-          const { selectedProduct } = this.state;
-          const { data: productBrand } =
-            await getProductBrandByProductAndBrandId(selectedProduct, value);
-          const { data } = await getModelByProductBrandId(productBrand.id);
-          this.setState({ data, productBrand });
-          break;
-        default:
-          break;
-      }
-    } catch (ex) {
-      toast.error(ex.message);
-    }
-  };
-
   doSubmit = async () => {
-    const { data, productBrand, fields } = this.state;
+    const { data, fields } = this.state;
     this.setState({ loading: true });
     try {
       const { data: result } = await addModel({
-        productBrandId: productBrand.id,
+        size: fields.size,
         name: fields.model,
       });
       const newData = [result, ...data];
-      this.setState({ data: newData, loading: false, fields: { model: "" } });
+      this.setState({
+        data: newData,
+        loading: false,
+        fields: { model: "", size: "" },
+      });
     } catch (ex) {
       this.setState({ loading: false });
       toast.error(ex.response.data.message);
@@ -131,8 +93,6 @@ class ModelForm extends Form {
       currentPage,
       sortColumn,
       fields,
-      products,
-      brands,
       errors,
       loading,
     } = this.state;
@@ -164,20 +124,6 @@ class ModelForm extends Form {
           />
         </div>
         <div className="col m-5">
-          {this.renderSelect(
-            "Product",
-            products,
-            errors.products,
-            this.handleSelectChange
-          )}
-          <p className="mt-2"> </p>
-          {this.renderSelect(
-            "Brand",
-            brands,
-            errors.brands,
-            this.handleSelectChange
-          )}
-          <p className="mt-2"> </p>
           {this.renderInput(
             "model",
             "Model",
@@ -185,6 +131,17 @@ class ModelForm extends Form {
             fields.model,
             this.handleInputChange,
             errors.model,
+            true,
+            ""
+          )}
+          <p className="mt-2"> </p>
+          {this.renderInput(
+            "size",
+            "Size",
+            "",
+            fields.size,
+            this.handleInputChange,
+            errors.size,
             true,
             ""
           )}

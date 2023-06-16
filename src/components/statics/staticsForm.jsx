@@ -37,8 +37,6 @@ class StaticsForm extends Form {
     loading: true,
     filters: [
       { id: 1, name: "All" },
-      { id: 2, name: "Product" },
-      { id: 3, name: "Brand" },
       { id: 4, name: "Model" },
       { id: 5, name: "Line" },
       { id: 6, name: "Defect" },
@@ -74,66 +72,7 @@ class StaticsForm extends Form {
     this.setState({ loading: true });
     try {
       switch (name) {
-        case "Product":
-          {
-            if (id === "-1") {
-              const { data } = await getBrands();
-              const brands = [{ id: -1, name: "All" }, ...data];
-              this.setState({
-                brands,
-                selectedProduct: id,
-                reports: [],
-                loading: false,
-              });
-            } else {
-              const { data: productBrands } = await getProductBrandByProductId(
-                id
-              );
-              const data = productBrands.map((p) => p.brand);
-              const brands = [{ id: -1, name: "All" }, ...data];
-
-              this.setState({
-                brands,
-                reports: [],
-                productBrands,
-                selectedProduct: id,
-                loading: false,
-              });
-            }
-          }
-          break;
-        case "Brand":
-          {
-            if (id === "-1") {
-              const { data } = await getModels();
-              const models = [{ id: -1, name: "All" }, ...data];
-              this.setState({
-                selectedBrand: id,
-                models,
-                loading: false,
-                reports: [],
-              });
-            } else {
-              const { productBrands, selectedProduct } = this.state;
-              const productBrand = productBrands.filter(
-                (pb) => pb.product.id == selectedProduct && pb.brand.id == id
-              );
-
-              const prodcutBrandId =
-                productBrand.length > 0 ? productBrand[0].id : 0;
-              const { data } = await getModelByProductBrandId(prodcutBrandId);
-
-              const models = [{ id: -1, name: "All" }, ...data];
-              this.setState({
-                selectedBrand: id,
-                models,
-                loading: false,
-                reports: [],
-              });
-            }
-          }
-          break;
-        case "Model":
+        case "Model": {
           const { data } = await getLines();
 
           const lines = [{ id: -1, name: "All" }, ...data];
@@ -145,6 +84,7 @@ class StaticsForm extends Form {
             loading: false,
           });
           break;
+        }
         case "Line":
           {
             this.setState({
