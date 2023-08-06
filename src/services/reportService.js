@@ -30,13 +30,13 @@ export function getReportByBarcode(barcode) {
 export function getReportByModelIdAndLineId(modelId, lineId, date, isClosed) {
   const query = endPoint.concat(
     "/GetByModelIdAndLineId?modelId=" +
-      modelId +
-      "&lineId=" +
-      lineId +
-      "&date=" +
-      date +
-      "&isClosed=" +
-      isClosed
+    modelId +
+    "&lineId=" +
+    lineId +
+    "&date=" +
+    date +
+    "&isClosed=" +
+    isClosed
   );
   return http.get(query);
 }
@@ -44,19 +44,46 @@ export function getReportByModelIdAndLineId(modelId, lineId, date, isClosed) {
 export function getReportsBy(productid, brandid, modelId, lineId, from, to) {
   const query = endPoint.concat(
     "/GetBy?productId=" +
-      productid +
-      "&brandId=" +
-      brandid +
-      "&modelId=" +
-      modelId +
-      "&lineId=" +
-      lineId +
-      "&from=" +
-      from +
-      "&to=" +
-      to
+    productid +
+    "&brandId=" +
+    brandid +
+    "&modelId=" +
+    modelId +
+    "&lineId=" +
+    lineId +
+    "&from=" +
+    from +
+    "&to=" +
+    to
   );
-  console.log(query);
+  return http.get(query);
+}
+
+export function getReportsByLineAndStatus(lineId, status, from, to) {
+  const query = endPoint.concat(
+    "/GetByLineAndStatus?&lineId=" +
+    lineId +
+    "&status=" +
+    status +
+    "&from=" +
+    from +
+    "&to=" +
+    to
+  );
+  return http.get(query);
+}
+
+export function getReportsByLineAndDefect(lineId, defectName, from, to) {
+  const query = endPoint.concat(
+    "/GetByLineAndDefect?&lineId=" +
+    lineId +
+    "&defectName=" +
+    defectName +
+    "&from=" +
+    from +
+    "&to=" +
+    to
+  );
   return http.get(query);
 }
 

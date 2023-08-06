@@ -32,6 +32,7 @@ import Repair from "./components/reports/repair";
 import Plan from "./components/forms/planForm";
 import PlanActivityForm from "./components/forms/PlanActivityForm";
 import PlanActivityEditForm from "./components/forms/planActivityEditForm";
+import DetailedReport from "./components/reports/detailedReport";
 
 class App extends Component {
   state = {};
@@ -41,7 +42,7 @@ class App extends Component {
       const jwt = localStorage.getItem("token");
       const user = jwtDecode(jwt);
       this.setState({ user });
-    } catch (ex) {}
+    } catch (ex) { }
   }
 
   render() {
@@ -102,6 +103,10 @@ class App extends Component {
             <Route
               path="/plan-activity/:id"
               element={<PlanActivityEditForm />}
+            />
+            <Route
+              path="/detailed"
+              element={<DetailedReport />}
             />
           </Routes>
         </main>

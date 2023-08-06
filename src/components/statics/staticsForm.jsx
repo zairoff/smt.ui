@@ -230,7 +230,6 @@ class StaticsForm extends Form {
         fields.from,
         fields.to
       );
-      console.log("rep", reports);
       this.setState({ reports, isFiltered: false });
     } catch (ex) {
       toast.error(ex.message);
@@ -256,14 +255,14 @@ class StaticsForm extends Form {
     const excel = isFiltered
       ? reports
       : reports.map((d) => ({
-          barcode: d.barcode,
-          product: d.model.productBrand.product.name,
-          brand: d.model.productBrand.brand.name,
-          model: d.model.name,
-          line: d.line.name,
-          defect: d.defect.name,
-          date: format(Date.parse(d.createdDate), "yyyy-MM-dd HH:mm:ss"),
-        }));
+        barcode: d.barcode,
+        product: d.model.productBrand.product.name,
+        brand: d.model.productBrand.brand.name,
+        model: d.model.name,
+        line: d.line.name,
+        defect: d.defect.name,
+        date: format(Date.parse(d.createdDate), "yyyy-MM-dd HH:mm:ss"),
+      }));
     return (
       <>
         <form className="border p-4 mt-2 mb-4" onSubmit={this.handleSubmit}>

@@ -25,6 +25,7 @@ import {
   DefectCountByLine,
   DefectsByLine,
 } from "../../services/staticsService";
+import { Link } from "react-router-dom";
 
 ChartJS.register(
   CategoryScale,
@@ -115,7 +116,7 @@ class FtqReport extends Form {
     }
   };
 
-  handleDelete = async ({ id }) => {};
+  handleDelete = async ({ id }) => { };
 
   render() {
     const {
@@ -346,24 +347,50 @@ class FtqReport extends Form {
                 </button>
               </div>
             </div>
-            {this.renderButton(
-              totalDefedctText,
-              "button",
-              null,
-              "btn btn-danger"
-            )}
-            {this.renderButton(
-              totalClosedDefectsText,
-              "button",
-              null,
-              "btn btn-success ms-2"
-            )}
+            <Link
+              to={{
+                pathname: "/detailed",
+              }}
+              state={{
+                data: {
+                  from: fields.from,
+                  to: fields.to,
+                  line: selectedLine,
+                  status: true,
+                  display: "all",
+                  defectName: undefined
+                }
+              }}
+              className="btn btn-danger"
+            >
+              {totalDefedctText}
+            </Link>
+            <Link
+              to={{
+                pathname: "/detailed",
+              }}
+              state={{
+                data: {
+                  from: fields.from,
+                  to: fields.to,
+                  line: selectedLine,
+                  status: true,
+                  display: "closed",
+                  defectName: undefined
+                }
+              }}
+              className="btn btn-success ms-2"
+            >
+              {totalClosedDefectsText}
+            </Link>
             <div className="mt-4">
               <FtqDefectTable
                 rows={defectRows}
                 sortColumn={sortColumn}
                 onDelete={this.handleDelete}
                 onSort={this.handleSort}
+                fields={fields}
+                line={selectedLine}
               />
               <Pagination
                 itemsCount={defects.length}

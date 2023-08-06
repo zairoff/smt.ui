@@ -6,15 +6,40 @@ import { Link } from "react-router-dom";
 const fileUrl = config.fileUrl;
 
 class FtqDefectTable extends Component {
-  columns = [
-    { path: "name", label: "DEFECT" },
-    { path: "count", label: "COUNT" },
-  ];
   render() {
-    const { rows, sortColumn, onSort } = this.props;
+    const { rows, sortColumn, onSort, fields, line } = this.props;
+
+    const columns = [
+      { path: "name", label: "DEFECT" },
+      { path: "count", label: "COUNT" },
+      {
+        path: "details",
+        content: (defect) => (
+          <Link
+            to={{
+              pathname: "/detailed",
+            }}
+            state={{
+              data: {
+                from: fields.from,
+                to: fields.to,
+                line: line,
+                status: true,
+                display: "defect",
+                defectName: defect.name
+              }
+            }}
+            className="btn btn-primary"
+          >
+            details
+          </Link>
+        ),
+      },
+    ];
+
     return (
       <Table
-        columns={this.columns}
+        columns={columns}
         rows={rows}
         sortColumn={sortColumn}
         onSort={onSort}
