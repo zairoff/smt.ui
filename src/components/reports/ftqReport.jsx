@@ -25,7 +25,7 @@ import {
   DefectCountByLine,
   DefectsByLine,
 } from "../../services/staticsService";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 
 ChartJS.register(
   CategoryScale,
@@ -73,9 +73,40 @@ class FtqReport extends Form {
 
   async componentDidMount() {
     try {
-      const { data: lines } = await getLines();
+      const stateData = this.props.location.state;
+      console.log(stateData);
+      if (stateData !== null) {
+        const { data } = stateData;
+        if (data !== null) {
+          const { from, to, line } = data;
 
-      this.setState({ lines, loading: false, fields: { from: "", to: "" } });
+          const { data: lines } = await getLines();
+
+          const { data: plans } = await getPlanByLineAndDate(line, from, to);
+
+          const { data: defects } = await DefectsByLine(line, from, to);
+
+          const { data: allDefects } = await DefectCountByLine(line, from, to);
+
+          const { data: closedDefects } = await ClosedDefectCountByLine(
+            line,
+            from,
+            to
+          );
+
+          this.setState({
+            lines, loading: false, fields: { from, to }, plans,
+            defects,
+            allDefectsCount: allDefects.count,
+            closedDefectsCount: closedDefects.count,
+            selectedLine: line,
+          });
+        }
+      } else {
+        const { data: lines } = await getLines();
+
+        this.setState({ lines, loading: false, fields: { from: "", to: "" } });
+      }
     } catch (ex) {
       this.setState({ loading: false });
       toast.error(ex.message);
@@ -406,4 +437,6 @@ class FtqReport extends Form {
   }
 }
 
-export default FtqReport;
+export default () => (
+  <FtqReport params={useParams()} location={useLocation()} />
+);

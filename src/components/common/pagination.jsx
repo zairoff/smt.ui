@@ -12,7 +12,7 @@ const Pagination = ({ itemsCount, pageSize, onPageChange, currentPage }) => {
   }
   return (
     <nav>
-      <ul className="pagination">
+      <ul className="pagination mt-2">
         {pageArray.map((page) => (
           <li
             className={currentPage === page ? "page-item active" : "page-item"}

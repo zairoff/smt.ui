@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { getReportsBy, getReportsByLineAndDefect, getReportsByLineAndStatus } from "../../services/reportService";
 import { toast } from "react-toastify";
 import ReactLoading from "react-loading";
@@ -21,7 +21,6 @@ class DetailedReport extends Component {
 
     async componentDidMount() {
         const { data } = this.props.location.state;
-        console.log(data);
         const { line, status, from, to, defectName, display } = data;
         this.setState({ loading: true });
         try {
@@ -72,6 +71,9 @@ class DetailedReport extends Component {
         );
 
         const rows = paginate(sortedRows, currentPage, pageSize);
+
+        const { data } = this.props.location.state;
+        const { line, from, to } = data;
         return <>
             {loading && (
                 <ReactLoading className="loading" type="spin" color="blue" />
@@ -88,6 +90,21 @@ class DetailedReport extends Component {
                 currentPage={currentPage}
                 onPageChange={this.handlePageChange}
             />
+            <Link
+                to={{
+                    pathname: "/ftq",
+                }}
+                state={{
+                    data: {
+                        from: from,
+                        to: to,
+                        line: line,
+                    }
+                }}
+                className="btn btn-success mt-2 mb-2"
+            >
+                BACK
+            </Link>
         </>
     }
 }
