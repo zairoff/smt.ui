@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import Table from "../common/table";
-import config from "../../config.json";
 import { Link } from "react-router-dom";
-
-const fileUrl = config.fileUrl;
 
 class FtqDefectTable extends Component {
   render() {
@@ -26,8 +23,8 @@ class FtqDefectTable extends Component {
                 line: line,
                 status: true,
                 display: "defect",
-                defectName: defect.name
-              }
+                defectName: defect.name,
+              },
             }}
             className="btn btn-primary"
           >

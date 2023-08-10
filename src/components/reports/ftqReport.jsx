@@ -54,7 +54,7 @@ class FtqReport extends Form {
     loading: true,
     sortColumn: { path: "", order: "asc" },
     currentPage: 1,
-    pageSize: 10,
+    pageSize: 25,
   };
 
   handlePageChange = (page) => {
@@ -95,7 +95,10 @@ class FtqReport extends Form {
           );
 
           this.setState({
-            lines, loading: false, fields: { from, to }, plans,
+            lines,
+            loading: false,
+            fields: { from, to },
+            plans,
             defects,
             allDefectsCount: allDefects.count,
             closedDefectsCount: closedDefects.count,
@@ -147,7 +150,7 @@ class FtqReport extends Form {
     }
   };
 
-  handleDelete = async ({ id }) => { };
+  handleDelete = async ({ id }) => {};
 
   render() {
     const {
@@ -389,8 +392,8 @@ class FtqReport extends Form {
                   line: selectedLine,
                   status: true,
                   display: "all",
-                  defectName: undefined
-                }
+                  defectName: undefined,
+                },
               }}
               className="btn btn-danger"
             >
@@ -407,8 +410,8 @@ class FtqReport extends Form {
                   line: selectedLine,
                   status: true,
                   display: "closed",
-                  defectName: undefined
-                }
+                  defectName: undefined,
+                },
               }}
               className="btn btn-success ms-2"
             >

@@ -12,6 +12,7 @@ import {
 } from "../../services/reportService";
 import { getPcbRepairers } from "../../services/pcbRepairerService";
 import { format } from "date-fns";
+import Pagination from "../common/pagination";
 
 class Repair extends Form {
   state = {
@@ -23,7 +24,7 @@ class Repair extends Form {
     condition: "",
     createdDate: "",
     currentPage: 1,
-    pageSize: 15,
+    pageSize: 25,
     data: [],
     repairers: [],
     errors: {},
@@ -70,7 +71,7 @@ class Repair extends Form {
         this.setState({ employee: value });
         break;
       case "Status":
-        const cond = value === 1 ? 'ishladi' : 'ishlamadi';
+        const cond = value === 1 ? "ishladi" : "ishlamadi";
         this.setState({ condition: cond });
         break;
       case "PcbStatus":
@@ -180,6 +181,7 @@ class Repair extends Form {
         this.state.fields.searchDate,
         psbStatus
       );
+      console.log(data);
       this.setState({ data });
     } catch (ex) {
       toast.error(ex.response.data.message);
@@ -346,6 +348,12 @@ class Repair extends Form {
               onDelete={this.handleDelete}
             />
           )}
+          <Pagination
+            itemsCount={data.length}
+            pageSize={pageSize}
+            currentPage={currentPage}
+            onPageChange={this.handlePageChange}
+          />
         </div>
       </div>
     );

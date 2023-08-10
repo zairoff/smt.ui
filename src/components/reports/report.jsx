@@ -40,7 +40,7 @@ class Report extends Form {
     isActiveBarcode: false,
     sortColumn: { path: "", order: "asc" },
     currentPage: 1,
-    pageSize: 15,
+    pageSize: 25,
   };
 
   componentDidUpdate() {
