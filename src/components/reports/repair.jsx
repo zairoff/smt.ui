@@ -7,7 +7,7 @@ import PcbRepairTable from "../tables/pcbRepairTable";
 import _ from "lodash";
 import {
   getReportByBarcode,
-  getReportByDate,
+  getReportByUpdatedDate,
   updateReport,
 } from "../../services/reportService";
 import { getPcbRepairers } from "../../services/pcbRepairerService";
@@ -37,7 +37,7 @@ class Repair extends Form {
     try {
       const { data: repairers } = await getPcbRepairers();
       const date = format(new Date(), "yyyy-MM-dd HH:mm:ss");
-      const { data } = await getReportByDate(date, true);
+      const { data } = await getReportByUpdatedDate(date, true);
       this.setState({
         repairers,
         data,
@@ -70,7 +70,8 @@ class Repair extends Form {
         this.setState({ employee: value });
         break;
       case "Status":
-        this.setState({ condition: value });
+        const cond = value === 1 ? 'ishladi' : 'ishlamadi';
+        this.setState({ condition: cond });
         break;
       case "PcbStatus":
         this.setState({ psbStatus: value });
@@ -97,7 +98,7 @@ class Repair extends Form {
       });
 
       const date = format(new Date(), "yyyy-MM-dd HH:mm:ss");
-      const { data } = await getReportByDate(date, true);
+      const { data } = await getReportByUpdatedDate(date, true);
 
       this.setState({
         data,
@@ -175,7 +176,7 @@ class Repair extends Form {
   handleSearch = async () => {
     const { psbStatus } = this.state;
     try {
-      const { data } = await getReportByDate(
+      const { data } = await getReportByUpdatedDate(
         this.state.fields.searchDate,
         psbStatus
       );

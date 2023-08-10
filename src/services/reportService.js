@@ -22,6 +22,13 @@ export function getReportByDate(date, status) {
   return http.get(query);
 }
 
+export function getReportByUpdatedDate(date, status) {
+  const query = endPoint.concat(
+    "/GetByUpdatedDate?date=" + date + "&status=" + status
+  );
+  return http.get(query);
+}
+
 export function getReportByBarcode(barcode) {
   const query = endPoint.concat("/GetByBarcode?barcode=").concat(barcode);
   return http.get(query);
