@@ -1,61 +1,42 @@
 import React from "react";
 import { getLines } from "../../services/lineService";
-import { getModelByProductBrandId } from "../../services/modelService";
-import { getProducts } from "../../services/productService";
 import Form from "../forms/form";
 import { toast } from "react-toastify";
 import ReactLoading from "react-loading";
 import ButtonBadge from "../common/buttonBadge";
-import { getProductBrandByProductId } from "../../services/productBrandService";
 import { getLineDefectByLineId } from "../../services/lineDefectService";
 import {
   addReport,
   deleteReport,
   getReportByModelIdAndLineId,
-  updateReport,
 } from "../../services/reportService";
 import ReportTable from "../tables/reportTable";
 import Pagination from "../common/pagination";
 import _ from "lodash";
 import { paginate } from "../../utils/paginate";
 import { format } from "date-fns";
+import { getModels } from "../../services/modelService";
 
 class Report extends Form {
-  barcodeRef = React.createRef();
 
   state = {
-    fields: {
-      barcode: "",
-    },
-    products: [],
-    productBrands: [],
-    brands: [],
     models: [],
     lines: [],
     defects: [],
-    selectedItem: { productId: "", brandId: "", modelId: "", lineId: "" },
+    shifts: [{ id: 'day', name: 'day' }, { id: 'night', name: 'night' }],
+    selectedItem: { modelId: "", lineId: "", shift: '' },
     data: [],
-    errors: {},
-    loading: true,
-    isActiveBarcode: false,
+    loading: false,
     sortColumn: { path: "", order: "asc" },
     currentPage: 1,
-    pageSize: 15,
+    pageSize: 25,
   };
-
-  componentDidUpdate() {
-    this.setFocusOnBarcode();
-  }
-
-  setFocusOnBarcode() {
-    this.barcodeRef.current.focus();
-  }
 
   async componentDidMount() {
     try {
-      const { data: products } = await getProducts();
+      const { data: models } = await getModels();
       const { data: lines } = await getLines();
-      this.setState({ products, lines });
+      this.setState({ models, lines });
     } catch (ex) {
       toast.error(ex.message);
     } finally {
@@ -65,89 +46,36 @@ class Report extends Form {
 
   handleSelectChange = async ({ target }) => {
     const { name, value: id } = target;
-    this.setState({ loading: true });
     try {
       switch (name) {
-        case "Product":
-          {
-            const { data: productBrands } = await getProductBrandByProductId(
-              id
-            );
-            const brands = productBrands.map((p) => p.brand);
-            this.setState({
-              fields: { barcode: "" },
-              brands,
-              productBrands,
-              selectedItem: {
-                productId: id,
-                brandId: "",
-                modelId: "",
-                lineId: "",
-              },
-              models: [],
-              loading: false,
-            });
-          }
-          break;
-        case "Brand":
-          {
-            const { productBrands, selectedItem } = this.state;
-            const productBrand = productBrands.filter(
-              (pb) =>
-                pb.product.id == selectedItem.productId && pb.brand.id == id
-            );
+        case "Shift":
+          const { selectedItem } = this.state;
+          selectedItem.shift = id;
+          this.setState({ selectedItem });
 
-            const { data: models } = await getModelByProductBrandId(
-              productBrand[0].id
-            );
-
-            selectedItem.brandId = id;
-            selectedItem.modelId = null;
-            selectedItem.lineId = null;
-
-            this.setState({
-              fields: { barcode: "" },
-              selectedItem,
-              models,
-              loading: false,
-            });
-          }
+          await this.retrieveDataAsync();
           break;
         case "Model":
-          const { selectedItem } = this.state;
+          {
+            const { selectedItem } = this.state;
+            selectedItem.modelId = id;
 
-          selectedItem.modelId = id;
-          selectedItem.lineId = null;
+            this.setState({ selectedItem });
 
-          this.setState({
-            selectedItem,
-            fields: { barcode: "" },
-            loading: false,
-          });
+            await this.retrieveDataAsync();
+          }
           break;
         case "Line":
           {
             const { selectedItem } = this.state;
             selectedItem.lineId = id;
 
-            if (!selectedItem.modelId) return;
-
             const { data: lineDefects } = await getLineDefectByLineId(id);
             const defects = lineDefects.map((ld) => ld.defect);
 
-            const { data } = await getReportByModelIdAndLineId(
-              selectedItem.modelId,
-              selectedItem.lineId,
-              format(new Date(), "yyyy-MM-dd HH:mm:ss"),
-              false
-            );
-            this.setState({
-              defects,
-              selectedItem,
-              data,
-              fields: { barcode: "" },
-              loading: false,
-            });
+            this.setState({ selectedItem, defects });
+
+            await this.retrieveDataAsync();
           }
           break;
       }
@@ -157,33 +85,44 @@ class Report extends Form {
     }
   };
 
-  handleCustomInputChange = async ({ currentTarget: input }) => {
-    const { value } = input;
+  retrieveDataAsync = async () => {
+    const { selectedItem } = this.state;
+    const { modelId, lineId, shift } = selectedItem;
 
-    const errors = { ...this.state.errors };
-    delete errors[input.id];
-    const fields = { ...this.state.fields };
-    fields[input.id] = value;
-    this.setState({ fields, errors, isActiveBarcode: false });
-  };
+    if (modelId !== '' && lineId !== '' && shift !== '') {
+      this.setState({
+        loading: true,
+      });
+      const { data } = await getReportByModelIdAndLineId(
+        modelId,
+        lineId,
+        shift,
+        format(new Date(), "yyyy-MM-dd HH:mm:ss"),
+      );
+      this.setState({
+        data,
+        loading: false,
+      });
+    }
+  }
 
   handleButtonClick = async (defect) => {
-    const { fields, selectedItem, data } = this.state;
-    const { modelId, lineId } = selectedItem;
+    const { selectedItem, data } = this.state;
+    const { modelId, lineId, shift } = selectedItem;
 
     if (
-      Object.values(fields).every((x) => x === null || x === "") ||
+      shift === '' || shift === null || shift === undefined ||
       Object.values(selectedItem).every((x) => x === null || x === "")
     ) {
-      toast.warning("Check model choosen and barcode scanned");
+      toast.warning("Check model and shift choosen");
       return;
     }
 
     const report = {
-      barcode: fields.barcode,
       lineId: lineId,
       defectId: defect,
       modelId: modelId,
+      shift: shift
     };
 
     try {
@@ -191,58 +130,20 @@ class Report extends Form {
       const { data } = await getReportByModelIdAndLineId(
         modelId,
         lineId,
+        shift,
         format(new Date(), "yyyy-MM-dd HH:mm:ss"),
-        false
       );
-      this.setState({ data, isActiveBarcode: false, fields: { barcode: "" } });
+      this.setState({ data });
     } catch (ex) {
-      this.catchExceptionMessage(ex, "barcode");
+      toast.error(ex.message);
 
       if (ex.response && ex.response.status == 409) {
-        this.setState({ data, isActiveBarcode: true });
+        this.setState({ data });
       } else {
         this.setState({
-          data,
-          isActiveBarcode: false,
-          fields: { barcode: "" },
+          data
         });
       }
-    }
-  };
-
-  handleButtonClear = () => {
-    this.setState({ fields: { barcode: "" } });
-  };
-
-  handleButtonRemont = async () => {
-    const { fields, data } = this.state;
-
-    const filteredData = data.filter((d) => d.barcode == fields.barcode);
-
-    const line = _.get(filteredData[0], "line.name");
-
-    const reportId = _.get(filteredData[0], "id");
-
-    try {
-      await updateReport(reportId, {
-        status: true,
-        employee: line,
-        condition: "OK",
-        action: "Payka qilindi",
-      });
-
-      const filteredData = data.filter((d) => d.barcode != fields.barcode);
-
-      this.setState({
-        data: filteredData,
-        fields: { barcode: "" },
-        isActiveBarcode: false,
-        errors: "",
-      });
-    } catch (ex) {
-      toast.error(ex.response.data.message);
-    } finally {
-      this.setState({ loading: false });
     }
   };
 
@@ -274,19 +175,15 @@ class Report extends Form {
 
   render() {
     const {
-      fields,
-      products,
-      brands,
       models,
       defects,
       lines,
-      errors,
       data,
       sortColumn,
       currentPage,
       pageSize,
       loading,
-      isActiveBarcode,
+      shifts
     } = this.state;
 
     const sortedRows = _.orderBy(data, [sortColumn.path], [sortColumn.order]);
@@ -299,15 +196,7 @@ class Report extends Form {
         )}
         <div className="row mt-4">
           <div className="col">
-            {this.renderSelect(
-              "Product",
-              products,
-              "",
-              this.handleSelectChange
-            )}
-          </div>
-          <div className="col">
-            {this.renderSelect("Brand", brands, "", this.handleSelectChange)}
+            {this.renderSelect("Shift", shifts, "", this.handleSelectChange)}
           </div>
           <div className="col">
             {this.renderSelect("Model", models, "", this.handleSelectChange)}
@@ -316,32 +205,8 @@ class Report extends Form {
             {this.renderSelect("Line", lines, "", this.handleSelectChange)}
           </div>
           <div className="row mt-4">
-            <div className="col ms-4">
-              <div className="row">
-                <div className="col">
-                  {this.renderInput(
-                    "barcode",
-                    "",
-                    "Barcode",
-                    fields.barcode,
-                    this.handleCustomInputChange,
-                    errors.barcode,
-                    true,
-                    "text",
-                    this.barcodeRef
-                  )}
-                </div>
-                <div className="col-2 my-auto">
-                  {this.renderButton(
-                    "CLEAR",
-                    "button",
-                    this.handleButtonClear,
-                    "btn btn-primary btn-block mt-4"
-                  )}
-                </div>
-              </div>
+            <div className="col">
               <div
-                className=" ms-2 mt-4 mb-4"
                 style={{ fontWeight: "bold", width: "150px", height: "20px" }}
               >
                 TOTAL:{" "}
@@ -349,14 +214,6 @@ class Report extends Form {
                   {data.length}
                 </span>
               </div>
-              <p> </p>
-              {isActiveBarcode &&
-                this.renderButton(
-                  "REMONT",
-                  "button",
-                  this.handleButtonRemont,
-                  "btn btn-warning text-white btn-block"
-                )}
               <p> </p>
               {defects.map((defect) => (
                 <ButtonBadge

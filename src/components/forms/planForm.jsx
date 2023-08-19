@@ -3,14 +3,13 @@ import ReactLoading from "react-loading";
 import { paginate } from "../../utils/paginate";
 import Form from "./form";
 import Pagination from "../common/pagination";
-import { getModelByProductBrandId } from "../../services/modelService";
 import { addPlan, deletePlan, getPlanByDate } from "../../services/planService";
-import { getProductBrandByProductId } from "../../services/productBrandService";
-import { getProducts } from "../../services/productService";
 import PlanTable from "../tables/planTable";
 import { format } from "date-fns";
 import { getLines } from "../../services/lineService";
 import _ from "lodash";
+import { getPlannersByLine } from "../../services/plannerService";
+import { getModels } from "../../services/modelService";
 
 class Plan extends Form {
   state = {
@@ -18,30 +17,28 @@ class Plan extends Form {
       planProduced: "",
       planRequired: "",
       date: "",
+      shift: ''
     },
-    products: [],
-    productBrands: [],
-    brands: [],
+    shifts: [{ id: 'day', name: 'day' }, { id: 'night', name: 'night' }],
     models: [],
     lines: [],
-    selectedItem: { productId: "", brandId: "", modelId: "", lineId: "" },
+    planners: [],
+    selectedItem: { modelId: "", lineId: "", shift: '', employee: '' },
     data: [],
     errors: {},
     loading: true,
     sortColumn: { path: "", order: "asc" },
     currentPage: 1,
-    pageSize: 15,
+    pageSize: 25,
   };
 
   async componentDidMount() {
     try {
       const { data } = await getPlanByDate(format(new Date(), "yyyy-MM-dd"));
-
-      const { data: products } = await getProducts();
-
       const { data: lines } = await getLines();
+      const { data: models } = await getModels();
 
-      this.setState({ data, products, lines, loading: false });
+      this.setState({ data, lines, models, loading: false });
     } catch (ex) {
       this.setState({ loading: false });
       toast.error(ex.message);
@@ -62,7 +59,7 @@ class Plan extends Form {
 
     if (this.isDate(value)) {
       try {
-        const { data } = await getPlanByDate(value);
+        const { data } = await getPlanByDate(value, fields.shift);
 
         this.setState({ fields, errors, data, loading: false });
       } catch (ex) {
@@ -71,10 +68,6 @@ class Plan extends Form {
       }
     }
   };
-
-  async componentDidUpdate() {
-    const { fields } = this.state;
-  }
 
   handleDelete = async ({ id }) => {
     const clone = [...this.state.data];
@@ -102,59 +95,42 @@ class Plan extends Form {
 
   handleSelectChange = async ({ target }) => {
     const { name, value: id } = target;
-    this.setState({ loading: true });
     try {
       switch (name) {
         case "Line":
           {
             const { selectedItem, fields } = this.state;
             selectedItem.lineId = id;
+            const { data: planners } = await getPlannersByLine(id);
+
             this.setState({
               selectedItem,
-              fields: { planProduced: "", planRequired: "", date: fields.date },
+              planners,
+              fields: { planProduced: "", planRequired: "", date: fields.date, shift: fields.shift },
               loading: false,
             });
           }
           break;
-        case "Product":
+        case "Employee":
           {
-            const { fields, selectedItem } = this.state;
-            const { data: productBrands } = await getProductBrandByProductId(
-              id
-            );
-            const brands = productBrands.map((p) => p.brand);
-            selectedItem.productId = id;
-            selectedItem.brandId = null;
-            selectedItem.modelId = null;
+            const { selectedItem, fields } = this.state;
+            selectedItem.employee = id;
+
             this.setState({
-              fields: { planProduced: "", planRequired: "", date: fields.date },
-              brands,
-              productBrands,
               selectedItem,
-              models: [],
+              fields: { planProduced: "", planRequired: "", date: fields.date, shift: fields.shift },
               loading: false,
             });
           }
           break;
-        case "Brand":
+        case "Shift":
           {
-            const { productBrands, selectedItem, fields } = this.state;
-            const productBrand = productBrands.filter(
-              (pb) =>
-                pb.product.id == selectedItem.productId && pb.brand.id == id
-            );
-
-            const { data: models } = await getModelByProductBrandId(
-              productBrand[0].id
-            );
-
-            selectedItem.brandId = id;
-            selectedItem.modelId = null;
+            const { selectedItem, fields } = this.state;
+            selectedItem.shift = id;
 
             this.setState({
-              fields: { planProduced: "", planRequired: "", date: fields.date },
               selectedItem,
-              models,
+              fields: { planProduced: "", planRequired: "", date: fields.date, shift: fields.shift },
               loading: false,
             });
           }
@@ -166,7 +142,7 @@ class Plan extends Form {
 
           this.setState({
             selectedItem,
-            fields: { planProduced: "", planRequired: "", date: fields.date },
+            fields: { planProduced: "", planRequired: "", date: fields.date, shift: fields.shift },
             loading: false,
           });
           break;
@@ -186,6 +162,8 @@ class Plan extends Form {
         modelId: selectedItem.modelId,
         requiredCount: fields.planRequired,
         producedCount: fields.planProduced,
+        employee: selectedItem.employee,
+        shift: selectedItem.shift,
         date: fields.date,
       });
       const newData = [result, ...data];
@@ -211,8 +189,6 @@ class Plan extends Form {
   render() {
     const {
       fields,
-      products,
-      brands,
       models,
       lines,
       errors,
@@ -221,6 +197,8 @@ class Plan extends Form {
       currentPage,
       pageSize,
       loading,
+      shifts,
+      planners
     } = this.state;
 
     const sortedRows = _.orderBy(data, [sortColumn.path], [sortColumn.order]);
@@ -241,11 +219,18 @@ class Plan extends Form {
             "date"
           )}
           <p className="mt-2"> </p>
+          {this.renderSelect("Shift", shifts, "", this.handleSelectChange)}
+          <p className="mt-2"> </p>
           {this.renderSelect("Line", lines, "", this.handleSelectChange)}
           <p className="mt-2"> </p>
-          {this.renderSelect("Product", products, "", this.handleSelectChange)}
-          <p className="mt-2"> </p>
-          {this.renderSelect("Brand", brands, "", this.handleSelectChange)}
+          {this.renderSelect(
+            "Employee",
+            planners,
+            errors.planners,
+            this.handleSelectChange,
+            "employee.fullName",
+            "employee.fullName"
+          )}
           <p className="mt-2"> </p>
           {this.renderSelect("Model", models, "", this.handleSelectChange)}
           <p className="mt-2"></p>
@@ -273,6 +258,7 @@ class Plan extends Form {
           )}
           <p className="mt-2"> </p>
           {this.renderButton("Save")}
+          <p className="mb-4"> </p>
         </div>
         <div className="col">
           <PlanTable

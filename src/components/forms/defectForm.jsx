@@ -1,5 +1,4 @@
-import React, { Component } from "react";
-import BrandTable from "../tables/brandTable";
+import React from "react";
 import Pagination from "../common/pagination";
 import { paginate } from "../../utils/paginate";
 import ReactLoading from "react-loading";
@@ -16,9 +15,9 @@ import DefectTable from "../tables/defectTable";
 class DefectForm extends Form {
   state = {
     sortColumn: { path: "", order: "asc" },
-    fields: { defect: "" },
+    fields: { defect: "", size: '' },
     currentPage: 1,
-    pageSize: 15,
+    pageSize: 25,
     data: [],
     errors: {},
     loading: true,
@@ -39,9 +38,9 @@ class DefectForm extends Form {
     const { data, fields } = this.state;
     this.setState({ loading: true });
     try {
-      const { data: result } = await addDefect({ name: fields.defect });
+      const { data: result } = await addDefect({ name: fields.defect, size: fields.size });
       const newData = [result, ...data];
-      this.setState({ data: newData, fields: { defect: "" } });
+      this.setState({ data: newData, fields: { defect: "", size: '' } });
     } catch (ex) {
       this.catchExceptionMessage(ex, "defect");
     } finally {
@@ -118,11 +117,21 @@ class DefectForm extends Form {
         <div className="col m-4">
           {this.renderInput(
             "defect",
-            "",
+            "Defect",
             "",
             fields.defect,
             this.handleInputChange,
             errors.defect,
+            true
+          )}
+          <p className="mt-2"> </p>
+          {this.renderInput(
+            "size",
+            "Size",
+            "",
+            fields.size,
+            this.handleInputChange,
+            errors.size,
             true
           )}
           <p className="mt-2"> </p>

@@ -6,6 +6,7 @@ class LineDefectTable extends Component {
     { path: "id", label: "ID" },
     { path: "line.name", label: "LINE" },
     { path: "defect.name", label: "DEFECT" },
+    { path: "defect.size", label: "SIZE" },
     {
       path: "button",
       content: (productBrand) => (

@@ -28,11 +28,13 @@ export function getByDefect(from, to) {
   return http.get(query);
 }
 
-export function DefectsByLine(lineId, from, to) {
+export function DefectsByLine(lineId, shift, from, to) {
   const query =
     endPoint +
     "/DefectsByLine?lineid=" +
     lineId +
+    "&shift=" +
+    shift +
     "&from=" +
     from +
     "&to=" +
@@ -40,11 +42,13 @@ export function DefectsByLine(lineId, from, to) {
   return http.get(query);
 }
 
-export function DefectCountByLine(lineId, from, to) {
+export function DefectCountByLine(lineId, shift, from, to) {
   const query =
     endPoint +
     "/DefectCountByLine?lineid=" +
     lineId +
+    "&shift=" +
+    shift +
     "&from=" +
     from +
     "&to=" +

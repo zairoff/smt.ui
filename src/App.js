@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import NavBar from "./components/navbar";
 import { Navigate, Route, Routes } from "react-router-dom";
-import ProductForm from "./components/forms/productForm";
 import ModelForm from "./components/forms/modelForm";
-import BrandForm from "./components/forms/brandForm";
-import ProductBrandForm from "./components/forms/productBrandForm";
 import Login from "./components/forms/login";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -22,16 +19,15 @@ import MachineForm from "./components/forms/machineForm";
 import MachineRepairForm from "./components/forms/machineRepairForm";
 import PcbRepairerForm from "./components/forms/pcbRepairerForm";
 import MachineRepairerForm from "./components/forms/machineRepairerForm";
-import Card from "./components/common/card";
 import MachineDashborad from "./components/machineDashboard";
 import MachineHistory from "./components/machineHistory";
 import PcbReport from "./components/reports/pcbReport";
-import PcbCard from "./components/reports/pcbCard";
 import StaticsForm from "./components/statics/staticsForm";
 import Logout from "./components/forms/logout";
 import FtqReport from "./components/reports/ftqReport";
 import Repair from "./components/reports/repair";
 import Plan from "./components/forms/planForm";
+import PlannerForm from "./components/forms/plannerForm";
 
 class App extends Component {
   state = {};
@@ -41,7 +37,7 @@ class App extends Component {
       const jwt = localStorage.getItem("token");
       const user = jwtDecode(jwt);
       this.setState({ user });
-    } catch (ex) {}
+    } catch (ex) { }
   }
 
   render() {
@@ -54,9 +50,6 @@ class App extends Component {
           <Routes>
             {user ? (
               <>
-                <Route path="/product" element={<ProductForm />} />
-                <Route path="/brand" element={<BrandForm />} />
-                <Route path="/productBrand" element={<ProductBrandForm />} />
                 <Route path="/model" element={<ModelForm />} />
                 <Route path="/defect" element={<DefectForm />} />
                 <Route path="/line" element={<LineForm />} />
@@ -86,7 +79,6 @@ class App extends Component {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/report" element={<Report />} />
-            <Route path="/pcb-repair" element={<Repair />} />
             <Route path="/machine-repair" element={<MachineRepairForm />} />
             <Route path="/machine-dashboard" element={<MachineDashborad />} />
             <Route path="/pcb-report" element={<PcbReport />} />
@@ -94,6 +86,7 @@ class App extends Component {
             <Route path="/dashboard" element={<StaticsForm />} />
             <Route path="/ftq" element={<FtqReport />} />
             <Route path="/plan" element={<Plan />} />
+            <Route path="/planner" element={<PlannerForm />} />
             <Route
               path="/machine-history/:machineId"
               element={<MachineHistory />}

@@ -1,22 +1,11 @@
 import React from "react";
 import { CSVLink } from "react-csv";
 import { toast } from "react-toastify";
-import { getBrands } from "../../services/brandService";
 import { getLines } from "../../services/lineService";
 import {
-  getModelByProductBrandId,
   getModels,
 } from "../../services/modelService";
-import { getProductBrandByProductId } from "../../services/productBrandService";
-import { getProducts } from "../../services/productService";
 import { getReportsBy } from "../../services/reportService";
-import {
-  getByBrand,
-  getByDefect,
-  getByLine,
-  getByModel,
-  getByProduct,
-} from "../../services/staticsService";
 import Form from "../forms/form";
 import StaticsGroupedTable from "../tables/staticsGroupedTable";
 import StaticsTable from "../tables/staticsTable";
@@ -25,9 +14,6 @@ import { format } from "date-fns";
 
 class StaticsForm extends Form {
   state = {
-    products: [],
-    productBrands: [],
-    brands: [],
     models: [],
     lines: [],
     reports: [],
@@ -45,21 +31,23 @@ class StaticsForm extends Form {
     ],
     sort: false,
     sortColumn: { path: "", order: "asc" },
-    selectedProduct: "",
-    selectedBrand: "",
-    selectedModel: "",
-    selectedLine: "",
+    selectedItem: { modelId: '', lineId: '', shift: '' },
     fields: { from: "", to: "" },
     isFiltered: false,
+    shifts: [{ id: 'day', name: 'day' }, { id: 'night', name: 'night' }],
   };
 
   async componentDidMount() {
     try {
-      const { data } = await getProducts();
-      const products = [{ id: -1, name: "All" }, ...data];
+      const { data } = await getModels();
+      const models = [{ id: -1, name: "All" }, ...data];
+
+      const { data: liness } = await getLines();
+      const lines = [{ id: -1, name: "All" }, ...liness];
 
       this.setState({
-        products,
+        models,
+        lines,
         loading: false,
       });
     } catch (ex) {
@@ -71,86 +59,34 @@ class StaticsForm extends Form {
   handleSelectChange = async ({ target }) => {
     const { name, value: id } = target;
 
-    this.setState({ loading: true });
     try {
       switch (name) {
-        case "Product":
-          {
-            if (id === "-1") {
-              const { data } = await getBrands();
-              const brands = [{ id: -1, name: "All" }, ...data];
-              this.setState({
-                brands,
-                selectedProduct: id,
-                reports: [],
-                loading: false,
-              });
-            } else {
-              const { data: productBrands } = await getProductBrandByProductId(
-                id
-              );
-              const data = productBrands.map((p) => p.brand);
-              const brands = [{ id: -1, name: "All" }, ...data];
-
-              this.setState({
-                brands,
-                reports: [],
-                productBrands,
-                selectedProduct: id,
-                loading: false,
-              });
-            }
-          }
-          break;
-        case "Brand":
-          {
-            if (id === "-1") {
-              const { data } = await getModels();
-              const models = [{ id: -1, name: "All" }, ...data];
-              this.setState({
-                selectedBrand: id,
-                models,
-                loading: false,
-                reports: [],
-              });
-            } else {
-              const { productBrands, selectedProduct } = this.state;
-              const productBrand = productBrands.filter(
-                (pb) => pb.product.id == selectedProduct && pb.brand.id == id
-              );
-
-              const prodcutBrandId =
-                productBrand.length > 0 ? productBrand[0].id : 0;
-              const { data } = await getModelByProductBrandId(prodcutBrandId);
-
-              const models = [{ id: -1, name: "All" }, ...data];
-              this.setState({
-                selectedBrand: id,
-                models,
-                loading: false,
-                reports: [],
-              });
-            }
-          }
-          break;
         case "Model":
-          const { data } = await getLines();
-
-          const lines = [{ id: -1, name: "All" }, ...data];
+          const { selectedItem } = this.state;
+          selectedItem.modelId = id;
 
           this.setState({
-            selectedModel: id,
-            lines,
+            selectedItem,
             reports: [],
-            loading: false,
           });
           break;
         case "Line":
           {
+            const { selectedItem } = this.state;
+            selectedItem.lineId = id;
             this.setState({
-              selectedLine: id,
+              selectedItem,
               reports: [],
-              loading: false,
+            });
+          }
+          break;
+        case "Shift":
+          {
+            const { selectedItem } = this.state;
+            selectedItem.shift = id;
+            this.setState({
+              selectedItem,
+              reports: [],
             });
           }
           break;
@@ -213,24 +149,21 @@ class StaticsForm extends Form {
 
   doSubmit = async () => {
     const {
-      selectedProduct,
-      selectedBrand,
-      selectedModel,
-      selectedLine,
+      selectedItem,
       fields,
     } = this.state;
+
+    const { modelId, lineId, shift } = selectedItem;
 
     this.setState({ loading: true });
     try {
       const { data: reports } = await getReportsBy(
-        selectedProduct,
-        selectedBrand,
-        selectedModel,
-        selectedLine,
+        modelId,
+        lineId,
+        shift,
         fields.from,
         fields.to
       );
-      console.log("rep", reports);
       this.setState({ reports, isFiltered: false });
     } catch (ex) {
       toast.error(ex.message);
@@ -241,29 +174,26 @@ class StaticsForm extends Form {
 
   render() {
     const {
-      products,
-      brands,
       models,
       lines,
       reports,
-      filters,
       sortColumn,
       fields,
       isFiltered,
       loading,
+      shifts,
     } = this.state;
 
     const excel = isFiltered
       ? reports
       : reports.map((d) => ({
-          barcode: d.barcode,
-          product: d.model.productBrand.product.name,
-          brand: d.model.productBrand.brand.name,
-          model: d.model.name,
-          line: d.line.name,
-          defect: d.defect.name,
-          date: format(Date.parse(d.createdDate), "yyyy-MM-dd HH:mm:ss"),
-        }));
+        model: d.model.name,
+        line: d.line.name,
+        defect: d.defect.name,
+        shift: d.shift,
+        date: format(Date.parse(d.createdDate), "yyyy-MM-dd HH:mm:ss"),
+      }));
+
     return (
       <>
         <form className="border p-4 mt-2 mb-4" onSubmit={this.handleSubmit}>
@@ -271,23 +201,15 @@ class StaticsForm extends Form {
             <ReactLoading className="loading" type="spin" color="blue" />
           )}
           <div className="row">
-            <div className="col">
-              {this.renderSelect(
-                "Product",
-                products,
-                "",
-                this.handleSelectChange
-              )}
-            </div>
-            <div className="col">
-              {this.renderSelect("Brand", brands, "", this.handleSelectChange)}
-            </div>
 
             <div className="col">
               {this.renderSelect("Model", models, "", this.handleSelectChange)}
             </div>
             <div className="col">
               {this.renderSelect("Line", lines, "", this.handleSelectChange)}
+            </div>
+            <div className="col">
+              {this.renderSelect("Shift", shifts, "", this.handleSelectChange)}
             </div>
           </div>
 

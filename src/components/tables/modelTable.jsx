@@ -4,9 +4,8 @@ import Table from "../common/table";
 class ModelTable extends Component {
   columns = [
     { path: "id", label: "ID" },
-    { path: "productBrand.product.name", label: "PRODUCT" },
-    { path: "productBrand.brand.name", label: "BRAND" },
     { path: "name", label: "MODEL" },
+    { path: "size", label: "SIZE" },
     {
       path: "button",
       content: (productBrand) => (

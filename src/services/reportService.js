@@ -1,3 +1,4 @@
+import { shield } from "fontawesome";
 import config from "../config.json";
 import http from "./httpService";
 
@@ -27,36 +28,33 @@ export function getReportByBarcode(barcode) {
   return http.get(query);
 }
 
-export function getReportByModelIdAndLineId(modelId, lineId, date, isClosed) {
+export function getReportByModelIdAndLineId(modelId, lineId, shift, date) {
   const query = endPoint.concat(
     "/GetByModelIdAndLineId?modelId=" +
-      modelId +
-      "&lineId=" +
-      lineId +
-      "&date=" +
-      date +
-      "&isClosed=" +
-      isClosed
+    modelId +
+    "&lineId=" +
+    lineId +
+    "&shift=" +
+    shift +
+    "&date=" +
+    date
   );
   return http.get(query);
 }
 
-export function getReportsBy(productid, brandid, modelId, lineId, from, to) {
+export function getReportsBy(modelId, lineId, shift, from, to) {
   const query = endPoint.concat(
-    "/GetBy?productId=" +
-      productid +
-      "&brandId=" +
-      brandid +
-      "&modelId=" +
-      modelId +
-      "&lineId=" +
-      lineId +
-      "&from=" +
-      from +
-      "&to=" +
-      to
+    "/GetBy?modelId=" +
+    modelId +
+    "&lineId=" +
+    lineId +
+    "&shift=" +
+    shift +
+    "&from=" +
+    from +
+    "&to=" +
+    to
   );
-  console.log(query);
   return http.get(query);
 }
 

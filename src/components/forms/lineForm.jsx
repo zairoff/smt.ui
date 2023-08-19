@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import BrandTable from "../tables/brandTable";
 import Pagination from "../common/pagination";
 import { paginate } from "../../utils/paginate";
 import ReactLoading from "react-loading";
@@ -7,7 +6,6 @@ import _ from "lodash";
 import Form from "./form";
 import { toast } from "react-toastify";
 import { addLine, deleteLine, getLines } from "../../services/lineService";
-import DefectTable from "../tables/defectTable";
 import LineTable from "../tables/lineTable";
 
 class LineForm extends Form {

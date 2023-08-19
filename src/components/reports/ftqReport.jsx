@@ -21,7 +21,6 @@ import { toast } from "react-toastify";
 import ReactLoading from "react-loading";
 import { getPlanByLineAndDate } from "../../services/planService";
 import {
-  ClosedDefectCountByLine,
   DefectCountByLine,
   DefectsByLine,
 } from "../../services/staticsService";
@@ -46,13 +45,14 @@ class FtqReport extends Form {
     lines: [],
     plans: [],
     defects: [],
-    allDefectsCount: "",
-    closedDefectsCount: "",
+    allDefects: { count: '', size: '' },
     errors: {},
     loading: true,
     sortColumn: { path: "", order: "asc" },
     currentPage: 1,
-    pageSize: 10,
+    pageSize: 25,
+    shifts: [{ id: 'day', name: 'day' }, { id: 'night', name: 'night' }],
+    selectedItem: { line: "", shift: '' },
   };
 
   handlePageChange = (page) => {
@@ -80,32 +80,42 @@ class FtqReport extends Form {
     }
   }
 
+  handleSelectChange = async ({ target }) => {
+    const { name, value: id } = target;
+    switch (name) {
+      case "Shift":
+        {
+          const { selectedItem, fields } = this.state;
+          selectedItem.shift = id;
+
+          this.setState({
+            selectedItem,
+            fields: { from: fields.from, to: fields.to },
+          });
+        }
+        break;
+    }
+  };
+
   handleLineClick = async ({ id }) => {
-    const { fields } = this.state;
+    const { fields, selectedItem } = this.state;
     const { from, to } = fields;
     if (from === null || from === "" || to === null || to === "") {
       return;
     }
     this.setState({ loading: true });
     try {
-      const { data: plans } = await getPlanByLineAndDate(id, from, to);
+      const { data: plans } = await getPlanByLineAndDate(id, selectedItem.shift, from, to);
 
-      const { data: defects } = await DefectsByLine(id, from, to);
+      const { data: defects } = await DefectsByLine(id, selectedItem.shift, from, to);
 
-      const { data: allDefects } = await DefectCountByLine(id, from, to);
-
-      const { data: closedDefects } = await ClosedDefectCountByLine(
-        id,
-        from,
-        to
-      );
+      const { data: allDefects } = await DefectCountByLine(id, selectedItem.shift, from, to);
 
       this.setState({
         plans,
         defects,
         loading: false,
-        allDefectsCount: allDefects.count,
-        closedDefectsCount: closedDefects.count,
+        allDefects,
       });
     } catch (ex) {
       this.setState({ loading: false });
@@ -113,7 +123,7 @@ class FtqReport extends Form {
     }
   };
 
-  handleDelete = async ({ id }) => {};
+  handleDelete = async ({ id }) => { };
 
   render() {
     const {
@@ -124,9 +134,10 @@ class FtqReport extends Form {
       sortColumn,
       currentPage,
       pageSize,
-      allDefectsCount,
+      allDefects,
       closedDefectsCount,
       loading,
+      shifts
     } = this.state;
 
     const totalPlan = plans.reduce(
@@ -148,15 +159,15 @@ class FtqReport extends Form {
 
       totalDefectsPersent = (
         100 -
-        (allDefectsCount * 100) / totalProduced
+        (allDefects.count * 100) / totalProduced
       ).toFixed(2);
     }
 
     const totalPlanText = "Plan: " + totalPlan;
     const totalProducedText = "Produced: " + totalProduced;
 
-    const totalDefedctText = "Defects: " + allDefectsCount;
-    const totalClosedDefectsText = "Closed: " + closedDefectsCount;
+    const totalDefedctsCountText = "Defects: " + allDefects.count;
+    const totalDefectsSizeText = "Size: " + allDefects.size;
 
     const sortedPlanRows = _.orderBy(
       plans,
@@ -199,6 +210,8 @@ class FtqReport extends Form {
               true,
               "date"
             )}
+            <p className="mt-4"></p>
+            {this.renderSelect("Shift", shifts, "", this.handleSelectChange)}
             <p className="mt-4"></p>
             {lines.map((line) => (
               <div key={line.id} className="mt-2">
@@ -264,16 +277,16 @@ class FtqReport extends Form {
               </div>
             </div>
             {this.renderButton(
-              totalDefedctText,
+              totalDefedctsCountText,
               "button",
               null,
               "btn btn-danger"
             )}
             {this.renderButton(
-              totalClosedDefectsText,
+              totalDefectsSizeText,
               "button",
               null,
-              "btn btn-success ms-2"
+              "btn btn-secondary ms-2"
             )}
             <div className="mt-4">
               <FtqDefectTable

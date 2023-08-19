@@ -35,14 +35,14 @@ export function getPlanByLine(lineId) {
   return http.get(query);
 }
 
-export function getPlanByDate(date) {
-  const query = endPoint.concat("/GetByDate?date=").concat(date);
+export function getPlanByDate(date, shift) {
+  const query = endPoint.concat("/GetByDate?date=").concat(date) + "&shift=" + shift;
   return http.get(query);
 }
 
-export function getPlanByLineAndDate(lineId, from, to) {
+export function getPlanByLineAndDate(lineId, shift, from, to) {
   const query = endPoint.concat(
-    "/GetByLineAndDate?lineId=" + lineId + "&from=" + from + "&to=" + to
+    "/GetByLineAndDate?lineId=" + lineId + "&shift=" + shift + "&from=" + from + "&to=" + to
   );
   return http.get(query);
 }
