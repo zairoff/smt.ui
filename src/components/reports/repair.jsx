@@ -71,8 +71,7 @@ class Repair extends Form {
         this.setState({ employee: value });
         break;
       case "Status":
-        const cond = value === 1 ? "ishladi" : "ishlamadi";
-        this.setState({ condition: cond });
+        this.setState({ condition: value });
         break;
       case "PcbStatus":
         this.setState({ psbStatus: value });
@@ -291,8 +290,8 @@ class Repair extends Form {
             {this.renderSelect(
               "Status",
               [
-                { id: 1, name: "Worked" },
-                { id: 2, name: "Not Worked" },
+                { id: 'Ishladi', name: "Ishladi" },
+                { id: 'Ishlamadi', name: "Ishlamadi" },
               ],
               errors.repairers,
               this.handleSelectChange
