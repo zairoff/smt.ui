@@ -227,8 +227,8 @@ class Report extends Form {
       await updateReport(reportId, {
         status: true,
         employee: line,
-        condition: "OK",
-        action: "Payka qilindi",
+        condition: "Ishladi",
+        action: "To`g`irlandi",
       });
 
       const filteredData = data.filter((d) => d.barcode != fields.barcode);
