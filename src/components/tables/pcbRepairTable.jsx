@@ -8,6 +8,7 @@ class PcbRepairTable extends Component {
     { path: "line.name", label: "" },
     { path: "defect.name", label: "" },
     { path: "action", label: "" },
+    { path: "condition", label: "" },
     { path: "employee", label: "" },
     {
       path: "delete",
