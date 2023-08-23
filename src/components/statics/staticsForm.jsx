@@ -255,14 +255,17 @@ class StaticsForm extends Form {
     const excel = isFiltered
       ? reports
       : reports.map((d) => ({
-        barcode: d.barcode,
-        product: d.model.productBrand.product.name,
-        brand: d.model.productBrand.brand.name,
-        model: d.model.name,
-        line: d.line.name,
-        defect: d.defect.name,
-        date: format(Date.parse(d.createdDate), "yyyy-MM-dd HH:mm:ss"),
-      }));
+          barcode: d.barcode,
+          product: d.model.productBrand.product.name,
+          brand: d.model.productBrand.brand.name,
+          model: d.model.name,
+          line: d.line.name,
+          defect: d.defect.name,
+          action: d.action,
+          condition: d.condition,
+          createdDate: format(Date.parse(d.createdDate), "yyyy-MM-dd HH:mm:ss"),
+          updatedDate: format(Date.parse(d.updatedDate), "yyyy-MM-dd HH:mm:ss"),
+        }));
     return (
       <>
         <form className="border p-4 mt-2 mb-4" onSubmit={this.handleSubmit}>

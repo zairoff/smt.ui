@@ -6,9 +6,12 @@ class StaticsTable extends Component {
     { path: "product", label: "PRODUCT" },
     { path: "brand", label: "BRAND" },
     { path: "model", label: "MODEL" },
-    { path: "defect", label: "DEFECT" },
     { path: "line", label: "LINE" },
-    { path: "date", label: "DATE" },
+    { path: "defect", label: "DEFECT" },
+    { path: "action", label: "ACTION" },
+    { path: "condition", label: "CONDITION" },
+    { path: "createdDate", label: "CREATED" },
+    { path: "updatedDate", label: "UPDATED" },
   ];
   render() {
     const { rows, sortColumn, onSort } = this.props;
