@@ -6,6 +6,7 @@ import Form from "./../forms/form";
 import PcbRepairTable from "../tables/pcbRepairTable";
 import _ from "lodash";
 import {
+  getBarcodeHistory,
   getReportByBarcode,
   getReportByUpdatedDate,
   updateReport,
@@ -13,6 +14,7 @@ import {
 import { getPcbRepairers } from "../../services/pcbRepairerService";
 import { format } from "date-fns";
 import Pagination from "../common/pagination";
+import { Link } from "react-router-dom";
 
 class Repair extends Form {
   state = {
@@ -32,6 +34,7 @@ class Repair extends Form {
     employee: "",
     reportId: "",
     psbStatus: true,
+    reports: [],
   };
 
   async componentDidMount() {
@@ -136,7 +139,6 @@ class Repair extends Form {
 
   handleInputKeyPress = async (e) => {
     if (e.key === "Enter") {
-      const searchDate = this.state.searchDate;
       this.setState({
         loading: true,
         fields: { barcode: "", action: "", searchDate: "" },
@@ -146,8 +148,9 @@ class Repair extends Form {
         createdDate: "",
         reportId: "",
       });
+      const barcode = e.target.value;
       try {
-        const { data: report } = await getReportByBarcode(e.target.value);
+        const { data: report } = await getReportByBarcode(barcode);
         if (Object.keys(report).length > 0) {
           this.setState({
             fields: {
@@ -165,6 +168,9 @@ class Repair extends Form {
             ),
           });
         }
+
+        const { data: reports } = await getBarcodeHistory(barcode);
+        this.setState({ reports })
       } catch (ex) {
         toast.error(ex.response.data.message);
       } finally {
@@ -203,142 +209,164 @@ class Repair extends Form {
       pageSize,
       currentPage,
       repairers,
+      reports
     } = this.state;
 
     const sortedRows = _.orderBy(data, [sortColumn.path], [sortColumn.order]);
     const rows = paginate(sortedRows, currentPage, pageSize);
 
     return (
-      <div className="mt-2 row">
+      <>
         {loading && (
           <ReactLoading className="loading" type="spin" color="blue" />
         )}
-        <div className="mt-2 row">
-          <div className="col">
-            {this.renderInput(
-              "barcode",
-              "Barcode",
-              "",
-              fields.barcode,
-              this.handleInputChange,
-              errors.barcode,
-              true,
-              "text",
-              undefined,
-              false,
-              this.handleInputKeyPress
-            )}
-          </div>
-          <div className="col">
-            {this.renderInput(
-              "model",
-              "Model",
-              "",
-              model,
-              this.handleInputChange,
-              errors.model,
-              true
-            )}
-          </div>
-          <div className="col">
-            {this.renderInput(
-              "line",
-              "Line",
-              "",
-              line,
-              this.handleInputChange,
-              errors.line,
-              true
-            )}
-          </div>
-          <div className="col">
-            {this.renderInput(
-              "defect",
-              "Defect",
-              "",
-              defect,
-              this.handleInputChange,
-              errors.defect,
-              true
-            )}
-          </div>
-        </div>
+        <div className="row">
+          {(reports && reports.length > 0) ? (<Link
+            to={{
+              pathname: "/repair-history",
+            }}
+            state={{
+              data: {
+                reports
+              },
+            }}
+            className="btn btn-success text-white w-25"
+          >
+            HISTORY
+          </Link>) : <></>}
+          <div className="mt-2 row">
 
-        <div className="mt-2 row">
-          <div className="col">
-            {this.renderInput(
-              "date",
-              "Created date",
-              "",
-              createdDate,
-              this.handleInputChange,
-              errors.createdDate,
-              true
-            )}
+            <div className="col-2">
+              {this.renderInput(
+                "barcode",
+                "Barcode",
+                "",
+                fields.barcode,
+                this.handleInputChange,
+                errors.barcode,
+                true,
+                "text",
+                undefined,
+                false,
+                this.handleInputKeyPress
+              )}
+            </div>
+            <div className="col">
+              {this.renderInput(
+                "model",
+                "Model",
+                "",
+                model,
+                this.handleInputChange,
+                errors.model,
+                true
+              )}
+            </div>
+            <div className="col-2">
+              {this.renderInput(
+                "line",
+                "Line",
+                "",
+                line,
+                this.handleInputChange,
+                errors.line,
+                true
+              )}
+            </div>
+            <div className="col">
+              {this.renderInput(
+                "defect",
+                "Defect",
+                "",
+                defect,
+                this.handleInputChange,
+                errors.defect,
+                true
+              )}
+            </div>
+            <div className="col">
+              {this.renderInput(
+                "date",
+                "Created date",
+                "",
+                createdDate,
+                this.handleInputChange,
+                errors.createdDate,
+                true
+              )}
+            </div>
           </div>
-          <div className="col">
-            {this.renderSelect(
-              "Repairer",
-              repairers,
-              errors.repairers,
-              this.handleSelectChange,
-              "employee.fullName",
-              "employee.fullName"
-            )}
+
+          <div className="mt-2 row">
+            <div className="col">
+              {this.renderTextArea(
+                "action",
+                "Action",
+                fields.action,
+                this.handleInputChange
+              )}
+            </div>
+
+            <div className="col">
+              <div className="row">
+                <div className="col">
+                  {this.renderSelect(
+                    "Repairer",
+                    repairers,
+                    errors.repairers,
+                    this.handleSelectChange,
+                    "employee.fullName",
+                    "employee.fullName"
+                  )}
+                </div>
+                <div className="col">
+                  {this.renderSelect(
+                    "Status",
+                    [
+                      { id: 'Ishladi', name: "Ishladi" },
+                      { id: 'Ishlamadi', name: "Ishlamadi" },
+                    ],
+                    errors.repairers,
+                    this.handleSelectChange
+                  )}
+                </div>
+                <div className="col mt-4">
+                  {this.renderButton("SAVE", "button", this.handleSave)}
+                </div>
+              </div>
+
+            </div>
+
           </div>
-          <div className="col">
-            {this.renderSelect(
-              "Status",
-              [
-                { id: 'Ishladi', name: "Ishladi" },
-                { id: 'Ishlamadi', name: "Ishlamadi" },
-              ],
-              errors.repairers,
-              this.handleSelectChange
-            )}
+          <div className="mt-2 row">
+            <div className="col">
+              {this.renderSelect(
+                "PcbStatus",
+                [
+                  { id: false, name: "Open" },
+                  { id: true, name: "Closed" },
+                ],
+                errors.repairers,
+                this.handleSelectChange
+              )}
+            </div>
+            <div className="col">
+              {this.renderInput(
+                "searchDate",
+                "Date",
+                "",
+                fields.searchDate,
+                this.handleInputChange,
+                errors.searchDate,
+                false,
+                "date"
+              )}
+            </div>
+            <div className="col mt-4">
+              {this.renderButton("SEARCH", "button", this.handleSearch)}
+            </div>
+
           </div>
-        </div>
-        <div className="mt-2 row">
-          <div className="col">
-            {this.renderTextArea(
-              "action",
-              "Action",
-              fields.action,
-              this.handleInputChange
-            )}
-            <p className="mt-2"> </p>
-            {this.renderButton("Save", "button", this.handleSave)}
-          </div>
-        </div>
-        <div className="mt-2 row">
-          <div className="col">
-            {this.renderSelect(
-              "PcbStatus",
-              [
-                { id: false, name: "Open" },
-                { id: true, name: "Closed" },
-              ],
-              errors.repairers,
-              this.handleSelectChange
-            )}
-          </div>
-          <div className="col">
-            {this.renderInput(
-              "searchDate",
-              "Date",
-              "",
-              fields.searchDate,
-              this.handleInputChange,
-              errors.searchDate,
-              false,
-              "date"
-            )}
-          </div>
-          <div className="col mt-4">
-            {this.renderButton("SEARCH", "button", this.handleSearch)}
-          </div>
-        </div>
-        <div className="col">
           {rows.length > 0 && (
             <PcbRepairTable
               rows={rows}
@@ -353,8 +381,10 @@ class Repair extends Form {
             currentPage={currentPage}
             onPageChange={this.handlePageChange}
           />
+
         </div>
-      </div>
+      </>
+
     );
   }
 }

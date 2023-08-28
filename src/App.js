@@ -34,6 +34,7 @@ import PlanActivityForm from "./components/forms/PlanActivityForm";
 import PlanActivityEditForm from "./components/forms/planActivityEditForm";
 import DetailedReport from "./components/reports/detailedReport";
 import GroupByStaticsForm from "./components/statics/groupByStaticsForm";
+import RepairHistory from "./components/reports/repairHistory";
 
 class App extends Component {
   state = {};
@@ -108,6 +109,10 @@ class App extends Component {
             <Route
               path="/detailed"
               element={<DetailedReport />}
+            />
+            <Route
+              path="/repair-history"
+              element={<RepairHistory />}
             />
           </Routes>
         </main>

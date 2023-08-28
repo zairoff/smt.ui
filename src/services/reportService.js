@@ -34,6 +34,11 @@ export function getReportByBarcode(barcode) {
   return http.get(query);
 }
 
+export function getBarcodeHistory(barcode) {
+  const query = endPoint.concat("/GetHistory?barcode=").concat(barcode);
+  return http.get(query);
+}
+
 export function getReportByModelIdAndLineId(modelId, lineId, date, isClosed) {
   const query = endPoint.concat(
     "/GetByModelIdAndLineId?modelId=" +
