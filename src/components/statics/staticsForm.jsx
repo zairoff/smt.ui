@@ -263,9 +263,11 @@ class StaticsForm extends Form {
           defect: d.defect.name,
           action: d.action,
           condition: d.condition,
+          employee: d.employee,
           createdDate: format(Date.parse(d.createdDate), "yyyy-MM-dd HH:mm:ss"),
           updatedDate: format(Date.parse(d.updatedDate), "yyyy-MM-dd HH:mm:ss"),
         }));
+
     return (
       <>
         <form className="border p-4 mt-2 mb-4" onSubmit={this.handleSubmit}>

@@ -8,10 +8,11 @@ class StaticsTable extends Component {
     { path: "model", label: "MODEL" },
     { path: "line", label: "LINE" },
     { path: "defect", label: "DEFECT" },
-    { path: "action", label: "ACTION" },
-    { path: "condition", label: "CONDITION" },
-    { path: "createdDate", label: "CREATED" },
-    { path: "updatedDate", label: "UPDATED" },
+    { path: "action", label: "BAJARILDI" },
+    { path: "employee", label: "BAJARDI" },
+    { path: "condition", label: "XOLATI" },
+    { path: "createdDate", label: "KIRITILDI" },
+    { path: "updatedDate", label: "TO'G'IRLANDI" },
   ];
   render() {
     const { rows, sortColumn, onSort } = this.props;
