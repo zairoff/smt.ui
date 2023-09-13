@@ -3,6 +3,7 @@ import Table from "../common/table";
 
 class StaticsTable extends Component {
   columns = [
+    { path: "barcode", label: "BARCODE" },
     { path: "product", label: "PRODUCT" },
     { path: "brand", label: "BRAND" },
     { path: "model", label: "MODEL" },
