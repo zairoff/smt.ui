@@ -3,16 +3,6 @@ import http from "./httpService";
 
 const endPoint = config.apiUrl + "statics";
 
-export function getByProduct(from, to) {
-  const query = endPoint + "/ByProduct?from=" + from + "&to=" + to;
-  return http.get(query);
-}
-
-export function getByBrand(from, to) {
-  const query = endPoint + "/ByBrand?from=" + from + "&to=" + to;
-  return http.get(query);
-}
-
 export function getByModel(from, to) {
   const query = endPoint + "/ByModel?from=" + from + "&to=" + to;
   return http.get(query);
@@ -28,11 +18,13 @@ export function getByDefect(from, to) {
   return http.get(query);
 }
 
-export function getDefectsByLine(lineId, from, to) {
+export function getDefectsByLine(lineId, shift, from, to) {
   const query =
     endPoint +
     "/DefectsByLine?lineid=" +
     lineId +
+    "&shift=" +
+    shift +
     "&from=" +
     from +
     "&to=" +
@@ -40,11 +32,13 @@ export function getDefectsByLine(lineId, from, to) {
   return http.get(query);
 }
 
-export function getDefectCountByLine(lineId, from, to) {
+export function getDefectCountByLine(lineId, shift, from, to) {
   const query =
     endPoint +
     "/DefectCountByLine?lineid=" +
     lineId +
+    "&shift=" +
+    shift +
     "&from=" +
     from +
     "&to=" +
@@ -52,11 +46,13 @@ export function getDefectCountByLine(lineId, from, to) {
   return http.get(query);
 }
 
-export function getClosedDefectCountByLine(lineId, from, to) {
+export function getClosedDefectCountByLine(lineId, shift, from, to) {
   const query =
     endPoint +
     "/ClosedDefectCountByLine?lineid=" +
     lineId +
+    "&shift=" +
+    shift +
     "&from=" +
     from +
     "&to=" +

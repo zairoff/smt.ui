@@ -52,6 +52,11 @@ class FtqReport extends Form {
     sortColumn: { path: "", order: "asc" },
     currentPage: 1,
     pageSize: 10,
+    daynight: [
+      { id: "Den", name: "Den" },
+      { id: "Noch", name: "Noch" },
+    ],
+    shift: "",
   };
 
   handlePageChange = (page) => {
@@ -80,18 +85,23 @@ class FtqReport extends Form {
   }
 
   handleLineClick = async ({ id }) => {
-    const { fields } = this.state;
+    const { fields, shift } = this.state;
     const { from, to } = fields;
     if (from === null || from === "" || to === null || to === "") {
       return;
     }
     this.setState({ loading: true });
     try {
-      const { data: plans } = await getPlanByLineAndDate(id, from, to);
+      const { data: plans } = await getPlanByLineAndDate(id, shift, from, to);
 
-      const { data: defects } = await getDefectsByLine(id, from, to);
+      const { data: defects } = await getDefectsByLine(id, shift, from, to);
 
-      const { data: allDefects } = await getDefectCountByLine(id, from, to);
+      const { data: allDefects } = await getDefectCountByLine(
+        id,
+        shift,
+        from,
+        to
+      );
 
       this.setState({
         plans,
@@ -102,6 +112,24 @@ class FtqReport extends Form {
       });
     } catch (ex) {
       this.setState({ loading: false });
+      toast.error(ex.message);
+    }
+  };
+
+  handleSelectChange = async ({ target }) => {
+    const { name, value: id } = target;
+    try {
+      switch (name) {
+        case "SMENA":
+          {
+            this.setState({
+              shift: id,
+            });
+          }
+
+          break;
+      }
+    } catch (ex) {
       toast.error(ex.message);
     }
   };
@@ -118,6 +146,7 @@ class FtqReport extends Form {
       allDefectsCount,
       loading,
       selectedLine,
+      daynight,
     } = this.state;
 
     const totalPlan = plans.reduce(
@@ -138,41 +167,6 @@ class FtqReport extends Form {
       0
     );
 
-    const agingId = 7;
-    const agingPlanLim = 0;
-    const agingSifatLim = 0;
-
-    const pcb1 = 3;
-    const pcb1PlanLim = 100;
-    const pcb1SifatLim = 98.8;
-
-    const pcb2 = 4;
-    const pcb2PlanLim = 100;
-    const pcb2SifatLim = 98.5;
-
-    const qc1 = 5;
-    const qc1PlanLim = 100;
-    const qc1SifatLim = 99.6;
-
-    const qc2 = 6;
-    const qc2PlanLim = 100;
-    const qc2SifatLim = 99.7;
-
-    const smt1 = 1;
-    const smt1PlanLim = 100;
-    const smt1SifatLim = 99.3;
-
-    const smt2 = 2;
-    const smt2PlanLim = 100;
-    const smt2SifatLim = 99.5;
-
-    const smt3 = 8;
-    const smt3PlanLim = 100;
-    const smt3SifatLim = 99.9;
-
-    let planColor = true;
-    let sifatColor = true;
-
     let planPersent = 0;
     let planPersentText = "0%";
     let totalDefectsPersent = 0;
@@ -185,50 +179,14 @@ class FtqReport extends Form {
         100 -
         (allDefectsCount * 100) / totalProduced
       ).toFixed(2);
-
-      if (selectedLine === pcb1) {
-        planColor = parseFloat(pcb1PlanLim) <= parseFloat(planPersent);
-        sifatColor =
-          parseFloat(pcb1SifatLim) <= parseFloat(totalDefectsPersent);
-      }
-
-      if (selectedLine == pcb2) {
-        planColor = pcb2PlanLim <= planPersent;
-        sifatColor = pcb2SifatLim <= totalDefectsPersent;
-      }
-
-      if (selectedLine == qc1) {
-        planColor = qc1PlanLim <= planPersent;
-        sifatColor = qc1SifatLim <= totalDefectsPersent;
-      }
-
-      if (selectedLine == qc2) {
-        planColor = qc2PlanLim <= planPersent;
-        sifatColor = qc2SifatLim <= totalDefectsPersent;
-      }
-
-      if (selectedLine == smt1) {
-        planColor = smt1PlanLim <= planPersent;
-        sifatColor = smt1SifatLim <= totalDefectsPersent;
-      }
-
-      if (selectedLine == smt2) {
-        planColor = smt2PlanLim <= planPersent;
-        sifatColor = smt2SifatLim <= totalDefectsPersent;
-      }
-
-      if (selectedLine == smt3) {
-        planColor = smt3PlanLim <= planPersent;
-        sifatColor = smt3SifatLim <= totalDefectsPersent;
-      }
     }
 
-    const totalPlanText = "Plan: " + totalPlan;
-    const totalProducedText = "Produced: " + totalProduced;
+    const totalPlanText = "Reja: " + totalPlan;
+    const totalProducedText = "Chiqarildi: " + totalProduced;
     const totalPlanSizeText = "Size: " + totalPlanSize + " m2";
     const totalDefectSizeText = "Size: " + totalDefectSize + " m2";
 
-    const totalDefedctText = "Defects: " + allDefectsCount;
+    const totalDefedctText = "Nuqsonlar: " + allDefectsCount;
 
     const sortedPlanRows = _.orderBy(
       plans,
@@ -272,6 +230,8 @@ class FtqReport extends Form {
               "date"
             )}
             <p className="mt-4"></p>
+            {this.renderSelect("SMENA", daynight, "", this.handleSelectChange)}
+            <p className="mt-4"></p>
             {lines.map((line) => (
               <div key={line.id} className="mt-2">
                 {" "}
@@ -290,9 +250,7 @@ class FtqReport extends Form {
                 <button
                   type="button"
                   className={
-                    planColor
-                      ? "btn btn-block btn-success rounded-circle mb-5 fw-bold fs-3"
-                      : "btn btn-block btn-danger rounded-circle mb-5 fw-bold fs-3"
+                    "btn btn-block btn-success rounded-circle mb-5 fw-bold fs-3"
                   }
                   style={{ width: "130px", height: "130px" }}
                 >
@@ -310,13 +268,13 @@ class FtqReport extends Form {
               totalProducedText,
               "button",
               null,
-              "btn btn-success ms-2"
+              "btn btn-primary ms-2"
             )}
             {this.renderButton(
               totalPlanSizeText,
               "button",
               null,
-              "btn btn-secondary ms-2"
+              "btn btn-primary ms-2"
             )}
             <div className="mt-4">
               <FtqPlanTable
@@ -339,9 +297,7 @@ class FtqReport extends Form {
                 <button
                   type="button"
                   className={
-                    sifatColor
-                      ? "btn btn-block btn-success rounded-circle mb-5 fw-bold fs-3"
-                      : "btn btn-block btn-danger rounded-circle mb-5 fw-bold fs-3"
+                    "btn btn-block btn-success rounded-circle mb-5 fw-bold fs-3"
                   }
                   style={{ width: "130px", height: "130px" }}
                 >

@@ -31,6 +31,7 @@ import Repair from "./components/reports/repair";
 import Plan from "./components/forms/planForm";
 import PlanActivityForm from "./components/forms/PlanActivityForm";
 import PlanActivityEditForm from "./components/forms/planActivityEditForm";
+import GroupByStaticsForm from "./components/statics/groupByStaticsForm";
 
 class App extends Component {
   state = {};
@@ -88,7 +89,6 @@ class App extends Component {
             <Route path="/machine-repair" element={<MachineRepairForm />} />
             <Route path="/machine-dashboard" element={<MachineDashborad />} />
             <Route path="/pcb-report" element={<PcbReport />} />
-            <Route path="/statics" element={<StaticsForm />} />
             <Route path="/dashboard" element={<StaticsForm />} />
             <Route path="/ftq" element={<FtqReport />} />
             <Route path="/plan" element={<Plan />} />
@@ -101,6 +101,7 @@ class App extends Component {
               path="/plan-activity/:id"
               element={<PlanActivityEditForm />}
             />
+            <Route path="/statics" element={<GroupByStaticsForm />} />
           </Routes>
         </main>
       </React.Fragment>

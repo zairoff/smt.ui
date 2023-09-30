@@ -3,8 +3,8 @@ import Table from "../common/table";
 
 class StaticsGroupedTable extends Component {
   columns = [
-    { path: "name", label: "NAME" },
-    { path: "count", label: "COUNT" },
+    { path: "name", label: "NOMI" },
+    { path: "count", label: "SONI" },
   ];
   render() {
     const { rows, sortColumn, onSort } = this.props;
