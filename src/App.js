@@ -80,7 +80,7 @@ class App extends Component {
                 <Route path="/logout" element={<Logout />} />
               </>
             ) : (
-              <Route path="*" element={<Navigate to="/dashboard" />} />
+              <Route path="*" element={<Navigate to="/statics" />} />
             )}
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
