@@ -3,12 +3,11 @@ import Table from "../common/table";
 
 class StaticsTable extends Component {
   columns = [
-    { path: "product", label: "PRODUCT" },
-    { path: "brand", label: "BRAND" },
     { path: "model", label: "MODEL" },
-    { path: "defect", label: "DEFECT" },
     { path: "line", label: "LINE" },
-    { path: "date", label: "DATE" },
+    { path: "defect", label: "NUQSON" },
+    { path: "shift", label: "SMENA" },
+    { path: "date", label: "SANA" },
   ];
   render() {
     const { rows, sortColumn, onSort } = this.props;

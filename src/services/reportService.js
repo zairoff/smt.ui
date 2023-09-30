@@ -41,16 +41,14 @@ export function getReportByModelIdAndLineId(modelId, lineId, shift, date) {
   return http.get(query);
 }
 
-export function getReportsBy(productid, brandid, modelId, lineId, from, to) {
+export function getReportsBy(modelId, lineId, shift, from, to) {
   const query = endPoint.concat(
-    "/GetBy?productId=" +
-      productid +
-      "&brandId=" +
-      brandid +
-      "&modelId=" +
+    "/GetBy?&modelId=" +
       modelId +
       "&lineId=" +
       lineId +
+      "&shift=" +
+      shift +
       "&from=" +
       from +
       "&to=" +
