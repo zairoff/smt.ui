@@ -29,9 +29,9 @@ class MachineRepairTable extends Component {
           { path: "machine.name", label: "" },
           { path: "issue", label: "" },
           { path: "action", label: "" },
-          { path: "createdDate", label: "" },
-          { path: "notificationDate", label: "" },
+          { path: "shift", label: "" },
           { path: "employee.fullName", label: "" },
+          { path: "createdDate", label: "" },
         ];
     return (
       <Table
