@@ -30,6 +30,8 @@ class Report extends Form {
     sortColumn: { path: "", order: "asc" },
     currentPage: 1,
     pageSize: 15,
+    shift: "",
+    daynight: [],
   };
 
   async componentDidMount() {
@@ -66,22 +68,43 @@ class Report extends Form {
 
             if (!selectedItem.modelId) return;
 
-            const { data: lineDefects } = await getLineDefectByLineId(id);
+            const { data: lineDefects } = await getLineDefectByLineId(
+              selectedItem.lineId
+            );
             const defects = lineDefects.map((ld) => ld.defect);
+
+            const daynight = [
+              { id: "Den", name: "Den" },
+              { id: "Noch", name: "Noch" },
+            ];
+
+            this.setState({
+              defects,
+              selectedItem,
+              daynight,
+              loading: false,
+            });
+          }
+          break;
+        case "Smena":
+          {
+            const { selectedItem } = this.state;
+            if (!selectedItem.modelId || !selectedItem.lineId) return;
 
             const { data } = await getReportByModelIdAndLineId(
               selectedItem.modelId,
               selectedItem.lineId,
-              format(new Date(), "yyyy-MM-dd HH:mm:ss"),
-              false
+              id,
+              format(new Date(), "yyyy-MM-dd HH:mm:ss")
             );
+
             this.setState({
-              defects,
-              selectedItem,
               data,
+              shift: id,
               loading: false,
             });
           }
+
           break;
       }
     } catch (ex) {
@@ -93,7 +116,7 @@ class Report extends Form {
   };
 
   handleButtonClick = async (defect) => {
-    const { selectedItem, data } = this.state;
+    const { selectedItem, data, shift } = this.state;
     const { modelId, lineId } = selectedItem;
 
     if (Object.values(selectedItem).every((x) => x === null || x === "")) {
@@ -105,6 +128,7 @@ class Report extends Form {
       lineId: lineId,
       defectId: defect,
       modelId: modelId,
+      shift: shift,
     };
 
     try {
@@ -112,8 +136,10 @@ class Report extends Form {
       const { data } = await getReportByModelIdAndLineId(
         modelId,
         lineId,
+        shift,
         format(new Date(), "yyyy-MM-dd HH:mm:ss")
       );
+
       this.setState({ data });
     } catch (ex) {
       this.catchExceptionMessage(ex, "model");
@@ -164,6 +190,7 @@ class Report extends Form {
       currentPage,
       pageSize,
       loading,
+      daynight,
     } = this.state;
 
     const sortedRows = _.orderBy(data, [sortColumn.path], [sortColumn.order]);
@@ -180,6 +207,9 @@ class Report extends Form {
           </div>
           <div className="col">
             {this.renderSelect("Line", lines, "", this.handleSelectChange)}
+          </div>
+          <div className="col">
+            {this.renderSelect("Smena", daynight, "", this.handleSelectChange)}
           </div>
           <div className="row mt-4">
             <div className="col">

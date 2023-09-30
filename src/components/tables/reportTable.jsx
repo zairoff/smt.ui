@@ -5,6 +5,8 @@ class ReportTable extends Component {
   columns = [
     { path: "model.name", label: "MODEL" },
     { path: "defect.name", label: "DEFECT" },
+    { path: "shift", label: "SMENA" },
+    { path: "createdDate", label: "SANA" },
     {
       path: "button",
       content: (report) => (

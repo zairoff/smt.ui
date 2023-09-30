@@ -27,16 +27,16 @@ export function getReportByBarcode(barcode) {
   return http.get(query);
 }
 
-export function getReportByModelIdAndLineId(modelId, lineId, date, isClosed) {
+export function getReportByModelIdAndLineId(modelId, lineId, shift, date) {
   const query = endPoint.concat(
     "/GetByModelIdAndLineId?modelId=" +
       modelId +
       "&lineId=" +
       lineId +
+      "&shift=" +
+      shift +
       "&date=" +
-      date +
-      "&isClosed=" +
-      isClosed
+      date
   );
   return http.get(query);
 }
@@ -56,7 +56,6 @@ export function getReportsBy(productid, brandid, modelId, lineId, from, to) {
       "&to=" +
       to
   );
-  console.log(query);
   return http.get(query);
 }
 
