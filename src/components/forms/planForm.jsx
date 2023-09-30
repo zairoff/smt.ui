@@ -102,7 +102,7 @@ class Plan extends Form {
     this.setState({ loading: true });
     try {
       switch (name) {
-        case "Line":
+        case "LINE":
           {
             const { selectedItem, fields } = this.state;
             selectedItem.lineId = id;
@@ -113,7 +113,7 @@ class Plan extends Form {
             });
           }
           break;
-        case "Model":
+        case "MODEL":
           const { selectedItem, fields } = this.state;
 
           selectedItem.modelId = id;
@@ -125,7 +125,7 @@ class Plan extends Form {
           });
           break;
 
-        case "Day":
+        case "SMENA":
           {
             const { selectedItem, fields } = this.state;
 
@@ -155,6 +155,7 @@ class Plan extends Form {
       fields.date === "" ||
       selectedItem.lineId === "" ||
       selectedItem.modelId === "" ||
+      selectedItem.day === "" ||
       fields.employee === ""
     ) {
       return;
@@ -166,7 +167,7 @@ class Plan extends Form {
         lineId: selectedItem.lineId,
         modelId: selectedItem.modelId,
         employee: fields.employee,
-        dayNight: selectedItem.day,
+        shift: selectedItem.day,
         requiredCount: fields.planRequired,
         producedCount: fields.planProduced,
         date: fields.date,
@@ -205,7 +206,6 @@ class Plan extends Form {
       loading,
     } = this.state;
 
-    console.log(data);
     const sortedRows = _.orderBy(data, [sortColumn.path], [sortColumn.order]);
     const rows = paginate(sortedRows, currentPage, pageSize);
 
@@ -215,7 +215,7 @@ class Plan extends Form {
         <div className="col-4">
           {this.renderInput(
             "date",
-            "Date",
+            "SANA",
             "",
             fields.date,
             this.handleDateChange,
@@ -224,15 +224,15 @@ class Plan extends Form {
             "date"
           )}
           <p className="mt-2"> </p>
-          {this.renderSelect("Line", lines, "", this.handleSelectChange)}
+          {this.renderSelect("LINE", lines, "", this.handleSelectChange)}
           <p className="mt-2"> </p>
-          {this.renderSelect("Model", models, "", this.handleSelectChange)}
+          {this.renderSelect("MODEL", models, "", this.handleSelectChange)}
           <p className="mt-2"></p>
-          {this.renderSelect("Day", daynight, "", this.handleSelectChange)}
+          {this.renderSelect("SMENA", daynight, "", this.handleSelectChange)}
           <p className="mt-2"></p>
           {this.renderInput(
             "employee",
-            "Employee",
+            "XODIM",
             "",
             fields.employee,
             this.handleInputChange,
@@ -243,7 +243,7 @@ class Plan extends Form {
           <p className="mt-2"></p>
           {this.renderInput(
             "planRequired",
-            "Plan",
+            "REJA",
             "",
             fields.planRequired,
             this.handleInputChange,
@@ -254,7 +254,7 @@ class Plan extends Form {
           <p className="mt-2"> </p>
           {this.renderInput(
             "planProduced",
-            "Produced",
+            "ISHLAB CHIQARILDI",
             "",
             fields.planProduced,
             this.handleInputChange,

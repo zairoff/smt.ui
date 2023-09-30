@@ -6,11 +6,11 @@ class PlanTable extends Component {
     { path: "id", label: "ID" },
     { path: "line.name", label: "LINE" },
     { path: "model.name", label: "MODEL" },
-    { path: "dayNight", label: "DAY" },
-    { path: "employee", label: "Employee" },
-    { path: "requiredCount", label: "PLAN" },
-    { path: "producedCount", label: "PRODUCED" },
-    { path: "date", label: "DATE" },
+    { path: "shift", label: "SMENA" },
+    { path: "employee", label: "XODIM" },
+    { path: "requiredCount", label: "REJA" },
+    { path: "producedCount", label: "ISHLAB CHIQARILDI" },
+    { path: "date", label: "SANA" },
     {
       path: "button",
       content: (productBrand) => (
