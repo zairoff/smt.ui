@@ -16,7 +16,7 @@ import DefectTable from "../tables/defectTable";
 class DefectForm extends Form {
   state = {
     sortColumn: { path: "", order: "asc" },
-    fields: { defect: "", size: "" },
+    fields: { defect: "" },
     currentPage: 1,
     pageSize: 15,
     data: [],
@@ -41,7 +41,6 @@ class DefectForm extends Form {
     try {
       const { data: result } = await addDefect({
         name: fields.defect,
-        size: fields.size,
       });
       const newData = [result, ...data];
       this.setState({ data: newData, fields: { defect: "", size: "" } });
@@ -126,16 +125,6 @@ class DefectForm extends Form {
             fields.defect,
             this.handleInputChange,
             errors.defect,
-            true
-          )}
-          <p className="mt-2"> </p>
-          {this.renderInput(
-            "size",
-            "",
-            "",
-            fields.size,
-            this.handleInputChange,
-            errors.size,
             true
           )}
           <p className="mt-2"> </p>

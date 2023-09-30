@@ -18,7 +18,7 @@ import jwtDecode from "jwt-decode";
 class MachineRepairForm extends Form {
   state = {
     sortColumn: { path: "", order: "asc" },
-    fields: { issue: "", action: "", notificationDate: "", createdDate: "" },
+    fields: { issue: "", action: "", createdDate: "" },
     currentPage: 1,
     pageSize: 15,
     machines: [],
@@ -28,7 +28,12 @@ class MachineRepairForm extends Form {
     loading: true,
     employeeId: "",
     machineId: "",
+    shift: "",
     user: "",
+    daynight: [
+      { id: "Den", name: "Den" },
+      { id: "Noch", name: "Noch" },
+    ],
   };
 
   async componentDidMount() {
@@ -66,11 +71,14 @@ class MachineRepairForm extends Form {
   handleSelectChange = ({ target }) => {
     const { name, value } = target;
     switch (name) {
-      case "Repairer":
+      case "Remontchi":
         this.setState({ employeeId: value });
         break;
-      case "Machine":
+      case "Uskuna":
         this.setState({ machineId: value });
+        break;
+      case "Smena":
+        this.setState({ shift: value });
         break;
       default:
         break;
@@ -78,8 +86,8 @@ class MachineRepairForm extends Form {
   };
 
   doSubmit = async () => {
-    const { employeeId, machineId, fields, data } = this.state;
-    const { issue, action, notificationDate, createdDate } = fields;
+    const { employeeId, machineId, fields, data, shift } = this.state;
+    const { issue, action, createdDate } = fields;
     this.setState({ loading: true });
     try {
       const { data: machineRepair } = await addMachineRepair({
@@ -87,8 +95,7 @@ class MachineRepairForm extends Form {
         employeeId,
         issue,
         action,
-        isActive: notificationDate ? true : false,
-        notificationDate,
+        shift,
         createdDate,
       });
       this.setState({
@@ -98,6 +105,7 @@ class MachineRepairForm extends Form {
           action: "",
           notificationDate: "",
           createdDate: "",
+          shift: "",
         },
       });
     } catch (ex) {
@@ -133,6 +141,7 @@ class MachineRepairForm extends Form {
       errors,
       machines,
       fields,
+      daynight,
       user,
     } = this.state;
 
@@ -147,7 +156,7 @@ class MachineRepairForm extends Form {
         <div className="row shadow p-3 mb-5 bg-body rounded">
           <div className="col">
             {this.renderSelect(
-              "Machine",
+              "Uskuna",
               machines,
               errors.machines,
               this.handleSelectChange
@@ -155,7 +164,7 @@ class MachineRepairForm extends Form {
           </div>
           <div className="col">
             {this.renderSelect(
-              "Repairer",
+              "Remontchi",
               repairers,
               errors.repairers,
               this.handleSelectChange,
@@ -164,9 +173,12 @@ class MachineRepairForm extends Form {
             )}
           </div>
           <div className="col">
+            {this.renderSelect("Smena", daynight, "", this.handleSelectChange)}
+          </div>
+          <div className="col">
             {this.renderInput(
               "createdDate",
-              "Repair Date",
+              "Sana",
               "",
               fields.createdDate,
               this.handleInputChange,
@@ -175,24 +187,11 @@ class MachineRepairForm extends Form {
               "datetime-local"
             )}
           </div>
-          <div className="col">
-            {this.renderInput(
-              "notificationDate",
-              "Expire Date",
-              "",
-              fields.notificationDate,
-              this.handleInputChange,
-              errors.notificationDate,
-              false,
-              "datetime-local"
-            )}
-          </div>
-
           <div className="row mt-4">
             <div className="col">
               {this.renderTextArea(
                 "issue",
-                "Issue",
+                "Sabab",
                 fields.issue,
                 this.handleInputChange
               )}
@@ -200,7 +199,7 @@ class MachineRepairForm extends Form {
             <div className="col">
               {this.renderTextArea(
                 "action",
-                "Action",
+                "Bajarildi",
                 fields.action,
                 this.handleInputChange
               )}
