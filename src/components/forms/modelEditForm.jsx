@@ -75,7 +75,7 @@ class ModelEditForm extends Form {
         <div className="row">
           <div className="col-4">
             {this.renderInput(
-              "model",
+              "name",
               "Model",
               "",
               fields.name,
