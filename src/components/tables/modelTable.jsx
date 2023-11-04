@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Table from "../common/table";
+import { Link } from "react-router-dom";
 
 class ModelTable extends Component {
   columns = [
@@ -7,6 +8,22 @@ class ModelTable extends Component {
     { path: "productBrand.product.name", label: "PRODUCT" },
     { path: "productBrand.brand.name", label: "BRAND" },
     { path: "name", label: "MODEL" },
+    { path: "nameInBarcode", label: "BARCODE NAME" },
+    { path: "sapCode", label: "SAP CODE" },
+    {
+      path: "edit",
+      content: (model) => (
+        <Link
+          to={{
+            pathname: "/model-edit/" + model.id,
+          }}
+          state={{ data: model }}
+          className="btn btn-primary"
+        >
+          Update
+        </Link>
+      ),
+    },
     {
       path: "button",
       content: (productBrand) => (

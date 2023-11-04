@@ -25,7 +25,7 @@ import {
   DefectCountByLine,
   DefectsByLine,
 } from "../../services/staticsService";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 ChartJS.register(
   CategoryScale,

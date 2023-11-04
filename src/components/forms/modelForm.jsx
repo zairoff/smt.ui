@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import ReactLoading from "react-loading";
 import _ from "lodash";
 import Form from "./form";
@@ -22,6 +22,8 @@ class ModelForm extends Form {
     sortColumn: { path: "", order: "asc" },
     fields: {
       model: "",
+      barcode: "",
+      sapCode: "",
     },
     productBrand: {},
     products: [],
@@ -39,6 +41,7 @@ class ModelForm extends Form {
   async componentDidMount() {
     try {
       const { data: products } = await getProducts();
+
       this.setState({ products, loading: false });
     } catch (ex) {
       this.setState({ loading: false });
@@ -183,6 +186,28 @@ class ModelForm extends Form {
             "Model",
             "",
             fields.model,
+            this.handleInputChange,
+            errors.model,
+            true,
+            ""
+          )}
+          <p className="mt-2"> </p>
+          {this.renderInput(
+            "barcode",
+            "Barcode name",
+            "",
+            fields.barcode,
+            this.handleInputChange,
+            errors.model,
+            true,
+            ""
+          )}
+          <p className="mt-2"> </p>
+          {this.renderInput(
+            "Sapcode",
+            "Sap code",
+            "",
+            fields.sapCode,
             this.handleInputChange,
             errors.model,
             true,

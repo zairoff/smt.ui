@@ -35,6 +35,7 @@ import PlanActivityEditForm from "./components/forms/planActivityEditForm";
 import DetailedReport from "./components/reports/detailedReport";
 import GroupByStaticsForm from "./components/statics/groupByStaticsForm";
 import RepairHistory from "./components/reports/repairHistory";
+import ModelEditForm from "./components/forms/modelEditForm";
 
 class App extends Component {
   state = {};
@@ -44,7 +45,7 @@ class App extends Component {
       const jwt = localStorage.getItem("token");
       const user = jwtDecode(jwt);
       this.setState({ user });
-    } catch (ex) { }
+    } catch (ex) {}
   }
 
   render() {
@@ -61,6 +62,7 @@ class App extends Component {
                 <Route path="/brand" element={<BrandForm />} />
                 <Route path="/productBrand" element={<ProductBrandForm />} />
                 <Route path="/model" element={<ModelForm />} />
+                <Route path="/model-edit/:id" element={<ModelEditForm />} />
                 <Route path="/defect" element={<DefectForm />} />
                 <Route path="/line" element={<LineForm />} />
                 <Route path="/lineDefect" element={<LineDefectForm />} />
@@ -106,14 +108,8 @@ class App extends Component {
               path="/plan-activity/:id"
               element={<PlanActivityEditForm />}
             />
-            <Route
-              path="/detailed"
-              element={<DetailedReport />}
-            />
-            <Route
-              path="/repair-history"
-              element={<RepairHistory />}
-            />
+            <Route path="/detailed" element={<DetailedReport />} />
+            <Route path="/repair-history" element={<RepairHistory />} />
           </Routes>
         </main>
       </React.Fragment>
