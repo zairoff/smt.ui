@@ -1,8 +1,8 @@
 {
   "apiUrl2": "http://127.0.0.1:35905/api/",
   "fileUrl2": "http://127.0.0.1:35905/images/",
-  "apiUrl4": "http://192.168.0.103:8085/api/",
-  "fileUrl4": "http://192.168.0.103:8085/images/",
-  "apiUrl": "http://10.74.50.29:8086/api/",
-  "fileUrl": "http://10.74.50.29:8086/images/"
+  "apiUrl": "http://192.168.0.103:8085/api/",
+  "fileUrl": "http://192.168.0.103:8085/images/",
+  "apiUrl3": "http://10.74.50.29:8086/api/",
+  "fileUrl3": "http://10.74.50.29:8086/images/"
 }
