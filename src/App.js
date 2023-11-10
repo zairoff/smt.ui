@@ -36,6 +36,7 @@ import DetailedReport from "./components/reports/detailedReport";
 import GroupByStaticsForm from "./components/statics/groupByStaticsForm";
 import RepairHistory from "./components/reports/repairHistory";
 import ModelEditForm from "./components/forms/modelEditForm";
+import ReadyProductForm from "./components/ready-product/ReadyProductForm";
 
 class App extends Component {
   state = {};
@@ -110,6 +111,7 @@ class App extends Component {
             />
             <Route path="/detailed" element={<DetailedReport />} />
             <Route path="/repair-history" element={<RepairHistory />} />
+            <Route path="/ready-product" element={<ReadyProductForm />} />
           </Routes>
         </main>
       </React.Fragment>

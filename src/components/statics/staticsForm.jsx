@@ -10,15 +10,7 @@ import {
 import { getProductBrandByProductId } from "../../services/productBrandService";
 import { getProducts } from "../../services/productService";
 import { getReportsBy } from "../../services/reportService";
-import {
-  getByBrand,
-  getByDefect,
-  getByLine,
-  getByModel,
-  getByProduct,
-} from "../../services/staticsService";
 import Form from "../forms/form";
-import StaticsGroupedTable from "../tables/staticsGroupedTable";
 import StaticsTable from "../tables/staticsTable";
 import ReactLoading from "react-loading";
 import { format } from "date-fns";
@@ -245,28 +237,24 @@ class StaticsForm extends Form {
       models,
       lines,
       reports,
-      filters,
       sortColumn,
       fields,
-      isFiltered,
       loading,
     } = this.state;
 
-    const excel = isFiltered
-      ? reports
-      : reports.map((d) => ({
-          barcode: d.barcode,
-          product: d.model.productBrand.product.name,
-          brand: d.model.productBrand.brand.name,
-          model: d.model.name,
-          line: d.line.name,
-          defect: d.defect.name,
-          action: d.action,
-          condition: d.condition,
-          employee: d.employee,
-          createdDate: format(Date.parse(d.createdDate), "yyyy-MM-dd HH:mm:ss"),
-          updatedDate: format(Date.parse(d.updatedDate), "yyyy-MM-dd HH:mm:ss"),
-        }));
+    const excel = reports.map((d) => ({
+      barcode: d.barcode,
+      product: d.model.productBrand.product.name,
+      brand: d.model.productBrand.brand.name,
+      model: d.model.name,
+      line: d.line.name,
+      defect: d.defect.name,
+      action: d.action,
+      condition: d.condition,
+      employee: d.employee,
+      createdDate: format(Date.parse(d.createdDate), "yyyy-MM-dd HH:mm:ss"),
+      updatedDate: format(Date.parse(d.updatedDate), "yyyy-MM-dd HH:mm:ss"),
+    }));
 
     return (
       <>
@@ -320,14 +308,6 @@ class StaticsForm extends Form {
                 "date"
               )}
             </div>
-            {/*<div className="col">
-              {this.renderSelect(
-                "Filter",
-                filters,
-                "",
-                this.handleFilterChange
-              )}
-              </div>*/}
             <div className="col-2">
               <p className="mt-4"></p>
               {this.renderButton("Search")}
@@ -343,21 +323,12 @@ class StaticsForm extends Form {
             </div>
           </div>
         </form>
-        {isFiltered ? (
-          <StaticsGroupedTable
-            rows={excel}
-            onSort={this.handleSort}
-            sortColumn={sortColumn}
-            onDelete={this.handleDelete}
-          />
-        ) : (
-          <StaticsTable
-            rows={excel}
-            onSort={this.handleSort}
-            sortColumn={sortColumn}
-            onDelete={this.handleDelete}
-          />
-        )}
+        <StaticsTable
+          rows={excel}
+          onSort={this.handleSort}
+          sortColumn={sortColumn}
+          onDelete={this.handleDelete}
+        />
       </>
     );
   }

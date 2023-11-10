@@ -20,6 +20,11 @@ export function getModelByName(name) {
   return http.get(query);
 }
 
+export function getModelBySapCode(sapCode) {
+  const query = endPoint.concat("/GetBySapCode?sapCode=").concat(sapCode);
+  return http.get(query);
+}
+
 export function getModelByProductBrandId(id) {
   const query = endPoint
     .concat("/GetByProductBrandId?productBrandId=")
