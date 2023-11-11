@@ -11,6 +11,8 @@ import {
   getReadyProductByProductBrand,
   getReadyProducts,
 } from "../../services/readyProductService";
+import jwtDecode from "jwt-decode";
+import { cat } from "fontawesome";
 
 class ReadyProductExportForm extends Form {
   state = {
@@ -23,9 +25,17 @@ class ReadyProductExportForm extends Form {
     sortColumn: { path: "", order: "asc" },
     selectedProduct: "",
     selectedBrand: "",
+    authorized: false,
   };
 
   async componentDidMount() {
+    const authorized = false;
+    try {
+      const jwt = localStorage.getItem("token");
+      const user = jwtDecode(jwt);
+      authorized = user ?? false;
+    } catch (ex) {}
+
     try {
       const { data: products } = await getProducts();
 
@@ -35,6 +45,7 @@ class ReadyProductExportForm extends Form {
         products,
         data,
         loading: false,
+        authorized,
       });
     } catch (ex) {
       this.setState({ loading: false });
@@ -112,7 +123,8 @@ class ReadyProductExportForm extends Form {
   };
 
   render() {
-    const { products, brands, data, sortColumn, loading } = this.state;
+    const { products, brands, data, sortColumn, loading, authorized } =
+      this.state;
 
     return (
       <>
@@ -137,6 +149,7 @@ class ReadyProductExportForm extends Form {
           onSort={this.handleSort}
           sortColumn={sortColumn}
           onDelete={this.handleDelete}
+          authorized={authorized}
         />
       </>
     );
