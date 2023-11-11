@@ -11,8 +11,6 @@ import {
   getReadyProductByProductBrand,
   getReadyProducts,
 } from "../../services/readyProductService";
-import jwtDecode from "jwt-decode";
-import { cat } from "fontawesome";
 
 class ReadyProductExportForm extends Form {
   state = {
@@ -29,13 +27,7 @@ class ReadyProductExportForm extends Form {
   };
 
   async componentDidMount() {
-    const authorized = false;
-    try {
-      const jwt = localStorage.getItem("token");
-      const user = jwtDecode(jwt);
-      authorized = user ?? false;
-    } catch (ex) {}
-
+    const { authorized } = this.props;
     try {
       const { data: products } = await getProducts();
 

@@ -53,6 +53,7 @@ class App extends Component {
 
   render() {
     const { user } = this.state;
+    const authorized = user !== "" && user != undefined;
     return (
       <React.Fragment>
         <ToastContainer />
@@ -119,7 +120,9 @@ class App extends Component {
             />
             <Route
               path="/ready-product-export"
-              element={<ReadyProductExportForm />}
+              element={
+                <ReadyProductExportForm user={user} authorized={authorized} />
+              }
             />
             <Route
               path="/ready-product-export/:id"
