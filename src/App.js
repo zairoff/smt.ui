@@ -36,7 +36,9 @@ import DetailedReport from "./components/reports/detailedReport";
 import GroupByStaticsForm from "./components/statics/groupByStaticsForm";
 import RepairHistory from "./components/reports/repairHistory";
 import ModelEditForm from "./components/forms/modelEditForm";
-import ReadyProductForm from "./components/ready-product/ReadyProductForm";
+import ReadyProductImportForm from "./components/ready-product/readyProductImportForm";
+import ReadyProductExportForm from "./components/ready-product/readyProductExportForm";
+import ReadyProducExportDetailForm from "./components/ready-product/readyProducExportDetailForm";
 
 class App extends Component {
   state = {};
@@ -111,7 +113,18 @@ class App extends Component {
             />
             <Route path="/detailed" element={<DetailedReport />} />
             <Route path="/repair-history" element={<RepairHistory />} />
-            <Route path="/ready-product" element={<ReadyProductForm />} />
+            <Route
+              path="/ready-product-import"
+              element={<ReadyProductImportForm />}
+            />
+            <Route
+              path="/ready-product-export"
+              element={<ReadyProductExportForm />}
+            />
+            <Route
+              path="/ready-product-export/:id"
+              element={<ReadyProducExportDetailForm />}
+            />
           </Routes>
         </main>
       </React.Fragment>

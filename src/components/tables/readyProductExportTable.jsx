@@ -1,21 +1,35 @@
 import React, { Component } from "react";
 import Table from "../common/table";
+import { Link } from "react-router-dom";
 
 class ReadyProductExportTable extends Component {
   columns = [
     { path: "model.name", label: "MODEL" },
     { path: "model.sapCode", label: "SAP CODE" },
     { path: "count", label: "SONI" },
-    { path: "exit", label: "CHIQISH" },
     {
-      path: "button",
+      path: "edit",
+      content: (readyProduct) => (
+        <Link
+          to={{
+            pathname: "/ready-product-export/" + readyProduct.id,
+          }}
+          state={{ data: readyProduct }}
+          className="btn btn-primary"
+        >
+          CHIQIM
+        </Link>
+      ),
+    },
+    {
+      path: "edit-all",
       content: (readyProduct) => (
         <button
           type="button"
           onClick={() => this.props.onDelete(readyProduct)}
           className="btn btn-danger"
         >
-          Delete
+          CHIQIM BARCHASINI
         </button>
       ),
     },

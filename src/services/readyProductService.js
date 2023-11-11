@@ -31,6 +31,18 @@ export function getReadyProductByDate(date, transactionType) {
   return http.get(query);
 }
 
+export function getReadyProductByProductBrand(productBrandId) {
+  const query = endPoint.concat(
+    "/GetByProductBrand?productBrandId=" + productBrandId
+  );
+  return http.get(query);
+}
+
+export function getReadyProductByProduct(productId) {
+  const query = endPoint.concat("/GetByProduct?productId=" + productId);
+  return http.get(query);
+}
+
 export function getReadyProductByDateRange(from, to, transactionType) {
   const query = endPoint.concat(
     "/GetByEnterDateRange?from=" +

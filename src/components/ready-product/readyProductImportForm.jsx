@@ -22,7 +22,7 @@ import ReadyProductImportTable from "../tables/readyProductImportTable";
     }
  */
 
-class ReadyProductForm extends Form {
+class ReadyProductImportForm extends Form {
   barcodeRef = React.createRef();
 
   state = {
@@ -160,4 +160,4 @@ class ReadyProductForm extends Form {
   }
 }
 
-export default ReadyProductForm;
+export default ReadyProductImportForm;
