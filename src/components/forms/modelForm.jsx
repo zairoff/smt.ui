@@ -110,9 +110,14 @@ class ModelForm extends Form {
       const { data: result } = await addModel({
         productBrandId: productBrand.id,
         name: fields.model,
+        sapCode: fields.sapCode,
       });
       const newData = [result, ...data];
-      this.setState({ data: newData, loading: false, fields: { model: "" } });
+      this.setState({
+        data: newData,
+        loading: false,
+        fields: { model: "", sapCode: "" },
+      });
     } catch (ex) {
       this.setState({ loading: false });
       toast.error(ex.response.data.message);
@@ -199,12 +204,12 @@ class ModelForm extends Form {
             fields.barcode,
             this.handleInputChange,
             errors.model,
-            true,
+            false,
             ""
           )}
           <p className="mt-2"> </p>
           {this.renderInput(
-            "Sapcode",
+            "sapCode",
             "Sap code",
             "",
             fields.sapCode,
