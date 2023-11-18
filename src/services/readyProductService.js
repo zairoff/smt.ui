@@ -24,6 +24,29 @@ export function getReadyProduct(id) {
   return http.get(readyProductUrl(id));
 }
 
+export function getReadyProductByDateGroupByModel(date, transactionType) {
+  const query = endPoint.concat(
+    "/GetByDateGroupBy?dateTime=" + date + "&transactionType=" + transactionType
+  );
+  return http.get(query);
+}
+
+export function getReadyProductByDateRangeGroupByModel(
+  from,
+  to,
+  transactionType
+) {
+  const query = endPoint.concat(
+    "/GetByDateRangeGroupBy?from=" +
+      from +
+      "&to=" +
+      to +
+      "&transactionType=" +
+      transactionType
+  );
+  return http.get(query);
+}
+
 export function getReadyProductByDate(date, transactionType) {
   const query = endPoint.concat(
     "/GetByDate?dateTime=" + date + "&transactionType=" + transactionType
@@ -46,6 +69,20 @@ export function getReadyProductByProduct(productId) {
 export function getReadyProductByDateRange(from, to, transactionType) {
   const query = endPoint.concat(
     "/GetByEnterDateRange?from=" +
+      from +
+      "&to=" +
+      to +
+      "&transactionType=" +
+      transactionType
+  );
+  return http.get(query);
+}
+
+export function getBySapCodeDateRange(sapCode, from, to, transactionType) {
+  const query = endPoint.concat(
+    "/GetBySapCodeDateRange?sapCode=" +
+      sapCode +
+      "&from=" +
       from +
       "&to=" +
       to +

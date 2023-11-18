@@ -39,6 +39,8 @@ import ModelEditForm from "./components/forms/modelEditForm";
 import ReadyProductImportForm from "./components/ready-product/readyProductImportForm";
 import ReadyProductExportForm from "./components/ready-product/readyProductExportForm";
 import ReadyProducExportDetailForm from "./components/ready-product/readyProducExportDetailForm";
+import ReadyProductReport from "./components/ready-product/readyProductReport";
+import DetailedReadyProductReport from "./components/ready-product/detailedReadyProductReport";
 
 class App extends Component {
   state = {};
@@ -127,6 +129,14 @@ class App extends Component {
             <Route
               path="/ready-product-export/:id"
               element={<ReadyProducExportDetailForm />}
+            />
+            <Route
+              path="/ready-product-report"
+              element={<ReadyProductReport />}
+            />
+            <Route
+              path="/ready-product-detailed"
+              element={<DetailedReadyProductReport />}
             />
           </Routes>
         </main>

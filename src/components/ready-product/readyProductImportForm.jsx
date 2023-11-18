@@ -87,8 +87,19 @@ class ReadyProductImportForm extends Form {
       const barcode = e.target.value;
 
       try {
-        const count = barcode.slice(-2);
-        const sapCode = barcode.slice(0, -6);
+        let count = "";
+        let sapCode = "";
+        if (barcode.length == 19 || barcode.length == 17) {
+          count = barcode.slice(-2);
+          sapCode = barcode.slice(0, -6);
+        } else if (barcode.length == 18 || barcode.length == 16) {
+          count = barcode.slice(-1);
+          sapCode = barcode.slice(0, -5);
+        }
+
+        if (count === "" || sapCode === "") {
+          return;
+        }
 
         const { data: model } = await getModelBySapCode(sapCode);
         if (model === "" || model === undefined) {

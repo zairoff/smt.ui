@@ -260,6 +260,11 @@ const NavBar = ({ user }) => {
                     Skladdan chiqish
                   </NavLink>
                 </li>
+                <li>
+                  <NavLink to="/ready-product-report" className="dropdown-item">
+                    Skladdan report
+                  </NavLink>
+                </li>
               </ul>
             </li>
           </ul>
