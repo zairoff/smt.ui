@@ -3,7 +3,7 @@ import _ from "lodash";
 import { toast } from "react-toastify";
 import ReactLoading from "react-loading";
 import { useParams, useLocation } from "react-router-dom";
-import { exportReadyProduct } from "../../services/readyProductService";
+import { exportReadyProductTransaction } from "../../services/readyProductTransactionService";
 
 class ReadyProducExportDetailForm extends Form {
   state = {
@@ -18,9 +18,9 @@ class ReadyProducExportDetailForm extends Form {
 
   async componentDidMount() {
     const { data } = this.props.location.state;
-    const { modelId, model, count } = data;
+    const { model, count } = data;
     this.setState({
-      modelId,
+      modelId: model.id,
       name: model.name,
       sapCode: model.sapCode,
       count,
@@ -58,7 +58,7 @@ class ReadyProducExportDetailForm extends Form {
         modelId: modelId,
         count: fields.count,
       };
-      await exportReadyProduct(readyProductUpdate);
+      await exportReadyProductTransaction(readyProductUpdate);
       this.setState({ loading: false, fields: { count: "" } });
       toast.success("Muvaffaqiyatli o'zgartirildi");
     } catch (ex) {

@@ -3,8 +3,8 @@ import { useLocation, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import ReactLoading from "react-loading";
 import _ from "lodash";
-import { getBySapCodeDateRange } from "../../services/readyProductService";
 import DetailedReadyProductReportTable from "../tables/detailedReadyProductReportTable";
+import { getTransactionBySapCodeDateRange } from "../../services/readyProductTransactionService";
 
 class DetailedReadyProductReport extends Component {
   state = {
@@ -19,7 +19,7 @@ class DetailedReadyProductReport extends Component {
     const { sapCode, from, to, transactionType } = data;
     this.setState({ loading: true });
     try {
-      const { data } = await getBySapCodeDateRange(
+      const { data } = await getTransactionBySapCodeDateRange(
         sapCode,
         from,
         to,

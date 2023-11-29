@@ -3,8 +3,8 @@ import { CSVLink } from "react-csv";
 import { toast } from "react-toastify";
 import Form from "../forms/form";
 import ReactLoading from "react-loading";
-import { getReadyProductByDateRangeGroupByModel } from "../../services/readyProductService";
 import ReadyProductGroupByTable from "../tables/readyProductGroupByTable";
+import { getTransactionByDateRangeGroupByModel } from "../../services/readyProductTransactionService";
 
 class ReadyProductReport extends Form {
   state = {
@@ -31,7 +31,7 @@ class ReadyProductReport extends Form {
     this.setState({ loading: true });
 
     try {
-      const { data } = await getReadyProductByDateRangeGroupByModel(
+      const { data } = await getTransactionByDateRangeGroupByModel(
         from,
         to,
         id

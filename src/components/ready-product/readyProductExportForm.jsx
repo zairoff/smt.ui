@@ -6,11 +6,11 @@ import Form from "../forms/form";
 import ReactLoading from "react-loading";
 import ReadyProductExportTable from "../tables/readyProductExportTable";
 import {
-  exportReadyProduct,
-  getReadyProductByProduct,
-  getReadyProductByProductBrand,
-  getReadyProducts,
-} from "../../services/readyProductService";
+  exportReadyProductTransaction,
+  getReadyProductTransactions,
+  getTransactionByProduct,
+  getTransactionByProductBrand,
+} from "../../services/readyProductTransactionService";
 
 class ReadyProductExportForm extends Form {
   state = {
@@ -31,7 +31,7 @@ class ReadyProductExportForm extends Form {
     try {
       const { data: products } = await getProducts();
 
-      const { data } = await getReadyProducts();
+      const { data } = await getReadyProductTransactions();
 
       this.setState({
         products,
@@ -49,11 +49,11 @@ class ReadyProductExportForm extends Form {
     try {
       this.setState({ loading: true });
       const readyProductUpdate = {
-        modelId: readyProduct.modelId,
+        modelId: readyProduct.model.id,
         count: readyProduct.count,
       };
-      await exportReadyProduct(readyProductUpdate);
-      const { data } = await getReadyProducts();
+      await exportReadyProductTransaction(readyProductUpdate);
+      const { data } = await getReadyProductTransactions();
       this.setState({ loading: false, data });
     } catch (ex) {
       this.setState({ loading: false });
@@ -75,7 +75,7 @@ class ReadyProductExportForm extends Form {
             );
             const brands = productBrands.map((p) => p.brand);
 
-            const { data } = await getReadyProductByProduct(id);
+            const { data } = await getTransactionByProduct(id);
 
             this.setState({
               brands,
@@ -95,9 +95,7 @@ class ReadyProductExportForm extends Form {
 
             const prodcutBrandId =
               productBrand.length > 0 ? productBrand[0].id : 0;
-            const { data } = await getReadyProductByProductBrand(
-              prodcutBrandId
-            );
+            const { data } = await getTransactionByProductBrand(prodcutBrandId);
 
             this.setState({
               selectedBrand: id,

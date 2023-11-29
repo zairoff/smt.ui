@@ -3,14 +3,14 @@ import ReactLoading from "react-loading";
 import _ from "lodash";
 import Form from "../forms/form";
 import { toast } from "react-toastify";
-import {
-  deleteReadyProductTransaction,
-  getReadyProductByDate,
-  importReadyProduct,
-} from "../../services/readyProductService";
 import { format } from "date-fns";
 import { getModelBySapCode } from "../../services/modelService";
 import ReadyProductImportTable from "../tables/readyProductImportTable";
+import {
+  deleteReadyProductTransaction,
+  getTransactionByDate,
+  importReadyProductTransaction,
+} from "../../services/readyProductTransactionService";
 
 /**
  *  public enum TransactionType
@@ -44,7 +44,7 @@ class ReadyProductImportForm extends Form {
   async componentDidMount() {
     try {
       const today = format(new Date(), "yyyy-MM-dd HH:mm:ss");
-      const { data: imports } = await getReadyProductByDate(today, 1); // 1 - is import
+      const { data: imports } = await getTransactionByDate(today, 1); // 1 - is import
       this.setState({ imports });
     } catch (ex) {
       toast(ex.response.data.message);
@@ -60,7 +60,7 @@ class ReadyProductImportForm extends Form {
     try {
       await deleteReadyProductTransaction(id);
       const today = format(new Date(), "yyyy-MM-dd HH:mm:ss");
-      const { data: imports } = await getReadyProductByDate(today, 1);
+      const { data: imports } = await getTransactionByDate(today, 1);
       this.setState({ loading: false, imports });
     } catch (ex) {
       this.setState({ imports });
@@ -87,15 +87,9 @@ class ReadyProductImportForm extends Form {
       const barcode = e.target.value;
 
       try {
-        let count = "";
-        let sapCode = "";
-        if (barcode.length == 19 || barcode.length == 17) {
-          count = barcode.slice(-2);
-          sapCode = barcode.slice(0, -6);
-        } else if (barcode.length == 18 || barcode.length == 16) {
-          count = barcode.slice(-1);
-          sapCode = barcode.slice(0, -5);
-        }
+        const indexOf = barcode.indexOf("-");
+        const sapCode = barcode.substring(0, indexOf);
+        const count = barcode.substring(indexOf + 4, barcode.length);
 
         if (count === "" || sapCode === "") {
           return;
@@ -109,15 +103,12 @@ class ReadyProductImportForm extends Form {
           modelId: model.id,
           count,
         };
-        const { data: readyProduct } = await importReadyProduct(
-          readyProductCreate
-        );
+        await importReadyProductTransaction(readyProductCreate);
 
-        if (readyProduct === "" || readyProduct === undefined) {
-          return;
-        }
         const today = format(new Date(), "yyyy-MM-dd HH:mm:ss");
-        const { data: imports } = await getReadyProductByDate(today, 1);
+        const { data: imports } = await getTransactionByDate(today, 1);
+
+        console.log("imm", imports);
         if (Object.keys(imports).length > 0) {
           this.setState({
             fields: {
