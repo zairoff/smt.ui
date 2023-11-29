@@ -44,7 +44,11 @@ class ReadyProductImportForm extends Form {
   async componentDidMount() {
     try {
       const today = format(new Date(), "yyyy-MM-dd HH:mm:ss");
-      const { data: imports } = await getTransactionByDate(today, 1); // 1 - is import
+      const { data } = await getTransactionByDate(today, 1); // 1 - is import
+      const imports = data.map((obj, index) => ({
+        ...obj,
+        index: index + 1,
+      }));
       this.setState({ imports });
     } catch (ex) {
       toast(ex.response.data.message);
@@ -60,7 +64,11 @@ class ReadyProductImportForm extends Form {
     try {
       await deleteReadyProductTransaction(id);
       const today = format(new Date(), "yyyy-MM-dd HH:mm:ss");
-      const { data: imports } = await getTransactionByDate(today, 1);
+      const { data } = await getTransactionByDate(today, 1);
+      const imports = data.map((obj, index) => ({
+        ...obj,
+        index: index + 1,
+      }));
       this.setState({ loading: false, imports });
     } catch (ex) {
       this.setState({ imports });
@@ -106,9 +114,13 @@ class ReadyProductImportForm extends Form {
         await importReadyProductTransaction(readyProductCreate);
 
         const today = format(new Date(), "yyyy-MM-dd HH:mm:ss");
-        const { data: imports } = await getTransactionByDate(today, 1);
+        const { data } = await getTransactionByDate(today, 1);
 
-        console.log("imm", imports);
+        const imports = data.map((obj, index) => ({
+          ...obj,
+          index: index + 1,
+        }));
+
         if (Object.keys(imports).length > 0) {
           this.setState({
             fields: {

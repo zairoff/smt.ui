@@ -3,6 +3,7 @@ import Table from "../common/table";
 
 class ReadyProductImportTable extends Component {
   columns = [
+    { path: "index", label: "NOMER" },
     { path: "model.name", label: "MODEL" },
     { path: "model.sapCode", label: "SAP CODE" },
     { path: "date", label: "KIRISH" },
