@@ -38,6 +38,7 @@ class Repair extends Form {
   };
 
   async componentDidMount() {
+    this.setState({ loading: true });
     try {
       const { data: repairers } = await getPcbRepairers();
       const date = format(new Date(), "yyyy-MM-dd HH:mm:ss");
@@ -45,6 +46,7 @@ class Repair extends Form {
       this.setState({
         repairers,
         data,
+        loading: false,
       });
     } catch (ex) {
       toast.error(ex.response.data.message);
@@ -87,11 +89,17 @@ class Repair extends Form {
   handleSave = async () => {
     const { employee, reportId, fields, condition } = this.state;
 
-    if (employee == "" || condition == "") {
+    if (
+      employee === "" ||
+      employee === undefined ||
+      condition === "" ||
+      condition === undefined
+    ) {
       toast.warning("Remontchi va xolatini tanlang!");
       return;
     }
 
+    this.setState({ loading: true });
     try {
       await updateReport(reportId, {
         status: true,
@@ -170,7 +178,7 @@ class Repair extends Form {
         }
 
         const { data: reports } = await getBarcodeHistory(barcode);
-        this.setState({ reports })
+        this.setState({ reports });
       } catch (ex) {
         toast.error(ex.response.data.message);
       } finally {
@@ -181,6 +189,7 @@ class Repair extends Form {
 
   handleSearch = async () => {
     const { psbStatus } = this.state;
+    this.setState({ loading: true });
     try {
       const { data } = await getReportByUpdatedDate(
         this.state.fields.searchDate,
@@ -209,7 +218,7 @@ class Repair extends Form {
       pageSize,
       currentPage,
       repairers,
-      reports
+      reports,
     } = this.state;
 
     const sortedRows = _.orderBy(data, [sortColumn.path], [sortColumn.order]);
@@ -221,21 +230,24 @@ class Repair extends Form {
           <ReactLoading className="loading" type="spin" color="blue" />
         )}
         <div className="row">
-          {(reports && reports.length > 0) ? (<Link
-            to={{
-              pathname: "/repair-history",
-            }}
-            state={{
-              data: {
-                reports
-              },
-            }}
-            className="btn btn-success text-white w-25"
-          >
-            HISTORY
-          </Link>) : <></>}
+          {reports && reports.length > 0 ? (
+            <Link
+              to={{
+                pathname: "/repair-history",
+              }}
+              state={{
+                data: {
+                  reports,
+                },
+              }}
+              className="btn btn-success text-white w-25"
+            >
+              HISTORY
+            </Link>
+          ) : (
+            <></>
+          )}
           <div className="mt-2 row">
-
             <div className="col-2">
               {this.renderInput(
                 "barcode",
@@ -323,8 +335,8 @@ class Repair extends Form {
                   {this.renderSelect(
                     "Status",
                     [
-                      { id: 'Ishladi', name: "Ishladi" },
-                      { id: 'Ishlamadi', name: "Ishlamadi" },
+                      { id: "Ishladi", name: "Ishladi" },
+                      { id: "Ishlamadi", name: "Ishlamadi" },
                     ],
                     errors.repairers,
                     this.handleSelectChange
@@ -334,9 +346,7 @@ class Repair extends Form {
                   {this.renderButton("SAVE", "button", this.handleSave)}
                 </div>
               </div>
-
             </div>
-
           </div>
           <div className="mt-2 row">
             <div className="col">
@@ -365,7 +375,6 @@ class Repair extends Form {
             <div className="col mt-4">
               {this.renderButton("SEARCH", "button", this.handleSearch)}
             </div>
-
           </div>
           {rows.length > 0 && (
             <PcbRepairTable
@@ -381,10 +390,8 @@ class Repair extends Form {
             currentPage={currentPage}
             onPageChange={this.handlePageChange}
           />
-
         </div>
       </>
-
     );
   }
 }
