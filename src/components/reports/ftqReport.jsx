@@ -183,8 +183,8 @@ class FtqReport extends Form {
 
     const totalPlanText = "Reja: " + totalPlan;
     const totalProducedText = "Chiqarildi: " + totalProduced;
-    const totalPlanSizeText = "Size: " + totalPlanSize + " m2";
-    const totalDefectSizeText = "Size: " + totalDefectSize + " m2";
+    const totalPlanSizeText = "Size: " + totalPlanSize.toFixed(2) + " m2";
+    const totalDefectSizeText = "Size: " + totalDefectSize.toFixed(2) + " m2";
 
     const totalDefedctText = "Nuqsonlar: " + allDefectsCount;
 
