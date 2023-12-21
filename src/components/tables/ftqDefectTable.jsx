@@ -1,16 +1,41 @@
 import React, { Component } from "react";
 import Table from "../common/table";
+import { Link } from "react-router-dom";
 
 class FtqDefectTable extends Component {
-  columns = [
-    { path: "name", label: "DEFECT" },
-    { path: "count", label: "COUNT" },
-  ];
   render() {
-    const { rows, sortColumn, onSort } = this.props;
+    const { rows, sortColumn, onSort, fields, shift, line } = this.props;
+
+    const columns = [
+      { path: "name", label: "DEFECT" },
+      { path: "count", label: "COUNT" },
+      {
+        path: "details",
+        content: (defect) => (
+          <Link
+            to={{
+              pathname: "/detailed",
+            }}
+            state={{
+              data: {
+                from: fields.from,
+                to: fields.to,
+                line: line,
+                display: "defect",
+                defectName: defect.name,
+                shift: shift,
+              },
+            }}
+            className="btn btn-primary"
+          >
+            details
+          </Link>
+        ),
+      },
+    ];
     return (
       <Table
-        columns={this.columns}
+        columns={columns}
         rows={rows}
         sortColumn={sortColumn}
         onSort={onSort}

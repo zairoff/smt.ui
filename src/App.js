@@ -32,6 +32,7 @@ import Plan from "./components/forms/planForm";
 import PlanActivityForm from "./components/forms/PlanActivityForm";
 import PlanActivityEditForm from "./components/forms/planActivityEditForm";
 import GroupByStaticsForm from "./components/statics/groupByStaticsForm";
+import DetailedReport from "./components/reports/detailedReport";
 
 class App extends Component {
   state = {};
@@ -91,6 +92,7 @@ class App extends Component {
             <Route path="/pcb-report" element={<PcbReport />} />
             <Route path="/dashboard" element={<StaticsForm />} />
             <Route path="/ftq" element={<FtqReport />} />
+            <Route path="/detailed" element={<DetailedReport />} />
             <Route path="/plan" element={<Plan />} />
             <Route
               path="/machine-history/:machineId"

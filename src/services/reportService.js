@@ -41,6 +41,22 @@ export function getReportByModelIdAndLineId(modelId, lineId, shift, date) {
   return http.get(query);
 }
 
+export function getReportsByLineAndDefect(lineId, defect, shift, from, to) {
+  const query = endPoint.concat(
+    "/GetByLineAndDefect?lineId=" +
+      lineId +
+      "&defect=" +
+      defect +
+      "&shift=" +
+      shift +
+      "&from=" +
+      from +
+      "&to=" +
+      to
+  );
+  return http.get(query);
+}
+
 export function getReportsBy(modelId, lineId, shift, from, to) {
   const query = endPoint.concat(
     "/GetBy?&modelId=" +

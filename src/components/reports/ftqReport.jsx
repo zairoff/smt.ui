@@ -21,9 +21,11 @@ import { toast } from "react-toastify";
 import ReactLoading from "react-loading";
 import { getPlanByLineAndDate } from "../../services/planService";
 import {
+  getClosedDefectCountByLine,
   getDefectCountByLine,
   getDefectsByLine,
 } from "../../services/staticsService";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 ChartJS.register(
   CategoryScale,
@@ -75,9 +77,51 @@ class FtqReport extends Form {
 
   async componentDidMount() {
     try {
-      const { data: lines } = await getLines();
+      const stateData = this.props.location.state;
+      console.log("aaa", stateData);
+      if (stateData !== null) {
+        const { data } = stateData;
+        if (data !== null) {
+          const { from, to, line, shift } = data;
 
-      this.setState({ lines, loading: false, fields: { from: "", to: "" } });
+          const { data: lines } = await getLines();
+
+          const { data: plans } = await getPlanByLineAndDate(
+            line,
+            shift,
+            from,
+            to
+          );
+
+          const { data: defects } = await getDefectsByLine(
+            line,
+            shift,
+            from,
+            to
+          );
+
+          const { data: allDefects } = await getDefectCountByLine(
+            line,
+            shift,
+            from,
+            to
+          );
+
+          this.setState({
+            lines,
+            loading: false,
+            fields: { from, to },
+            plans,
+            defects,
+            allDefectsCount: allDefects.count,
+            selectedLine: line,
+          });
+        }
+      } else {
+        const { data: lines } = await getLines();
+
+        this.setState({ lines, loading: false, fields: { from: "", to: "" } });
+      }
     } catch (ex) {
       this.setState({ loading: false });
       toast.error(ex.message);
@@ -147,6 +191,7 @@ class FtqReport extends Form {
       loading,
       selectedLine,
       daynight,
+      shift,
     } = this.state;
 
     const totalPlan = plans.reduce(
@@ -305,12 +350,24 @@ class FtqReport extends Form {
                 </button>
               </div>
             </div>
-            {this.renderButton(
-              totalDefedctText,
-              "button",
-              null,
-              "btn btn-danger ms-2"
-            )}
+            <Link
+              to={{
+                pathname: "/detailed",
+              }}
+              state={{
+                data: {
+                  from: fields.from,
+                  to: fields.to,
+                  line: selectedLine,
+                  shift: shift,
+                  display: "all",
+                  defectName: undefined,
+                },
+              }}
+              className="btn btn-danger"
+            >
+              {totalDefedctText}
+            </Link>
             {this.renderButton(
               totalDefectSizeText,
               "button",
@@ -323,6 +380,9 @@ class FtqReport extends Form {
                 sortColumn={sortColumn}
                 onDelete={this.handleDelete}
                 onSort={this.handleSort}
+                fields={fields}
+                line={selectedLine}
+                shift={shift}
               />
               <Pagination
                 itemsCount={defects.length}
@@ -338,4 +398,6 @@ class FtqReport extends Form {
   }
 }
 
-export default FtqReport;
+export default () => (
+  <FtqReport params={useParams()} location={useLocation()} />
+);
