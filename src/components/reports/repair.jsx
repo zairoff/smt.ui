@@ -138,7 +138,7 @@ class Repair extends Form {
         action: "",
       });
     } catch (ex) {
-      toast.error(ex.response.data.message);
+      toast.error("error");
       this.state({ data: clone });
     } finally {
       this.setState({ loading: false });
