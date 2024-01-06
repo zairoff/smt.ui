@@ -25,6 +25,11 @@ export function getPlanActivityByDate(date) {
   return http.get(query);
 }
 
+export function getPlanActivityByDateRange(from, to) {
+  const query = endPoint.concat("/GetByDateRange?from=" + from + "&to=" + to);
+  return http.get(query);
+}
+
 export function getPlanActivityByLineAndDate(lineId, from, to) {
   const query = endPoint.concat(
     "/GetByLineAndDate?lineId=" + lineId + "&from=" + from + "&to=" + to

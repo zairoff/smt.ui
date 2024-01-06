@@ -217,11 +217,21 @@ class Report extends Form {
   handleButtonRemont = async () => {
     const { fields, data } = this.state;
 
+    console.log("fields", fields);
+
+    console.log("data", data);
+
     const filteredData = data.filter((d) => d.barcode == fields.barcode);
+
+    console.log("filteredData", filteredData);
 
     const line = _.get(filteredData[0], "line.name");
 
+    console.log("line", line);
+
     const reportId = _.get(filteredData[0], "id");
+
+    console.log("reportId", reportId);
 
     try {
       await updateReport(reportId, {

@@ -4,12 +4,12 @@ import { toast } from "react-toastify";
 import ReactLoading from "react-loading";
 import { paginate } from "../../utils/paginate";
 import Pagination from "../common/pagination";
-import PlanTable from "../tables/planTable";
 import { format } from "date-fns";
 import { getLines } from "../../services/lineService";
 import {
   addPlanActivity,
   deletePlanActivity,
+  getPlanActivities,
   getPlanActivityByDate,
 } from "../../services/planActivityService";
 import PlanActivityTable from "../tables/PlanActivityTable";
@@ -45,8 +45,7 @@ class PlanActivityForm extends Form {
 
   async componentDidMount() {
     try {
-      const date = format(new Date(), "yyyy-MM-dd HH:mm:ss");
-      const { data } = await getPlanActivityByDate(date, true);
+      const { data } = await getPlanActivities();
       const { data: lines } = await getLines();
 
       this.setState({ data, lines, loading: false });
@@ -58,27 +57,6 @@ class PlanActivityForm extends Form {
 
   isDate = (date) => {
     return new Date(date) !== "Invalid Date" && !isNaN(new Date(date));
-  };
-
-  handleSearchDateChange = async ({ currentTarget: input }) => {
-    const { value } = input;
-
-    const errors = { ...this.state.errors };
-    delete errors[input.id];
-    const fields = { ...this.state.fields };
-    fields[input.id] = value;
-
-    if (this.isDate(value)) {
-      try {
-        this.setState({ fields, loading: true });
-        const { data } = await getPlanActivityByDate(value);
-
-        this.setState({ errors, data, loading: false });
-      } catch (ex) {
-        this.setState({ loading: false });
-        toast.error(ex.message);
-      }
-    }
   };
 
   handleDateChange = async ({ currentTarget: input }) => {
@@ -215,23 +193,6 @@ class PlanActivityForm extends Form {
     return (
       <>
         {loading && <ReactLoading className="test" type="spin" color="blue" />}
-        <div className="row">
-          <div className="col-4">
-            {this.renderInput(
-              "searchDate",
-              "Search",
-              "",
-              fields.searchDate,
-              this.handleSearchDateChange,
-              errors.searchDate,
-              true,
-              "date"
-            )}
-          </div>
-        </div>
-        <br />
-        <br />
-        <br />
 
         <div className="row">
           <div className="col-4">

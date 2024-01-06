@@ -41,6 +41,7 @@ import ReadyProductExportForm from "./components/ready-product/readyProductExpor
 import ReadyProducExportDetailForm from "./components/ready-product/readyProducExportDetailForm";
 import ReadyProductReport from "./components/ready-product/readyProductReport";
 import DetailedReadyProductReport from "./components/ready-product/detailedReadyProductReport";
+import PlanActivityReport from "./components/forms/planActivityReport";
 
 class App extends Component {
   state = {};
@@ -110,6 +111,10 @@ class App extends Component {
               element={<MachineHistory />}
             />
             <Route path="/plan-activity" element={<PlanActivityForm />} />
+            <Route
+              path="/plan-activity-report"
+              element={<PlanActivityReport />}
+            />
             <Route
               path="/plan-activity/:id"
               element={<PlanActivityEditForm />}
