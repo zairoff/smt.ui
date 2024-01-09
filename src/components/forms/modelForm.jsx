@@ -117,7 +117,7 @@ class ModelForm extends Form {
       this.setState({
         data: newData,
         loading: false,
-        fields: { model: "", sapCode: "" },
+        fields: { model: "", sapCode: "", barcode: "" },
       });
     } catch (ex) {
       this.setState({ loading: false });
