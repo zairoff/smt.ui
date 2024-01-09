@@ -3,7 +3,7 @@ import { CSVLink } from "react-csv";
 import { toast } from "react-toastify";
 import Form from "../forms/form";
 import ReactLoading from "react-loading";
-import { getPlanActivityByDateRange } from "../../services/planActivityService";
+import { getPlanActivityByDateRangeAndStatus } from "../../services/planActivityService";
 import PlanActivityReportTable from "../tables/PlanActivityReportTable";
 
 class PlanActivityReport extends Form {
@@ -14,8 +14,14 @@ class PlanActivityReport extends Form {
     loading: false,
     sort: false,
     sortColumn: { path: "", order: "asc" },
-    fields: { from: "", to: "" },
+    fields: { from: "", to: "", status: "" },
     data: [],
+    statuses: [
+      { id: "Plan", name: "Plan" },
+      { id: "Plan-Do", name: "Plan-Do" },
+      { id: "Plan-Do-Act", name: "Plan-Do-Act" },
+      { id: "Plan-Do-Act-Resolve", name: "Plan-Do-Act-Resolve" },
+    ],
   };
 
   doSubmit = async () => {
@@ -23,7 +29,11 @@ class PlanActivityReport extends Form {
 
     this.setState({ loading: true });
     try {
-      const { data } = await getPlanActivityByDateRange(fields.from, fields.to);
+      const { data } = await getPlanActivityByDateRangeAndStatus(
+        fields.from,
+        fields.to,
+        fields.status
+      );
       this.setState({ data, loading: false });
     } catch (ex) {
       toast.error(ex.message);
@@ -32,8 +42,15 @@ class PlanActivityReport extends Form {
     }
   };
 
+  handleSelectChange = async ({ target }) => {
+    const { value: id } = target;
+    const { fields } = this.state;
+    fields.status = id;
+    this.setState({ fields });
+  };
+
   render() {
-    const { data, sortColumn, fields, loading } = this.state;
+    const { data, sortColumn, fields, loading, statuses } = this.state;
 
     const excel = data.map((a) => ({
       line: a.line.name,
@@ -45,7 +62,6 @@ class PlanActivityReport extends Form {
       javobgarlar: a.responsible,
       xolati: a.status,
     }));
-    console.log("data", data);
     return (
       <>
         <form className="border p-4 mt-2 mb-4" onSubmit={this.handleSubmit}>
@@ -76,6 +92,14 @@ class PlanActivityReport extends Form {
                 "",
                 true,
                 "date"
+              )}
+            </div>
+            <div className="col">
+              {this.renderSelect(
+                "Status",
+                statuses,
+                "",
+                this.handleSelectChange
               )}
             </div>
             <div className="col-2">

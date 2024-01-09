@@ -30,6 +30,13 @@ export function getPlanActivityByDateRange(from, to) {
   return http.get(query);
 }
 
+export function getPlanActivityByDateRangeAndStatus(from, to, status) {
+  const query = endPoint.concat(
+    "/GetByDateRangeAndStatus?from=" + from + "&to=" + to + "&status=" + status
+  );
+  return http.get(query);
+}
+
 export function getPlanActivityByLineAndDate(lineId, from, to) {
   const query = endPoint.concat(
     "/GetByLineAndDate?lineId=" + lineId + "&from=" + from + "&to=" + to
