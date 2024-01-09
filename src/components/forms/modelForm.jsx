@@ -32,7 +32,7 @@ class ModelForm extends Form {
     selectedBrand: "",
     currentPage: 1,
     selectedItem: { id: "", value: "" },
-    pageSize: 15,
+    pageSize: 25,
     data: [],
     errors: {},
     loading: true,
@@ -111,6 +111,7 @@ class ModelForm extends Form {
         productBrandId: productBrand.id,
         name: fields.model,
         sapCode: fields.sapCode,
+        barcode: fields.barcode,
       });
       const newData = [result, ...data];
       this.setState({
@@ -199,7 +200,7 @@ class ModelForm extends Form {
           <p className="mt-2"> </p>
           {this.renderInput(
             "barcode",
-            "Barcode name",
+            "Barcode",
             "",
             fields.barcode,
             this.handleInputChange,

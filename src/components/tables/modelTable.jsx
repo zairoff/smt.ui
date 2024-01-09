@@ -9,6 +9,7 @@ class ModelTable extends Component {
     { path: "productBrand.brand.name", label: "BRAND" },
     { path: "name", label: "MODEL" },
     { path: "sapCode", label: "SAP CODE" },
+    { path: "barcode", label: "BAR CODE" },
     {
       path: "edit",
       content: (model) => (

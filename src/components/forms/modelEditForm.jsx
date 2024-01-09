@@ -22,12 +22,12 @@ class ModelEditForm extends Form {
 
   async componentDidMount() {
     const { data } = this.props.location.state;
-    const { id, name, nameInBarcode, sapCode, productBrand } = data;
+    const { id, name, barcode, sapCode, productBrand } = data;
     this.setState({
       fields: {
         id,
         name,
-        barcode: nameInBarcode,
+        barcode,
         sapCode,
       },
       productBrand,
@@ -54,7 +54,7 @@ class ModelEditForm extends Form {
       this.setState({ loading: true });
       const modelUpdate = {
         name,
-        nameInBarcode: barcode,
+        barcode,
         sapCode,
       };
       await updateModel(id, modelUpdate);
@@ -63,7 +63,7 @@ class ModelEditForm extends Form {
     } catch (ex) {
       this.setState({ loading: false });
       console.log(ex.response);
-      toast.error(ex.response.data.title);
+      toast.error(ex.response.data.message);
     }
   };
 
@@ -87,7 +87,7 @@ class ModelEditForm extends Form {
             <p className="mt-2"> </p>
             {this.renderInput(
               "barcode",
-              "Barcode name",
+              "Barcode",
               "",
               fields.barcode,
               this.handleInputChange,
