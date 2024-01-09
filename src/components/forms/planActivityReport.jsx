@@ -35,6 +35,17 @@ class PlanActivityReport extends Form {
   render() {
     const { data, sortColumn, fields, loading } = this.state;
 
+    const excel = data.map((a) => ({
+      line: a.line.name,
+      kiritilganSana: a.date,
+      nomuvofiqlik: a.issue,
+      sabab: a.reason,
+      tugirlashishlari: a.act,
+      muddat: a.expires,
+      javobgarlar: a.responsible,
+      xolati: a.status,
+    }));
+    console.log("data", data);
     return (
       <>
         <form className="border p-4 mt-2 mb-4" onSubmit={this.handleSubmit}>
@@ -75,7 +86,7 @@ class PlanActivityReport extends Form {
               <p className="mt-4"></p>
               <CSVLink
                 className="btn btn-block btn-success btn-lg w-100"
-                data={data}
+                data={excel}
               >
                 Excel
               </CSVLink>
