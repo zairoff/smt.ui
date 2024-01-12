@@ -94,6 +94,7 @@ class App extends Component {
               <Route path="/statics" element={<GroupByStaticsForm />} />
               <Route path="/dashboard" element={<StaticsForm />} />
               <Route path="/ftq" element={<FtqReport />} />
+              <Route path="*" element={<FtqReport />} />
               <Route path="/plan" element={<Plan />} />
               <Route
                 path="/machine-history/:machineId"
