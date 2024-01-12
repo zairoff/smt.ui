@@ -19,6 +19,7 @@ class EmployeeAdd extends Form {
       position: "",
       phone: "",
       details: "",
+      birthday: "",
     },
     departmentId: "",
     errors: {},
@@ -73,7 +74,7 @@ class EmployeeAdd extends Form {
 
   doSubmit = async () => {
     const { imageFileName, departmentId, fields } = this.state;
-    const { name, phone, details } = fields;
+    const { name, phone, details, birthday } = fields;
 
     if (!imageFileName) {
       toast.warning("Choose image!");
@@ -86,6 +87,7 @@ class EmployeeAdd extends Form {
       phone,
       details,
       ImagePath: imageFileName,
+      birthday,
       IsActive: true,
     };
 
@@ -155,6 +157,7 @@ class EmployeeAdd extends Form {
             errors.name,
             true
           )}
+          <p className="mt-2"> </p>
           {this.renderInput(
             "department",
             "Department",
@@ -164,6 +167,7 @@ class EmployeeAdd extends Form {
             errors.department,
             true
           )}
+          <p className="mt-2"> </p>
           {this.renderInput(
             "position",
             "Position",
@@ -173,6 +177,7 @@ class EmployeeAdd extends Form {
             errors.position,
             true
           )}
+          <p className="mt-2"> </p>
           {this.renderInput(
             "phone",
             "Phone",
@@ -183,6 +188,18 @@ class EmployeeAdd extends Form {
             true,
             "number"
           )}
+          <p className="mt-2"> </p>
+          {this.renderInput(
+            "birthday",
+            "Birthday",
+            "",
+            fields.birthday,
+            this.handleInputChange,
+            "",
+            true,
+            "date"
+          )}
+          <p className="mt-2"> </p>
           {this.renderTextArea(
             "details",
             "Additional info",

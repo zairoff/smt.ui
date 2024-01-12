@@ -21,6 +21,7 @@ class EmployeeEdit extends Form {
       position: "",
       phone: "",
       details: "",
+      birthday: "",
     },
     departmentId: "",
     employeeId: "",
@@ -30,7 +31,7 @@ class EmployeeEdit extends Form {
 
   async componentDidMount() {
     const { data } = this.props.location.state;
-    const { id, fullName, phone, details, imageUrl } = data;
+    const { id, fullName, phone, details, imageUrl, birthday } = data;
 
     const fields = {
       name: fullName,
@@ -38,6 +39,7 @@ class EmployeeEdit extends Form {
       details,
       department: "",
       position: "",
+      birthday,
     };
 
     try {
@@ -92,7 +94,7 @@ class EmployeeEdit extends Form {
 
   doSubmit = async () => {
     const { imageFileName, departmentId, fields } = this.state;
-    const { name, phone, details } = fields;
+    const { name, phone, details, birthday } = fields;
 
     const employee = {
       imagePath: imageFileName,
@@ -101,6 +103,7 @@ class EmployeeEdit extends Form {
       phone,
       details,
       isActive: true,
+      birthday,
     };
 
     this.setState({ loading: true });
@@ -120,6 +123,7 @@ class EmployeeEdit extends Form {
           department: "",
           position: "",
           imageFileName: "",
+          birthday: "",
         },
       });
     }
@@ -164,6 +168,7 @@ class EmployeeEdit extends Form {
             errors.name,
             true
           )}
+          <p className="mt-2"> </p>
           {this.renderInput(
             "department",
             "Department",
@@ -173,6 +178,7 @@ class EmployeeEdit extends Form {
             errors.department,
             true
           )}
+          <p className="mt-2"> </p>
           {this.renderInput(
             "position",
             "Position",
@@ -182,6 +188,7 @@ class EmployeeEdit extends Form {
             errors.position,
             true
           )}
+          <p className="mt-2"> </p>
           {this.renderInput(
             "phone",
             "Phone",
@@ -191,6 +198,17 @@ class EmployeeEdit extends Form {
             errors.phone,
             true,
             "number"
+          )}
+          <p className="mt-2"> </p>
+          {this.renderInput(
+            "birthday",
+            "Birthday",
+            "",
+            fields.birthday,
+            this.handleInputChange,
+            "",
+            true,
+            "date"
           )}
           {this.renderTextArea(
             "details",
