@@ -74,7 +74,6 @@ class FtqReport extends Form {
   async componentDidMount() {
     try {
       const stateData = this.props.location.state;
-      console.log(stateData);
       if (stateData !== null) {
         const { data } = stateData;
         if (data !== null) {

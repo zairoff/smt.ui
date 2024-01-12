@@ -3,7 +3,7 @@ import Form from "../form";
 import ReactLoading from "react-loading";
 import Department from "../../common/department";
 import { toast } from "react-toastify";
-import { updateEmployee } from "../../../services/employeeService";
+import { getEmployee, updateEmployee } from "../../../services/employeeService";
 import { useParams, useLocation } from "react-router-dom";
 import config from "../../../config.json";
 import { addFile } from "../../../services/fileService";
@@ -30,25 +30,27 @@ class EmployeeEdit extends Form {
   };
 
   async componentDidMount() {
-    const { data } = this.props.location.state;
-    const { id, fullName, phone, details, imageUrl, birthday } = data;
-
-    const fields = {
-      name: fullName,
-      phone,
-      details,
-      department: "",
-      position: "",
-      birthday,
-    };
+    const { empId } = this.props.params;
 
     try {
+      this.setState({ loading: true });
+      const { data: employee } = await getEmployee(empId);
       const { data: departments } = await getDepartmentByHierarchyId("/");
+
+      const fields = {
+        name: employee.fullName,
+        phone: employee.phone,
+        details: employee.details,
+        department: "",
+        position: "",
+        birthday: employee.birthday,
+      };
+
       this.setState({
         departments,
         fields,
-        imageFileName: imageUrl,
-        employeeId: id,
+        imageFileName: employee.imageUrl,
+        employeeId: empId,
       });
     } catch (ex) {
       toast.error(ex.response.data.message);
