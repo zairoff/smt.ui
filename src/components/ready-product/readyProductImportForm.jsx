@@ -31,6 +31,7 @@ class ReadyProductImportForm extends Form {
     imports: [],
     errors: {},
     loading: true,
+    authorized: false,
   };
 
   componentDidUpdate() {
@@ -42,6 +43,7 @@ class ReadyProductImportForm extends Form {
   }
 
   async componentDidMount() {
+    const { authorized } = this.props;
     try {
       const today = format(new Date(), "yyyy-MM-dd HH:mm:ss");
       const { data } = await getTransactionByDate(today, 1); // 1 - is import
@@ -49,7 +51,7 @@ class ReadyProductImportForm extends Form {
         ...obj,
         index: index + 1,
       }));
-      this.setState({ imports });
+      this.setState({ imports, authorized });
     } catch (ex) {
       toast(ex.response.data.message);
     } finally {
@@ -85,8 +87,6 @@ class ReadyProductImportForm extends Form {
   handlePageChange = (page) => {};
 
   handleImportKeyPress = async (e) => {
-    const { fields } = this.state;
-
     if (e.key === "Enter") {
       this.setState({
         loading: true,
@@ -140,7 +140,8 @@ class ReadyProductImportForm extends Form {
   };
 
   render() {
-    const { imports, sortColumn, loading, fields, errors } = this.state;
+    const { imports, sortColumn, loading, fields, errors, authorized } =
+      this.state;
 
     return (
       <div className="row">
@@ -167,6 +168,7 @@ class ReadyProductImportForm extends Form {
             onSort={this.handleSort}
             sortColumn={sortColumn}
             onDelete={this.handleDelete}
+            authorized={authorized}
           />
         </div>
       </div>

@@ -113,7 +113,9 @@ class App extends Component {
               <Route path="/repair-history" element={<RepairHistory />} />
               <Route
                 path="/ready-product-import"
-                element={<ReadyProductImportForm />}
+                element={
+                  <ReadyProductImportForm user={user} authorized={authorized} />
+                }
               />
               <Route
                 path="/ready-product-export"
