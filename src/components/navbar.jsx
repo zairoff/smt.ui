@@ -250,22 +250,43 @@ const NavBar = ({ user }) => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                Sklad
+                Ombor
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
                   <NavLink to="/ready-product-import" className="dropdown-item">
-                    Skladga kirish
+                    Kirish
                   </NavLink>
                 </li>
                 <li>
                   <NavLink to="/ready-product-export" className="dropdown-item">
-                    Skladdan chiqish
+                    Chiqish
                   </NavLink>
                 </li>
                 <li>
                   <NavLink to="/ready-product-report" className="dropdown-item">
-                    Skladdan report
+                    Hisobot
+                  </NavLink>
+                </li>
+              </ul>
+            </li>
+            <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Qaytgan mahsulotlar
+              </a>
+              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <NavLink
+                    to="/returned-product-import"
+                    className="dropdown-item"
+                  >
+                    Kirish
                   </NavLink>
                 </li>
               </ul>

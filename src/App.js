@@ -42,6 +42,7 @@ import ReadyProducExportDetailForm from "./components/ready-product/readyProducE
 import ReadyProductReport from "./components/ready-product/readyProductReport";
 import DetailedReadyProductReport from "./components/ready-product/detailedReadyProductReport";
 import PlanActivityReport from "./components/forms/planActivityReport";
+import ReturnProductImport from "./components/return-product/returnProductImport";
 
 class App extends Component {
   state = {};
@@ -134,6 +135,11 @@ class App extends Component {
               <Route
                 path="/ready-product-detailed"
                 element={<DetailedReadyProductReport />}
+              />
+
+              <Route
+                path="/returned-product-import"
+                element={<ReturnProductImport user={user} />}
               />
 
               <Route path="/logout" element={<Logout />} />
