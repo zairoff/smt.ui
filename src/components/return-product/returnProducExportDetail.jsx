@@ -3,26 +3,35 @@ import _ from "lodash";
 import { toast } from "react-toastify";
 import ReactLoading from "react-loading";
 import { useParams, useLocation } from "react-router-dom";
-import { exportReadyProductTransaction } from "../../services/readyProductTransactionService";
+import {
+  exportReturnedProduct,
+  importReturnedProduct,
+} from "../../services/returnedProductTransactionService";
 
-class ReadyProducExportDetailForm extends Form {
+class ReturnProducExportDetail extends Form {
   state = {
     modelId: "",
     name: "",
     sapCode: "",
+    barCode: "",
     count: "",
     fields: { count: "" },
     errors: {},
     loading: true,
+    transactionType: "",
   };
 
   async componentDidMount() {
-    const { data } = this.props.location.state;
+    const { data, transactionType } = this.props.location.state;
+    console.log(data);
+    console.log(transactionType);
     const { model, count } = data;
     this.setState({
       modelId: model.id,
       name: model.name,
       sapCode: model.sapCode,
+      barCode: model.barcode,
+      transactionType,
       count,
       fields: {
         count: "",
@@ -32,7 +41,7 @@ class ReadyProducExportDetailForm extends Form {
   }
 
   handleSubmit = async () => {
-    const { fields, count, modelId } = this.state;
+    const { fields, count, modelId, transactionType } = this.state;
 
     if (
       modelId === "" ||
@@ -43,6 +52,7 @@ class ReadyProducExportDetailForm extends Form {
       toast.warning("MODEL TOPILMADI");
       return;
     }
+
     if (fields.count === "" || fields.count === undefined) {
       toast.warning("CHIQIM SONINI KIRITING");
       return;
@@ -54,11 +64,13 @@ class ReadyProducExportDetailForm extends Form {
     }
     try {
       this.setState({ loading: true });
-      const readyProductUpdate = {
+
+      const returnedProductTransaction = {
         modelId: modelId,
         count: fields.count,
+        TransactionType: parseInt(transactionType),
       };
-      await exportReadyProductTransaction(readyProductUpdate);
+      await exportReturnedProduct(returnedProductTransaction);
       this.setState({
         loading: false,
         name: "",
@@ -77,7 +89,8 @@ class ReadyProducExportDetailForm extends Form {
   };
 
   render() {
-    const { fields, errors, loading, name, count, sapCode } = this.state;
+    const { fields, errors, loading, name, count, sapCode, barCode } =
+      this.state;
     return (
       <>
         {loading && <ReactLoading className="test" type="spin" color="blue" />}
@@ -103,6 +116,19 @@ class ReadyProducExportDetailForm extends Form {
               sapCode,
               null,
               errors.sapCode,
+              true,
+              "",
+              null,
+              true
+            )}
+            <p className="mt-2"> </p>
+            {this.renderInput(
+              "barcode",
+              "BAR CODE",
+              "",
+              barCode,
+              null,
+              errors.barCode,
               true,
               "",
               null,
@@ -142,5 +168,5 @@ class ReadyProducExportDetailForm extends Form {
 }
 
 export default () => (
-  <ReadyProducExportDetailForm params={useParams()} location={useLocation()} />
+  <ReturnProducExportDetail params={useParams()} location={useLocation()} />
 );

@@ -289,6 +289,23 @@ const NavBar = ({ user }) => {
                     Kirish
                   </NavLink>
                 </li>
+                <li>
+                  <NavLink
+                    to="/returned-product-export"
+                    className="dropdown-item"
+                  >
+                    Chiqish
+                  </NavLink>
+                </li>
+
+                <li>
+                  <NavLink
+                    to="/returned-product-report"
+                    className="dropdown-item"
+                  >
+                    Hisobot
+                  </NavLink>
+                </li>
               </ul>
             </li>
           </ul>

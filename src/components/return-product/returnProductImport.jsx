@@ -14,15 +14,15 @@ import {
 import ReturnedProductImportTable from "../tables/ReturnedProductImportTable";
 
 /**
- *  public enum ReturnedProductTransactionType
+    public enum ReturnedProductTransactionType
     {
         All = 0,
-        Import = 1,
-        ImportFromRepair = 2,
-        ImportUtilize = 3,
-        Export = 4,
-        ExportToRepair = 5,
-        ExportUtilize = 6,
+        ImportFromFactoryToBuffer = 1,
+        ExportFromRepairToStore = 2,
+        ExportFromRepairToUtilize = 3,
+        ExportFromStoreToFactory = 4,
+        ExportFromBufferToRepair = 5,
+        ExportFromStoreToUtilize = 6,
         Deleted = 7,
     }
  */
@@ -37,12 +37,6 @@ class ReturnProductImport extends Form {
     errors: {},
     loading: false,
     authorized: false,
-    filters: [
-      { id: 1, name: "OMBORGA KIRISH (ZAVODDAN)" },
-      { id: 2, name: "OMBORGA KIRISH (REMONTDAN)" },
-      { id: 3, name: "OMBORGA KIRISH (UTILIZATSIYA)" },
-    ],
-    selectedImportType: "",
   };
 
   componentDidUpdate() {
@@ -55,39 +49,30 @@ class ReturnProductImport extends Form {
 
   async componentDidMount() {
     const { user } = this.props;
-    this.setState({ authorized: user != null });
-  }
-
-  handleFilterChange = async ({ target }) => {
-    const { value: id } = target;
-    this.setState({ loading: true });
-
+    this.setState({ loading: true, authorized: user != null });
     try {
       const today = format(new Date(), "yyyy-MM-dd HH:mm:ss");
-      const { data } = await getReturnedProductByDate(today, id);
+      const { data } = await getReturnedProductByDate(today, 1); // ImportFromFactoryToBuffer
       const imports = data.map((obj, index) => ({
         ...obj,
         index: index + 1,
       }));
-      this.setState({ imports, selectedImportType: id });
+      this.setState({ imports });
     } catch (ex) {
       toast(ex.response.data.message);
     } finally {
       this.setState({ loading: false });
     }
-  };
+  }
 
   handleDelete = async ({ id }) => {
-    const { imports, selectedImportType } = this.state;
+    const { imports } = this.state;
     this.setState({ loading: true });
 
     try {
       await deleteReturnedProductTransaction(id);
       const today = format(new Date(), "yyyy-MM-dd HH:mm:ss");
-      const { data } = await getReturnedProductByDate(
-        today,
-        selectedImportType
-      );
+      const { data } = await getReturnedProductByDate(today, 1);
       const imports = data.map((obj, index) => ({
         ...obj,
         index: index + 1,
@@ -143,7 +128,7 @@ class ReturnProductImport extends Form {
           barcode,
           modelId: model.id,
           count,
-          TransactionType: parseInt(selectedImportType),
+          TransactionType: 1, // ImportFromFactoryToBuffer
         };
 
         await importReturnedProduct(returnedProductCreate);
@@ -151,7 +136,7 @@ class ReturnProductImport extends Form {
         const today = format(new Date(), "yyyy-MM-dd HH:mm:ss");
         const { data } = await getReturnedProductByDate(
           today,
-          selectedImportType
+          1 // ImportFromFactoryToBuffer
         );
 
         const imports = data.map((obj, index) => ({
@@ -169,7 +154,6 @@ class ReturnProductImport extends Form {
           });
         }
       } catch (ex) {
-        console.log(ex);
         toast.error(ex.response.data.message);
       } finally {
         this.setState({ loading: false });
@@ -178,15 +162,8 @@ class ReturnProductImport extends Form {
   };
 
   render() {
-    const {
-      imports,
-      sortColumn,
-      loading,
-      fields,
-      errors,
-      authorized,
-      filters,
-    } = this.state;
+    const { imports, sortColumn, loading, fields, errors, authorized } =
+      this.state;
     return (
       <div className="row">
         {loading && (
@@ -194,8 +171,6 @@ class ReturnProductImport extends Form {
         )}
 
         <div className="col">
-          {this.renderSelect("Qaerdan?", filters, "", this.handleFilterChange)}
-          <p className="mt-2"> </p>
           {this.renderInput(
             "import",
             "",

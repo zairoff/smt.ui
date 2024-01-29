@@ -5,15 +5,16 @@ import http from "./httpService";
     public enum ReturnedProductTransactionType
     {
         All = 0,
-        Import = 1,
-        ImportFromRepair = 2,
-        ImportUtilize = 3,
-        Export = 4,
-        ExportToRepair = 5,
-        ExportUtilize = 6,
+        ImportFromFactoryToBuffer = 1,
+        ExportFromRepairToStore = 2,
+        ExportFromRepairToUtilize = 3,
+        ExportFromStoreToFactory = 4,
+        ExportFromBufferToRepair = 5,
+        ExportFromStoreToUtilize = 6,
         Deleted = 7,
     }
  */
+
 const endPoint = config.apiUrl + "ReturnedProductTransaction";
 
 function returnedProductUrl(id) {
@@ -56,7 +57,7 @@ export function getReturnedProductByDate(date, transactionType) {
 
 export function getReturnedProductByDateRange(from, to, transactionType) {
   const query = endPoint.concat(
-    "/GetByEnterDateRange?from=" +
+    "/GetByDateRange?from=" +
       from +
       "&to=" +
       to +
@@ -68,6 +69,30 @@ export function getReturnedProductByDateRange(from, to, transactionType) {
 
 export function importReturnedProduct(returnedProduct) {
   return http.post(endPoint + "/import", returnedProduct);
+}
+
+export function exportReturnedProduct(returnedProduct) {
+  return http.post(endPoint + "/export", returnedProduct);
+}
+
+export function getStoreState() {
+  const query = endPoint.concat("/GetStoreState");
+  return http.get(query);
+}
+
+export function getRepairState() {
+  const query = endPoint.concat("/GetRepairState");
+  return http.get(query);
+}
+
+export function getUtilizeState() {
+  const query = endPoint.concat("/GetUtilizeState");
+  return http.get(query);
+}
+
+export function getBufferState() {
+  const query = endPoint.concat("/GetBufferState");
+  return http.get(query);
 }
 
 export function deleteReturnedProductTransaction(id) {

@@ -43,6 +43,10 @@ import ReadyProductReport from "./components/ready-product/readyProductReport";
 import DetailedReadyProductReport from "./components/ready-product/detailedReadyProductReport";
 import PlanActivityReport from "./components/forms/planActivityReport";
 import ReturnProductImport from "./components/return-product/returnProductImport";
+import ReturnProductExport from "./components/return-product/returnProductExport";
+import ReturnProducExportDetail from "./components/return-product/returnProducExportDetail";
+import ReturnProductTransactions from "./components/return-product/returnProductTransactions";
+import ReturnProductReport from "./components/return-product/returnProductReport";
 
 class App extends Component {
   state = {};
@@ -140,6 +144,26 @@ class App extends Component {
               <Route
                 path="/returned-product-import"
                 element={<ReturnProductImport user={user} />}
+              />
+
+              <Route
+                path="/returned-product-export"
+                element={<ReturnProductExport user={user} />}
+              />
+
+              <Route
+                path="/returned-product-export/:id"
+                element={<ReturnProducExportDetail />}
+              />
+
+              <Route
+                path="/returned-product-transactions"
+                element={<ReturnProductTransactions user={user} />}
+              />
+
+              <Route
+                path="/returned-product-report"
+                element={<ReturnProductReport />}
               />
 
               <Route path="/logout" element={<Logout />} />
