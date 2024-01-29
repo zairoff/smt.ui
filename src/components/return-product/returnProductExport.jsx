@@ -6,10 +6,12 @@ import {
   exportReturnedProduct,
   getBufferState,
   getRepairState,
+  getState,
   getStoreState,
   getUtilizeState,
 } from "../../services/returnedProductTransactionService";
 import ReturnedProductExportTable from "../tables/ReturnedProductExportTable";
+import { getModelByBarcode } from "../../services/modelService";
 
 /**
     public enum ReturnedProductTransactionType
@@ -26,6 +28,8 @@ import ReturnedProductExportTable from "../tables/ReturnedProductExportTable";
  */
 
 class ReturnProductExport extends Form {
+  barcodeRef = React.createRef();
+
   state = {
     errors: {},
     data: [],
@@ -40,6 +44,85 @@ class ReturnProductExport extends Form {
       { id: 5, name: "BUFFERDAN CHIQISH (REMONTGA)" },
     ],
     selectedTransactionType: "",
+    fields: { export: "" },
+  };
+
+  componentDidUpdate() {
+    this.setFocusOnBarcode();
+  }
+
+  setFocusOnBarcode() {
+    this.barcodeRef.current.focus();
+  }
+
+  handleExportKeyPress = async (e) => {
+    if (e.key === "Enter") {
+      try {
+        let count = 0;
+        const barcode = e.target.value;
+        const { selectedTransactionType, data } = this.state;
+        const fiveLetterCode = barcode.substring(0, 5);
+
+        if (barcode.length == 14 && !barcode.includes("-")) {
+          count = 1;
+        }
+
+        if (count === "" || count == 0 || fiveLetterCode === "") {
+          toast.warning("BARCODE BOTO'G'RI");
+          return;
+        }
+
+        this.setState({
+          loading: true,
+          fields: { export: "" },
+        });
+
+        const { data: model } = await getModelByBarcode(fiveLetterCode);
+        if (model === "" || model === undefined) {
+          toast.warning("MODEL TOPILMADI");
+          return;
+        }
+
+        const currentModel = data.filter((x) => x.model.id == model.id);
+
+        console.log("currentModel", currentModel);
+        console.log("selectedTransactionType", selectedTransactionType);
+
+        if (
+          currentModel == null ||
+          currentModel == undefined ||
+          currentModel == ""
+        ) {
+          toast.warning("MODEL TOPILMADI");
+          return;
+        }
+
+        const returnedProductTransaction = {
+          barcode,
+          modelId: model.id,
+          count,
+          TransactionType: parseInt(selectedTransactionType), // ImportFromFactoryToBuffer
+        };
+
+        await exportReturnedProduct(returnedProductTransaction);
+
+        const { data: newData } = await getState(
+          parseInt(selectedTransactionType)
+        );
+
+        this.setState({
+          fields: {
+            export: "",
+          },
+          data: newData,
+          loading: false,
+        });
+      } catch (ex) {
+        toast.error(ex.response.data.message);
+      } finally {
+        this.setState({ loading: false });
+      }
+    }
   };
 
   async componentDidMount() {
@@ -56,11 +139,12 @@ class ReturnProductExport extends Form {
         count: transaction.count,
         TransactionType: parseInt(selectedTransactionType),
       };
+
       await exportReturnedProduct(returnedProductTransaction);
-      const { data } = await this.loadDataAsync(
-        parseInt(selectedTransactionType)
-      );
-      this.setState({ loading: false, data });
+
+      const { data } = await getState(parseInt(selectedTransactionType));
+
+      this.setState({ data });
     } catch (ex) {
       this.setState({ loading: false });
       toast.error(ex.response.data.title);
@@ -69,49 +153,18 @@ class ReturnProductExport extends Form {
 
   handleFilterChange = async ({ target }) => {
     const { value: id } = target;
-    this.loadDataAsync(id);
-  };
-
-  async loadDataAsync(id) {
-    this.setState({ loading: true });
-
     try {
-      switch (id) {
-        case "2":
-        case "3": {
-          const { data } = await getRepairState();
+      this.setState({ loading: true });
 
-          this.setState({ data, selectedTransactionType: id });
-          break;
-        }
-        case "4": {
-          const { data } = await getStoreState();
+      const { data } = await getState(parseInt(id));
 
-          this.setState({ data, selectedTransactionType: id });
-          break;
-        }
-        case "5": {
-          const { data } = await getBufferState();
-
-          this.setState({ data, selectedTransactionType: id });
-          break;
-        }
-        case "6": {
-          const { data } = await getUtilizeState();
-
-          this.setState({ data, selectedTransactionType: id });
-          break;
-        }
-
-        default:
-          break;
-      }
+      this.setState({ data, selectedTransactionType: id });
     } catch (ex) {
       toast(ex.response.data.message);
     } finally {
       this.setState({ loading: false });
     }
-  }
+  };
 
   render() {
     const {
@@ -120,6 +173,8 @@ class ReturnProductExport extends Form {
       loading,
       authorized,
       filters,
+      fields,
+      errors,
       selectedTransactionType,
     } = this.state;
 
@@ -131,6 +186,20 @@ class ReturnProductExport extends Form {
           )}
           <div className="col">
             {this.renderSelect("Qaerga?", filters, "", this.handleFilterChange)}
+            <p className="mt-2"> </p>
+            {this.renderInput(
+              "export",
+              "",
+              "",
+              fields.export,
+              this.handleInputChange,
+              errors.export,
+              true,
+              "text",
+              this.barcodeRef,
+              false,
+              this.handleExportKeyPress
+            )}
             <p className="mt-2"> </p>
             <ReturnedProductExportTable
               rows={data}

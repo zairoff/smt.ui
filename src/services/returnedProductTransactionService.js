@@ -75,23 +75,8 @@ export function exportReturnedProduct(returnedProduct) {
   return http.post(endPoint + "/export", returnedProduct);
 }
 
-export function getStoreState() {
-  const query = endPoint.concat("/GetStoreState");
-  return http.get(query);
-}
-
-export function getRepairState() {
-  const query = endPoint.concat("/GetRepairState");
-  return http.get(query);
-}
-
-export function getUtilizeState() {
-  const query = endPoint.concat("/GetUtilizeState");
-  return http.get(query);
-}
-
-export function getBufferState() {
-  const query = endPoint.concat("/GetBufferState");
+export function getState(transactionType) {
+  const query = endPoint.concat("/GetState?transactionType=" + transactionType);
   return http.get(query);
 }
 
