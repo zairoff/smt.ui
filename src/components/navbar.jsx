@@ -268,6 +268,16 @@ const NavBar = ({ user }) => {
                     Hisobot
                   </NavLink>
                 </li>
+                {user && (
+                  <li>
+                    <NavLink
+                      to="/ready-product-transactions"
+                      className="dropdown-item"
+                    >
+                      Transaksiyalar
+                    </NavLink>
+                  </li>
+                )}
               </ul>
             </li>
             <li className="nav-item dropdown">

@@ -68,7 +68,7 @@ export function getTransactionByProduct(productId) {
 
 export function getTransactionByDateRange(from, to, transactionType) {
   const query = endPoint.concat(
-    "/GetByEnterDateRange?from=" +
+    "/GetByDateRange?from=" +
       from +
       "&to=" +
       to +
@@ -103,6 +103,10 @@ export function importReadyProductTransaction(readyProduct) {
 
 export function exportReadyProductTransaction(readyProduct) {
   return http.put(endPoint, readyProduct);
+}
+
+export function changeReadyProductTransaction(id, count) {
+  return http.put(endPoint + "/" + id + "/change?count=" + count);
 }
 
 export function deleteReadyProductTransaction(id) {
