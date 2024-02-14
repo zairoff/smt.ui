@@ -4,7 +4,10 @@ import _ from "lodash";
 import Form from "../forms/form";
 import { toast } from "react-toastify";
 import { format } from "date-fns";
-import { getModelByBarcode } from "../../services/modelService";
+import {
+  getModelByBarcode,
+  getModelBySapCode,
+} from "../../services/modelService";
 import ReadyProductImportTable from "../tables/readyProductImportTable";
 import {
   deleteReturnedProductTransaction,
@@ -103,23 +106,42 @@ class ReturnProductImport extends Form {
       //3ACOP----10
       try {
         let count = 0;
+        let sapCode = "";
+        let fiveLetterCode = "";
 
-        const fiveLetterCode = barcode.substring(0, 5);
-
-        if (barcode.length == 14 && !barcode.includes("-")) {
+        if (
+          barcode.length == 14 &&
+          !barcode.includes("-") &&
+          !barcode.includes("/")
+        ) {
+          fiveLetterCode = barcode.substring(0, 5);
           count = 1;
         }
 
-        if (barcode.includes("-")) {
+        if (barcode.includes("-") && !barcode.includes("/")) {
+          fiveLetterCode = barcode.substring(0, 5);
           const indexOf = barcode.indexOf("-");
           count = barcode.substring(indexOf + 4, barcode.length);
         }
 
         if (count === "" || count == 0 || fiveLetterCode === "") {
-          return;
+          const indexOf = barcode.indexOf("-");
+          sapCode = barcode.substring(0, indexOf);
+          count = barcode.substring(indexOf + 4, barcode.length);
+
+          console.log(sapCode);
+          console.log(count);
+
+          if (count === "" || sapCode === "") {
+            return;
+          }
         }
 
-        const { data: model } = await getModelByBarcode(fiveLetterCode);
+        const { data: model } =
+          sapCode != "" && count != 0
+            ? await getModelBySapCode(sapCode)
+            : await getModelByBarcode(fiveLetterCode);
+
         if (model === "" || model === undefined) {
           return;
         }

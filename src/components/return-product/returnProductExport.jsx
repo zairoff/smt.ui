@@ -11,7 +11,10 @@ import {
   getUtilizeState,
 } from "../../services/returnedProductTransactionService";
 import ReturnedProductExportTable from "../tables/ReturnedProductExportTable";
-import { getModelByBarcode } from "../../services/modelService";
+import {
+  getModelByBarcode,
+  getModelBySapCode,
+} from "../../services/modelService";
 
 /**
     public enum ReturnedProductTransactionType
@@ -59,17 +62,30 @@ class ReturnProductExport extends Form {
     if (e.key === "Enter") {
       try {
         let count = 0;
+        let sapCode = "";
+        let fiveLetterCode = "";
+
         const barcode = e.target.value;
         const { selectedTransactionType, data } = this.state;
-        const fiveLetterCode = barcode.substring(0, 5);
 
-        if (barcode.length == 14 && !barcode.includes("-")) {
+        if (
+          barcode.length == 14 &&
+          !barcode.includes("-") &&
+          !barcode.includes("/")
+        ) {
+          fiveLetterCode = barcode.substring(0, 5);
           count = 1;
         }
 
         if (count === "" || count == 0 || fiveLetterCode === "") {
-          toast.warning("BARCODE BOTO'G'RI");
-          return;
+          const indexOf = barcode.indexOf("-");
+          sapCode = barcode.substring(0, indexOf);
+          count = barcode.substring(indexOf + 4, barcode.length);
+          if (count === "" || sapCode === "") {
+            toast.warning("BARCODE NOTO'G'RI");
+
+            return;
+          }
         }
 
         this.setState({
@@ -77,7 +93,10 @@ class ReturnProductExport extends Form {
           fields: { export: "" },
         });
 
-        const { data: model } = await getModelByBarcode(fiveLetterCode);
+        const { data: model } =
+          sapCode != "" && count != 0
+            ? getModelBySapCode
+            : await getModelByBarcode(fiveLetterCode);
         if (model === "" || model === undefined) {
           toast.warning("MODEL TOPILMADI");
           return;
