@@ -52,7 +52,7 @@ class ReadyProductTransactionsDetailed extends Form {
 
     try {
       this.setState({ loading: true });
-      await changeReadyProductTransaction(transactionId, count);
+      await changeReadyProductTransaction(transactionId, fields.count);
       this.setState({
         loading: false,
         name: "",
