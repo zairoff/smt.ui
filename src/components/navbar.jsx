@@ -99,6 +99,9 @@ const NavBar = ({ user }) => {
                   <NavLink to="/plan-activity-report" className="dropdown-item">
                     Report
                   </NavLink>
+                  <NavLink to="/plan-hourly" className="dropdown-item">
+                    Plan hourly
+                  </NavLink>
                 </li>
               </ul>
             </li>

@@ -49,6 +49,7 @@ import ReturnProductTransactions from "./components/return-product/returnProduct
 import ReturnProductReport from "./components/return-product/returnProductReport";
 import ReadyProductTransactions from "./components/ready-product/readyProductTransactions";
 import ReadyProductTransactionsDetailed from "./components/ready-product/readyProductTransactionsDetailed";
+import HourlyPlan from "./components/forms/hourlyPlan";
 
 class App extends Component {
   state = {};
@@ -177,6 +178,8 @@ class App extends Component {
                 path="/returned-product-report"
                 element={<ReturnProductReport />}
               />
+
+              <Route path="/plan-hourly" element={<HourlyPlan />} />
 
               <Route path="/logout" element={<Logout />} />
               <Route path="/login" element={<Login />} />
