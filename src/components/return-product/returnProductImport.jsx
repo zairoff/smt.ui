@@ -104,6 +104,7 @@ class ReturnProductImport extends Form {
       const barcode = e.target.value;
       const { selectedImportType } = this.state;
       //3ACOP----10
+      // SSBSMT32/0026----30
       try {
         let count = 0;
         let sapCode = "";
@@ -193,6 +194,9 @@ class ReturnProductImport extends Form {
         )}
 
         <div className="col">
+          <button className="btn p-2 btn-primary fw-bold">
+            QAYTGAN MAXSULOTLAR
+          </button>
           {this.renderInput(
             "import",
             "",

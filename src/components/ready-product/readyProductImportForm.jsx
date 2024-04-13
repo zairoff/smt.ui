@@ -149,6 +149,9 @@ class ReadyProductImportForm extends Form {
           <ReactLoading className="loading" type="spin" color="blue" />
         )}
         <div className="col">
+          <button className="btn p-2 btn-success fw-bold">
+            TAYYOR MAXSULOTLAR
+          </button>
           {this.renderInput(
             "import",
             "",
