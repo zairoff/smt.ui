@@ -215,10 +215,6 @@ class HourlyPlan extends Form {
     this.setState({ sortColumn });
   };
 
-  handleNotify = async () => {
-    hourlyPlanNotify();
-  };
-
   render() {
     const {
       fields,
@@ -283,13 +279,6 @@ class HourlyPlan extends Form {
           )}
           <p className="mt-2"> </p>
           {this.renderButton("Save")}
-          <p className="mt-2"> </p>
-          {this.renderButton(
-            "Notify",
-            "button",
-            this.handleNotify,
-            "btn btn-success text-white btn-lg w-100"
-          )}
           <p className="mb-2"> </p>
         </div>
         <div className="col">
