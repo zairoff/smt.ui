@@ -321,7 +321,27 @@ const NavBar = ({ user }) => {
                 </li>
               </ul>
             </li>
+
+            <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Printer
+              </a>
+              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <NavLink to="/component-print" className="dropdown-item">
+                    QR
+                  </NavLink>
+                </li>
+              </ul>
+            </li>
           </ul>
+
           <ul className="navbar-nav ms-auto">
             {!user && (
               <React.Fragment>
