@@ -319,6 +319,15 @@ const NavBar = ({ user }) => {
                     Hisobot
                   </NavLink>
                 </li>
+
+                <li>
+                  <NavLink
+                    to="/returned-product-transactions"
+                    className="dropdown-item"
+                  >
+                    Transaksiyalar
+                  </NavLink>
+                </li>
               </ul>
             </li>
 
