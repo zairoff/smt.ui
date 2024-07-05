@@ -52,6 +52,7 @@ import ReadyProductTransactionsDetailed from "./components/ready-product/readyPr
 import HourlyPlan from "./components/forms/hourlyPlan";
 import ComponentBulkImport from "./components/store/componentBulkImport";
 import ComponentPrint from "./components/store/componentPrint";
+import ComponentAdd from "./components/store/componentAdd";
 
 class App extends Component {
   state = {};
@@ -180,6 +181,8 @@ class App extends Component {
                 path="/returned-product-report"
                 element={<ReturnProductReport />}
               />
+
+              <Route path="/component" element={<ComponentAdd />} />
 
               <Route
                 path="/component-import"

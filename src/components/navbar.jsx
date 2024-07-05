@@ -242,6 +242,11 @@ const NavBar = ({ user }) => {
                       Line-Defect
                     </NavLink>
                   </li>
+                  <li>
+                    <NavLink to="/component" className="dropdown-item">
+                      Component
+                    </NavLink>
+                  </li>
                 </ul>
               </li>
             )}
