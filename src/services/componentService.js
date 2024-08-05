@@ -19,6 +19,10 @@ export function addComponents(components) {
   return http.post(endPoint + "/bulk", components);
 }
 
+export function connectComponents(components) {
+  return http.post(endPoint + "/connect", components);
+}
+
 export function deleteComponent(id) {
   return http.delete(`${endPoint}/${id}`);
 }

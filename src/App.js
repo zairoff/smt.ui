@@ -53,6 +53,7 @@ import HourlyPlan from "./components/forms/hourlyPlan";
 import ComponentBulkImport from "./components/store/componentBulkImport";
 import ComponentPrint from "./components/store/componentPrint";
 import ComponentAdd from "./components/store/componentAdd";
+import ComponentConnectToComponent from "./components/store/componentConnectToComponent";
 
 class App extends Component {
   state = {};
@@ -183,6 +184,11 @@ class App extends Component {
               />
 
               <Route path="/component" element={<ComponentAdd />} />
+
+              <Route
+                path="/component-connect"
+                element={<ComponentConnectToComponent />}
+              />
 
               <Route
                 path="/component-import"

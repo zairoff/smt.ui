@@ -172,6 +172,7 @@ const NavBar = ({ user }) => {
                     Dashboard
                   </NavLink>
                 </li>
+
                 {user && (
                   <>
                     <li>
@@ -245,6 +246,16 @@ const NavBar = ({ user }) => {
                   <li>
                     <NavLink to="/component" className="dropdown-item">
                       Component
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/component-connect" className="dropdown-item">
+                      Component connect
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/component-import" className="dropdown-item">
+                      Component bulk
                     </NavLink>
                   </li>
                 </ul>
