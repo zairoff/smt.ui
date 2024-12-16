@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 class FtqPlanTable extends Component {
   columns = [
     { path: "model.name", label: "MODEL" },
+    { path: "model.sapCode", label: "SAP" },
     { path: "requiredCount", label: "PLAN" },
     { path: "producedCount", label: "PRODUCED" },
   ];
