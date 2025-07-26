@@ -24,6 +24,7 @@ class ModelForm extends Form {
       model: "",
       barcode: "",
       sapCode: "",
+      boardId: "",
     },
     productBrand: {},
     products: [],
@@ -112,6 +113,7 @@ class ModelForm extends Form {
         name: fields.model,
         sapCode: fields.sapCode,
         barcode: fields.barcode,
+        boardId: fields.boardId,
       });
       const newData = [result, ...data];
       this.setState({
@@ -214,6 +216,17 @@ class ModelForm extends Form {
             "Sap code",
             "",
             fields.sapCode,
+            this.handleInputChange,
+            errors.model,
+            true,
+            ""
+          )}
+          <p className="mt-2"> </p>
+          {this.renderInput(
+            "boardId",
+            "BoardID",
+            "",
+            fields.boardId,
             this.handleInputChange,
             errors.model,
             true,

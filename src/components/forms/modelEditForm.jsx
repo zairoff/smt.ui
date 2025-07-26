@@ -12,6 +12,7 @@ class ModelEditForm extends Form {
       name: "",
       barcode: "",
       sapCode: "",
+      boardId: "",
     },
     productBrand: {},
     brandId: "",
@@ -22,13 +23,14 @@ class ModelEditForm extends Form {
 
   async componentDidMount() {
     const { data } = this.props.location.state;
-    const { id, name, barcode, sapCode, productBrand } = data;
+    const { id, name, barcode, sapCode, boardId, productBrand } = data;
     this.setState({
       fields: {
         id,
         name,
         barcode,
         sapCode,
+        boardId,
       },
       productBrand,
       loading: false,
@@ -37,7 +39,7 @@ class ModelEditForm extends Form {
 
   handleSubmit = async () => {
     const { fields } = this.state;
-    const { id, name, barcode, sapCode } = fields;
+    const { id, name, barcode, sapCode, boardId } = fields;
 
     if (
       name === "" ||
@@ -45,7 +47,9 @@ class ModelEditForm extends Form {
       barcode === "" ||
       barcode === undefined ||
       sapCode === "" ||
-      sapCode === undefined
+      sapCode === undefined ||
+      boardId === "" ||
+      boardId === undefined
     ) {
       toast.warning("Kerakli ma'lumotlarni kiriting");
       return;
@@ -56,6 +60,7 @@ class ModelEditForm extends Form {
         name,
         barcode,
         sapCode,
+        boardId,
       };
       await updateModel(id, modelUpdate);
       this.setState({ loading: false });
@@ -103,6 +108,17 @@ class ModelEditForm extends Form {
               fields.sapCode,
               this.handleInputChange,
               errors.sapCode,
+              true,
+              ""
+            )}
+            <p className="mt-2"> </p>
+            {this.renderInput(
+              "boardId",
+              "BoardID",
+              "",
+              fields.boardId,
+              this.handleInputChange,
+              errors.boardId,
               true,
               ""
             )}

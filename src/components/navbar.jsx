@@ -196,6 +196,35 @@ const NavBar = ({ user }) => {
               </ul>
             </li>
 
+            <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Board Flow
+              </a>
+              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <NavLink to="/board-report" className="dropdown-item">
+                    Report
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/board-flow" className="dropdown-item">
+                    Flow
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/qr-reader-add" className="dropdown-item">
+                    QR Reader
+                  </NavLink>
+                </li>
+              </ul>
+            </li>
+
             {user && (
               <li className="nav-item dropdown">
                 <a

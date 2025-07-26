@@ -51,15 +51,22 @@ class ComponentBulkImport extends Form {
     const workbook = XLSX.read(data);
     const worksheet = workbook.Sheets[workbook.SheetNames[0]];
     const jsonData = XLSX.utils.sheet_to_json(worksheet);
-    const raw_data = jsonData.filter(
-      (x) =>
-        //x["PlaceCode"] != undefined &&
-        x["PartNumber"] != undefined &&
-        //x["RCode"] != undefined &&
-        x["SapPlace"] != undefined &&
-        x["Specification"] != undefined &&
-        x["StorePlaceNumber"] != undefined
-    );
+    //console.log("reading input file:", jsonData);
+    const raw_data = jsonData
+      .filter(
+        (x) =>
+          //x["PlaceCode"] != undefined &&
+          x["PartNumber"] != undefined &&
+          x["RCode"] != undefined &&
+          //x["SapPlace"] != undefined &&
+          x["Specification"] != undefined
+        //x["StorePlaceNumber"] != undefined
+      )
+      .map((item) =>
+        Object.fromEntries(
+          Object.entries(item).map(([key, value]) => [key, String(value)])
+        )
+      );
 
     console.log(raw_data);
     try {
