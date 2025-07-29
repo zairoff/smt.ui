@@ -5,15 +5,11 @@ import Form from "../forms/form";
 import { toast } from "react-toastify";
 import { format } from "date-fns";
 import {
-  addBoardReport,
-  deleteBoardReport,
-  getBoardReport,
-  getBoardReportByReaderAndDate,
+  GetBoardFlowReports,
+  GetMissingBoardFlowReports,
+  GetPassedBoardFlowReports,
 } from "../../services/board-flow/boardReportService";
-import { getQrReaders } from "../../services/board-flow/qrReaderService";
-import BoardReportTable from "../tables/board-flow/boardReportTable";
 import BoardFlow from "./boardFlow";
-import { line } from "fontawesome";
 import BoardFlowTable from "../tables/board-flow/boardFlowTable";
 
 /*
@@ -27,14 +23,13 @@ import BoardFlowTable from "../tables/board-flow/boardFlowTable";
 class BoardStatistics extends Form {
   state = {
     sortColumn: { path: "", order: "asc" },
-    fields: { qrCode: "", from: "", to: "" },
+    fields: { from: "", to: "" },
     successes: [],
     failures: [],
     errors: {},
-    loading: true,
-    selectedReader: "",
-    readers: [],
+    loading: false,
     data: [],
+    reports: [],
   };
 
   async componentDidMount() {}
@@ -45,32 +40,47 @@ class BoardStatistics extends Form {
 
   handlePageChange = (page) => {};
 
-  handleSelectChange = async ({ target }) => {
-    const { value } = target;
-    console.log(target);
-    if (!value) return;
+  handleSearch = async () => {
+    const { fields } = this.state;
 
-    const today = format(new Date(), "yyyy-MM-dd");
-    const { data } = await getBoardReportByReaderAndDate(value, today);
-    // TODO: Need to find other way. Here extra server call occuring
-    this.setState({
-      selectedReader: value,
-      data,
-    });
+    if (!fields.from || !fields.to) return;
+
+    this.setState({ loading: true });
+    try {
+      const { data } = await GetBoardFlowReports(fields.from, fields.to);
+      console.log(data);
+      this.setState({ data });
+    } catch (ex) {
+      toast.error(ex.response.data.message);
+    } finally {
+      this.setState({ loading: false });
+    }
   };
 
-  handleDelete = async ({ id }) => {};
+  handleCircleClick = async ({ id, passed }) => {
+    console.log("Clicked Reader ID:", id);
+    console.log("pased:", passed);
+
+    const { fields } = this.state;
+
+    if (!fields.from || !fields.to) return;
+
+    this.setState({ loading: true });
+    try {
+      const { data } = passed
+        ? await GetPassedBoardFlowReports(id, fields.from, fields.to)
+        : await GetMissingBoardFlowReports(id, fields.from, fields.to);
+      console.log(data);
+      this.setState({ reports: data });
+    } catch (ex) {
+      toast.error(ex.response.data.message);
+    } finally {
+      this.setState({ loading: false });
+    }
+  };
 
   render() {
-    const { data, filters, sortColumn, fields, loading, transactionType } =
-      this.state;
-    const lines = [
-      { id: 1, name: "Parmi", passed: 21, failed: 2 },
-      { id: 2, name: "Jutze", passed: 21, failed: 1 },
-      { id: 3, name: "Valnavoy (PCB)", passed: 21, failed: 1 },
-      { id: 4, name: "Aging", passed: 21, failed: 1 },
-      { id: 5, name: "QC", passed: 21, failed: 1 },
-    ];
+    const { data, reports, sortColumn, fields, loading } = this.state;
     return (
       <>
         <div className="mb-4">
@@ -108,10 +118,13 @@ class BoardStatistics extends Form {
             </div>
           </div>
         </div>
-        <BoardFlow lines={lines}></BoardFlow>
+        <BoardFlow
+          lines={data}
+          onCircleClick={this.handleCircleClick}
+        ></BoardFlow>
         <div className="mt-4">
           <BoardFlowTable
-            rows={data}
+            rows={reports}
             sortColumn={sortColumn}
             onDelete={this.handleDelete}
             onSort={this.handleSort}

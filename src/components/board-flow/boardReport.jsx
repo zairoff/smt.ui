@@ -45,7 +45,6 @@ class BoardReport extends Form {
   async componentDidMount() {
     try {
       const { data: readers } = await getQrReaders();
-      console.log(readers);
       this.setState({ readers });
     } catch (ex) {
       toast(ex.response.data.message);
@@ -56,24 +55,23 @@ class BoardReport extends Form {
 
   handleDelete = async ({ id }) => {
     this.setState({ loading: true });
-    const { data, fields } = this.state;
+    const { data, selectedReader } = this.state;
     try {
       await deleteBoardReport(id);
       const today = format(new Date(), "yyyy-MM-dd");
       const { data: imports } = await getBoardReportByReaderAndDate(
-        fields.qrReaderId,
+        selectedReader,
         today
       );
       data = imports.map((obj, index) => ({
         ...obj,
         index: index + 1,
       }));
-      this.setState({ loading: false, data });
     } catch (ex) {
       this.setState({ data });
       this.catchExceptionMessage(ex, "product");
     } finally {
-      this.setState({ loading: false });
+      this.setState({ loading: false, data });
     }
   };
 
@@ -98,7 +96,10 @@ class BoardReport extends Form {
         });
 
         const today = format(new Date(), "yyyy-MM-dd HH:mm:ss");
-        const { data } = await getBoardReport(fields.qrReaderId, today);
+        const { data } = await getBoardReportByReaderAndDate(
+          selectedReader,
+          today
+        );
 
         const imports = data.map((obj, index) => ({
           ...obj,
@@ -107,25 +108,24 @@ class BoardReport extends Form {
 
         if (Object.keys(imports).length > 0) {
           this.setState({
-            fields: {
-              qrCode: "",
-            },
             data: imports,
-            loading: false,
           });
         }
       } catch (ex) {
-        console.log(ex);
         toast.error(ex.response.data.message);
       } finally {
-        this.setState({ loading: false });
+        this.setState({
+          loading: false,
+          fields: {
+            qrCode: "",
+          },
+        });
       }
     }
   };
 
   handleSelectChange = async ({ target }) => {
     const { value } = target;
-    console.log(target);
     if (!value) return;
 
     const today = format(new Date(), "yyyy-MM-dd");
@@ -140,7 +140,6 @@ class BoardReport extends Form {
   render() {
     const { data, sortColumn, loading, fields, errors, readers } = this.state;
 
-    console.log(data);
     return (
       <div className="row">
         {loading && (
