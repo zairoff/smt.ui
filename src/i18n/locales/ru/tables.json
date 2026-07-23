@@ -1,0 +1,298 @@
+{
+  "hourlyPlanTable": {
+    "columns": {
+      "id": "ID",
+      "line": "Линия",
+      "model": "Модель",
+      "plan": "План",
+      "produced": "Произведено",
+      "date": "Дата"
+    }
+  },
+  "planActivityReportTable": {
+    "columns": {
+      "id": "ID",
+      "line": "Линия",
+      "dateEntered": "Дата внесения",
+      "issue": "Несоответствие",
+      "reason": "Причина",
+      "correctiveAction": "Корректирующие действия",
+      "deadline": "Срок",
+      "responsible": "Ответственные",
+      "status": "Статус"
+    }
+  },
+  "planActivityTable": {
+    "columns": {
+      "id": "ID",
+      "line": "Линия",
+      "issue": "Несоответствие",
+      "reason": "Причина",
+      "correctiveAction": "Корректирующие действия",
+      "responsible": "Ответственные",
+      "status": "Статус",
+      "dateEntered": "Дата внесения",
+      "deadline": "Срок"
+    }
+  },
+  "readyProductTransactionsTable": {
+    "columns": {
+      "model": "Модель",
+      "sapCode": "SAP-код",
+      "barCode": "Штрихкод",
+      "receivedDate": "Приход",
+      "count": "Количество"
+    }
+  },
+  "returnedProductExportTable": {
+    "columns": {
+      "model": "Модель",
+      "sapCode": "SAP-код",
+      "barCode": "Штрихкод",
+      "count": "Количество"
+    },
+    "actions": {
+      "issue": "Расход",
+      "issueAll": "Списать всё"
+    }
+  },
+  "returnedProductExportTransactionsTable": {
+    "columns": {
+      "index": "№",
+      "sapCode": "SAP-код",
+      "receivedDate": "Приход",
+      "count": "Количество"
+    }
+  },
+  "returnedProductImportTable": {
+    "columns": {
+      "index": "№",
+      "model": "Модель",
+      "sapCode": "SAP-код",
+      "barCode": "Штрихкод",
+      "receivedDate": "Приход",
+      "count": "Количество"
+    }
+  },
+  "returnedProductTransactionsTable": {
+    "columns": {
+      "model": "Модель",
+      "sapCode": "SAP-код",
+      "barCode": "Штрихкод",
+      "receivedDate": "Приход",
+      "count": "Количество"
+    }
+  },
+  "boardFlowTable": {
+    "columns": {
+      "qrCode": "QR-код",
+      "reader": "Считыватель",
+      "model": "Модель",
+      "sapCode": "SAP-код",
+      "time": "Время"
+    }
+  },
+  "boardReportTable": {
+    "columns": {
+      "qrCode": "QR-код",
+      "reader": "Считыватель",
+      "model": "Модель",
+      "sapCode": "SAP-код",
+      "time": "Время"
+    }
+  },
+  "qrReaderTable": {
+    "columns": {
+      "id": "ID",
+      "name": "Название",
+      "position": "Позиция"
+    }
+  },
+  "brandTable": {
+    "columns": {
+      "id": "ID",
+      "name": "Бренд"
+    }
+  },
+  "componentTable": {
+    "columns": {
+      "id": "ID",
+      "partNumber": "Номер детали",
+      "rCode": "R-код",
+      "storePlace": "Место хранения",
+      "sapPlace": "Место SAP"
+    }
+  },
+  "defectTable": {
+    "columns": {
+      "id": "ID",
+      "name": "Дефект"
+    }
+  },
+  "detailedDefectTable": {
+    "columns": {
+      "line": "Линия",
+      "barcode": "Штрихкод",
+      "model": "Модель",
+      "sap": "SAP",
+      "defect": "Дефект",
+      "repairAction": "Действие по ремонту",
+      "condition": "Состояние",
+      "repairedBy": "Кто устранил",
+      "loggedAt": "Внесено",
+      "fixedAt": "Исправлено"
+    }
+  },
+  "detailedReadyProductReportTable": {
+    "columns": {
+      "model": "Модель",
+      "sapCode": "SAP-код",
+      "count": "Количество",
+      "status": "Статус",
+      "date": "Дата"
+    }
+  },
+  "ftqDefectTable": {
+    "columns": {
+      "name": "Дефект",
+      "count": "Количество"
+    },
+    "actions": {
+      "details": "Подробнее"
+    }
+  },
+  "ftqPlanTable": {
+    "columns": {
+      "model": "Модель",
+      "sap": "SAP",
+      "requiredCount": "План",
+      "producedCount": "Произведено"
+    }
+  },
+  "lineDefectTable": {
+    "columns": {
+      "id": "ID",
+      "line": "Линия",
+      "defect": "Дефект"
+    }
+  },
+  "lineTable": {
+    "columns": {
+      "id": "ID",
+      "name": "Линия"
+    }
+  },
+  "modelTable": {
+    "columns": {
+      "id": "ID",
+      "product": "Продукт",
+      "brand": "Бренд",
+      "model": "Модель",
+      "boardId": "ID платы",
+      "sapCode": "SAP-код",
+      "barCode": "Штрихкод"
+    }
+  },
+  "planTable": {
+    "columns": {
+      "id": "ID",
+      "line": "Линия",
+      "model": "Модель",
+      "requiredCount": "План",
+      "producedCount": "Произведено",
+      "date": "Дата"
+    }
+  },
+  "productBrandTable": {
+    "columns": {
+      "id": "ID",
+      "product": "Продукт",
+      "brand": "Бренд"
+    }
+  },
+  "productTable": {
+    "columns": {
+      "id": "ID",
+      "name": "Продукт"
+    }
+  },
+  "readyProductExportTable": {
+    "columns": {
+      "model": "Модель",
+      "sapCode": "SAP-код",
+      "count": "Количество"
+    },
+    "actions": {
+      "issue": "Расход",
+      "issueAll": "Списать всё"
+    }
+  },
+  "readyProductGroupByTable": {
+    "columns": {
+      "model": "Модель",
+      "sapCode": "SAP-код",
+      "count": "Количество"
+    },
+    "actions": {
+      "details": "Подробнее"
+    }
+  },
+  "readyProductImportTable": {
+    "columns": {
+      "index": "№",
+      "model": "Модель",
+      "sapCode": "SAP-код",
+      "receivedDate": "Приход",
+      "count": "Количество"
+    }
+  },
+  "repairHistoryTable": {
+    "columns": {
+      "barcode": "Штрихкод",
+      "model": "Модель",
+      "line": "Линия",
+      "defect": "Дефект",
+      "actionPerformed": "Выполнено",
+      "performedBy": "Кто выполнил",
+      "condition": "Состояние",
+      "loggedAt": "Внесено",
+      "updatedAt": "Изменено"
+    }
+  },
+  "reportTable": {
+    "columns": {
+      "barcode": "Штрихкод",
+      "model": "Модель",
+      "defect": "Дефект"
+    }
+  },
+  "returnProductGroupByTable": {
+    "columns": {
+      "model": "Модель",
+      "sapCode": "SAP-код",
+      "barCode": "Штрихкод",
+      "count": "Количество"
+    }
+  },
+  "staticsGroupedTable": {
+    "columns": {
+      "name": "Название",
+      "count": "Количество"
+    }
+  },
+  "staticsTable": {
+    "columns": {
+      "barcode": "Штрихкод",
+      "product": "Продукт",
+      "brand": "Бренд",
+      "model": "Модель",
+      "line": "Линия",
+      "defect": "Дефект",
+      "actionPerformed": "Выполнено",
+      "performedBy": "Кто выполнил",
+      "condition": "Состояние",
+      "loggedAt": "Внесено",
+      "fixedAt": "Исправлено"
+    }
+  }
+}

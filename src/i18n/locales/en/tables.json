@@ -1,0 +1,298 @@
+{
+  "hourlyPlanTable": {
+    "columns": {
+      "id": "ID",
+      "line": "Line",
+      "model": "Model",
+      "plan": "Plan",
+      "produced": "Produced",
+      "date": "Date"
+    }
+  },
+  "planActivityReportTable": {
+    "columns": {
+      "id": "ID",
+      "line": "Line",
+      "dateEntered": "Date entered",
+      "issue": "Issue",
+      "reason": "Reason",
+      "correctiveAction": "Corrective action",
+      "deadline": "Deadline",
+      "responsible": "Responsible",
+      "status": "Status"
+    }
+  },
+  "planActivityTable": {
+    "columns": {
+      "id": "ID",
+      "line": "Line",
+      "issue": "Issue",
+      "reason": "Reason",
+      "correctiveAction": "Corrective action",
+      "responsible": "Responsible",
+      "status": "Status",
+      "dateEntered": "Date entered",
+      "deadline": "Deadline"
+    }
+  },
+  "readyProductTransactionsTable": {
+    "columns": {
+      "model": "Model",
+      "sapCode": "SAP code",
+      "barCode": "Barcode",
+      "receivedDate": "Received",
+      "count": "Quantity"
+    }
+  },
+  "returnedProductExportTable": {
+    "columns": {
+      "model": "Model",
+      "sapCode": "SAP code",
+      "barCode": "Barcode",
+      "count": "Quantity"
+    },
+    "actions": {
+      "issue": "Issue",
+      "issueAll": "Issue all"
+    }
+  },
+  "returnedProductExportTransactionsTable": {
+    "columns": {
+      "index": "No.",
+      "sapCode": "SAP code",
+      "receivedDate": "Received",
+      "count": "Quantity"
+    }
+  },
+  "returnedProductImportTable": {
+    "columns": {
+      "index": "No.",
+      "model": "Model",
+      "sapCode": "SAP code",
+      "barCode": "Barcode",
+      "receivedDate": "Received",
+      "count": "Quantity"
+    }
+  },
+  "returnedProductTransactionsTable": {
+    "columns": {
+      "model": "Model",
+      "sapCode": "SAP code",
+      "barCode": "Barcode",
+      "receivedDate": "Received",
+      "count": "Quantity"
+    }
+  },
+  "boardFlowTable": {
+    "columns": {
+      "qrCode": "QR code",
+      "reader": "Reader",
+      "model": "Model",
+      "sapCode": "SAP code",
+      "time": "Time"
+    }
+  },
+  "boardReportTable": {
+    "columns": {
+      "qrCode": "QR code",
+      "reader": "Reader",
+      "model": "Model",
+      "sapCode": "SAP code",
+      "time": "Time"
+    }
+  },
+  "qrReaderTable": {
+    "columns": {
+      "id": "ID",
+      "name": "Name",
+      "position": "Position"
+    }
+  },
+  "brandTable": {
+    "columns": {
+      "id": "ID",
+      "name": "Brand"
+    }
+  },
+  "componentTable": {
+    "columns": {
+      "id": "ID",
+      "partNumber": "Part number",
+      "rCode": "R-code",
+      "storePlace": "Storage location",
+      "sapPlace": "SAP location"
+    }
+  },
+  "defectTable": {
+    "columns": {
+      "id": "ID",
+      "name": "Defect"
+    }
+  },
+  "detailedDefectTable": {
+    "columns": {
+      "line": "Line",
+      "barcode": "Barcode",
+      "model": "Model",
+      "sap": "SAP",
+      "defect": "Defect",
+      "repairAction": "Repair action",
+      "condition": "Condition",
+      "repairedBy": "Repaired by",
+      "loggedAt": "Logged at",
+      "fixedAt": "Fixed at"
+    }
+  },
+  "detailedReadyProductReportTable": {
+    "columns": {
+      "model": "Model",
+      "sapCode": "SAP code",
+      "count": "Quantity",
+      "status": "Status",
+      "date": "Date"
+    }
+  },
+  "ftqDefectTable": {
+    "columns": {
+      "name": "Defect",
+      "count": "Count"
+    },
+    "actions": {
+      "details": "Details"
+    }
+  },
+  "ftqPlanTable": {
+    "columns": {
+      "model": "Model",
+      "sap": "SAP",
+      "requiredCount": "Plan",
+      "producedCount": "Produced"
+    }
+  },
+  "lineDefectTable": {
+    "columns": {
+      "id": "ID",
+      "line": "Line",
+      "defect": "Defect"
+    }
+  },
+  "lineTable": {
+    "columns": {
+      "id": "ID",
+      "name": "Line"
+    }
+  },
+  "modelTable": {
+    "columns": {
+      "id": "ID",
+      "product": "Product",
+      "brand": "Brand",
+      "model": "Model",
+      "boardId": "Board ID",
+      "sapCode": "SAP code",
+      "barCode": "Barcode"
+    }
+  },
+  "planTable": {
+    "columns": {
+      "id": "ID",
+      "line": "Line",
+      "model": "Model",
+      "requiredCount": "Plan",
+      "producedCount": "Produced",
+      "date": "Date"
+    }
+  },
+  "productBrandTable": {
+    "columns": {
+      "id": "ID",
+      "product": "Product",
+      "brand": "Brand"
+    }
+  },
+  "productTable": {
+    "columns": {
+      "id": "ID",
+      "name": "Product"
+    }
+  },
+  "readyProductExportTable": {
+    "columns": {
+      "model": "Model",
+      "sapCode": "SAP code",
+      "count": "Quantity"
+    },
+    "actions": {
+      "issue": "Issue",
+      "issueAll": "Issue all"
+    }
+  },
+  "readyProductGroupByTable": {
+    "columns": {
+      "model": "Model",
+      "sapCode": "SAP code",
+      "count": "Quantity"
+    },
+    "actions": {
+      "details": "Details"
+    }
+  },
+  "readyProductImportTable": {
+    "columns": {
+      "index": "No.",
+      "model": "Model",
+      "sapCode": "SAP code",
+      "receivedDate": "Received",
+      "count": "Quantity"
+    }
+  },
+  "repairHistoryTable": {
+    "columns": {
+      "barcode": "Barcode",
+      "model": "Model",
+      "line": "Line",
+      "defect": "Defect",
+      "actionPerformed": "Action performed",
+      "performedBy": "Performed by",
+      "condition": "Condition",
+      "loggedAt": "Logged at",
+      "updatedAt": "Updated at"
+    }
+  },
+  "reportTable": {
+    "columns": {
+      "barcode": "Barcode",
+      "model": "Model",
+      "defect": "Defect"
+    }
+  },
+  "returnProductGroupByTable": {
+    "columns": {
+      "model": "Model",
+      "sapCode": "SAP code",
+      "barCode": "Barcode",
+      "count": "Quantity"
+    }
+  },
+  "staticsGroupedTable": {
+    "columns": {
+      "name": "Name",
+      "count": "Count"
+    }
+  },
+  "staticsTable": {
+    "columns": {
+      "barcode": "Barcode",
+      "product": "Product",
+      "brand": "Brand",
+      "model": "Model",
+      "line": "Line",
+      "defect": "Defect",
+      "actionPerformed": "Action performed",
+      "performedBy": "Performed by",
+      "condition": "Condition",
+      "loggedAt": "Logged at",
+      "fixedAt": "Fixed at"
+    }
+  }
+}

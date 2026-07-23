@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
 import Table from "../../common/table";
 
 /*
@@ -12,14 +13,14 @@ import Table from "../../common/table";
 class BoardReportTable extends Component {
   columns = [];
   render() {
-    const { rows, sortColumn, onSort } = this.props;
+    const { rows, sortColumn, onSort, t } = this.props;
 
     const columns = [
-      { path: "qrCode", label: "QR" },
-      { path: "qrReader.name", label: "READER" },
-      { path: "model.name", label: "MODEL" },
-      { path: "model.sapCode", label: "SAP CODE" },
-      { path: "dateTime", label: "VAQT" },
+      { path: "qrCode", label: t("tables:boardReportTable.columns.qrCode") },
+      { path: "qrReader.name", label: t("tables:boardReportTable.columns.reader") },
+      { path: "model.name", label: t("tables:boardReportTable.columns.model") },
+      { path: "model.sapCode", label: t("tables:boardReportTable.columns.sapCode") },
+      { path: "dateTime", label: t("tables:boardReportTable.columns.time") },
       {
         path: "button",
         content: (readyProduct) => (
@@ -28,7 +29,7 @@ class BoardReportTable extends Component {
             onClick={() => this.props.onDelete(readyProduct)}
             className="btn btn-danger"
           >
-            Delete
+            {t("common:buttons.delete")}
           </button>
         ),
       },
@@ -45,4 +46,4 @@ class BoardReportTable extends Component {
   }
 }
 
-export default BoardReportTable;
+export default withTranslation(["tables", "common"])(BoardReportTable);

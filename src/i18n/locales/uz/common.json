@@ -1,0 +1,31 @@
+{
+  "buttons": {
+    "save": "Saqlash",
+    "cancel": "Bekor qilish",
+    "delete": "O'chirish",
+    "edit": "Tahrirlash",
+    "close": "Yopish",
+    "search": "Qidirish",
+    "add": "Qo'shish"
+  },
+  "confirmDelete": {
+    "title": "O'chirishni tasdiqlang",
+    "message": "Ushbu elementni o'chirishni xohlaysizmi? Bu amalni bekor qilib bo'lmaydi."
+  },
+  "table": {
+    "loadingDefault": "Yuklanmoqda...",
+    "emptyDefault": "Ma'lumot topilmadi."
+  },
+  "pagination": {
+    "ariaLabel": "Sahifalash"
+  },
+  "card": {
+    "status": "Holat"
+  },
+  "department": {
+    "treeAriaLabel": "Bo'limlar bo'yicha navigatsiya daraxti"
+  },
+  "errors": {
+    "unexpected": "Kutilmagan xatolik yuz berdi."
+  }
+}

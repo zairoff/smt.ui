@@ -1,6 +1,7 @@
 import Form from "./form";
 import _ from "lodash";
 import { toast } from "react-toastify";
+import { withTranslation } from "react-i18next";
 import ReactLoading from "react-loading";
 import { useParams, useLocation } from "react-router-dom";
 import { updateModel } from "../../services/modelService";
@@ -51,7 +52,7 @@ class ModelEditForm extends Form {
       boardId === "" ||
       boardId === undefined
     ) {
-      toast.warning("Kerakli ma'lumotlarni kiriting");
+      toast.warning(this.props.t("forms:messages.fillRequiredFields"));
       return;
     }
     try {
@@ -64,7 +65,7 @@ class ModelEditForm extends Form {
       };
       await updateModel(id, modelUpdate);
       this.setState({ loading: false });
-      toast.success("Muvaffaqiyatli o'zgartirildi");
+      toast.success(this.props.t("forms:messages.updatedSuccessfully"));
     } catch (ex) {
       this.setState({ loading: false });
       console.log(ex.response);
@@ -73,6 +74,7 @@ class ModelEditForm extends Form {
   };
 
   render() {
+    const { t } = this.props;
     const { fields, errors, loading, productBrand } = this.state;
     return (
       <>
@@ -81,7 +83,7 @@ class ModelEditForm extends Form {
           <div className="col-4">
             {this.renderInput(
               "name",
-              "Model",
+              t("forms:model.name"),
               "",
               fields.name,
               this.handleInputChange,
@@ -92,7 +94,7 @@ class ModelEditForm extends Form {
             <p className="mt-2"> </p>
             {this.renderInput(
               "barcode",
-              "Barcode",
+              t("forms:model.barcode"),
               "",
               fields.barcode,
               this.handleInputChange,
@@ -103,7 +105,7 @@ class ModelEditForm extends Form {
             <p className="mt-2"> </p>
             {this.renderInput(
               "sapCode",
-              "Sap code",
+              t("forms:model.sapCode"),
               "",
               fields.sapCode,
               this.handleInputChange,
@@ -114,7 +116,7 @@ class ModelEditForm extends Form {
             <p className="mt-2"> </p>
             {this.renderInput(
               "boardId",
-              "BoardID",
+              t("forms:model.boardId"),
               "",
               fields.boardId,
               this.handleInputChange,
@@ -123,7 +125,11 @@ class ModelEditForm extends Form {
               ""
             )}
             <p className="mt-2"> </p>
-            {this.renderButton("Save", "button", this.handleSubmit)}
+            {this.renderButton(
+              t("common:buttons.save"),
+              "button",
+              this.handleSubmit
+            )}
           </div>
         </div>
       </>
@@ -131,6 +137,10 @@ class ModelEditForm extends Form {
   }
 }
 
+const TranslatedModelEditForm = withTranslation(["forms", "common"])(
+  ModelEditForm
+);
+
 export default () => (
-  <ModelEditForm params={useParams()} location={useLocation()} />
+  <TranslatedModelEditForm params={useParams()} location={useLocation()} />
 );

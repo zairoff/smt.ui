@@ -12,6 +12,7 @@ import {
   getLineDefects,
 } from "../../services/lineDefectService";
 import Form from "./form";
+import { withTranslation } from "react-i18next";
 import ReactLoading from "react-loading";
 import { getLines } from "../../services/lineService";
 import { getDefects } from "../../services/defectService";
@@ -117,6 +118,7 @@ class LineDefectForm extends Form {
   };
 
   render() {
+    const { t } = this.props;
     const {
       data: allData,
       pageSize,
@@ -158,21 +160,27 @@ class LineDefectForm extends Form {
             "Line",
             fields.lines,
             errors.lines,
-            this.handleSelectChange
+            this.handleSelectChange,
+            "id",
+            "name",
+            t("forms:fields.line")
           )}
           <p className="mt-2"> </p>
           {this.renderSelect(
             "Defect",
             fields.defects,
             errors.defects,
-            this.handleSelectChange
+            this.handleSelectChange,
+            "id",
+            "name",
+            t("forms:fields.defect")
           )}
           <p className="mt-2"> </p>
-          {this.renderButton("Save")}
+          {this.renderButton(t("common:buttons.save"))}
         </div>
       </form>
     );
   }
 }
 
-export default LineDefectForm;
+export default withTranslation(["forms", "common"])(LineDefectForm);

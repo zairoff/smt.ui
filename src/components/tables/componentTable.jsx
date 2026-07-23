@@ -1,13 +1,15 @@
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
 import Table from "../common/table";
 
 class ComponentTable extends Component {
-  columns = [
-    { path: "id", label: "ID" },
-    { path: "partNumber", label: "PARTNUMBER" },
-    { path: "rCode", label: "RCODE" },
-    { path: "storePlaceNumber", label: "STOREPLACE" },
-    { path: "sapPlace", label: "SAPPLACE" },
+  get columns() {
+    return [
+    { path: "id", label: this.props.t("tables:componentTable.columns.id") },
+    { path: "partNumber", label: this.props.t("tables:componentTable.columns.partNumber") },
+    { path: "rCode", label: this.props.t("tables:componentTable.columns.rCode") },
+    { path: "storePlaceNumber", label: this.props.t("tables:componentTable.columns.storePlace") },
+    { path: "sapPlace", label: this.props.t("tables:componentTable.columns.sapPlace") },
     {
       path: "button",
       content: (component) => (
@@ -16,11 +18,12 @@ class ComponentTable extends Component {
           onClick={() => this.props.onDelete(component)}
           className="btn btn-danger"
         >
-          Delete
+          {this.props.t("common:buttons.delete")}
         </button>
       ),
     },
   ];
+  }
   render() {
     const { rows, sortColumn, onSort } = this.props;
     return (
@@ -34,4 +37,4 @@ class ComponentTable extends Component {
   }
 }
 
-export default ComponentTable;
+export default withTranslation(["tables", "common"])(ComponentTable);

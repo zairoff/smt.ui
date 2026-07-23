@@ -3,6 +3,7 @@ import ReactLoading from "react-loading";
 import _ from "lodash";
 import Form from "../forms/form";
 import { toast } from "react-toastify";
+import { withTranslation } from "react-i18next";
 import { print } from "../../services/printerService";
 
 class ComponentPrint extends Form {
@@ -65,7 +66,9 @@ class ComponentPrint extends Form {
           <ReactLoading className="loading" type="spin" color="blue" />
         )}
         <div className="col">
-          <button className="btn p-2 btn-success fw-bold">PRINTER</button>
+          <button className="btn p-2 btn-success fw-bold">
+            {this.props.t("componentPrint.printer")}
+          </button>
           {this.renderInput(
             "partNumber",
             "",
@@ -85,4 +88,4 @@ class ComponentPrint extends Form {
   }
 }
 
-export default ComponentPrint;
+export default withTranslation("store")(ComponentPrint);

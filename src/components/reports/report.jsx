@@ -1,4 +1,5 @@
 import React from "react";
+import { withTranslation } from "react-i18next";
 import { getLines } from "../../services/lineService";
 import { getModelByProductBrandId } from "../../services/modelService";
 import { getProducts } from "../../services/productService";
@@ -175,7 +176,7 @@ class Report extends Form {
       Object.values(fields).every((x) => x === null || x === "") ||
       Object.values(selectedItem).every((x) => x === null || x === "")
     ) {
-      toast.warning("Check model choosen and barcode scanned");
+      toast.warning(this.props.t("report.selectModelWarning"));
       return;
     }
 
@@ -291,6 +292,7 @@ class Report extends Form {
 
     const sortedRows = _.orderBy(data, [sortColumn.path], [sortColumn.order]);
     const rows = paginate(sortedRows, currentPage, pageSize);
+    const { t } = this.props;
 
     return (
       <React.Fragment>
@@ -303,17 +305,44 @@ class Report extends Form {
               "Product",
               products,
               "",
-              this.handleSelectChange
+              this.handleSelectChange,
+              "id",
+              "name",
+              t("report.product")
             )}
           </div>
           <div className="col">
-            {this.renderSelect("Brand", brands, "", this.handleSelectChange)}
+            {this.renderSelect(
+              "Brand",
+              brands,
+              "",
+              this.handleSelectChange,
+              "id",
+              "name",
+              t("report.brand")
+            )}
           </div>
           <div className="col">
-            {this.renderSelect("Model", models, "", this.handleSelectChange)}
+            {this.renderSelect(
+              "Model",
+              models,
+              "",
+              this.handleSelectChange,
+              "id",
+              "name",
+              t("report.model")
+            )}
           </div>
           <div className="col">
-            {this.renderSelect("Line", lines, "", this.handleSelectChange)}
+            {this.renderSelect(
+              "Line",
+              lines,
+              "",
+              this.handleSelectChange,
+              "id",
+              "name",
+              t("report.line")
+            )}
           </div>
           <div className="row mt-4">
             <div className="col ms-4">
@@ -322,7 +351,7 @@ class Report extends Form {
                   {this.renderInput(
                     "barcode",
                     "",
-                    "Barcode",
+                    t("report.barcode"),
                     fields.barcode,
                     this.handleCustomInputChange,
                     errors.barcode,
@@ -333,7 +362,7 @@ class Report extends Form {
                 </div>
                 <div className="col-2 my-auto">
                   {this.renderButton(
-                    "CLEAR",
+                    t("report.clear"),
                     "button",
                     this.handleButtonClear,
                     "btn btn-primary btn-block mt-4"
@@ -344,7 +373,7 @@ class Report extends Form {
                 className=" ms-2 mt-4 mb-4"
                 style={{ fontWeight: "bold", width: "150px", height: "20px" }}
               >
-                TOTAL:{" "}
+                {t("report.total")}{" "}
                 <span className="badge rounded-pill bg-info">
                   {data.length}
                 </span>
@@ -352,7 +381,7 @@ class Report extends Form {
               <p> </p>
               {isActiveBarcode &&
                 this.renderButton(
-                  "REMONT",
+                  t("report.remont"),
                   "button",
                   this.handleButtonRemont,
                   "btn btn-warning text-white btn-block"
@@ -389,4 +418,4 @@ class Report extends Form {
   }
 }
 
-export default Report;
+export default withTranslation("reports")(Report);

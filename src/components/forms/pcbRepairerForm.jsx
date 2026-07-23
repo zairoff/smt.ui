@@ -10,6 +10,7 @@ import {
 import Department from "../common/department";
 import PcbRepairerTable from "../tables/pcbRepairerTable";
 import Form from "./form";
+import { withTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import { paginate } from "../../utils/paginate";
 import ReactLoading from "react-loading";
@@ -101,6 +102,7 @@ class PcbRepairerForm extends Form {
   };
 
   render() {
+    const { t } = this.props;
     const {
       departments,
       data,
@@ -143,14 +145,15 @@ class PcbRepairerForm extends Form {
             errors.repairers,
             this.handleSelectChange,
             "id",
-            "fullName"
+            "fullName",
+            t("forms:fields.repairers")
           )}
           <p className="mt-2"> </p>
-          {this.renderButton("Save", "submit")}
+          {this.renderButton(t("common:buttons.save"), "submit")}
         </div>
       </form>
     );
   }
 }
 
-export default PcbRepairerForm;
+export default withTranslation(["forms", "common"])(PcbRepairerForm);

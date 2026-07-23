@@ -1,6 +1,7 @@
 import Form from "./form";
 import _ from "lodash";
 import { toast } from "react-toastify";
+import { withTranslation } from "react-i18next";
 import ReactLoading from "react-loading";
 import { useParams, useLocation } from "react-router-dom";
 import { updatePlanActivity } from "../../services/planActivityService";
@@ -18,12 +19,6 @@ class PlanActivityEditForm extends Form {
       createdDate: "",
       expireDate: "",
     },
-    statuses: [
-      { id: "Plan", name: "Plan" },
-      { id: "Plan-Do", name: "Plan-Do" },
-      { id: "Plan-Do-Act", name: "Plan-Do-Act" },
-      { id: "Plan-Do-Act-Resolve", name: "Plan-Do-Act-Resolve" },
-    ],
     data: [],
     errors: {},
     loading: true,
@@ -68,7 +63,7 @@ class PlanActivityEditForm extends Form {
       status === "" ||
       status === undefined
     ) {
-      toast.warning("Kerakli ma'lumotlarni kiriting");
+      toast.warning(this.props.t("forms:messages.fillRequiredFields"));
       return;
     }
     try {
@@ -82,7 +77,7 @@ class PlanActivityEditForm extends Form {
       };
       await updatePlanActivity(activityId, planActivity);
       this.setState({ loading: false });
-      toast.success("Muvaffaqiyatli o'zgartirildi");
+      toast.success(this.props.t("forms:messages.updatedSuccessfully"));
     } catch (ex) {
       this.setState({ loading: false });
       console.log(ex.response);
@@ -91,7 +86,19 @@ class PlanActivityEditForm extends Form {
   };
 
   render() {
-    const { fields, errors, loading, statuses } = this.state;
+    const { t } = this.props;
+    const { fields, errors, loading } = this.state;
+
+    const statuses = [
+      { id: "Plan", name: t("forms:planActivity.statuses.plan") },
+      { id: "Plan-Do", name: t("forms:planActivity.statuses.planDo") },
+      { id: "Plan-Do-Act", name: t("forms:planActivity.statuses.planDoAct") },
+      {
+        id: "Plan-Do-Act-Resolve",
+        name: t("forms:planActivity.statuses.planDoActResolve"),
+      },
+    ];
+
     return (
       <>
         {loading && <ReactLoading className="test" type="spin" color="blue" />}
@@ -99,7 +106,7 @@ class PlanActivityEditForm extends Form {
           <div className="col-4">
             {this.renderInput(
               "line",
-              "Line",
+              t("forms:fields.line"),
               "",
               fields.line,
               null,
@@ -112,7 +119,7 @@ class PlanActivityEditForm extends Form {
             <p className="mt-2"> </p>
             {this.renderInput(
               "issue",
-              "Nomuvofiqlik",
+              t("forms:planActivity.issue"),
               "",
               fields.issue,
               this.handleInputChange,
@@ -123,7 +130,7 @@ class PlanActivityEditForm extends Form {
             <p className="mt-2"> </p>
             {this.renderInput(
               "reason",
-              "Sabab",
+              t("forms:planActivity.reason"),
               "",
               fields.reason,
               this.handleInputChange,
@@ -134,7 +141,7 @@ class PlanActivityEditForm extends Form {
             <p className="mt-2"> </p>
             {this.renderInput(
               "action",
-              "To'g'irlash ishlari",
+              t("forms:planActivity.action"),
               "",
               fields.action,
               this.handleInputChange,
@@ -145,7 +152,7 @@ class PlanActivityEditForm extends Form {
             <p className="mt-2"> </p>
             {this.renderInput(
               "responsible",
-              "Javobgar",
+              t("forms:planActivity.responsible"),
               "",
               fields.responsible,
               this.handleInputChange,
@@ -154,9 +161,21 @@ class PlanActivityEditForm extends Form {
               ""
             )}
             <p className="mt-2"> </p>
-            {this.renderSelect("Status", statuses, "", this.handleSelectChange)}
+            {this.renderSelect(
+              "Status",
+              statuses,
+              "",
+              this.handleSelectChange,
+              "id",
+              "name",
+              t("forms:fields.status")
+            )}
             <p className="mt-2"> </p>
-            {this.renderButton("Save", "button", this.handleSubmit)}
+            {this.renderButton(
+              t("common:buttons.save"),
+              "button",
+              this.handleSubmit
+            )}
           </div>
         </div>
       </>
@@ -164,6 +183,13 @@ class PlanActivityEditForm extends Form {
   }
 }
 
+const TranslatedPlanActivityEditForm = withTranslation(["forms", "common"])(
+  PlanActivityEditForm
+);
+
 export default () => (
-  <PlanActivityEditForm params={useParams()} location={useLocation()} />
+  <TranslatedPlanActivityEditForm
+    params={useParams()}
+    location={useLocation()}
+  />
 );

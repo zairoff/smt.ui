@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
+import { withTranslation } from "react-i18next";
 import {
   getReportsBy,
   getReportsByLineAndDefect,
@@ -117,13 +118,15 @@ class DetailedReport extends Component {
           }}
           className="btn btn-success mt-2 mb-2"
         >
-          BACK
+          {this.props.t("detailedReport.back")}
         </Link>
       </>
     );
   }
 }
 
+const TranslatedDetailedReport = withTranslation("reports")(DetailedReport);
+
 export default () => (
-  <DetailedReport params={useParams()} location={useLocation()} />
+  <TranslatedDetailedReport params={useParams()} location={useLocation()} />
 );

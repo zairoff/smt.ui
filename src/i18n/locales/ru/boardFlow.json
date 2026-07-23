@@ -1,0 +1,109 @@
+{
+  "shared": {
+    "boardStatus": {
+      "inProgress": "В процессе",
+      "flagged": "Помечено",
+      "completed": "Завершено",
+      "deleted": "Удалено"
+    },
+    "noStationsConfigured": "Станции ещё не настроены.",
+    "historyButton": "История"
+  },
+  "boardReport": {
+    "readersLabel": "Считыватели"
+  },
+  "boardStatistics": {
+    "fromLabel": "От",
+    "toLabel": "До"
+  },
+  "boardHistoryModal": {
+    "title": "История платы",
+    "notFound": "Плата не найдена.",
+    "lineLabel": "Линия:",
+    "modelLabel": "Модель:",
+    "statusLabel": "Статус:",
+    "columns": {
+      "time": "Время",
+      "station": "Станция",
+      "result": "Результат"
+    },
+    "noMovements": "Движения не зафиксированы.",
+    "movementStatus": {
+      "passed": "Пройдено",
+      "missingPrevious": "Пропущен предыдущий проход",
+      "deleted": "Удалено"
+    }
+  },
+  "boardReportV2": {
+    "processTitle": "Процесс",
+    "processHint": "Нажмите на станцию, на которой выполняете сканирование.",
+    "scanningAt": "Сканирование на:",
+    "noStationSelected": "станция не выбрана",
+    "scanPlaceholder": "Отсканируйте QR-код платы",
+    "todaysReport": "Отчёт за сегодня",
+    "totalBoards": "Всего отсканировано плат: {{count}}",
+    "columns": {
+      "time": "Время",
+      "qrCode": "QR-код",
+      "model": "Модель",
+      "station": "Станция",
+      "status": "Статус"
+    },
+    "noBoardsToday": "Сегодня платы ещё не отсканированы.",
+    "alreadyReported": "{{qrCode}} уже был отсканирован на станции {{station}}.",
+    "thisStation": "этой станции",
+    "movementStatus": {
+      "passed": "Пройдено",
+      "flaggedMissingPrevious": "Помечено — пропущен предыдущий проход",
+      "deleted": "Удалено"
+    }
+  },
+  "lineFlowBoard": {
+    "completedSince": "Завершено с",
+    "completedUntil": "Завершено по",
+    "refreshButton": "Обновить",
+    "wholeProcessTitle": "Весь процесс — в реальном времени",
+    "wholeProcessHint": "Все линии слева направо в порядке производства. Счётчики отражают, где платы находятся прямо сейчас, а не историческое количество. Обновляется автоматически каждые 20 секунд. Нажмите на станцию, чтобы увидеть платы за её счётчиками.",
+    "inTransit": "в пути",
+    "flaggedCount": "{{count}} помечено",
+    "completedInRange": "завершено за период",
+    "lookupTitle": "Найти плату по QR-коду",
+    "viewButton": "Посмотреть",
+    "flaggedBoardsTitle": "Помеченные платы",
+    "flaggedBoardsHint": "Платы, чья текущая станция не соответствует станции перед ней — вероятно, пропущено сканирование, движение назад или требуется проверка.",
+    "noFlaggedBoards": "Помеченных плат нет.",
+    "columns": {
+      "line": "Линия",
+      "qrCode": "QR-код",
+      "model": "Модель",
+      "currentStation": "Текущая станция",
+      "lastUpdated": "Последнее обновление"
+    }
+  },
+  "qrReaderV2": {
+    "lineRequired": "Выберите линию",
+    "positionRequired": "Введите позицию",
+    "columns": {
+      "line": "Линия",
+      "position": "Позиция",
+      "name": "Название",
+      "previousStations": "Предыдущая(ие) станция(и)"
+    },
+    "entryStation": "— (входная станция)",
+    "addStationTitle": "Добавить станцию",
+    "nameLabel": "Название",
+    "positionLabel": "Позиция",
+    "previousStationsHint": "Оставьте все флажки снятыми, если это входная станция. Отметьте несколько, чтобы сделать эту станцию точкой схождения, питаемой несколькими линиями (например, входная станция линии PCB, питаемая окончанием обеих линий SMD — Parmi и Jutze).",
+    "noStationsYet": "Станций пока нет."
+  },
+  "stationBoardsModal": {
+    "title": "Платы на станции {{station}}",
+    "noBoards": "На этой станции сейчас нет плат.",
+    "columns": {
+      "qrCode": "QR-код",
+      "model": "Модель",
+      "status": "Статус",
+      "lastUpdated": "Последнее обновление"
+    }
+  }
+}

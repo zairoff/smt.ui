@@ -1,14 +1,16 @@
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
 import Table from "../common/table";
 
 class PlanTable extends Component {
-  columns = [
-    { path: "id", label: "ID" },
-    { path: "line.name", label: "LINE" },
-    { path: "model.name", label: "MODEL" },
-    { path: "requiredCount", label: "PLAN" },
-    { path: "producedCount", label: "PRODUCED" },
-    { path: "date", label: "DATE" },
+  get columns() {
+    return [
+    { path: "id", label: this.props.t("tables:planTable.columns.id") },
+    { path: "line.name", label: this.props.t("tables:planTable.columns.line") },
+    { path: "model.name", label: this.props.t("tables:planTable.columns.model") },
+    { path: "requiredCount", label: this.props.t("tables:planTable.columns.requiredCount") },
+    { path: "producedCount", label: this.props.t("tables:planTable.columns.producedCount") },
+    { path: "date", label: this.props.t("tables:planTable.columns.date") },
     {
       path: "button",
       content: (productBrand) => (
@@ -17,11 +19,12 @@ class PlanTable extends Component {
           onClick={() => this.props.onDelete(productBrand)}
           className="btn btn-danger"
         >
-          Delete
+          {this.props.t("common:buttons.delete")}
         </button>
       ),
     },
   ];
+  }
   render() {
     const { rows, sortColumn, onSort } = this.props;
     return (
@@ -35,4 +38,4 @@ class PlanTable extends Component {
   }
 }
 
-export default PlanTable;
+export default withTranslation(["tables", "common"])(PlanTable);

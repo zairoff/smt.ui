@@ -5,6 +5,7 @@ import { paginate } from "../../utils/paginate";
 import ReactLoading from "react-loading";
 import _ from "lodash";
 import Form from "./form";
+import { withTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import { addBrand, deleteBrand, getBrands } from "../../services/brandService";
 
@@ -123,11 +124,11 @@ class BrandForm extends Form {
             true
           )}
           <p className="mt-2"> </p>
-          {this.renderButton("Save")}
+          {this.renderButton(this.props.t("common:buttons.save"))}
         </div>
       </form>
     );
   }
 }
 
-export default BrandForm;
+export default withTranslation("common")(BrandForm);

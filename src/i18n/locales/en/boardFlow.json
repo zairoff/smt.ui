@@ -1,0 +1,109 @@
+{
+  "shared": {
+    "boardStatus": {
+      "inProgress": "In progress",
+      "flagged": "Flagged",
+      "completed": "Completed",
+      "deleted": "Deleted"
+    },
+    "noStationsConfigured": "No stations configured yet.",
+    "historyButton": "History"
+  },
+  "boardReport": {
+    "readersLabel": "Readers"
+  },
+  "boardStatistics": {
+    "fromLabel": "From",
+    "toLabel": "To"
+  },
+  "boardHistoryModal": {
+    "title": "Board history",
+    "notFound": "Board not found.",
+    "lineLabel": "Line:",
+    "modelLabel": "Model:",
+    "statusLabel": "Status:",
+    "columns": {
+      "time": "Time",
+      "station": "Station",
+      "result": "Result"
+    },
+    "noMovements": "No movements recorded.",
+    "movementStatus": {
+      "passed": "Passed",
+      "missingPrevious": "Missing previous pass",
+      "deleted": "Deleted"
+    }
+  },
+  "boardReportV2": {
+    "processTitle": "Process",
+    "processHint": "Click the station you're scanning at.",
+    "scanningAt": "Scanning at:",
+    "noStationSelected": "no station selected",
+    "scanPlaceholder": "Scan board QR code",
+    "todaysReport": "Today's report",
+    "totalBoards": "Total boards reported: {{count}}",
+    "columns": {
+      "time": "Time",
+      "qrCode": "QR Code",
+      "model": "Model",
+      "station": "Station",
+      "status": "Status"
+    },
+    "noBoardsToday": "No boards reported today yet.",
+    "alreadyReported": "{{qrCode}} was already reported at {{station}}.",
+    "thisStation": "this station",
+    "movementStatus": {
+      "passed": "Passed",
+      "flaggedMissingPrevious": "Flagged - missing previous pass",
+      "deleted": "Deleted"
+    }
+  },
+  "lineFlowBoard": {
+    "completedSince": "Completed since",
+    "completedUntil": "Completed until",
+    "refreshButton": "Refresh",
+    "wholeProcessTitle": "Whole process — live",
+    "wholeProcessHint": "Every line, left to right in production order. Counts reflect where boards currently are, right now — not a historical count. Updates automatically every 20s. Click a station to see the boards behind its counts.",
+    "inTransit": "in transit",
+    "flaggedCount": "{{count}} flagged",
+    "completedInRange": "completed in range",
+    "lookupTitle": "Look up a board by QR code",
+    "viewButton": "View",
+    "flaggedBoardsTitle": "Flagged boards",
+    "flaggedBoardsHint": "Boards whose current station doesn't match the station right before it — likely skipped a scan, went backwards, or need review.",
+    "noFlaggedBoards": "No flagged boards.",
+    "columns": {
+      "line": "Line",
+      "qrCode": "QR Code",
+      "model": "Model",
+      "currentStation": "Current station",
+      "lastUpdated": "Last updated"
+    }
+  },
+  "qrReaderV2": {
+    "lineRequired": "Please select a line",
+    "positionRequired": "Please enter a position",
+    "columns": {
+      "line": "Line",
+      "position": "Position",
+      "name": "Name",
+      "previousStations": "Previous station(s)"
+    },
+    "entryStation": "— (entry station)",
+    "addStationTitle": "Add station",
+    "nameLabel": "Name",
+    "positionLabel": "Position",
+    "previousStationsHint": "Leave all unchecked if this is an entry station. Check more than one to make this a convergence point fed by multiple lines (e.g. the PCB line's entry station, fed by the end of both the Parmi and Jutze SMD lines).",
+    "noStationsYet": "No stations yet."
+  },
+  "stationBoardsModal": {
+    "title": "Boards at {{station}}",
+    "noBoards": "No boards currently at this station.",
+    "columns": {
+      "qrCode": "QR Code",
+      "model": "Model",
+      "status": "Status",
+      "lastUpdated": "Last updated"
+    }
+  }
+}

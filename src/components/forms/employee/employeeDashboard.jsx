@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import ReactLoading from "react-loading";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { withTranslation } from "react-i18next";
 import { getDepartmentByHierarchyId } from "../../../services/departmentService";
 import {
   getEmployeeByDepartmentId,
@@ -83,6 +84,7 @@ class EmployeeDashboard extends Form {
   };
 
   render() {
+    const { t } = this.props;
     const {
       loading,
       data,
@@ -106,7 +108,7 @@ class EmployeeDashboard extends Form {
           <div className="col-4 m-2">
             <p className="mt-4"> </p>
             <Link to="/employee-add" className="btn btn-primary p-2 w-100">
-              ADD EMPLOYEE
+              {t("forms:employeeDashboard.addEmployeeLink")}
             </Link>
             <p className="mt-2"> </p>
             <Department
@@ -119,7 +121,7 @@ class EmployeeDashboard extends Form {
             {this.renderInput(
               "search",
               "",
-              "Search",
+              t("common:buttons.search"),
               fields.search,
               this.handleInputChange,
               errors.search,
@@ -145,4 +147,4 @@ class EmployeeDashboard extends Form {
   }
 }
 
-export default EmployeeDashboard;
+export default withTranslation(["forms", "common"])(EmployeeDashboard);

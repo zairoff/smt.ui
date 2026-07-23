@@ -1,5 +1,6 @@
 import _ from "lodash";
 import Form from "./form";
+import { withTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import ReactLoading from "react-loading";
 import { paginate } from "../../utils/paginate";
@@ -29,12 +30,6 @@ class PlanActivityForm extends Form {
       searchDate: "",
     },
     lines: [],
-    statuses: [
-      { id: "Plan", name: "Plan" },
-      { id: "Plan-Do", name: "Plan-Do" },
-      { id: "Plan-Do-Act", name: "Plan-Do-Act" },
-      { id: "Plan-Do-Act-Resolve", name: "Plan-Do-Act-Resolve" },
-    ],
     currentPage: 1,
     selectedItem: { id: "", value: "" },
     pageSize: 15,
@@ -137,7 +132,7 @@ class PlanActivityForm extends Form {
       createdDate === "" ||
       expireDate === ""
     ) {
-      toast.warning("Kerakli ma'lumotlarni kiriting");
+      toast.warning(this.props.t("forms:messages.fillRequiredFields"));
       return;
     }
     this.setState({ loading: true });
@@ -175,10 +170,10 @@ class PlanActivityForm extends Form {
   };
 
   render() {
+    const { t } = this.props;
     const {
       fields,
       lines,
-      statuses,
       errors,
       data,
       sortColumn,
@@ -186,6 +181,16 @@ class PlanActivityForm extends Form {
       pageSize,
       loading,
     } = this.state;
+
+    const statuses = [
+      { id: "Plan", name: t("forms:planActivity.statuses.plan") },
+      { id: "Plan-Do", name: t("forms:planActivity.statuses.planDo") },
+      { id: "Plan-Do-Act", name: t("forms:planActivity.statuses.planDoAct") },
+      {
+        id: "Plan-Do-Act-Resolve",
+        name: t("forms:planActivity.statuses.planDoActResolve"),
+      },
+    ];
 
     const sortedRows = _.orderBy(data, [sortColumn.path], [sortColumn.order]);
     const rows = paginate(sortedRows, currentPage, pageSize);
@@ -196,12 +201,20 @@ class PlanActivityForm extends Form {
 
         <div className="row">
           <div className="col-4">
-            {this.renderSelect("Line", lines, "", this.handleSelectChange)}
+            {this.renderSelect(
+              "Line",
+              lines,
+              "",
+              this.handleSelectChange,
+              "id",
+              "name",
+              t("forms:fields.line")
+            )}
           </div>
           <div className="col-4">
             {this.renderInput(
               "issue",
-              "Nomuvofiqlik",
+              t("forms:planActivity.issue"),
               "",
               fields.issue,
               this.handleInputChange,
@@ -214,7 +227,7 @@ class PlanActivityForm extends Form {
           <div className="col-4">
             {this.renderInput(
               "reason",
-              "Sabab",
+              t("forms:planActivity.reason"),
               "",
               fields.reason,
               this.handleInputChange,
@@ -229,7 +242,7 @@ class PlanActivityForm extends Form {
           <div className="col-4">
             {this.renderInput(
               "action",
-              "To'g'irlash ishlari",
+              t("forms:planActivity.action"),
               "",
               fields.action,
               this.handleInputChange,
@@ -242,7 +255,7 @@ class PlanActivityForm extends Form {
           <div className="col-4">
             {this.renderInput(
               "responsible",
-              "Javobgar",
+              t("forms:planActivity.responsible"),
               "",
               fields.responsible,
               this.handleInputChange,
@@ -253,7 +266,15 @@ class PlanActivityForm extends Form {
           </div>
 
           <div className="col-4">
-            {this.renderSelect("Status", statuses, "", this.handleSelectChange)}
+            {this.renderSelect(
+              "Status",
+              statuses,
+              "",
+              this.handleSelectChange,
+              "id",
+              "name",
+              t("forms:fields.status")
+            )}
           </div>
 
           <p className="mt-2"> </p>
@@ -261,7 +282,7 @@ class PlanActivityForm extends Form {
           <div className="col-4">
             {this.renderInput(
               "createdDate",
-              "Nomuvofiqlik sanasi",
+              t("forms:planActivity.createdDate"),
               "",
               fields.createdDate,
               this.handleDateChange,
@@ -274,7 +295,7 @@ class PlanActivityForm extends Form {
           <div className="col-4">
             {this.renderInput(
               "expireDate",
-              "Muddat",
+              t("forms:planActivity.expireDate"),
               "",
               fields.expireDate,
               this.handleDateChange,
@@ -285,7 +306,11 @@ class PlanActivityForm extends Form {
           </div>
 
           <div className="col-4 pt-4">
-            {this.renderButton("Save", "button", this.handleSubmit)}
+            {this.renderButton(
+              t("common:buttons.save"),
+              "button",
+              this.handleSubmit
+            )}
           </div>
           <p className="mt-2"> </p>
           <p className="mt-2"> </p>
@@ -309,4 +334,4 @@ class PlanActivityForm extends Form {
   }
 }
 
-export default PlanActivityForm;
+export default withTranslation(["forms", "common"])(PlanActivityForm);

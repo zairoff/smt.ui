@@ -1,6 +1,7 @@
 import React from "react";
 import { loginUser } from "../../services/userService";
 import ReactLoading from "react-loading";
+import { withTranslation } from "react-i18next";
 import Form from "./form";
 
 class Login extends Form {
@@ -25,6 +26,7 @@ class Login extends Form {
   };
 
   render() {
+    const { t } = this.props;
     const { fields, errors, loading } = this.state;
     return (
       <div className="d-flex justify-content-center align-items-center p-4">
@@ -32,7 +34,7 @@ class Login extends Form {
         <form onSubmit={this.handleSubmit}>
           {this.renderInput(
             "username",
-            "Username",
+            t("forms:login.username"),
             "",
             fields.username,
             this.handleInputChange,
@@ -42,7 +44,7 @@ class Login extends Form {
           <p className="mt-2"> </p>
           {this.renderInput(
             "password",
-            "Password",
+            t("forms:login.password"),
             "",
             fields.password,
             this.handleInputChange,
@@ -51,16 +53,16 @@ class Login extends Form {
             "password"
           )}
           {this.renderLink(
-            "forgot password?",
+            t("forms:login.forgotPassword"),
             "/reset",
             "d-flex justify-content-end"
           )}
           <p className="mt-2"> </p>
-          {this.renderButton("Login")}
+          {this.renderButton(t("forms:login.submit"))}
         </form>
       </div>
     );
   }
 }
 
-export default Login;
+export default withTranslation("forms")(Login);

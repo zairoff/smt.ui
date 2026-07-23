@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
 import Table from "../common/table";
 import config from "../../config.json";
 import { Link } from "react-router-dom";
@@ -30,7 +31,7 @@ class EmployeeTable extends Component {
           state={{ data: employee }}
           className="link"
         >
-          Edit
+          {this.props.t("common:buttons.edit")}
         </Link>
       ),
     },
@@ -42,7 +43,7 @@ class EmployeeTable extends Component {
           onClick={() => this.props.onDelete(employee)}
           className="btn btn-danger"
         >
-          Delete
+          {this.props.t("common:buttons.delete")}
         </button>
       ),
     },
@@ -60,4 +61,4 @@ class EmployeeTable extends Component {
   }
 }
 
-export default EmployeeTable;
+export default withTranslation("common")(EmployeeTable);

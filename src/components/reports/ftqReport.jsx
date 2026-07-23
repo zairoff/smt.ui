@@ -1,4 +1,5 @@
 import React from "react";
+import { withTranslation } from "react-i18next";
 import Form from "../forms/form";
 import {
   Chart as ChartJS,
@@ -261,11 +262,15 @@ class FtqReport extends Form {
       }
     }
 
-    const totalPlanText = "Plan: " + totalPlan;
-    const totalProducedText = "Produced: " + totalProduced;
+    const { t } = this.props;
 
-    const totalDefedctText = "Defects: " + allDefectsCount;
-    const totalClosedDefectsText = "Closed: " + closedDefectsCount;
+    const totalPlanText = t("ftqReport.plan", { count: totalPlan });
+    const totalProducedText = t("ftqReport.produced", { count: totalProduced });
+
+    const totalDefedctText = t("ftqReport.defects", { count: allDefectsCount });
+    const totalClosedDefectsText = t("ftqReport.closedDefects", {
+      count: closedDefectsCount,
+    });
 
     const sortedPlanRows = _.orderBy(
       plans,
@@ -439,6 +444,8 @@ class FtqReport extends Form {
   }
 }
 
+const TranslatedFtqReport = withTranslation("reports")(FtqReport);
+
 export default () => (
-  <FtqReport params={useParams()} location={useLocation()} />
+  <TranslatedFtqReport params={useParams()} location={useLocation()} />
 );

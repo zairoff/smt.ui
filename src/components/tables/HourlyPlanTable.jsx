@@ -1,14 +1,16 @@
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
 import Table from "../common/table";
 
 class HourlyPlanTable extends Component {
-  columns = [
-    { path: "id", label: "ID" },
-    { path: "line.name", label: "LINE" },
-    { path: "model.name", label: "MODEL" },
-    { path: "plan", label: "PLAN" },
-    { path: "produced", label: "PRODUCED" },
-    { path: "time", label: "DATE" },
+  get columns() {
+    return [
+    { path: "id", label: this.props.t("tables:hourlyPlanTable.columns.id") },
+    { path: "line.name", label: this.props.t("tables:hourlyPlanTable.columns.line") },
+    { path: "model.name", label: this.props.t("tables:hourlyPlanTable.columns.model") },
+    { path: "plan", label: this.props.t("tables:hourlyPlanTable.columns.plan") },
+    { path: "produced", label: this.props.t("tables:hourlyPlanTable.columns.produced") },
+    { path: "time", label: this.props.t("tables:hourlyPlanTable.columns.date") },
     {
       path: "button",
       content: (productBrand) => (
@@ -17,11 +19,12 @@ class HourlyPlanTable extends Component {
           onClick={() => this.props.onDelete(productBrand)}
           className="btn btn-danger"
         >
-          Delete
+          {this.props.t("common:buttons.delete")}
         </button>
       ),
     },
   ];
+  }
   render() {
     const { rows, sortColumn, onSort } = this.props;
     return (
@@ -35,4 +38,4 @@ class HourlyPlanTable extends Component {
   }
 }
 
-export default HourlyPlanTable;
+export default withTranslation(["tables", "common"])(HourlyPlanTable);

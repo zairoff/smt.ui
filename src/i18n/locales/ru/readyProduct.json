@@ -1,0 +1,43 @@
+{
+  "fields": {
+    "model": "Модель",
+    "sapCode": "Код SAP",
+    "warehouseQuantity": "Количество на складе",
+    "exportQuantity": "Количество на отгрузку"
+  },
+  "dateRange": {
+    "from": "От",
+    "to": "До"
+  },
+  "filterLabel": "Фильтр",
+  "excelButton": "Excel",
+  "updateSuccess": "Успешно изменено",
+  "exportDetailForm": {
+    "modelNotFound": "Модель не найдена",
+    "enterExportQuantity": "Введите количество на отгрузку",
+    "exportExceedsWarehouse": "Количество на отгрузку не должно превышать остаток на складе"
+  },
+  "exportForm": {
+    "productLabel": "Продукт",
+    "brandLabel": "Бренд"
+  },
+  "importForm": {
+    "title": "Готовая продукция"
+  },
+  "report": {
+    "filters": {
+      "import": "Приход",
+      "export": "Расход"
+    }
+  },
+  "transactions": {
+    "filters": {
+      "import": "Приход",
+      "export": "Расход"
+    }
+  },
+  "transactionsDetailed": {
+    "transactionNotFound": "Транзакция не найдена",
+    "enterNewQuantity": "Введите новое количество"
+  }
+}

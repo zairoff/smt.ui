@@ -1,0 +1,109 @@
+{
+  "shared": {
+    "boardStatus": {
+      "inProgress": "Jarayonda",
+      "flagged": "Belgilangan",
+      "completed": "Yakunlangan",
+      "deleted": "O'chirilgan"
+    },
+    "noStationsConfigured": "Stansiyalar hali sozlanmagan.",
+    "historyButton": "Tarix"
+  },
+  "boardReport": {
+    "readersLabel": "Skanerlar"
+  },
+  "boardStatistics": {
+    "fromLabel": "Dan",
+    "toLabel": "Gacha"
+  },
+  "boardHistoryModal": {
+    "title": "Plata tarixi",
+    "notFound": "Plata topilmadi.",
+    "lineLabel": "Liniya:",
+    "modelLabel": "Model:",
+    "statusLabel": "Holat:",
+    "columns": {
+      "time": "Vaqt",
+      "station": "Stansiya",
+      "result": "Natija"
+    },
+    "noMovements": "Harakatlar qayd etilmagan.",
+    "movementStatus": {
+      "passed": "O'tdi",
+      "missingPrevious": "Oldingi o'tish yo'qolgan",
+      "deleted": "O'chirilgan"
+    }
+  },
+  "boardReportV2": {
+    "processTitle": "Jarayon",
+    "processHint": "Skanerlayotgan stansiyangizni bosing.",
+    "scanningAt": "Skanerlanmoqda:",
+    "noStationSelected": "stansiya tanlanmagan",
+    "scanPlaceholder": "Plata QR kodini skanerlang",
+    "todaysReport": "Bugungi hisobot",
+    "totalBoards": "Jami skanerlangan platalar: {{count}}",
+    "columns": {
+      "time": "Vaqt",
+      "qrCode": "QR kod",
+      "model": "Model",
+      "station": "Stansiya",
+      "status": "Holat"
+    },
+    "noBoardsToday": "Bugun hali platalar skanerlanmagan.",
+    "alreadyReported": "{{qrCode}} allaqachon {{station}} stansiyasida qayd etilgan.",
+    "thisStation": "ushbu stansiyada",
+    "movementStatus": {
+      "passed": "O'tdi",
+      "flaggedMissingPrevious": "Belgilangan — oldingi o'tish yo'qolgan",
+      "deleted": "O'chirilgan"
+    }
+  },
+  "lineFlowBoard": {
+    "completedSince": "Yakunlangan (dan)",
+    "completedUntil": "Yakunlangan (gacha)",
+    "refreshButton": "Yangilash",
+    "wholeProcessTitle": "Butun jarayon — jonli",
+    "wholeProcessHint": "Har bir liniya, ishlab chiqarish tartibida chapdan o'ngga. Hisoblagichlar platalarning hozirgi joylashuvini aks ettiradi — tarixiy sonni emas. Har 20 soniyada avtomatik yangilanadi. Hisoblagichlar ortidagi platalarni ko'rish uchun stansiyani bosing.",
+    "inTransit": "yo'lda",
+    "flaggedCount": "{{count}} ta belgilangan",
+    "completedInRange": "tanlangan davrda yakunlangan",
+    "lookupTitle": "Platani QR kod bo'yicha qidirish",
+    "viewButton": "Ko'rish",
+    "flaggedBoardsTitle": "Belgilangan platalar",
+    "flaggedBoardsHint": "Joriy stansiyasi undan oldingi stansiyaga mos kelmaydigan platalar — ehtimol skanerlash o'tkazib yuborilgan, orqaga qaytgan yoki tekshiruv talab qilinadi.",
+    "noFlaggedBoards": "Belgilangan platalar yo'q.",
+    "columns": {
+      "line": "Liniya",
+      "qrCode": "QR kod",
+      "model": "Model",
+      "currentStation": "Joriy stansiya",
+      "lastUpdated": "Oxirgi yangilanish"
+    }
+  },
+  "qrReaderV2": {
+    "lineRequired": "Liniyani tanlang",
+    "positionRequired": "Pozitsiyani kiriting",
+    "columns": {
+      "line": "Liniya",
+      "position": "Pozitsiya",
+      "name": "Nomi",
+      "previousStations": "Oldingi stansiya(lar)"
+    },
+    "entryStation": "— (kirish stansiyasi)",
+    "addStationTitle": "Stansiya qo'shish",
+    "nameLabel": "Nomi",
+    "positionLabel": "Pozitsiya",
+    "previousStationsHint": "Agar bu kirish stansiyasi bo'lsa, barchasini belgilamasdan qoldiring. Bir nechta liniyadan oziqlanadigan qo'shilish nuqtasi hosil qilish uchun bir nechtasini belgilang (masalan, PCB liniyasining kirish stansiyasi, Parmi va Jutze SMD liniyalarining oxiridan oziqlanadi).",
+    "noStationsYet": "Hozircha stansiyalar yo'q."
+  },
+  "stationBoardsModal": {
+    "title": "{{station}} stansiyasidagi platalar",
+    "noBoards": "Hozirda bu stansiyada platalar yo'q.",
+    "columns": {
+      "qrCode": "QR kod",
+      "model": "Model",
+      "status": "Holat",
+      "lastUpdated": "Oxirgi yangilanish"
+    }
+  }
+}

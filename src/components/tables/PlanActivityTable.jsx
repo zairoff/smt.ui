@@ -1,18 +1,20 @@
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
 import Table from "../common/table";
 import { Link } from "react-router-dom";
 
 class PlanActivityTable extends Component {
-  columns = [
-    { path: "id", label: "ID" },
-    { path: "line.name", label: "LINE" },
-    { path: "issue", label: "NOMUVOFIQLIK" },
-    { path: "reason", label: "SABAB" },
-    { path: "act", label: "TO'G'IRLASH ISHLARI" },
-    { path: "responsible", label: "JAVOBGARLAR" },
-    { path: "status", label: "STATUS" },
-    { path: "date", label: "KIRITILGAN SANA" },
-    { path: "expires", label: "MUDDAT" },
+  get columns() {
+    return [
+    { path: "id", label: this.props.t("tables:planActivityTable.columns.id") },
+    { path: "line.name", label: this.props.t("tables:planActivityTable.columns.line") },
+    { path: "issue", label: this.props.t("tables:planActivityTable.columns.issue") },
+    { path: "reason", label: this.props.t("tables:planActivityTable.columns.reason") },
+    { path: "act", label: this.props.t("tables:planActivityTable.columns.correctiveAction") },
+    { path: "responsible", label: this.props.t("tables:planActivityTable.columns.responsible") },
+    { path: "status", label: this.props.t("tables:planActivityTable.columns.status") },
+    { path: "date", label: this.props.t("tables:planActivityTable.columns.dateEntered") },
+    { path: "expires", label: this.props.t("tables:planActivityTable.columns.deadline") },
     {
       path: "edit",
       content: (planActivity) => (
@@ -23,7 +25,7 @@ class PlanActivityTable extends Component {
           state={{ data: planActivity }}
           className="btn btn-primary"
         >
-          Edit
+          {this.props.t("common:buttons.edit")}
         </Link>
       ),
     },
@@ -35,11 +37,12 @@ class PlanActivityTable extends Component {
           onClick={() => this.props.onDelete(productBrand)}
           className="btn btn-danger"
         >
-          Delete
+          {this.props.t("common:buttons.delete")}
         </button>
       ),
     },
   ];
+  }
   render() {
     const { rows, sortColumn, onSort } = this.props;
     return (
@@ -53,4 +56,4 @@ class PlanActivityTable extends Component {
   }
 }
 
-export default PlanActivityTable;
+export default withTranslation(["tables", "common"])(PlanActivityTable);

@@ -1,0 +1,85 @@
+{
+  "menu": {
+    "main": "Main",
+    "management": "Management",
+    "plans": "Plans",
+    "reports": "Reports",
+    "repairs": "Repairs",
+    "machines": "Machines",
+    "boardFlow": "Board Flow",
+    "settings": "Settings",
+    "printer": "Printer"
+  },
+  "main": {
+    "dashboard": "Dashboard",
+    "statics": "Statics",
+    "planQuality": "Plan & Quality",
+    "ftq": "FTQ"
+  },
+  "management": {
+    "department": "Department",
+    "employeeDashboard": "Employee dashboard",
+    "employeeAdd": "Employee add"
+  },
+  "plans": {
+    "plan": "Plan",
+    "planActivity": "Plan activity",
+    "report": "Report",
+    "planHourly": "Plan hourly"
+  },
+  "reports": {
+    "report": "Report",
+    "pcbReport": "PCB report"
+  },
+  "repairs": {
+    "repairer": "Repairer",
+    "repair": "Repair"
+  },
+  "machines": {
+    "dashboard": "Dashboard",
+    "machine": "Machine",
+    "repairer": "Repairer",
+    "repair": "Repair"
+  },
+  "boardFlow": {
+    "report": "Report",
+    "flow": "Flow",
+    "qrReader": "QR Reader",
+    "flowV2": "Flow V2 (live)",
+    "reportV2": "Report V2",
+    "qrReaderV2": "QR Reader V2"
+  },
+  "settings": {
+    "product": "Product",
+    "brand": "Brand",
+    "productBrand": "Product-Brand",
+    "model": "Model",
+    "defect": "Defect",
+    "line": "Line",
+    "lineDefect": "Line-Defect",
+    "component": "Component",
+    "componentConnect": "Component connect",
+    "componentBulk": "Component bulk"
+  },
+  "readyProduct": {
+    "title": "Warehouse",
+    "import": "Inbound",
+    "export": "Outbound",
+    "report": "Report",
+    "transactions": "Transactions"
+  },
+  "returnProduct": {
+    "title": "Returned products",
+    "import": "Inbound",
+    "export": "Outbound",
+    "report": "Report",
+    "transactions": "Transactions"
+  },
+  "printer": {
+    "qr": "QR"
+  },
+  "auth": {
+    "login": "Login",
+    "logout": "Logout"
+  }
+}

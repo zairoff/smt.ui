@@ -1,0 +1,37 @@
+{
+  "fields": {
+    "model": "Model",
+    "sapCode": "SAP kodi",
+    "barCode": "Shtrix kod",
+    "warehouseQuantity": "Ombordagi soni",
+    "exportQuantity": "Chiqim soni"
+  },
+  "dateRange": {
+    "from": "Dan",
+    "to": "Gacha"
+  },
+  "filterLabel": "Filtr",
+  "excelButton": "Excel",
+  "updateSuccess": "Muvaffaqiyatli o'zgartirildi",
+  "errors": {
+    "modelNotFound": "Model topilmadi",
+    "enterExportQuantity": "Chiqim sonini kiriting",
+    "exportExceedsWarehouse": "Chiqim soni ombordagi miqdordan ko'p bo'lmasligi kerak",
+    "barcodeInvalid": "Shtrix kod noto'g'ri"
+  },
+  "transactionTypeLabels": {
+    "importFromFactoryToBuffer": "Bufferga kirish (zavod Oxangaron)",
+    "exportFromBufferToRepair": "Bufferdan chiqish (remontga)",
+    "exportFromRepairToStore": "Remontdan chiqish (omborga)",
+    "exportFromRepairToUtilize": "Remontdan chiqish (ombor, utilizatsiyaga)",
+    "exportFromStoreToFactory": "Ombordan chiqish (zavodga, Oxangaron)",
+    "exportFromStoreToFactoryShort": "Ombordan chiqish (zavodga)",
+    "exportFromStoreToUtilize": "Ombordan chiqish (utilizatsiyaga)"
+  },
+  "export": {
+    "destinationLabel": "Qaerga?"
+  },
+  "import": {
+    "title": "Qaytgan mahsulotlar"
+  }
+}

@@ -26,6 +26,7 @@ import { getDepartments } from "../../services/departmentService";
 import config from "../../config.json";
 import PcbCard from "./pcbCard";
 import { format } from 'date-fns';
+import { withTranslation } from "react-i18next";
 
 const fileUrl = config.fileUrl;
 
@@ -236,7 +237,7 @@ class PcbReport extends Form {
     }
 
     if (!selectedDefect) {
-      toast.warning("Defektni tanlang!");
+      toast.warning(this.props.t("pcbReport.selectDefectWarning"));
       return;
     }
 
@@ -284,6 +285,7 @@ class PcbReport extends Form {
       employees,
       hideItems,
     } = this.state;
+    const { t } = this.props;
     return (
       <>
         <form className="row mt-4">
@@ -295,17 +297,44 @@ class PcbReport extends Form {
               "Product",
               products,
               "",
-              this.handleSelectChange
+              this.handleSelectChange,
+              "id",
+              "name",
+              t("pcbReport.product")
             )}
           </div>
           <div className="col">
-            {this.renderSelect("Brand", brands, "", this.handleSelectChange)}
+            {this.renderSelect(
+              "Brand",
+              brands,
+              "",
+              this.handleSelectChange,
+              "id",
+              "name",
+              t("pcbReport.brand")
+            )}
           </div>
           <div className="col">
-            {this.renderSelect("Model", models, "", this.handleSelectChange)}
+            {this.renderSelect(
+              "Model",
+              models,
+              "",
+              this.handleSelectChange,
+              "id",
+              "name",
+              t("pcbReport.model")
+            )}
           </div>
           <div className="col">
-            {this.renderSelect("Line", lines, "", this.handleSelectChange)}
+            {this.renderSelect(
+              "Line",
+              lines,
+              "",
+              this.handleSelectChange,
+              "id",
+              "name",
+              t("pcbReport.line")
+            )}
           </div>
           <div className="col">
             {this.renderSelect(
@@ -314,7 +343,8 @@ class PcbReport extends Form {
               "",
               this.handleSelectChange,
               "departmentId",
-              "name"
+              "name",
+              t("pcbReport.department")
             )}
           </div>
         </form>
@@ -326,7 +356,7 @@ class PcbReport extends Form {
               }
               onClick={() => this.handleCalibrationClick(!hideItems)}
             >
-              {hideItems ? "CALIBRATION" : "WORK"}
+              {hideItems ? t("pcbReport.calibration") : t("pcbReport.work")}
             </div>
             <ListGroup
               items={defects}
@@ -353,4 +383,4 @@ class PcbReport extends Form {
   }
 }
 
-export default PcbReport;
+export default withTranslation("reports")(PcbReport);

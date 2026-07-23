@@ -5,6 +5,7 @@ import ReactLoading from "react-loading";
 import _ from "lodash";
 import Form from "../forms/form";
 import { toast } from "react-toastify";
+import { withTranslation } from "react-i18next";
 import {
   addComponent,
   deleteComponent,
@@ -118,6 +119,7 @@ class ComponentAdd extends Form {
       fields,
       errors,
     } = this.state;
+    const { t } = this.props;
 
     const sortedRows = _.orderBy(
       allRows,
@@ -147,7 +149,7 @@ class ComponentAdd extends Form {
         <div className="col mt-5">
           {this.renderInput(
             "partNumber",
-            "Part number",
+            t("componentAdd.partNumber"),
             "",
             fields.partNumber,
             this.handleInputChange,
@@ -157,7 +159,7 @@ class ComponentAdd extends Form {
           <p className="mt-2"> </p>
           {this.renderInput(
             "rCode",
-            "R code",
+            t("componentAdd.rCode"),
             "",
             fields.rCode,
             this.handleInputChange,
@@ -167,7 +169,7 @@ class ComponentAdd extends Form {
           <p className="mt-2"> </p>
           {this.renderInput(
             "storePlaceNumber",
-            "Ombordagi joy nomeri",
+            t("componentAdd.storePlaceNumber"),
             "",
             fields.storePlaceNumber,
             this.handleInputChange,
@@ -177,7 +179,7 @@ class ComponentAdd extends Form {
           <p className="mt-2"> </p>
           {this.renderInput(
             "sapPlace",
-            "SAP nomeri",
+            t("componentAdd.sapPlace"),
             "",
             fields.sapPlace,
             this.handleInputChange,
@@ -187,7 +189,7 @@ class ComponentAdd extends Form {
           <p className="mt-2"> </p>
           {this.renderInput(
             "placeCode",
-            "Joy kodi",
+            t("componentAdd.placeCode"),
             "",
             fields.placeCode,
             this.handleInputChange,
@@ -197,7 +199,7 @@ class ComponentAdd extends Form {
           <p className="mt-2"> </p>
           {this.renderInput(
             "specification",
-            "Specification",
+            t("componentAdd.specification"),
             "",
             fields.specification,
             this.handleInputChange,
@@ -205,11 +207,11 @@ class ComponentAdd extends Form {
             true
           )}
           <p className="mt-2"> </p>
-          {this.renderButton("Save")}
+          {this.renderButton(t("componentAdd.save"))}
         </div>
       </form>
     );
   }
 }
 
-export default ComponentAdd;
+export default withTranslation("store")(ComponentAdd);

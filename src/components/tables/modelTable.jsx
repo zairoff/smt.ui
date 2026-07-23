@@ -1,16 +1,18 @@
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
 import Table from "../common/table";
 import { Link } from "react-router-dom";
 
 class ModelTable extends Component {
-  columns = [
-    { path: "id", label: "ID" },
-    { path: "productBrand.product.name", label: "PRODUCT" },
-    { path: "productBrand.brand.name", label: "BRAND" },
-    { path: "name", label: "MODEL" },
-    { path: "boardId", label: "BoardID" },
-    { path: "sapCode", label: "SAP CODE" },
-    { path: "barcode", label: "BAR CODE" },
+  get columns() {
+    return [
+    { path: "id", label: this.props.t("tables:modelTable.columns.id") },
+    { path: "productBrand.product.name", label: this.props.t("tables:modelTable.columns.product") },
+    { path: "productBrand.brand.name", label: this.props.t("tables:modelTable.columns.brand") },
+    { path: "name", label: this.props.t("tables:modelTable.columns.model") },
+    { path: "boardId", label: this.props.t("tables:modelTable.columns.boardId") },
+    { path: "sapCode", label: this.props.t("tables:modelTable.columns.sapCode") },
+    { path: "barcode", label: this.props.t("tables:modelTable.columns.barCode") },
     {
       path: "edit",
       content: (model) => (
@@ -21,7 +23,7 @@ class ModelTable extends Component {
           state={{ data: model }}
           className="btn btn-primary"
         >
-          Update
+          {this.props.t("common:buttons.edit")}
         </Link>
       ),
     },
@@ -33,11 +35,12 @@ class ModelTable extends Component {
           onClick={() => this.props.onDelete(productBrand)}
           className="btn btn-danger"
         >
-          Delete
+          {this.props.t("common:buttons.delete")}
         </button>
       ),
     },
   ];
+  }
   render() {
     const { rows, sortColumn, onSort } = this.props;
     return (
@@ -51,4 +54,4 @@ class ModelTable extends Component {
   }
 }
 
-export default ModelTable;
+export default withTranslation(["tables", "common"])(ModelTable);

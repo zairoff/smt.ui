@@ -1,0 +1,298 @@
+{
+  "hourlyPlanTable": {
+    "columns": {
+      "id": "ID",
+      "line": "Liniya",
+      "model": "Model",
+      "plan": "Reja",
+      "produced": "Ishlab chiqarildi",
+      "date": "Sana"
+    }
+  },
+  "planActivityReportTable": {
+    "columns": {
+      "id": "ID",
+      "line": "Liniya",
+      "dateEntered": "Kiritilgan sana",
+      "issue": "Nomuvofiqlik",
+      "reason": "Sabab",
+      "correctiveAction": "To'g'irlash ishlari",
+      "deadline": "Muddat",
+      "responsible": "Javobgarlar",
+      "status": "Holati"
+    }
+  },
+  "planActivityTable": {
+    "columns": {
+      "id": "ID",
+      "line": "Liniya",
+      "issue": "Nomuvofiqlik",
+      "reason": "Sabab",
+      "correctiveAction": "To'g'irlash ishlari",
+      "responsible": "Javobgarlar",
+      "status": "Holati",
+      "dateEntered": "Kiritilgan sana",
+      "deadline": "Muddat"
+    }
+  },
+  "readyProductTransactionsTable": {
+    "columns": {
+      "model": "Model",
+      "sapCode": "SAP kodi",
+      "barCode": "Shtrix-kod",
+      "receivedDate": "Kirish",
+      "count": "Soni"
+    }
+  },
+  "returnedProductExportTable": {
+    "columns": {
+      "model": "Model",
+      "sapCode": "SAP kodi",
+      "barCode": "Shtrix-kod",
+      "count": "Soni"
+    },
+    "actions": {
+      "issue": "Chiqim",
+      "issueAll": "Barchasini chiqarish"
+    }
+  },
+  "returnedProductExportTransactionsTable": {
+    "columns": {
+      "index": "Raqami",
+      "sapCode": "SAP kodi",
+      "receivedDate": "Kirish",
+      "count": "Soni"
+    }
+  },
+  "returnedProductImportTable": {
+    "columns": {
+      "index": "Raqami",
+      "model": "Model",
+      "sapCode": "SAP kodi",
+      "barCode": "Shtrix-kod",
+      "receivedDate": "Kirish",
+      "count": "Soni"
+    }
+  },
+  "returnedProductTransactionsTable": {
+    "columns": {
+      "model": "Model",
+      "sapCode": "SAP kodi",
+      "barCode": "Shtrix-kod",
+      "receivedDate": "Kirish",
+      "count": "Soni"
+    }
+  },
+  "boardFlowTable": {
+    "columns": {
+      "qrCode": "QR-kod",
+      "reader": "Skaner",
+      "model": "Model",
+      "sapCode": "SAP kodi",
+      "time": "Vaqt"
+    }
+  },
+  "boardReportTable": {
+    "columns": {
+      "qrCode": "QR-kod",
+      "reader": "Skaner",
+      "model": "Model",
+      "sapCode": "SAP kodi",
+      "time": "Vaqt"
+    }
+  },
+  "qrReaderTable": {
+    "columns": {
+      "id": "ID",
+      "name": "Nomi",
+      "position": "Joylashuvi"
+    }
+  },
+  "brandTable": {
+    "columns": {
+      "id": "ID",
+      "name": "Brend"
+    }
+  },
+  "componentTable": {
+    "columns": {
+      "id": "ID",
+      "partNumber": "Qism raqami",
+      "rCode": "R-kod",
+      "storePlace": "Saqlash joyi",
+      "sapPlace": "SAP joyi"
+    }
+  },
+  "defectTable": {
+    "columns": {
+      "id": "ID",
+      "name": "Nuqson"
+    }
+  },
+  "detailedDefectTable": {
+    "columns": {
+      "line": "Liniya",
+      "barcode": "Shtrix-kod",
+      "model": "Model",
+      "sap": "SAP",
+      "defect": "Nuqson",
+      "repairAction": "Ta'mirlash",
+      "condition": "Xolati",
+      "repairedBy": "Tuzatdi",
+      "loggedAt": "Kiritildi",
+      "fixedAt": "Tuzatildi"
+    }
+  },
+  "detailedReadyProductReportTable": {
+    "columns": {
+      "model": "Model",
+      "sapCode": "SAP kodi",
+      "count": "Soni",
+      "status": "Holati",
+      "date": "Sana"
+    }
+  },
+  "ftqDefectTable": {
+    "columns": {
+      "name": "Nuqson",
+      "count": "Soni"
+    },
+    "actions": {
+      "details": "Batafsil"
+    }
+  },
+  "ftqPlanTable": {
+    "columns": {
+      "model": "Model",
+      "sap": "SAP",
+      "requiredCount": "Reja",
+      "producedCount": "Ishlab chiqarildi"
+    }
+  },
+  "lineDefectTable": {
+    "columns": {
+      "id": "ID",
+      "line": "Liniya",
+      "defect": "Nuqson"
+    }
+  },
+  "lineTable": {
+    "columns": {
+      "id": "ID",
+      "name": "Liniya"
+    }
+  },
+  "modelTable": {
+    "columns": {
+      "id": "ID",
+      "product": "Mahsulot",
+      "brand": "Brend",
+      "model": "Model",
+      "boardId": "Plata ID",
+      "sapCode": "SAP kodi",
+      "barCode": "Shtrix-kod"
+    }
+  },
+  "planTable": {
+    "columns": {
+      "id": "ID",
+      "line": "Liniya",
+      "model": "Model",
+      "requiredCount": "Reja",
+      "producedCount": "Ishlab chiqarildi",
+      "date": "Sana"
+    }
+  },
+  "productBrandTable": {
+    "columns": {
+      "id": "ID",
+      "product": "Mahsulot",
+      "brand": "Brend"
+    }
+  },
+  "productTable": {
+    "columns": {
+      "id": "ID",
+      "name": "Mahsulot"
+    }
+  },
+  "readyProductExportTable": {
+    "columns": {
+      "model": "Model",
+      "sapCode": "SAP kodi",
+      "count": "Soni"
+    },
+    "actions": {
+      "issue": "Chiqim",
+      "issueAll": "Barchasini chiqarish"
+    }
+  },
+  "readyProductGroupByTable": {
+    "columns": {
+      "model": "Model",
+      "sapCode": "SAP kodi",
+      "count": "Soni"
+    },
+    "actions": {
+      "details": "Batafsil"
+    }
+  },
+  "readyProductImportTable": {
+    "columns": {
+      "index": "Raqami",
+      "model": "Model",
+      "sapCode": "SAP kodi",
+      "receivedDate": "Kirish",
+      "count": "Soni"
+    }
+  },
+  "repairHistoryTable": {
+    "columns": {
+      "barcode": "Shtrix-kod",
+      "model": "Model",
+      "line": "Liniya",
+      "defect": "Nuqson",
+      "actionPerformed": "Bajarildi",
+      "performedBy": "Bajardi",
+      "condition": "Xolati",
+      "loggedAt": "Kiritildi",
+      "updatedAt": "O'zgartirildi"
+    }
+  },
+  "reportTable": {
+    "columns": {
+      "barcode": "Shtrix-kod",
+      "model": "Model",
+      "defect": "Nuqson"
+    }
+  },
+  "returnProductGroupByTable": {
+    "columns": {
+      "model": "Model",
+      "sapCode": "SAP kodi",
+      "barCode": "Shtrix-kod",
+      "count": "Soni"
+    }
+  },
+  "staticsGroupedTable": {
+    "columns": {
+      "name": "Nomi",
+      "count": "Soni"
+    }
+  },
+  "staticsTable": {
+    "columns": {
+      "barcode": "Shtrix-kod",
+      "product": "Mahsulot",
+      "brand": "Brend",
+      "model": "Model",
+      "line": "Liniya",
+      "defect": "Nuqson",
+      "actionPerformed": "Bajarildi",
+      "performedBy": "Bajardi",
+      "condition": "Xolati",
+      "loggedAt": "Kiritildi",
+      "fixedAt": "Tuzatildi"
+    }
+  }
+}

@@ -1,11 +1,13 @@
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
 import Table from "../common/table";
 
 class LineDefectTable extends Component {
-  columns = [
-    { path: "id", label: "ID" },
-    { path: "line.name", label: "LINE" },
-    { path: "defect.name", label: "DEFECT" },
+  get columns() {
+    return [
+    { path: "id", label: this.props.t("tables:lineDefectTable.columns.id") },
+    { path: "line.name", label: this.props.t("tables:lineDefectTable.columns.line") },
+    { path: "defect.name", label: this.props.t("tables:lineDefectTable.columns.defect") },
     {
       path: "button",
       content: (productBrand) => (
@@ -14,11 +16,12 @@ class LineDefectTable extends Component {
           onClick={() => this.props.onDelete(productBrand)}
           className="btn btn-danger"
         >
-          Delete
+          {this.props.t("common:buttons.delete")}
         </button>
       ),
     },
   ];
+  }
   render() {
     const { rows, sortColumn, onSort } = this.props;
     return (
@@ -32,4 +35,4 @@ class LineDefectTable extends Component {
   }
 }
 
-export default LineDefectTable;
+export default withTranslation(["tables", "common"])(LineDefectTable);

@@ -4,6 +4,7 @@ import { paginate } from "../../utils/paginate";
 import ReactLoading from "react-loading";
 import _ from "lodash";
 import Form from "./form";
+import { withTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import {
   addMachine,
@@ -42,7 +43,7 @@ class MachineForm extends Form {
   doSubmit = async () => {
     const { data, fields, imageFileName } = this.state;
     if (!imageFileName) {
-      toast.warning("Please upload image!");
+      toast.warning(this.props.t("forms:machine.uploadWarning"));
       return;
     }
     this.setState({ loading: true });
@@ -119,6 +120,7 @@ class MachineForm extends Form {
   };
 
   render() {
+    const { t } = this.props;
     const {
       data: allRows,
       pageSize,
@@ -186,7 +188,7 @@ class MachineForm extends Form {
                 true
               )}
               <p className="mt-2"> </p>
-              {this.renderButton("Save")}
+              {this.renderButton(t("common:buttons.save"))}
             </div>
           </div>
         </div>
@@ -195,4 +197,4 @@ class MachineForm extends Form {
   }
 }
 
-export default MachineForm;
+export default withTranslation(["forms", "common"])(MachineForm);

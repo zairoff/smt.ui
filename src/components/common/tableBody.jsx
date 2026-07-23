@@ -11,7 +11,7 @@ class TableBody extends Component {
     const { columns, rows } = this.props;
 
     return (
-      <tbody>
+      <>
         {rows.map((row) => (
           <tr key={row.id}>
             {columns.map((column) => (
@@ -24,7 +24,7 @@ class TableBody extends Component {
             ))}
           </tr>
         ))}
-      </tbody>
+      </>
     );
   }
 }

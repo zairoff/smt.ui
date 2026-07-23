@@ -1,0 +1,55 @@
+{
+  "detailedReport": {
+    "back": "Orqaga"
+  },
+  "ftqReport": {
+    "plan": "Reja: {{count}}",
+    "produced": "Ishlab chiqarildi: {{count}}",
+    "defects": "Nuqsonlar: {{count}}",
+    "closedDefects": "Yopilgan: {{count}}"
+  },
+  "pcbReport": {
+    "product": "Mahsulot",
+    "brand": "Brend",
+    "model": "Model",
+    "line": "Liniya",
+    "department": "Bo'lim",
+    "calibration": "KALIBROVKA",
+    "work": "ISH",
+    "selectDefectWarning": "Nuqsonni tanlang!"
+  },
+  "repair": {
+    "history": "TARIX",
+    "barcode": "Shtrix-kod",
+    "model": "Model",
+    "line": "Liniya",
+    "defect": "Nuqson",
+    "createdDate": "Yaratilgan sana",
+    "action": "Amal",
+    "repairer": "Ta'mirlovchi",
+    "status": "Holat",
+    "statusWorked": "Ishladi",
+    "statusNotWorked": "Ishlamadi",
+    "save": "SAQLASH",
+    "pcbStatus": "Plata holati",
+    "statusOpen": "Ochiq",
+    "statusClosed": "Yopiq",
+    "date": "Sana",
+    "search": "QIDIRISH",
+    "selectRepairerWarning": "Remontchi va xolatini tanlang!"
+  },
+  "repairHistory": {
+    "back": "Orqaga"
+  },
+  "report": {
+    "product": "Mahsulot",
+    "brand": "Brend",
+    "model": "Model",
+    "line": "Liniya",
+    "barcode": "Shtrix-kod",
+    "clear": "TOZALASH",
+    "total": "JAMI:",
+    "remont": "TA'MIRLASH",
+    "selectModelWarning": "Modelni tanlang va shtrix-kodni skanerlang"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "fields": {
+    "model": "Model",
+    "sapCode": "SAP Code",
+    "barCode": "Bar code",
+    "warehouseQuantity": "Warehouse quantity",
+    "exportQuantity": "Export quantity"
+  },
+  "dateRange": {
+    "from": "From",
+    "to": "To"
+  },
+  "filterLabel": "Filter",
+  "excelButton": "Excel",
+  "updateSuccess": "Successfully updated",
+  "errors": {
+    "modelNotFound": "Model not found",
+    "enterExportQuantity": "Enter the export quantity",
+    "exportExceedsWarehouse": "Export quantity cannot exceed the warehouse quantity",
+    "barcodeInvalid": "Invalid barcode"
+  },
+  "transactionTypeLabels": {
+    "importFromFactoryToBuffer": "Inbound to buffer (Oxangaron factory)",
+    "exportFromBufferToRepair": "Outbound from buffer (to repair)",
+    "exportFromRepairToStore": "Outbound from repair (to warehouse)",
+    "exportFromRepairToUtilize": "Outbound from repair (warehouse, to utilization)",
+    "exportFromStoreToFactory": "Outbound from warehouse (to Oxangaron factory)",
+    "exportFromStoreToFactoryShort": "Outbound from warehouse (to factory)",
+    "exportFromStoreToUtilize": "Outbound from warehouse (to utilization)"
+  },
+  "export": {
+    "destinationLabel": "Where to?"
+  },
+  "import": {
+    "title": "Returned products"
+  }
+}

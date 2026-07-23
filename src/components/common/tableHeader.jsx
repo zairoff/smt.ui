@@ -33,20 +33,45 @@ class TableHeader extends Component {
     );
   };
 
+  handleKeyDown = (e, column) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      this.raiseSort(column);
+    }
+  };
+
   render() {
+    const { sortColumn } = this.props;
+
     return (
       <thead>
         <tr>
-          {this.props.columns.map((column) => (
-            <th
-              className="align-middle text-center"
-              key={column.path}
-              onClick={() => this.raiseSort(column)}
-            >
-              {column.label}
-              {this.renderSortIcon(column)}
-            </th>
-          ))}
+          {this.props.columns.map((column) => {
+            const sortable = !column.content;
+            const isSorted = sortable && sortColumn && column.path === sortColumn.path;
+
+            return (
+              <th
+                className="align-middle text-center"
+                key={column.path}
+                onClick={sortable ? () => this.raiseSort(column) : undefined}
+                tabIndex={sortable ? 0 : undefined}
+                role={sortable ? "button" : undefined}
+                aria-sort={
+                  isSorted
+                    ? sortColumn.order === "asc"
+                      ? "ascending"
+                      : "descending"
+                    : undefined
+                }
+                onKeyDown={sortable ? (e) => this.handleKeyDown(e, column) : undefined}
+                style={sortable ? { cursor: "pointer" } : undefined}
+              >
+                {column.label}
+                {this.renderSortIcon(column)}
+              </th>
+            );
+          })}
         </tr>
       </thead>
     );

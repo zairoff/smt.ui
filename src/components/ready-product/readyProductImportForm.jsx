@@ -3,6 +3,7 @@ import ReactLoading from "react-loading";
 import _ from "lodash";
 import Form from "../forms/form";
 import { toast } from "react-toastify";
+import { withTranslation } from "react-i18next";
 import { format } from "date-fns";
 import { getModelBySapCode } from "../../services/modelService";
 import ReadyProductImportTable from "../tables/readyProductImportTable";
@@ -142,6 +143,7 @@ class ReadyProductImportForm extends Form {
   render() {
     const { imports, sortColumn, loading, fields, errors, authorized } =
       this.state;
+    const { t } = this.props;
 
     return (
       <div className="row">
@@ -150,7 +152,7 @@ class ReadyProductImportForm extends Form {
         )}
         <div className="col">
           <button className="btn p-2 btn-success fw-bold">
-            TAYYOR MAXSULOTLAR
+            {t("importForm.title")}
           </button>
           {this.renderInput(
             "import",
@@ -179,4 +181,4 @@ class ReadyProductImportForm extends Form {
   }
 }
 
-export default ReadyProductImportForm;
+export default withTranslation("readyProduct")(ReadyProductImportForm);

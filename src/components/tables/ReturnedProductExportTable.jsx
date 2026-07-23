@@ -1,18 +1,19 @@
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
 import Table from "../common/table";
 import { Link } from "react-router-dom";
 
 class ReturnedProductExportTable extends Component {
   render() {
-    const { rows, sortColumn, onSort, authorized, transactionType } =
+    const { rows, sortColumn, onSort, authorized, transactionType, t } =
       this.props;
 
     const columns = authorized
       ? [
-          { path: "model.name", label: "MODEL" },
-          { path: "model.sapCode", label: "SAP CODE" },
-          { path: "model.barcode", label: "BAR CODE" },
-          { path: "count", label: "SONI" },
+          { path: "model.name", label: t("tables:returnedProductExportTable.columns.model") },
+          { path: "model.sapCode", label: t("tables:returnedProductExportTable.columns.sapCode") },
+          { path: "model.barcode", label: t("tables:returnedProductExportTable.columns.barCode") },
+          { path: "count", label: t("tables:returnedProductExportTable.columns.count") },
           {
             path: "edit",
             content: (returnedProduct) => (
@@ -23,7 +24,7 @@ class ReturnedProductExportTable extends Component {
                 state={{ data: returnedProduct, transactionType }}
                 className="btn btn-primary"
               >
-                CHIQIM
+                {t("tables:returnedProductExportTable.actions.issue")}
               </Link>
             ),
           },
@@ -35,16 +36,16 @@ class ReturnedProductExportTable extends Component {
                 onClick={() => this.props.onDelete(returnedProduct)}
                 className="btn btn-danger"
               >
-                CHIQIM BARCHASINI
+                {t("tables:returnedProductExportTable.actions.issueAll")}
               </button>
             ),
           },
         ]
       : [
-          { path: "model.name", label: "MODEL" },
-          { path: "model.sapCode", label: "SAP CODE" },
-          { path: "model.barcode", label: "SAP CODE" },
-          { path: "count", label: "SONI" },
+          { path: "model.name", label: t("tables:returnedProductExportTable.columns.model") },
+          { path: "model.sapCode", label: t("tables:returnedProductExportTable.columns.sapCode") },
+          { path: "model.barcode", label: t("tables:returnedProductExportTable.columns.sapCode") },
+          { path: "count", label: t("tables:returnedProductExportTable.columns.count") },
         ];
 
     return (
@@ -58,4 +59,4 @@ class ReturnedProductExportTable extends Component {
   }
 }
 
-export default ReturnedProductExportTable;
+export default withTranslation(["tables", "common"])(ReturnedProductExportTable);

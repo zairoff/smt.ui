@@ -1,0 +1,55 @@
+{
+  "detailedReport": {
+    "back": "Back"
+  },
+  "ftqReport": {
+    "plan": "Plan: {{count}}",
+    "produced": "Produced: {{count}}",
+    "defects": "Defects: {{count}}",
+    "closedDefects": "Closed: {{count}}"
+  },
+  "pcbReport": {
+    "product": "Product",
+    "brand": "Brand",
+    "model": "Model",
+    "line": "Line",
+    "department": "Department",
+    "calibration": "CALIBRATION",
+    "work": "WORK",
+    "selectDefectWarning": "Select a defect!"
+  },
+  "repair": {
+    "history": "HISTORY",
+    "barcode": "Barcode",
+    "model": "Model",
+    "line": "Line",
+    "defect": "Defect",
+    "createdDate": "Created date",
+    "action": "Action",
+    "repairer": "Repairer",
+    "status": "Status",
+    "statusWorked": "Worked",
+    "statusNotWorked": "Not worked",
+    "save": "SAVE",
+    "pcbStatus": "PCB status",
+    "statusOpen": "Open",
+    "statusClosed": "Closed",
+    "date": "Date",
+    "search": "SEARCH",
+    "selectRepairerWarning": "Select the repairer and the status!"
+  },
+  "repairHistory": {
+    "back": "Back"
+  },
+  "report": {
+    "product": "Product",
+    "brand": "Brand",
+    "model": "Model",
+    "line": "Line",
+    "barcode": "Barcode",
+    "clear": "CLEAR",
+    "total": "TOTAL:",
+    "remont": "REPAIR",
+    "selectModelWarning": "Choose a model and scan the barcode"
+  }
+}

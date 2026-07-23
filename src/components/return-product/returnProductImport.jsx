@@ -3,6 +3,7 @@ import ReactLoading from "react-loading";
 import _ from "lodash";
 import Form from "../forms/form";
 import { toast } from "react-toastify";
+import { withTranslation } from "react-i18next";
 import { format } from "date-fns";
 import {
   getModelByBarcode,
@@ -187,6 +188,7 @@ class ReturnProductImport extends Form {
   render() {
     const { imports, sortColumn, loading, fields, errors, authorized } =
       this.state;
+    const { t } = this.props;
     return (
       <div className="row">
         {loading && (
@@ -195,7 +197,7 @@ class ReturnProductImport extends Form {
 
         <div className="col">
           <button className="btn p-2 btn-primary fw-bold">
-            QAYTGAN MAXSULOTLAR
+            {t("import.title")}
           </button>
           {this.renderInput(
             "import",
@@ -224,4 +226,4 @@ class ReturnProductImport extends Form {
   }
 }
 
-export default ReturnProductImport;
+export default withTranslation("returnProduct")(ReturnProductImport);

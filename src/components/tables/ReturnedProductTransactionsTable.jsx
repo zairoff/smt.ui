@@ -1,18 +1,19 @@
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
 import Table from "../common/table";
 
 class ReturnedProductTransactionsTable extends Component {
   columns = [];
   render() {
-    const { rows, sortColumn, onSort, authorized } = this.props;
+    const { rows, sortColumn, onSort, authorized, t } = this.props;
 
     const columns = authorized
       ? [
-          { path: "model.name", label: "MODEL" },
-          { path: "model.sapCode", label: "SAP CODE" },
-          { path: "model.barcode", label: "BAR CODE" },
-          { path: "date", label: "KIRISH" },
-          { path: "count", label: "SONI" },
+          { path: "model.name", label: t("tables:returnedProductTransactionsTable.columns.model") },
+          { path: "model.sapCode", label: t("tables:returnedProductTransactionsTable.columns.sapCode") },
+          { path: "model.barcode", label: t("tables:returnedProductTransactionsTable.columns.barCode") },
+          { path: "date", label: t("tables:returnedProductTransactionsTable.columns.receivedDate") },
+          { path: "count", label: t("tables:returnedProductTransactionsTable.columns.count") },
           {
             path: "button",
             content: (readyProduct) => (
@@ -21,17 +22,17 @@ class ReturnedProductTransactionsTable extends Component {
                 onClick={() => this.props.onDelete(readyProduct)}
                 className="btn btn-danger"
               >
-                Delete
+                {t("common:buttons.delete")}
               </button>
             ),
           },
         ]
       : [
-          { path: "model.name", label: "MODEL" },
-          { path: "model.sapCode", label: "SAP CODE" },
-          { path: "model.barcode", label: "BAR CODE" },
-          { path: "date", label: "KIRISH" },
-          { path: "count", label: "SONI" },
+          { path: "model.name", label: t("tables:returnedProductTransactionsTable.columns.model") },
+          { path: "model.sapCode", label: t("tables:returnedProductTransactionsTable.columns.sapCode") },
+          { path: "model.barcode", label: t("tables:returnedProductTransactionsTable.columns.barCode") },
+          { path: "date", label: t("tables:returnedProductTransactionsTable.columns.receivedDate") },
+          { path: "count", label: t("tables:returnedProductTransactionsTable.columns.count") },
         ];
 
     return (
@@ -45,4 +46,4 @@ class ReturnedProductTransactionsTable extends Component {
   }
 }
 
-export default ReturnedProductTransactionsTable;
+export default withTranslation(["tables", "common"])(ReturnedProductTransactionsTable);

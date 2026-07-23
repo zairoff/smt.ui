@@ -1,5 +1,6 @@
 import React from "react";
 import { toast } from "react-toastify";
+import { withTranslation } from "react-i18next";
 import Form from "../forms/form";
 import ReactLoading from "react-loading";
 import {
@@ -39,16 +40,20 @@ class ReturnProductExport extends Form {
     loading: false,
     sortColumn: { path: "", order: "asc" },
     authorized: false,
-    filters: [
-      { id: 2, name: "REMONTDAN CHIQISH (OMBORGA)" },
-      { id: 3, name: "REMONTDAN CHIQISH (OMBOR, UTILIZATSIYAGA)" },
-      { id: 4, name: "OMBORDAN CHIQISH (ZAVODGA)" },
-      { id: 6, name: "OMBORDAN CHIQISH (UTILIZATSIYAGA)" },
-      { id: 5, name: "BUFFERDAN CHIQISH (REMONTGA)" },
-    ],
     selectedTransactionType: "",
     fields: { export: "" },
   };
+
+  get filters() {
+    const { t } = this.props;
+    return [
+      { id: 2, name: t("transactionTypeLabels.exportFromRepairToStore") },
+      { id: 3, name: t("transactionTypeLabels.exportFromRepairToUtilize") },
+      { id: 4, name: t("transactionTypeLabels.exportFromStoreToFactoryShort") },
+      { id: 6, name: t("transactionTypeLabels.exportFromStoreToUtilize") },
+      { id: 5, name: t("transactionTypeLabels.exportFromBufferToRepair") },
+    ];
+  }
 
   componentDidUpdate() {
     this.setFocusOnBarcode();
@@ -60,6 +65,7 @@ class ReturnProductExport extends Form {
 
   handleExportKeyPress = async (e) => {
     if (e.key === "Enter") {
+      const { t } = this.props;
       try {
         let count = 0;
         let sapCode = "";
@@ -82,7 +88,7 @@ class ReturnProductExport extends Form {
           sapCode = barcode.substring(0, indexOf);
           count = barcode.substring(indexOf + 4, barcode.length);
           if (count === "" || sapCode === "") {
-            toast.warning("BARCODE NOTO'G'RI");
+            toast.warning(t("errors.barcodeInvalid"));
 
             return;
           }
@@ -98,7 +104,7 @@ class ReturnProductExport extends Form {
             ? getModelBySapCode
             : await getModelByBarcode(fiveLetterCode);
         if (model === "" || model === undefined) {
-          toast.warning("MODEL TOPILMADI");
+          toast.warning(t("errors.modelNotFound"));
           return;
         }
 
@@ -112,7 +118,7 @@ class ReturnProductExport extends Form {
           currentModel == undefined ||
           currentModel == ""
         ) {
-          toast.warning("MODEL TOPILMADI");
+          toast.warning(t("errors.modelNotFound"));
           return;
         }
 
@@ -191,11 +197,11 @@ class ReturnProductExport extends Form {
       sortColumn,
       loading,
       authorized,
-      filters,
       fields,
       errors,
       selectedTransactionType,
     } = this.state;
+    const { t } = this.props;
 
     return (
       <>
@@ -204,7 +210,15 @@ class ReturnProductExport extends Form {
             <ReactLoading className="loading" type="spin" color="blue" />
           )}
           <div className="col">
-            {this.renderSelect("Qaerga?", filters, "", this.handleFilterChange)}
+            {this.renderSelect(
+              "Qaerga?",
+              this.filters,
+              "",
+              this.handleFilterChange,
+              undefined,
+              undefined,
+              t("export.destinationLabel")
+            )}
             <p className="mt-2"> </p>
             {this.renderInput(
               "export",
@@ -235,4 +249,4 @@ class ReturnProductExport extends Form {
   }
 }
 
-export default ReturnProductExport;
+export default withTranslation("returnProduct")(ReturnProductExport);

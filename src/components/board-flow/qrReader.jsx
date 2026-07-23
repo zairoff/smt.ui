@@ -5,6 +5,7 @@ import ReactLoading from "react-loading";
 import _ from "lodash";
 import Form from "../forms/form";
 import { toast } from "react-toastify";
+import { withTranslation } from "react-i18next";
 import {
   addQrReader,
   deleteQrReader,
@@ -140,11 +141,11 @@ class QrReader extends Form {
             true
           )}
           <p className="mt-2"> </p>
-          {this.renderButton("Save")}
+          {this.renderButton(this.props.t("common:buttons.save"))}
         </div>
       </form>
     );
   }
 }
 
-export default QrReader;
+export default withTranslation(["boardFlow", "common"])(QrReader);

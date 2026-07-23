@@ -3,6 +3,7 @@ import TreeView from "@mui/lab/TreeView";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { TreeItem } from "@mui/lab";
+import { withTranslation } from "react-i18next";
 
 class Department extends Component {
   isChild =
@@ -48,10 +49,11 @@ class Department extends Component {
     ];*/
 
     const data = this.nest(this.props.data);
+    const { t } = this.props;
 
     return (
       <TreeView
-        aria-label="file system navigator"
+        aria-label={t("department.treeAriaLabel")}
         defaultCollapseIcon={<ExpandMoreIcon />}
         defaultExpandIcon={<ChevronRightIcon />}
         sx={{ height: "auto", flexGrow: 1, width: "auto", overflowY: "auto" }}
@@ -62,4 +64,4 @@ class Department extends Component {
   }
 }
 
-export default Department;
+export default withTranslation("common")(Department);

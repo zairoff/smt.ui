@@ -1,9 +1,10 @@
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
 import Table from "../common/table";
 
 class MachineRepairTable extends Component {
   render() {
-    const { rows, sortColumn, onSort, user } = this.props;
+    const { rows, sortColumn, onSort, user, t } = this.props;
     const columns = user
       ? [
           { path: "machine.name", label: "" },
@@ -20,7 +21,7 @@ class MachineRepairTable extends Component {
                 onClick={() => this.props.onDelete(brand)}
                 className="btn btn-danger"
               >
-                Delete
+                {t("common:buttons.delete")}
               </button>
             ),
           },
@@ -44,4 +45,4 @@ class MachineRepairTable extends Component {
   }
 }
 
-export default MachineRepairTable;
+export default withTranslation("common")(MachineRepairTable);

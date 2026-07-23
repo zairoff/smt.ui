@@ -1,6 +1,7 @@
 import React from "react";
 import { CSVLink } from "react-csv";
 import { toast } from "react-toastify";
+import { withTranslation } from "react-i18next";
 import Form from "../forms/form";
 import ReactLoading from "react-loading";
 import {
@@ -17,18 +18,22 @@ class ReturnProductTransactions extends Form {
     errors: {},
     loading: false,
     authorized: false,
-    filters: [
-      { id: 1, name: "BUFFERGA KIRISH (ZAVOD OXANGARON)" },
-      { id: 5, name: "BUFFERDAN CHIQISH (REMONTGA)" },
-      { id: 2, name: "REMONTDAN CHIQISH (OMBORGA)" },
-      { id: 3, name: "REMONTDAN CHIQISH (OMBOR, UTILIZATSIYAGA)" },
-      { id: 4, name: "OMBORDAN CHIQISH (ZAVODGA OXANGARON)" },
-      { id: 6, name: "OMBORDAN CHIQISH (UTILIZATSIYAGA)" },
-    ],
     sortColumn: { path: "", order: "asc" },
     fields: { from: "", to: "" },
     transactionType: "",
   };
+
+  get filters() {
+    const { t } = this.props;
+    return [
+      { id: 1, name: t("transactionTypeLabels.importFromFactoryToBuffer") },
+      { id: 5, name: t("transactionTypeLabels.exportFromBufferToRepair") },
+      { id: 2, name: t("transactionTypeLabels.exportFromRepairToStore") },
+      { id: 3, name: t("transactionTypeLabels.exportFromRepairToUtilize") },
+      { id: 4, name: t("transactionTypeLabels.exportFromStoreToFactory") },
+      { id: 6, name: t("transactionTypeLabels.exportFromStoreToUtilize") },
+    ];
+  }
 
   async componentDidMount() {
     const { user } = this.props;
@@ -82,8 +87,8 @@ class ReturnProductTransactions extends Form {
   };
 
   render() {
-    const { data, filters, sortColumn, fields, loading, authorized } =
-      this.state;
+    const { data, sortColumn, fields, loading, authorized } = this.state;
+    const { t } = this.props;
 
     return (
       <>
@@ -95,7 +100,7 @@ class ReturnProductTransactions extends Form {
             <div className="col">
               {this.renderInput(
                 "from",
-                "From",
+                t("dateRange.from"),
                 "",
                 fields.from,
                 this.handleInputChange,
@@ -107,7 +112,7 @@ class ReturnProductTransactions extends Form {
             <div className="col">
               {this.renderInput(
                 "to",
-                "To",
+                t("dateRange.to"),
                 "",
                 fields.to,
                 this.handleInputChange,
@@ -120,9 +125,12 @@ class ReturnProductTransactions extends Form {
               <div className="col">
                 {this.renderSelect(
                   "Filter",
-                  filters,
+                  this.filters,
                   "",
-                  this.handleFilterChange
+                  this.handleFilterChange,
+                  undefined,
+                  undefined,
+                  t("filterLabel")
                 )}
               </div>
             }
@@ -132,7 +140,7 @@ class ReturnProductTransactions extends Form {
                 className="btn btn-block btn-success btn-lg w-100"
                 data={data ?? []}
               >
-                Excel
+                {t("excelButton")}
               </CSVLink>
             </div>
           </div>
@@ -150,4 +158,4 @@ class ReturnProductTransactions extends Form {
   }
 }
 
-export default ReturnProductTransactions;
+export default withTranslation("returnProduct")(ReturnProductTransactions);

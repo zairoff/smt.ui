@@ -1,6 +1,7 @@
 import React from "react";
 import { CSVLink } from "react-csv";
 import { toast } from "react-toastify";
+import { withTranslation } from "react-i18next";
 import { getBrands } from "../../services/brandService";
 import { getLines } from "../../services/lineService";
 import {
@@ -28,12 +29,12 @@ class StaticsForm extends Form {
     errors: {},
     loading: true,
     filters: [
-      { id: 1, name: "All" },
-      { id: 2, name: "Product" },
-      { id: 3, name: "Brand" },
-      { id: 4, name: "Model" },
-      { id: 5, name: "Line" },
-      { id: 6, name: "Defect" },
+      { id: 1, name: this.props.t("staticsForm.filters.all") },
+      { id: 2, name: this.props.t("staticsForm.filters.product") },
+      { id: 3, name: this.props.t("staticsForm.filters.brand") },
+      { id: 4, name: this.props.t("staticsForm.filters.model") },
+      { id: 5, name: this.props.t("staticsForm.filters.line") },
+      { id: 6, name: this.props.t("staticsForm.filters.defect") },
     ],
     sort: false,
     sortColumn: { path: "", order: "asc" },
@@ -48,7 +49,10 @@ class StaticsForm extends Form {
   async componentDidMount() {
     try {
       const { data } = await getProducts();
-      const products = [{ id: -1, name: "All" }, ...data];
+      const products = [
+        { id: -1, name: this.props.t("staticsForm.filters.all") },
+        ...data,
+      ];
 
       this.setState({
         products,
@@ -70,7 +74,10 @@ class StaticsForm extends Form {
           {
             if (id === "-1") {
               const { data } = await getBrands();
-              const brands = [{ id: -1, name: "All" }, ...data];
+              const brands = [
+                { id: -1, name: this.props.t("staticsForm.filters.all") },
+                ...data,
+              ];
               this.setState({
                 brands,
                 selectedProduct: id,
@@ -82,7 +89,10 @@ class StaticsForm extends Form {
                 id
               );
               const data = productBrands.map((p) => p.brand);
-              const brands = [{ id: -1, name: "All" }, ...data];
+              const brands = [
+                { id: -1, name: this.props.t("staticsForm.filters.all") },
+                ...data,
+              ];
 
               this.setState({
                 brands,
@@ -98,7 +108,10 @@ class StaticsForm extends Form {
           {
             if (id === "-1") {
               const { data } = await getModels();
-              const models = [{ id: -1, name: "All" }, ...data];
+              const models = [
+                { id: -1, name: this.props.t("staticsForm.filters.all") },
+                ...data,
+              ];
               this.setState({
                 selectedBrand: id,
                 models,
@@ -115,7 +128,10 @@ class StaticsForm extends Form {
                 productBrand.length > 0 ? productBrand[0].id : 0;
               const { data } = await getModelByProductBrandId(prodcutBrandId);
 
-              const models = [{ id: -1, name: "All" }, ...data];
+              const models = [
+                { id: -1, name: this.props.t("staticsForm.filters.all") },
+                ...data,
+              ];
               this.setState({
                 selectedBrand: id,
                 models,
@@ -128,7 +144,10 @@ class StaticsForm extends Form {
         case "Model":
           const { data } = await getLines();
 
-          const lines = [{ id: -1, name: "All" }, ...data];
+          const lines = [
+            { id: -1, name: this.props.t("staticsForm.filters.all") },
+            ...data,
+          ];
 
           this.setState({
             selectedModel: id,
@@ -241,6 +260,7 @@ class StaticsForm extends Form {
       fields,
       loading,
     } = this.state;
+    const { t } = this.props;
 
     const excel = reports.map((d) => ({
       barcode: d.barcode,
@@ -268,18 +288,45 @@ class StaticsForm extends Form {
                 "Product",
                 products,
                 "",
-                this.handleSelectChange
+                this.handleSelectChange,
+                "id",
+                "name",
+                t("staticsForm.product")
               )}
             </div>
             <div className="col">
-              {this.renderSelect("Brand", brands, "", this.handleSelectChange)}
+              {this.renderSelect(
+                "Brand",
+                brands,
+                "",
+                this.handleSelectChange,
+                "id",
+                "name",
+                t("staticsForm.brand")
+              )}
             </div>
 
             <div className="col">
-              {this.renderSelect("Model", models, "", this.handleSelectChange)}
+              {this.renderSelect(
+                "Model",
+                models,
+                "",
+                this.handleSelectChange,
+                "id",
+                "name",
+                t("staticsForm.model")
+              )}
             </div>
             <div className="col">
-              {this.renderSelect("Line", lines, "", this.handleSelectChange)}
+              {this.renderSelect(
+                "Line",
+                lines,
+                "",
+                this.handleSelectChange,
+                "id",
+                "name",
+                t("staticsForm.line")
+              )}
             </div>
           </div>
 
@@ -287,7 +334,7 @@ class StaticsForm extends Form {
             <div className="col">
               {this.renderInput(
                 "from",
-                "From",
+                t("staticsForm.from"),
                 "",
                 fields.from,
                 this.handleInputChange,
@@ -299,7 +346,7 @@ class StaticsForm extends Form {
             <div className="col">
               {this.renderInput(
                 "to",
-                "To",
+                t("staticsForm.to"),
                 "",
                 fields.to,
                 this.handleInputChange,
@@ -310,7 +357,7 @@ class StaticsForm extends Form {
             </div>
             <div className="col-2">
               <p className="mt-4"></p>
-              {this.renderButton("Search")}
+              {this.renderButton(t("staticsForm.search"))}
             </div>
             <div className="col-2">
               <p className="mt-4"></p>
@@ -318,7 +365,7 @@ class StaticsForm extends Form {
                 className="btn btn-block btn-success btn-lg w-100"
                 data={excel}
               >
-                Excel
+                {t("staticsForm.excel")}
               </CSVLink>
             </div>
           </div>
@@ -334,4 +381,4 @@ class StaticsForm extends Form {
   }
 }
 
-export default StaticsForm;
+export default withTranslation("statics")(StaticsForm);

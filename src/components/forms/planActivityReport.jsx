@@ -1,6 +1,7 @@
 import React from "react";
 import { CSVLink } from "react-csv";
 import { toast } from "react-toastify";
+import { withTranslation } from "react-i18next";
 import Form from "../forms/form";
 import ReactLoading from "react-loading";
 import { getPlanActivityByDateRangeAndStatus } from "../../services/planActivityService";
@@ -16,12 +17,6 @@ class PlanActivityReport extends Form {
     sortColumn: { path: "", order: "asc" },
     fields: { from: "", to: "", status: "" },
     data: [],
-    statuses: [
-      { id: "Plan", name: "Plan" },
-      { id: "Plan-Do", name: "Plan-Do" },
-      { id: "Plan-Do-Act", name: "Plan-Do-Act" },
-      { id: "Plan-Do-Act-Resolve", name: "Plan-Do-Act-Resolve" },
-    ],
   };
 
   doSubmit = async () => {
@@ -50,7 +45,18 @@ class PlanActivityReport extends Form {
   };
 
   render() {
-    const { data, sortColumn, fields, loading, statuses } = this.state;
+    const { t } = this.props;
+    const { data, sortColumn, fields, loading } = this.state;
+
+    const statuses = [
+      { id: "Plan", name: t("forms:planActivity.statuses.plan") },
+      { id: "Plan-Do", name: t("forms:planActivity.statuses.planDo") },
+      { id: "Plan-Do-Act", name: t("forms:planActivity.statuses.planDoAct") },
+      {
+        id: "Plan-Do-Act-Resolve",
+        name: t("forms:planActivity.statuses.planDoActResolve"),
+      },
+    ];
 
     const excel = data.map((a) => ({
       line: a.line.name,
@@ -73,7 +79,7 @@ class PlanActivityReport extends Form {
             <div className="col">
               {this.renderInput(
                 "from",
-                "From",
+                t("forms:planActivityReport.from"),
                 "",
                 fields.from,
                 this.handleInputChange,
@@ -85,7 +91,7 @@ class PlanActivityReport extends Form {
             <div className="col">
               {this.renderInput(
                 "to",
-                "To",
+                t("forms:planActivityReport.to"),
                 "",
                 fields.to,
                 this.handleInputChange,
@@ -99,12 +105,15 @@ class PlanActivityReport extends Form {
                 "Status",
                 statuses,
                 "",
-                this.handleSelectChange
+                this.handleSelectChange,
+                "id",
+                "name",
+                t("forms:fields.status")
               )}
             </div>
             <div className="col-2">
               <p className="mt-4"></p>
-              {this.renderButton("Search")}
+              {this.renderButton(t("common:buttons.search"))}
             </div>
             <div className="col-2">
               <p className="mt-4"></p>
@@ -112,7 +121,7 @@ class PlanActivityReport extends Form {
                 className="btn btn-block btn-success btn-lg w-100"
                 data={excel}
               >
-                Excel
+                {t("forms:planActivityReport.excel")}
               </CSVLink>
             </div>
           </div>
@@ -128,4 +137,4 @@ class PlanActivityReport extends Form {
   }
 }
 
-export default PlanActivityReport;
+export default withTranslation(["forms", "common"])(PlanActivityReport);

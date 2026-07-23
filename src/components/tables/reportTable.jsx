@@ -1,11 +1,13 @@
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
 import Table from "../common/table";
 
 class ReportTable extends Component {
-  columns = [
-    { path: "barcode", label: "BARCODE" },
-    { path: "model.name", label: "MODEL" },
-    { path: "defect.name", label: "DEFECT" },
+  get columns() {
+    return [
+    { path: "barcode", label: this.props.t("tables:reportTable.columns.barcode") },
+    { path: "model.name", label: this.props.t("tables:reportTable.columns.model") },
+    { path: "defect.name", label: this.props.t("tables:reportTable.columns.defect") },
     {
       path: "button",
       content: (report) => (
@@ -14,11 +16,12 @@ class ReportTable extends Component {
           onClick={() => this.props.onDelete(report)}
           className="btn btn-danger"
         >
-          Delete
+          {this.props.t("common:buttons.delete")}
         </button>
       ),
     },
   ];
+  }
   render() {
     const { rows, sortColumn, onSort } = this.props;
     return (
@@ -32,4 +35,4 @@ class ReportTable extends Component {
   }
 }
 
-export default ReportTable;
+export default withTranslation(["tables", "common"])(ReportTable);

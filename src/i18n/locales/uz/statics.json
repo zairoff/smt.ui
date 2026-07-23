@@ -1,0 +1,62 @@
+{
+  "groupByStaticsForm": {
+    "from": "Dan",
+    "to": "Gacha",
+    "filter": "Filtr",
+    "search": "Qidirish",
+    "excel": "Excel",
+    "filters": {
+      "product": "Mahsulot",
+      "brand": "Brend",
+      "model": "Model",
+      "line": "Liniya",
+      "defect": "Nuqson"
+    }
+  },
+  "planQualityStatics": {
+    "all": "Barchasi",
+    "from": "Dan",
+    "to": "Gacha",
+    "line": "Liniya",
+    "search": "Qidirish",
+    "planTitle": "Reja",
+    "qualityTitle": "Sifat",
+    "planHint": "Shu kun uchun model bo'yicha taqsimotni ko'rish uchun ustunni bosing.",
+    "qualityHint": "Shu kun uchun model bo'yicha taqsimotni ko'rish uchun nuqtani bosing.",
+    "planDetailsTitle": "Reja tafsilotlari — {{date}}",
+    "qualityDetailsTitle": "Sifat tafsilotlari — {{date}}",
+    "noPlanData": "Bu sana uchun reja ma'lumotlari yo'q.",
+    "noQualityData": "Bu sana uchun sifat ma'lumotlari yo'q.",
+    "columns": {
+      "line": "Liniya",
+      "model": "Model",
+      "planned": "Reja",
+      "produced": "Ishlab chiqarildi",
+      "defects": "Nuqsonlar",
+      "ftq": "FTQ %"
+    },
+    "chart": {
+      "plan": "Reja",
+      "produced": "Ishlab chiqarildi",
+      "quality": "Sifat (FTQ %)"
+    }
+  },
+  "staticsForm": {
+    "product": "Mahsulot",
+    "brand": "Brend",
+    "model": "Model",
+    "line": "Liniya",
+    "from": "Dan",
+    "to": "Gacha",
+    "search": "Qidirish",
+    "excel": "Excel",
+    "filters": {
+      "all": "Barchasi",
+      "product": "Mahsulot",
+      "brand": "Brend",
+      "model": "Model",
+      "line": "Liniya",
+      "defect": "Nuqson"
+    }
+  }
+}

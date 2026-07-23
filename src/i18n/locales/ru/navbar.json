@@ -1,0 +1,85 @@
+{
+  "menu": {
+    "main": "Главная",
+    "management": "Управление",
+    "plans": "Планы",
+    "reports": "Отчёты",
+    "repairs": "Ремонты",
+    "machines": "Станки",
+    "boardFlow": "Поток плат",
+    "settings": "Настройки",
+    "printer": "Принтер"
+  },
+  "main": {
+    "dashboard": "Панель управления",
+    "statics": "Статистика",
+    "planQuality": "План и качество",
+    "ftq": "FTQ"
+  },
+  "management": {
+    "department": "Отдел",
+    "employeeDashboard": "Панель сотрудников",
+    "employeeAdd": "Добавить сотрудника"
+  },
+  "plans": {
+    "plan": "План",
+    "planActivity": "Активность плана",
+    "report": "Отчёт",
+    "planHourly": "Часовой план"
+  },
+  "reports": {
+    "report": "Отчёт",
+    "pcbReport": "Отчёт по платам"
+  },
+  "repairs": {
+    "repairer": "Ремонтник",
+    "repair": "Ремонт"
+  },
+  "machines": {
+    "dashboard": "Панель управления",
+    "machine": "Станок",
+    "repairer": "Ремонтник",
+    "repair": "Ремонт"
+  },
+  "boardFlow": {
+    "report": "Отчёт",
+    "flow": "Поток",
+    "qrReader": "QR-сканер",
+    "flowV2": "Поток V2 (лайв)",
+    "reportV2": "Отчёт V2",
+    "qrReaderV2": "QR-сканер V2"
+  },
+  "settings": {
+    "product": "Продукт",
+    "brand": "Бренд",
+    "productBrand": "Продукт-бренд",
+    "model": "Модель",
+    "defect": "Дефект",
+    "line": "Линия",
+    "lineDefect": "Линия-дефект",
+    "component": "Компонент",
+    "componentConnect": "Связать компонент",
+    "componentBulk": "Массовый импорт компонентов"
+  },
+  "readyProduct": {
+    "title": "Склад",
+    "import": "Приход",
+    "export": "Расход",
+    "report": "Отчёт",
+    "transactions": "Транзакции"
+  },
+  "returnProduct": {
+    "title": "Возвращённые товары",
+    "import": "Приход",
+    "export": "Расход",
+    "report": "Отчёт",
+    "transactions": "Транзакции"
+  },
+  "printer": {
+    "qr": "QR"
+  },
+  "auth": {
+    "login": "Войти",
+    "logout": "Выйти"
+  }
+}

@@ -3,9 +3,39 @@ import { Link } from "react-router-dom";
 import Input from "../common/input";
 import Select from "../common/select";
 import TextArea from "../common/textArea";
+import ConfirmModal from "../common/confirmModal";
 
 class Form extends Component {
-  state = { fields: {}, errors: {} };
+  state = {
+    fields: {},
+    errors: {},
+    confirm: { show: false, payload: null, onConfirm: null },
+  };
+
+  requestConfirm = (payload, onConfirm) => {
+    this.setState({ confirm: { show: true, payload, onConfirm } });
+  };
+
+  handleConfirmCancel = () => {
+    this.setState({ confirm: { show: false, payload: null, onConfirm: null } });
+  };
+
+  handleConfirmAccept = () => {
+    const { onConfirm, payload } = this.state.confirm;
+    this.setState({ confirm: { show: false, payload: null, onConfirm: null } });
+    if (onConfirm) onConfirm(payload);
+  };
+
+  renderConfirmModal(props = {}) {
+    return (
+      <ConfirmModal
+        show={this.state.confirm.show}
+        onConfirm={this.handleConfirmAccept}
+        onCancel={this.handleConfirmCancel}
+        {...props}
+      />
+    );
+  }
 
   handleInputChange = async ({ currentTarget: input }) => {
     const { value } = input;
@@ -87,9 +117,15 @@ class Form extends Component {
     );
   }
 
-  renderTextArea(name, label, value, onChange) {
+  renderTextArea(name, label, value, onChange, error = undefined) {
     return (
-      <TextArea name={name} label={label} value={value} onChange={onChange} />
+      <TextArea
+        name={name}
+        label={label}
+        value={value}
+        onChange={onChange}
+        error={error}
+      />
     );
   }
 
@@ -99,7 +135,8 @@ class Form extends Component {
     error,
     onChange,
     propertyKey = "id",
-    propertyValue = "name"
+    propertyValue = "name",
+    label = undefined
   ) {
     return (
       <Select
@@ -109,6 +146,7 @@ class Form extends Component {
         onChange={onChange}
         propertyKey={propertyKey}
         propertyValue={propertyValue}
+        label={label}
       />
     );
   }

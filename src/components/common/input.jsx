@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 const Input = ({
   name,
@@ -28,8 +28,14 @@ const Input = ({
         autoComplete="off"
         readOnly={readOnly}
         onKeyDown={onKeyDown}
+        aria-invalid={error ? "true" : undefined}
+        aria-describedby={error ? `${name}-error` : undefined}
       ></input>
-      {error && <div className="alert alert-danger p-2">{error}</div>}
+      {error && (
+        <div className="alert alert-danger p-2" id={`${name}-error`} role="alert">
+          {error}
+        </div>
+      )}
     </div>
   );
 };

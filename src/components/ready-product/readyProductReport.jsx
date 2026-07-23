@@ -1,6 +1,7 @@
 import React from "react";
 import { CSVLink } from "react-csv";
 import { toast } from "react-toastify";
+import { withTranslation } from "react-i18next";
 import Form from "../forms/form";
 import ReactLoading from "react-loading";
 import ReadyProductGroupByTable from "../tables/readyProductGroupByTable";
@@ -13,14 +14,18 @@ class ReadyProductReport extends Form {
     dateTo: "",
     errors: {},
     loading: false,
-    filters: [
-      { id: 1, name: "Omborga kirdi" },
-      { id: 2, name: "Ombordan chiqdi" },
-    ],
     sortColumn: { path: "", order: "asc" },
     fields: { from: "", to: "" },
     transactionType: "",
   };
+
+  get filters() {
+    const { t } = this.props;
+    return [
+      { id: 1, name: t("report.filters.import") },
+      { id: 2, name: t("report.filters.export") },
+    ];
+  }
 
   handleFilterChange = async ({ target }) => {
     const { value: id } = target;
@@ -44,8 +49,8 @@ class ReadyProductReport extends Form {
   };
 
   render() {
-    const { data, filters, sortColumn, fields, loading, transactionType } =
-      this.state;
+    const { data, sortColumn, fields, loading, transactionType } = this.state;
+    const { t } = this.props;
 
     const reports = data.map((d) => ({
       id: d.model.sapCode,
@@ -64,7 +69,7 @@ class ReadyProductReport extends Form {
             <div className="col">
               {this.renderInput(
                 "from",
-                "From",
+                t("dateRange.from"),
                 "",
                 fields.from,
                 this.handleInputChange,
@@ -76,7 +81,7 @@ class ReadyProductReport extends Form {
             <div className="col">
               {this.renderInput(
                 "to",
-                "To",
+                t("dateRange.to"),
                 "",
                 fields.to,
                 this.handleInputChange,
@@ -89,9 +94,12 @@ class ReadyProductReport extends Form {
               <div className="col">
                 {this.renderSelect(
                   "Filter",
-                  filters,
+                  this.filters,
                   "",
-                  this.handleFilterChange
+                  this.handleFilterChange,
+                  undefined,
+                  undefined,
+                  t("filterLabel")
                 )}
               </div>
             }
@@ -101,7 +109,7 @@ class ReadyProductReport extends Form {
                 className="btn btn-block btn-success btn-lg w-100"
                 data={reports ?? []}
               >
-                Excel
+                {t("excelButton")}
               </CSVLink>
             </div>
           </div>
@@ -120,4 +128,4 @@ class ReadyProductReport extends Form {
   }
 }
 
-export default ReadyProductReport;
+export default withTranslation("readyProduct")(ReadyProductReport);

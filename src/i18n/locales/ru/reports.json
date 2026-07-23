@@ -1,0 +1,55 @@
+{
+  "detailedReport": {
+    "back": "Назад"
+  },
+  "ftqReport": {
+    "plan": "План: {{count}}",
+    "produced": "Произведено: {{count}}",
+    "defects": "Дефекты: {{count}}",
+    "closedDefects": "Закрыто: {{count}}"
+  },
+  "pcbReport": {
+    "product": "Продукт",
+    "brand": "Бренд",
+    "model": "Модель",
+    "line": "Линия",
+    "department": "Отдел",
+    "calibration": "КАЛИБРОВКА",
+    "work": "РАБОТА",
+    "selectDefectWarning": "Выберите дефект!"
+  },
+  "repair": {
+    "history": "ИСТОРИЯ",
+    "barcode": "Штрихкод",
+    "model": "Модель",
+    "line": "Линия",
+    "defect": "Дефект",
+    "createdDate": "Дата создания",
+    "action": "Действие",
+    "repairer": "Ремонтник",
+    "status": "Статус",
+    "statusWorked": "Исправлено",
+    "statusNotWorked": "Не исправлено",
+    "save": "СОХРАНИТЬ",
+    "pcbStatus": "Статус платы",
+    "statusOpen": "Открыт",
+    "statusClosed": "Закрыт",
+    "date": "Дата",
+    "search": "ПОИСК",
+    "selectRepairerWarning": "Выберите ремонтника и статус!"
+  },
+  "repairHistory": {
+    "back": "Назад"
+  },
+  "report": {
+    "product": "Продукт",
+    "brand": "Бренд",
+    "model": "Модель",
+    "line": "Линия",
+    "barcode": "Штрихкод",
+    "clear": "ОЧИСТИТЬ",
+    "total": "ВСЕГО:",
+    "remont": "РЕМОНТ",
+    "selectModelWarning": "Выберите модель и отсканируйте штрихкод"
+  }
+}

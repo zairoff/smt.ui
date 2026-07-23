@@ -1,4 +1,5 @@
 import { toast } from "react-toastify";
+import { withTranslation } from "react-i18next";
 import ReactLoading from "react-loading";
 import { paginate } from "../../utils/paginate";
 import Form from "./form";
@@ -216,6 +217,7 @@ class HourlyPlan extends Form {
   };
 
   render() {
+    const { t } = this.props;
     const {
       fields,
       products,
@@ -239,7 +241,7 @@ class HourlyPlan extends Form {
         <div className="col-4">
           {this.renderInput(
             "date",
-            "Date",
+            t("forms:hourlyPlan.date"),
             "",
             fields.date,
             this.handleDateChange,
@@ -248,17 +250,49 @@ class HourlyPlan extends Form {
             "date"
           )}
           <p className="mt-2"> </p>
-          {this.renderSelect("Line", lines, "", this.handleSelectChange)}
+          {this.renderSelect(
+            "Line",
+            lines,
+            "",
+            this.handleSelectChange,
+            "id",
+            "name",
+            t("forms:fields.line")
+          )}
           <p className="mt-2"> </p>
-          {this.renderSelect("Product", products, "", this.handleSelectChange)}
+          {this.renderSelect(
+            "Product",
+            products,
+            "",
+            this.handleSelectChange,
+            "id",
+            "name",
+            t("forms:fields.product")
+          )}
           <p className="mt-2"> </p>
-          {this.renderSelect("Brand", brands, "", this.handleSelectChange)}
+          {this.renderSelect(
+            "Brand",
+            brands,
+            "",
+            this.handleSelectChange,
+            "id",
+            "name",
+            t("forms:fields.brand")
+          )}
           <p className="mt-2"> </p>
-          {this.renderSelect("Model", models, "", this.handleSelectChange)}
+          {this.renderSelect(
+            "Model",
+            models,
+            "",
+            this.handleSelectChange,
+            "id",
+            "name",
+            t("forms:fields.model")
+          )}
           <p className="mt-2"></p>
           {this.renderInput(
             "planRequired",
-            "Plan",
+            t("forms:hourlyPlan.plan"),
             "",
             fields.planRequired,
             this.handleInputChange,
@@ -269,7 +303,7 @@ class HourlyPlan extends Form {
           <p className="mt-2"> </p>
           {this.renderInput(
             "planProduced",
-            "Produced",
+            t("forms:hourlyPlan.produced"),
             "",
             fields.planProduced,
             this.handleInputChange,
@@ -278,7 +312,7 @@ class HourlyPlan extends Form {
             ""
           )}
           <p className="mt-2"> </p>
-          {this.renderButton("Save")}
+          {this.renderButton(t("common:buttons.save"))}
           <p className="mb-2"> </p>
         </div>
         <div className="col">
@@ -300,4 +334,4 @@ class HourlyPlan extends Form {
   }
 }
 
-export default HourlyPlan;
+export default withTranslation(["forms", "common"])(HourlyPlan);

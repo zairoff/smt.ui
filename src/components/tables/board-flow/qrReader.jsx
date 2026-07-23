@@ -1,11 +1,13 @@
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
 import Table from "../../common/table";
 
 class QrReaderTable extends Component {
-  columns = [
-    { path: "id", label: "ID" },
-    { path: "name", label: "NAME" },
-    { path: "position", label: "POSITION" },
+  get columns() {
+    return [
+    { path: "id", label: this.props.t("tables:qrReaderTable.columns.id") },
+    { path: "name", label: this.props.t("tables:qrReaderTable.columns.name") },
+    { path: "position", label: this.props.t("tables:qrReaderTable.columns.position") },
     {
       path: "button",
       content: (qrReader) => (
@@ -14,11 +16,12 @@ class QrReaderTable extends Component {
           onClick={() => this.props.onDelete(qrReader)}
           className="btn btn-danger"
         >
-          Delete
+          {this.props.t("common:buttons.delete")}
         </button>
       ),
     },
   ];
+  }
   render() {
     const { rows, sortColumn, onSort } = this.props;
     return (
@@ -32,4 +35,4 @@ class QrReaderTable extends Component {
   }
 }
 
-export default QrReaderTable;
+export default withTranslation(["tables", "common"])(QrReaderTable);

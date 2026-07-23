@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React from "react";
+import { useTranslation } from "react-i18next";
 
 const Card = ({
   title,
@@ -10,6 +11,7 @@ const Card = ({
   id,
   image,
 }) => {
+  const { t } = useTranslation("common");
   let result;
   if (expireDate) {
     // getting difference in hours
@@ -18,7 +20,7 @@ const Card = ({
   }
   return (
     <div className="card m-2 " style={{ height: "350px", width: "200px" }}>
-      <img className="card-img-top" src={image} />
+      <img className="card-img-top" src={image} alt={title || ""} />
       <div className="card-body row">
         <div className="col">
           <h5 className="card-title">{title}</h5>
@@ -35,8 +37,8 @@ const Card = ({
           />
         </div>
         <p
-          className="card-text m-0 d-inline-block text-truncate"
-          style={{ maxHeight: "400px", color: "green" }}
+          className="card-text m-0 d-inline-block text-truncate text-success"
+          style={{ maxHeight: "400px" }}
         >
           {bodyText}
         </p>
@@ -51,7 +53,7 @@ const Card = ({
                 : "p-2 my-auto badge rounded-pill bg-success"
             }
           >
-            Status
+            {t("card.status")}
           </div>
         </div>
       </div>

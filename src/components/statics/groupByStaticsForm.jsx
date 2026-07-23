@@ -1,6 +1,7 @@
 import React from "react";
 import { CSVLink } from "react-csv";
 import { toast } from "react-toastify";
+import { withTranslation } from "react-i18next";
 import { getReportsBy } from "../../services/reportService";
 import {
     getByBrand,
@@ -23,11 +24,11 @@ class GroupByStaticsForm extends Form {
         errors: {},
         loading: false,
         filters: [
-            { id: 1, name: "Product" },
-            { id: 2, name: "Brand" },
-            { id: 3, name: "Model" },
-            { id: 4, name: "Line" },
-            { id: 5, name: "Defect" },
+            { id: 1, name: this.props.t("groupByStaticsForm.filters.product") },
+            { id: 2, name: this.props.t("groupByStaticsForm.filters.brand") },
+            { id: 3, name: this.props.t("groupByStaticsForm.filters.model") },
+            { id: 4, name: this.props.t("groupByStaticsForm.filters.line") },
+            { id: 5, name: this.props.t("groupByStaticsForm.filters.defect") },
         ],
         sort: false,
         sortColumn: { path: "", order: "asc" },
@@ -93,6 +94,7 @@ class GroupByStaticsForm extends Form {
             isFiltered,
             loading,
         } = this.state;
+        const { t } = this.props;
 
         const excel = isFiltered
             ? reports
@@ -115,7 +117,7 @@ class GroupByStaticsForm extends Form {
                         <div className="col">
                             {this.renderInput(
                                 "from",
-                                "From",
+                                t("groupByStaticsForm.from"),
                                 "",
                                 fields.from,
                                 this.handleInputChange,
@@ -127,7 +129,7 @@ class GroupByStaticsForm extends Form {
                         <div className="col">
                             {this.renderInput(
                                 "to",
-                                "To",
+                                t("groupByStaticsForm.to"),
                                 "",
                                 fields.to,
                                 this.handleInputChange,
@@ -141,12 +143,15 @@ class GroupByStaticsForm extends Form {
                                 "Filter",
                                 filters,
                                 "",
-                                this.handleFilterChange
+                                this.handleFilterChange,
+                                "id",
+                                "name",
+                                t("groupByStaticsForm.filter")
                             )}
                         </div>}
                         <div className="col-2">
                             <p className="mt-4"></p>
-                            {this.renderButton("Search")}
+                            {this.renderButton(t("groupByStaticsForm.search"))}
                         </div>
                         <div className="col-2">
                             <p className="mt-4"></p>
@@ -154,7 +159,7 @@ class GroupByStaticsForm extends Form {
                                 className="btn btn-block btn-success btn-lg w-100"
                                 data={excel}
                             >
-                                Excel
+                                {t("groupByStaticsForm.excel")}
                             </CSVLink>
                         </div>
                     </div>
@@ -179,4 +184,4 @@ class GroupByStaticsForm extends Form {
     }
 }
 
-export default GroupByStaticsForm;
+export default withTranslation("statics")(GroupByStaticsForm);

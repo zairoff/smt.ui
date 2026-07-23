@@ -3,6 +3,7 @@ import ReactLoading from "react-loading";
 import _ from "lodash";
 import Form from "../forms/form";
 import { toast } from "react-toastify";
+import { withTranslation } from "react-i18next";
 import { format } from "date-fns";
 import {
   addBoardReport,
@@ -150,7 +151,10 @@ class BoardReport extends Form {
             "Readers",
             readers,
             errors.readers,
-            this.handleSelectChange
+            this.handleSelectChange,
+            undefined,
+            undefined,
+            this.props.t("boardReport.readersLabel")
           )}
           <p className="mt-2"> </p>
         </div>
@@ -181,4 +185,4 @@ class BoardReport extends Form {
   }
 }
 
-export default BoardReport;
+export default withTranslation(["boardFlow", "common"])(BoardReport);

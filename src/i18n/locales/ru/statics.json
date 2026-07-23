@@ -1,0 +1,62 @@
+{
+  "groupByStaticsForm": {
+    "from": "С",
+    "to": "По",
+    "filter": "Фильтр",
+    "search": "Поиск",
+    "excel": "Excel",
+    "filters": {
+      "product": "Продукт",
+      "brand": "Бренд",
+      "model": "Модель",
+      "line": "Линия",
+      "defect": "Дефект"
+    }
+  },
+  "planQualityStatics": {
+    "all": "Все",
+    "from": "С",
+    "to": "По",
+    "line": "Линия",
+    "search": "Поиск",
+    "planTitle": "План",
+    "qualityTitle": "Качество",
+    "planHint": "Нажмите на столбец, чтобы увидеть разбивку по моделям за этот день.",
+    "qualityHint": "Нажмите на точку, чтобы увидеть разбивку по моделям за этот день.",
+    "planDetailsTitle": "Детали плана — {{date}}",
+    "qualityDetailsTitle": "Детали качества — {{date}}",
+    "noPlanData": "Нет данных плана за эту дату.",
+    "noQualityData": "Нет данных качества за эту дату.",
+    "columns": {
+      "line": "Линия",
+      "model": "Модель",
+      "planned": "План",
+      "produced": "Произведено",
+      "defects": "Дефекты",
+      "ftq": "FTQ %"
+    },
+    "chart": {
+      "plan": "План",
+      "produced": "Произведено",
+      "quality": "Качество (FTQ %)"
+    }
+  },
+  "staticsForm": {
+    "product": "Продукт",
+    "brand": "Бренд",
+    "model": "Модель",
+    "line": "Линия",
+    "from": "С",
+    "to": "По",
+    "search": "Поиск",
+    "excel": "Excel",
+    "filters": {
+      "all": "Все",
+      "product": "Продукт",
+      "brand": "Бренд",
+      "model": "Модель",
+      "line": "Линия",
+      "defect": "Дефект"
+    }
+  }
+}

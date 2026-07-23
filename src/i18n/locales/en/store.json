@@ -1,0 +1,14 @@
+{
+  "componentAdd": {
+    "partNumber": "Part number",
+    "rCode": "R code",
+    "storePlaceNumber": "Store place number",
+    "sapPlace": "SAP number",
+    "placeCode": "Place code",
+    "specification": "Specification",
+    "save": "Save"
+  },
+  "componentPrint": {
+    "printer": "PRINTER"
+  }
+}

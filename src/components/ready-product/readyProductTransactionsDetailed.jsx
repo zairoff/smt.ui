@@ -2,6 +2,7 @@ import Form from "../forms/form";
 import _ from "lodash";
 import { toast } from "react-toastify";
 import ReactLoading from "react-loading";
+import { withTranslation } from "react-i18next";
 import { useParams, useLocation } from "react-router-dom";
 import { changeReadyProductTransaction } from "../../services/readyProductTransactionService";
 
@@ -35,6 +36,7 @@ class ReadyProductTransactionsDetailed extends Form {
 
   handleSubmit = async () => {
     const { fields, count, transactionId } = this.state;
+    const { t } = this.props;
 
     if (
       transactionId === "" ||
@@ -42,11 +44,11 @@ class ReadyProductTransactionsDetailed extends Form {
       count === "" ||
       count === undefined
     ) {
-      toast.warning("TRANSAKSIYA TOPILMADI");
+      toast.warning(t("transactionsDetailed.transactionNotFound"));
       return;
     }
     if (fields.count === "" || fields.count === undefined) {
-      toast.warning("O'ZGARUVCHI SONINI KIRITING");
+      toast.warning(t("transactionsDetailed.enterNewQuantity"));
       return;
     }
 
@@ -62,7 +64,7 @@ class ReadyProductTransactionsDetailed extends Form {
         count: "",
         fields: { count: "" },
       });
-      toast.success("Muvaffaqiyatli o'zgartirildi");
+      toast.success(t("updateSuccess"));
     } catch (ex) {
       this.setState({ loading: false });
       console.log(ex.response);
@@ -72,6 +74,7 @@ class ReadyProductTransactionsDetailed extends Form {
 
   render() {
     const { fields, errors, loading, name, count, sapCode } = this.state;
+    const { t } = this.props;
     return (
       <>
         {loading && <ReactLoading className="test" type="spin" color="blue" />}
@@ -79,7 +82,7 @@ class ReadyProductTransactionsDetailed extends Form {
           <div className="col-4">
             {this.renderInput(
               "model",
-              "MODEL",
+              t("fields.model"),
               "",
               name,
               null,
@@ -92,7 +95,7 @@ class ReadyProductTransactionsDetailed extends Form {
             <p className="mt-2"> </p>
             {this.renderInput(
               "sapCode",
-              "SAP CODE",
+              t("fields.sapCode"),
               "",
               sapCode,
               null,
@@ -105,7 +108,7 @@ class ReadyProductTransactionsDetailed extends Form {
             <p className="mt-2"> </p>
             {this.renderInput(
               "o-count",
-              "OMBORDAGI SONI",
+              t("fields.warehouseQuantity"),
               "",
               count,
               null,
@@ -118,7 +121,7 @@ class ReadyProductTransactionsDetailed extends Form {
             <p className="mt-2"> </p>
             {this.renderInput(
               "count",
-              "CHIQIM SONI",
+              t("fields.exportQuantity"),
               "",
               fields.count,
               this.handleInputChange,
@@ -127,7 +130,11 @@ class ReadyProductTransactionsDetailed extends Form {
               ""
             )}
             <p className="mt-2"> </p>
-            {this.renderButton("Save", "button", this.handleSubmit)}
+            {this.renderButton(
+              t("common:buttons.save"),
+              "button",
+              this.handleSubmit
+            )}
           </div>
         </div>
       </>
@@ -135,8 +142,13 @@ class ReadyProductTransactionsDetailed extends Form {
   }
 }
 
+const TranslatedReadyProductTransactionsDetailed = withTranslation([
+  "readyProduct",
+  "common",
+])(ReadyProductTransactionsDetailed);
+
 export default () => (
-  <ReadyProductTransactionsDetailed
+  <TranslatedReadyProductTransactionsDetailed
     params={useParams()}
     location={useLocation()}
   />

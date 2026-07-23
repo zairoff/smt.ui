@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
 import Table from "../common/table";
 
 class PcbRepairTable extends Component {
@@ -18,7 +19,7 @@ class PcbRepairTable extends Component {
           onClick={() => this.props.onDelete(repairer)}
           className="btn btn-danger"
         >
-          Delete
+          {this.props.t("common:buttons.delete")}
         </button>
       ),
     },
@@ -36,4 +37,4 @@ class PcbRepairTable extends Component {
   }
 }
 
-export default PcbRepairTable;
+export default withTranslation("common")(PcbRepairTable);

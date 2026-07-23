@@ -1,6 +1,7 @@
 import React from "react";
 import { loginUser, registerUser } from "../../services/userService";
 import ReactLoading from "react-loading";
+import { withTranslation } from "react-i18next";
 import Form from "./form";
 import { toast } from "react-toastify";
 
@@ -13,7 +14,8 @@ class Register extends Form {
 
   validateInput() {
     const { password, passwordRepeat } = this.state.fields;
-    if (password !== passwordRepeat) return "Password does not match";
+    if (password !== passwordRepeat)
+      return this.props.t("forms:register.passwordMismatch");
   }
 
   doSubmit = async () => {
@@ -38,6 +40,7 @@ class Register extends Form {
   };
 
   render() {
+    const { t } = this.props;
     const { fields, errors, loading } = this.state;
 
     return (
@@ -48,7 +51,7 @@ class Register extends Form {
             <p className="mt-2"> </p>
             {this.renderInput(
               "username",
-              "Username",
+              t("forms:register.username"),
               "", // placeholder
               fields.username,
               this.handleInputChange,
@@ -58,7 +61,7 @@ class Register extends Form {
             <p className="mt-2"> </p>
             {this.renderInput(
               "password",
-              "Password",
+              t("forms:register.password"),
               "", // placeholder
               fields.password,
               this.handleInputChange,
@@ -69,7 +72,7 @@ class Register extends Form {
             <p className="mt-2"> </p>
             {this.renderInput(
               "passwordRepeat",
-              "Confirm password",
+              t("forms:register.confirmPassword"),
               "", // placeholder
               fields.passwordRepeat,
               this.handleInputChange,
@@ -78,7 +81,7 @@ class Register extends Form {
               "password"
             )}
             <p className="mt-2"> </p>
-            {this.renderButton("Register")}
+            {this.renderButton(t("forms:register.submit"))}
           </form>
         </div>
       </React.Fragment>
@@ -86,4 +89,4 @@ class Register extends Form {
   }
 }
 
-export default Register;
+export default withTranslation("forms")(Register);

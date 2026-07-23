@@ -1,0 +1,93 @@
+{
+  "fields": {
+    "line": "Liniya",
+    "product": "Mahsulot",
+    "brand": "Brend",
+    "model": "Model",
+    "defect": "Nuqson",
+    "machine": "Stanok",
+    "repairer": "Ta'mirlovchi",
+    "repairers": "Ta'mirlovchilar",
+    "status": "Holati"
+  },
+  "messages": {
+    "fillRequiredFields": "Kerakli ma'lumotlarni kiriting",
+    "updatedSuccessfully": "Muvaffaqiyatli o'zgartirildi"
+  },
+  "planActivity": {
+    "issue": "Nomuvofiqlik",
+    "reason": "Sabab",
+    "action": "To'g'irlash ishlari",
+    "responsible": "Javobgar",
+    "createdDate": "Nomuvofiqlik sanasi",
+    "expireDate": "Muddat",
+    "statuses": {
+      "plan": "Plan",
+      "planDo": "Plan-Do",
+      "planDoAct": "Plan-Do-Act",
+      "planDoActResolve": "Plan-Do-Act-Resolve"
+    }
+  },
+  "planActivityReport": {
+    "from": "Dan",
+    "to": "Gacha",
+    "excel": "Excel"
+  },
+  "department": {
+    "selectFirst": "Avval bo'limni tanlang",
+    "updateButton": "Yangilash"
+  },
+  "employee": {
+    "fullName": "To'liq ism",
+    "department": "Bo'lim",
+    "position": "Lavozim",
+    "phone": "Telefon",
+    "birthday": "Tug'ilgan sana",
+    "details": "Qo'shimcha ma'lumot",
+    "successMessage": "Muvaffaqiyatli saqlandi!"
+  },
+  "employeeAdd": {
+    "chooseImageWarning": "Rasmni tanlang!"
+  },
+  "employeeDashboard": {
+    "addEmployeeLink": "XODIM QO'SHISH"
+  },
+  "hourlyPlan": {
+    "date": "Sana",
+    "plan": "Reja",
+    "produced": "Ishlab chiqarildi"
+  },
+  "planForm": {
+    "date": "Sana",
+    "plan": "Reja",
+    "produced": "Ishlab chiqarildi"
+  },
+  "login": {
+    "username": "Foydalanuvchi nomi",
+    "password": "Parol",
+    "forgotPassword": "parolni unutdingizmi?",
+    "submit": "Kirish"
+  },
+  "register": {
+    "username": "Foydalanuvchi nomi",
+    "password": "Parol",
+    "confirmPassword": "Parolni tasdiqlang",
+    "submit": "Ro'yxatdan o'tish",
+    "passwordMismatch": "Parollar mos kelmadi"
+  },
+  "machine": {
+    "uploadWarning": "Rasm yuklang!"
+  },
+  "machineRepair": {
+    "repairDate": "Ta'mirlash sanasi",
+    "expireDate": "Muddati",
+    "issue": "Muammo",
+    "action": "Chora"
+  },
+  "model": {
+    "name": "Model",
+    "barcode": "Shtrix-kod",
+    "sapCode": "SAP kodi",
+    "boardId": "Plata ID"
+  }
+}

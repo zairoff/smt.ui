@@ -5,6 +5,7 @@ import { paginate } from "../../utils/paginate";
 import ReactLoading from "react-loading";
 import Form from "./form";
 import _ from "lodash";
+import { withTranslation } from "react-i18next";
 import {
   getProducts,
   deleteProduct,
@@ -125,11 +126,11 @@ class ProductForm extends Form {
             true
           )}
           <p className="mt-2"> </p>
-          {this.renderButton("Save")}
+          {this.renderButton(this.props.t("common:buttons.save"))}
         </div>
       </form>
     );
   }
 }
 
-export default ProductForm;
+export default withTranslation("common")(ProductForm);

@@ -1,0 +1,93 @@
+{
+  "fields": {
+    "line": "Line",
+    "product": "Product",
+    "brand": "Brand",
+    "model": "Model",
+    "defect": "Defect",
+    "machine": "Machine",
+    "repairer": "Repairer",
+    "repairers": "Repairers",
+    "status": "Status"
+  },
+  "messages": {
+    "fillRequiredFields": "Please fill in all required fields",
+    "updatedSuccessfully": "Updated successfully"
+  },
+  "planActivity": {
+    "issue": "Nonconformity",
+    "reason": "Reason",
+    "action": "Corrective action",
+    "responsible": "Responsible",
+    "createdDate": "Nonconformity date",
+    "expireDate": "Due date",
+    "statuses": {
+      "plan": "Plan",
+      "planDo": "Plan-Do",
+      "planDoAct": "Plan-Do-Act",
+      "planDoActResolve": "Plan-Do-Act-Resolve"
+    }
+  },
+  "planActivityReport": {
+    "from": "From",
+    "to": "To",
+    "excel": "Excel"
+  },
+  "department": {
+    "selectFirst": "Please select a department first",
+    "updateButton": "Update"
+  },
+  "employee": {
+    "fullName": "Full name",
+    "department": "Department",
+    "position": "Position",
+    "phone": "Phone",
+    "birthday": "Date of birth",
+    "details": "Additional info",
+    "successMessage": "Saved successfully!"
+  },
+  "employeeAdd": {
+    "chooseImageWarning": "Please choose an image!"
+  },
+  "employeeDashboard": {
+    "addEmployeeLink": "ADD EMPLOYEE"
+  },
+  "hourlyPlan": {
+    "date": "Date",
+    "plan": "Plan",
+    "produced": "Produced"
+  },
+  "planForm": {
+    "date": "Date",
+    "plan": "Plan",
+    "produced": "Produced"
+  },
+  "login": {
+    "username": "Username",
+    "password": "Password",
+    "forgotPassword": "forgot password?",
+    "submit": "Login"
+  },
+  "register": {
+    "username": "Username",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "submit": "Register",
+    "passwordMismatch": "Passwords do not match"
+  },
+  "machine": {
+    "uploadWarning": "Please upload an image!"
+  },
+  "machineRepair": {
+    "repairDate": "Repair date",
+    "expireDate": "Expiration date",
+    "issue": "Issue",
+    "action": "Action"
+  },
+  "model": {
+    "name": "Model",
+    "barcode": "Barcode",
+    "sapCode": "SAP code",
+    "boardId": "Board ID"
+  }
+}

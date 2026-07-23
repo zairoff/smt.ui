@@ -1,11 +1,14 @@
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
 import Table from "../common/table";
 
 class StaticsGroupedTable extends Component {
-  columns = [
-    { path: "name", label: "NAME" },
-    { path: "count", label: "COUNT" },
+  get columns() {
+    return [
+    { path: "name", label: this.props.t("tables:staticsGroupedTable.columns.name") },
+    { path: "count", label: this.props.t("tables:staticsGroupedTable.columns.count") },
   ];
+  }
   render() {
     const { rows, sortColumn, onSort } = this.props;
     return (
@@ -19,4 +22,4 @@ class StaticsGroupedTable extends Component {
   }
 }
 
-export default StaticsGroupedTable;
+export default withTranslation("tables")(StaticsGroupedTable);

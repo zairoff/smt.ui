@@ -26,6 +26,7 @@ import MachineDashborad from "./components/machineDashboard";
 import MachineHistory from "./components/machineHistory";
 import PcbReport from "./components/reports/pcbReport";
 import StaticsForm from "./components/statics/staticsForm";
+import PlanQualityStatics from "./components/statics/planQualityStatics";
 import Logout from "./components/forms/logout";
 import FtqReport from "./components/reports/ftqReport";
 import Repair from "./components/reports/repair";
@@ -57,6 +58,9 @@ import ComponentConnectToComponent from "./components/store/componentConnectToCo
 import QrReader from "./components/board-flow/qrReader";
 import BoardReport from "./components/board-flow/boardReport";
 import BoardStatistics from "./components/board-flow/boardStatistics";
+import QrReaderV2 from "./components/board-flow/v2/qrReaderV2";
+import BoardReportV2 from "./components/board-flow/v2/boardReportV2";
+import LineFlowBoard from "./components/board-flow/v2/lineFlowBoard";
 
 class App extends Component {
   state = {};
@@ -108,6 +112,10 @@ class App extends Component {
               <Route path="/pcb-report" element={<PcbReport />} />
               <Route path="/statics" element={<GroupByStaticsForm />} />
               <Route path="/dashboard" element={<StaticsForm />} />
+              <Route
+                path="/statics-chart"
+                element={<PlanQualityStatics />}
+              />
               <Route path="/ftq" element={<FtqReport />} />
               <Route path="*" element={<FtqReport />} />
               <Route path="/plan" element={<Plan />} />
@@ -201,6 +209,9 @@ class App extends Component {
               <Route path="/qr-reader-add" element={<QrReader />} />
               <Route path="/board-report" element={<BoardReport />} />
               <Route path="/board-flow" element={<BoardStatistics />} />
+              <Route path="/qr-reader-v2-add" element={<QrReaderV2 />} />
+              <Route path="/board-report-v2" element={<BoardReportV2 />} />
+              <Route path="/board-flow-v2" element={<LineFlowBoard />} />
 
               <Route path="/component-print" element={<ComponentPrint />} />
 

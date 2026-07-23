@@ -1,0 +1,43 @@
+{
+  "fields": {
+    "model": "Model",
+    "sapCode": "SAP Code",
+    "warehouseQuantity": "Warehouse quantity",
+    "exportQuantity": "Export quantity"
+  },
+  "dateRange": {
+    "from": "From",
+    "to": "To"
+  },
+  "filterLabel": "Filter",
+  "excelButton": "Excel",
+  "updateSuccess": "Successfully updated",
+  "exportDetailForm": {
+    "modelNotFound": "Model not found",
+    "enterExportQuantity": "Enter the export quantity",
+    "exportExceedsWarehouse": "Export quantity cannot exceed the warehouse quantity"
+  },
+  "exportForm": {
+    "productLabel": "Product",
+    "brandLabel": "Brand"
+  },
+  "importForm": {
+    "title": "Finished products"
+  },
+  "report": {
+    "filters": {
+      "import": "Inbound",
+      "export": "Outbound"
+    }
+  },
+  "transactions": {
+    "filters": {
+      "import": "Inbound",
+      "export": "Outbound"
+    }
+  },
+  "transactionsDetailed": {
+    "transactionNotFound": "Transaction not found",
+    "enterNewQuantity": "Enter the new quantity"
+  }
+}

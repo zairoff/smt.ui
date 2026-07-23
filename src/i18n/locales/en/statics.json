@@ -1,0 +1,62 @@
+{
+  "groupByStaticsForm": {
+    "from": "From",
+    "to": "To",
+    "filter": "Filter",
+    "search": "Search",
+    "excel": "Excel",
+    "filters": {
+      "product": "Product",
+      "brand": "Brand",
+      "model": "Model",
+      "line": "Line",
+      "defect": "Defect"
+    }
+  },
+  "planQualityStatics": {
+    "all": "All",
+    "from": "From",
+    "to": "To",
+    "line": "Line",
+    "search": "Search",
+    "planTitle": "Plan",
+    "qualityTitle": "Quality",
+    "planHint": "Click a bar to see the per-model breakdown for that day.",
+    "qualityHint": "Click a point to see the per-model breakdown for that day.",
+    "planDetailsTitle": "Plan details — {{date}}",
+    "qualityDetailsTitle": "Quality details — {{date}}",
+    "noPlanData": "No plan data for this date.",
+    "noQualityData": "No quality data for this date.",
+    "columns": {
+      "line": "Line",
+      "model": "Model",
+      "planned": "Planned",
+      "produced": "Produced",
+      "defects": "Defects",
+      "ftq": "FTQ %"
+    },
+    "chart": {
+      "plan": "Plan",
+      "produced": "Produced",
+      "quality": "Quality (FTQ %)"
+    }
+  },
+  "staticsForm": {
+    "product": "Product",
+    "brand": "Brand",
+    "model": "Model",
+    "line": "Line",
+    "from": "From",
+    "to": "To",
+    "search": "Search",
+    "excel": "Excel",
+    "filters": {
+      "all": "All",
+      "product": "Product",
+      "brand": "Brand",
+      "model": "Model",
+      "line": "Line",
+      "defect": "Defect"
+    }
+  }
+}

@@ -3,6 +3,7 @@ import ReactLoading from "react-loading";
 import _ from "lodash";
 import Form from "../forms/form";
 import { toast } from "react-toastify";
+import { withTranslation } from "react-i18next";
 import { format } from "date-fns";
 import {
   GetBoardFlowReports,
@@ -91,7 +92,7 @@ class BoardStatistics extends Form {
             <div className="col">
               {this.renderInput(
                 "from",
-                "From",
+                this.props.t("boardStatistics.fromLabel"),
                 "",
                 fields.from,
                 this.handleInputChange,
@@ -103,7 +104,7 @@ class BoardStatistics extends Form {
             <div className="col">
               {this.renderInput(
                 "to",
-                "To",
+                this.props.t("boardStatistics.toLabel"),
                 "",
                 fields.to,
                 this.handleInputChange,
@@ -114,7 +115,11 @@ class BoardStatistics extends Form {
             </div>
             <div className="col-2">
               <p className="mt-4"></p>
-              {this.renderButton("SEARCH", "button", this.handleSearch)}
+              {this.renderButton(
+                this.props.t("common:buttons.search"),
+                "button",
+                this.handleSearch
+              )}
             </div>
           </div>
         </div>
@@ -135,4 +140,4 @@ class BoardStatistics extends Form {
   }
 }
 
-export default BoardStatistics;
+export default withTranslation(["boardFlow", "common"])(BoardStatistics);

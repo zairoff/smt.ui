@@ -1,10 +1,12 @@
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
 import Table from "../common/table";
 
 class DefectTable extends Component {
-  columns = [
-    { path: "id", label: "ID" },
-    { path: "name", label: "DEFECT" },
+  get columns() {
+    return [
+    { path: "id", label: this.props.t("tables:defectTable.columns.id") },
+    { path: "name", label: this.props.t("tables:defectTable.columns.name") },
     {
       path: "button",
       content: (brand) => (
@@ -13,11 +15,12 @@ class DefectTable extends Component {
           onClick={() => this.props.onDelete(brand)}
           className="btn btn-danger"
         >
-          Delete
+          {this.props.t("common:buttons.delete")}
         </button>
       ),
     },
   ];
+  }
   render() {
     const { rows, sortColumn, onSort } = this.props;
     return (
@@ -31,4 +34,4 @@ class DefectTable extends Component {
   }
 }
 
-export default DefectTable;
+export default withTranslation(["tables", "common"])(DefectTable);

@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
+import { withTranslation } from "react-i18next";
 import ReactLoading from "react-loading";
 import _ from "lodash";
 import Pagination from "../common/pagination";
@@ -93,13 +94,15 @@ class RepairHistory extends Component {
           }}
           className="btn btn-success mt-2 mb-2"
         >
-          BACK
+          {this.props.t("repairHistory.back")}
         </Link>
       </>
     );
   }
 }
 
+const TranslatedRepairHistory = withTranslation("reports")(RepairHistory);
+
 export default () => (
-  <RepairHistory params={useParams()} location={useLocation()} />
+  <TranslatedRepairHistory params={useParams()} location={useLocation()} />
 );

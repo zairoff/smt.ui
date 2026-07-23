@@ -1,19 +1,20 @@
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
 import Table from "../common/table";
 
 class ReturnedProductImportTable extends Component {
   columns = [];
   render() {
-    const { rows, sortColumn, onSort, authorized } = this.props;
+    const { rows, sortColumn, onSort, authorized, t } = this.props;
 
     const columns = authorized
       ? [
-          { path: "index", label: "NOMER" },
-          { path: "model.name", label: "MODEL" },
-          { path: "model.sapCode", label: "SAP CODE" },
-          { path: "model.barcode", label: "BAR CODE" },
-          { path: "date", label: "KIRISH" },
-          { path: "count", label: "SONI" },
+          { path: "index", label: t("tables:returnedProductImportTable.columns.index") },
+          { path: "model.name", label: t("tables:returnedProductImportTable.columns.model") },
+          { path: "model.sapCode", label: t("tables:returnedProductImportTable.columns.sapCode") },
+          { path: "model.barcode", label: t("tables:returnedProductImportTable.columns.barCode") },
+          { path: "date", label: t("tables:returnedProductImportTable.columns.receivedDate") },
+          { path: "count", label: t("tables:returnedProductImportTable.columns.count") },
           {
             path: "button",
             content: (readyProduct) => (
@@ -22,18 +23,18 @@ class ReturnedProductImportTable extends Component {
                 onClick={() => this.props.onDelete(readyProduct)}
                 className="btn btn-danger"
               >
-                Delete
+                {t("common:buttons.delete")}
               </button>
             ),
           },
         ]
       : [
-          { path: "index", label: "NOMER" },
-          { path: "model.name", label: "MODEL" },
-          { path: "model.sapCode", label: "SAP CODE" },
-          { path: "model.barcode", label: "BAR CODE" },
-          { path: "date", label: "KIRISH" },
-          { path: "count", label: "SONI" },
+          { path: "index", label: t("tables:returnedProductImportTable.columns.index") },
+          { path: "model.name", label: t("tables:returnedProductImportTable.columns.model") },
+          { path: "model.sapCode", label: t("tables:returnedProductImportTable.columns.sapCode") },
+          { path: "model.barcode", label: t("tables:returnedProductImportTable.columns.barCode") },
+          { path: "date", label: t("tables:returnedProductImportTable.columns.receivedDate") },
+          { path: "count", label: t("tables:returnedProductImportTable.columns.count") },
         ];
 
     return (
@@ -47,4 +48,4 @@ class ReturnedProductImportTable extends Component {
   }
 }
 
-export default ReturnedProductImportTable;
+export default withTranslation(["tables", "common"])(ReturnedProductImportTable);

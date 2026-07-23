@@ -1,0 +1,14 @@
+{
+  "componentAdd": {
+    "partNumber": "Detal raqami",
+    "rCode": "R-kod",
+    "storePlaceNumber": "Ombordagi joy nomeri",
+    "sapPlace": "SAP nomeri",
+    "placeCode": "Joy kodi",
+    "specification": "Spetsifikatsiya",
+    "save": "Saqlash"
+  },
+  "componentPrint": {
+    "printer": "PRINTER"
+  }
+}

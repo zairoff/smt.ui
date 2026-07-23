@@ -1,15 +1,17 @@
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
 import Table from "../common/table";
 import { Link } from "react-router-dom";
 
 class ReadyProductGroupByTable extends Component {
   render() {
-    const { rows, sortColumn, fields, onSort, transactionType } = this.props;
+    const { rows, sortColumn, fields, onSort, transactionType, t } =
+      this.props;
 
     const columns = [
-      { path: "model", label: "MODEL" },
-      { path: "sapCode", label: "SAP CODE" },
-      { path: "count", label: "SONI" },
+      { path: "model", label: t("tables:readyProductGroupByTable.columns.model") },
+      { path: "sapCode", label: t("tables:readyProductGroupByTable.columns.sapCode") },
+      { path: "count", label: t("tables:readyProductGroupByTable.columns.count") },
       {
         path: "details",
         content: (readyproduct) => (
@@ -27,7 +29,7 @@ class ReadyProductGroupByTable extends Component {
             }}
             className="btn btn-primary"
           >
-            batafsil
+            {t("tables:readyProductGroupByTable.actions.details")}
           </Link>
         ),
       },
@@ -44,4 +46,4 @@ class ReadyProductGroupByTable extends Component {
   }
 }
 
-export default ReadyProductGroupByTable;
+export default withTranslation("tables")(ReadyProductGroupByTable);

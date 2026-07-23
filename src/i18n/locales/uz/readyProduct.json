@@ -1,0 +1,43 @@
+{
+  "fields": {
+    "model": "Model",
+    "sapCode": "SAP kodi",
+    "warehouseQuantity": "Ombordagi soni",
+    "exportQuantity": "Chiqim soni"
+  },
+  "dateRange": {
+    "from": "Dan",
+    "to": "Gacha"
+  },
+  "filterLabel": "Filtr",
+  "excelButton": "Excel",
+  "updateSuccess": "Muvaffaqiyatli o'zgartirildi",
+  "exportDetailForm": {
+    "modelNotFound": "Model topilmadi",
+    "enterExportQuantity": "Chiqim sonini kiriting",
+    "exportExceedsWarehouse": "Chiqim soni ombordagi miqdordan ko'p bo'lmasligi kerak"
+  },
+  "exportForm": {
+    "productLabel": "Mahsulot",
+    "brandLabel": "Brend"
+  },
+  "importForm": {
+    "title": "Tayyor mahsulotlar"
+  },
+  "report": {
+    "filters": {
+      "import": "Kirish",
+      "export": "Chiqish"
+    }
+  },
+  "transactions": {
+    "filters": {
+      "import": "Kirish",
+      "export": "Chiqish"
+    }
+  },
+  "transactionsDetailed": {
+    "transactionNotFound": "Tranzaksiya topilmadi",
+    "enterNewQuantity": "Yangi miqdorni kiriting"
+  }
+}

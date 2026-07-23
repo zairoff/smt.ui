@@ -1,0 +1,14 @@
+{
+  "componentAdd": {
+    "partNumber": "Номер детали",
+    "rCode": "R-код",
+    "storePlaceNumber": "Номер места на складе",
+    "sapPlace": "Номер SAP",
+    "placeCode": "Код места",
+    "specification": "Спецификация",
+    "save": "Сохранить"
+  },
+  "componentPrint": {
+    "printer": "ПРИНТЕР"
+  }
+}

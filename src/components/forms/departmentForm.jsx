@@ -1,5 +1,6 @@
 import React from "react";
 import Form from "./form";
+import { withTranslation } from "react-i18next";
 import ReactLoading from "react-loading";
 import Department from "../common/department";
 import { toast } from "react-toastify";
@@ -33,7 +34,7 @@ class DepartmentForm extends Form {
   doSubmit = async () => {
     const { fields, selected, data } = this.state;
     if (data.length > 0 && Object.keys(selected).length === 0) {
-      toast.warning("Select deparmtnet first");
+      toast.warning(this.props.t("forms:department.selectFirst"));
       return;
     }
     this.setState({ loading: true });
@@ -66,7 +67,7 @@ class DepartmentForm extends Form {
   handleUpdate = async () => {
     const { fields, selected, data } = this.state;
     if (data.length > 0 && Object.keys(selected).length === 0) {
-      toast.warning("Select deparmtnet first");
+      toast.warning(this.props.t("forms:department.selectFirst"));
       return;
     }
     this.setState({ loading: true });
@@ -89,6 +90,7 @@ class DepartmentForm extends Form {
   };
 
   render() {
+    const { t } = this.props;
     const { fields, data, errors, loading } = this.state;
     return (
       <form className="m-2 row" onSubmit={this.handleSubmit}>
@@ -107,17 +109,17 @@ class DepartmentForm extends Form {
             true
           )}
           <p className="mt-2"> </p>
-          {this.renderButton("Save", "submit")}
+          {this.renderButton(t("common:buttons.save"), "submit")}
           <p className="mt-2"> </p>
           {this.renderButton(
-            "Update",
+            t("forms:department.updateButton"),
             "button",
             this.handleUpdate,
             "btn btn-secondary btn-block btn-lg w-100"
           )}
           <p className="mt-2"> </p>
           {this.renderButton(
-            "Delete",
+            t("common:buttons.delete"),
             "button",
             this.handleDelete,
             "btn btn-danger btn-block btn-lg w-100"
@@ -128,4 +130,4 @@ class DepartmentForm extends Form {
   }
 }
 
-export default DepartmentForm;
+export default withTranslation(["forms", "common"])(DepartmentForm);

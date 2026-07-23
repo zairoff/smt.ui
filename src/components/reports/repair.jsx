@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { toast } from "react-toastify";
+import { withTranslation } from "react-i18next";
 import { paginate } from "../../utils/paginate";
 import ReactLoading from "react-loading";
 import Form from "./../forms/form";
@@ -95,7 +96,7 @@ class Repair extends Form {
       condition === "" ||
       condition === undefined
     ) {
-      toast.warning("Remontchi va xolatini tanlang!");
+      toast.warning(this.props.t("repair.selectRepairerWarning"));
       return;
     }
 
@@ -138,7 +139,7 @@ class Repair extends Form {
         action: "",
       });
     } catch (ex) {
-      toast.error("error");
+      toast.error(this.props.t("common:errors.unexpected"));
       this.state({ data: clone });
     } finally {
       this.setState({ loading: false });
@@ -223,6 +224,7 @@ class Repair extends Form {
 
     const sortedRows = _.orderBy(data, [sortColumn.path], [sortColumn.order]);
     const rows = paginate(sortedRows, currentPage, pageSize);
+    const { t } = this.props;
 
     return (
       <>
@@ -242,7 +244,7 @@ class Repair extends Form {
               }}
               className="btn btn-success text-white w-25"
             >
-              HISTORY
+              {t("repair.history")}
             </Link>
           ) : (
             <></>
@@ -251,7 +253,7 @@ class Repair extends Form {
             <div className="col-2">
               {this.renderInput(
                 "barcode",
-                "Barcode",
+                t("repair.barcode"),
                 "",
                 fields.barcode,
                 this.handleInputChange,
@@ -266,7 +268,7 @@ class Repair extends Form {
             <div className="col">
               {this.renderInput(
                 "model",
-                "Model",
+                t("repair.model"),
                 "",
                 model,
                 this.handleInputChange,
@@ -277,7 +279,7 @@ class Repair extends Form {
             <div className="col-2">
               {this.renderInput(
                 "line",
-                "Line",
+                t("repair.line"),
                 "",
                 line,
                 this.handleInputChange,
@@ -288,7 +290,7 @@ class Repair extends Form {
             <div className="col">
               {this.renderInput(
                 "defect",
-                "Defect",
+                t("repair.defect"),
                 "",
                 defect,
                 this.handleInputChange,
@@ -299,7 +301,7 @@ class Repair extends Form {
             <div className="col">
               {this.renderInput(
                 "date",
-                "Created date",
+                t("repair.createdDate"),
                 "",
                 createdDate,
                 this.handleInputChange,
@@ -313,7 +315,7 @@ class Repair extends Form {
             <div className="col">
               {this.renderTextArea(
                 "action",
-                "Action",
+                t("repair.action"),
                 fields.action,
                 this.handleInputChange
               )}
@@ -328,22 +330,26 @@ class Repair extends Form {
                     errors.repairers,
                     this.handleSelectChange,
                     "employee.fullName",
-                    "employee.fullName"
+                    "employee.fullName",
+                    t("repair.repairer")
                   )}
                 </div>
                 <div className="col">
                   {this.renderSelect(
                     "Status",
                     [
-                      { id: "Ishladi", name: "Ishladi" },
-                      { id: "Ishlamadi", name: "Ishlamadi" },
+                      { id: "Ishladi", name: t("repair.statusWorked") },
+                      { id: "Ishlamadi", name: t("repair.statusNotWorked") },
                     ],
                     errors.repairers,
-                    this.handleSelectChange
+                    this.handleSelectChange,
+                    "id",
+                    "name",
+                    t("repair.status")
                   )}
                 </div>
                 <div className="col mt-4">
-                  {this.renderButton("SAVE", "button", this.handleSave)}
+                  {this.renderButton(t("repair.save"), "button", this.handleSave)}
                 </div>
               </div>
             </div>
@@ -353,17 +359,20 @@ class Repair extends Form {
               {this.renderSelect(
                 "PcbStatus",
                 [
-                  { id: false, name: "Open" },
-                  { id: true, name: "Closed" },
+                  { id: false, name: t("repair.statusOpen") },
+                  { id: true, name: t("repair.statusClosed") },
                 ],
                 errors.repairers,
-                this.handleSelectChange
+                this.handleSelectChange,
+                "id",
+                "name",
+                t("repair.pcbStatus")
               )}
             </div>
             <div className="col">
               {this.renderInput(
                 "searchDate",
-                "Date",
+                t("repair.date"),
                 "",
                 fields.searchDate,
                 this.handleInputChange,
@@ -373,7 +382,7 @@ class Repair extends Form {
               )}
             </div>
             <div className="col mt-4">
-              {this.renderButton("SEARCH", "button", this.handleSearch)}
+              {this.renderButton(t("repair.search"), "button", this.handleSearch)}
             </div>
           </div>
           {rows.length > 0 && (
@@ -396,4 +405,4 @@ class Repair extends Form {
   }
 }
 
-export default Repair;
+export default withTranslation(["reports", "common"])(Repair);

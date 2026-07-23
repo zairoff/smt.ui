@@ -1,11 +1,13 @@
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
 import Table from "../common/table";
 
 class ProductBrandTable extends Component {
-  columns = [
-    { path: "id", label: "ID" },
-    { path: "product.name", label: "PRODUCT" },
-    { path: "brand.name", label: "BRAND" },
+  get columns() {
+    return [
+    { path: "id", label: this.props.t("tables:productBrandTable.columns.id") },
+    { path: "product.name", label: this.props.t("tables:productBrandTable.columns.product") },
+    { path: "brand.name", label: this.props.t("tables:productBrandTable.columns.brand") },
     {
       path: "button",
       content: (productBrand) => (
@@ -14,11 +16,12 @@ class ProductBrandTable extends Component {
           onClick={() => this.props.onDelete(productBrand)}
           className="btn btn-danger"
         >
-          Delete
+          {this.props.t("common:buttons.delete")}
         </button>
       ),
     },
   ];
+  }
   render() {
     const { rows, sortColumn, onSort } = this.props;
     return (
@@ -32,4 +35,4 @@ class ProductBrandTable extends Component {
   }
 }
 
-export default ProductBrandTable;
+export default withTranslation(["tables", "common"])(ProductBrandTable);

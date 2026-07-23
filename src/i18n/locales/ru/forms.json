@@ -1,0 +1,93 @@
+{
+  "fields": {
+    "line": "Линия",
+    "product": "Продукт",
+    "brand": "Бренд",
+    "model": "Модель",
+    "defect": "Дефект",
+    "machine": "Станок",
+    "repairer": "Ремонтник",
+    "repairers": "Ремонтники",
+    "status": "Статус"
+  },
+  "messages": {
+    "fillRequiredFields": "Пожалуйста, заполните все обязательные поля",
+    "updatedSuccessfully": "Успешно обновлено"
+  },
+  "planActivity": {
+    "issue": "Несоответствие",
+    "reason": "Причина",
+    "action": "Корректирующие действия",
+    "responsible": "Ответственный",
+    "createdDate": "Дата несоответствия",
+    "expireDate": "Срок",
+    "statuses": {
+      "plan": "Plan",
+      "planDo": "Plan-Do",
+      "planDoAct": "Plan-Do-Act",
+      "planDoActResolve": "Plan-Do-Act-Resolve"
+    }
+  },
+  "planActivityReport": {
+    "from": "От",
+    "to": "До",
+    "excel": "Excel"
+  },
+  "department": {
+    "selectFirst": "Пожалуйста, сначала выберите отдел",
+    "updateButton": "Обновить"
+  },
+  "employee": {
+    "fullName": "ФИО",
+    "department": "Отдел",
+    "position": "Должность",
+    "phone": "Телефон",
+    "birthday": "Дата рождения",
+    "details": "Дополнительная информация",
+    "successMessage": "Успешно сохранено!"
+  },
+  "employeeAdd": {
+    "chooseImageWarning": "Пожалуйста, выберите изображение!"
+  },
+  "employeeDashboard": {
+    "addEmployeeLink": "ДОБАВИТЬ СОТРУДНИКА"
+  },
+  "hourlyPlan": {
+    "date": "Дата",
+    "plan": "План",
+    "produced": "Произведено"
+  },
+  "planForm": {
+    "date": "Дата",
+    "plan": "План",
+    "produced": "Произведено"
+  },
+  "login": {
+    "username": "Имя пользователя",
+    "password": "Пароль",
+    "forgotPassword": "забыли пароль?",
+    "submit": "Войти"
+  },
+  "register": {
+    "username": "Имя пользователя",
+    "password": "Пароль",
+    "confirmPassword": "Подтвердите пароль",
+    "submit": "Регистрация",
+    "passwordMismatch": "Пароли не совпадают"
+  },
+  "machine": {
+    "uploadWarning": "Пожалуйста, загрузите изображение!"
+  },
+  "machineRepair": {
+    "repairDate": "Дата ремонта",
+    "expireDate": "Дата истечения",
+    "issue": "Проблема",
+    "action": "Действие"
+  },
+  "model": {
+    "name": "Модель",
+    "barcode": "Штрихкод",
+    "sapCode": "Код SAP",
+    "boardId": "ID платы"
+  }
+}

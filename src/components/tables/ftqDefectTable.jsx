@@ -1,14 +1,15 @@
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
 import Table from "../common/table";
 import { Link } from "react-router-dom";
 
 class FtqDefectTable extends Component {
   render() {
-    const { rows, sortColumn, onSort, fields, line } = this.props;
+    const { rows, sortColumn, onSort, fields, line, t } = this.props;
 
     const columns = [
-      { path: "name", label: "DEFECT" },
-      { path: "count", label: "COUNT" },
+      { path: "name", label: t("tables:ftqDefectTable.columns.name") },
+      { path: "count", label: t("tables:ftqDefectTable.columns.count") },
       {
         path: "details",
         content: (defect) => (
@@ -28,7 +29,7 @@ class FtqDefectTable extends Component {
             }}
             className="btn btn-primary"
           >
-            details
+            {t("tables:ftqDefectTable.actions.details")}
           </Link>
         ),
       },
@@ -45,4 +46,4 @@ class FtqDefectTable extends Component {
   }
 }
 
-export default FtqDefectTable;
+export default withTranslation("tables")(FtqDefectTable);

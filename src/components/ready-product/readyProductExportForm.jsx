@@ -1,5 +1,6 @@
 import React from "react";
 import { toast } from "react-toastify";
+import { withTranslation } from "react-i18next";
 import { getProductBrandByProductId } from "../../services/productBrandService";
 import { getProducts } from "../../services/productService";
 import Form from "../forms/form";
@@ -115,6 +116,7 @@ class ReadyProductExportForm extends Form {
   render() {
     const { products, brands, data, sortColumn, loading, authorized } =
       this.state;
+    const { t } = this.props;
 
     return (
       <>
@@ -127,11 +129,22 @@ class ReadyProductExportForm extends Form {
               "Product",
               products,
               "",
-              this.handleSelectChange
+              this.handleSelectChange,
+              undefined,
+              undefined,
+              t("exportForm.productLabel")
             )}
           </div>
           <div className="col">
-            {this.renderSelect("Brand", brands, "", this.handleSelectChange)}
+            {this.renderSelect(
+              "Brand",
+              brands,
+              "",
+              this.handleSelectChange,
+              undefined,
+              undefined,
+              t("exportForm.brandLabel")
+            )}
           </div>
         </div>
         <ReadyProductExportTable
@@ -146,4 +159,4 @@ class ReadyProductExportForm extends Form {
   }
 }
 
-export default ReadyProductExportForm;
+export default withTranslation("readyProduct")(ReadyProductExportForm);

@@ -1,16 +1,17 @@
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
 import Table from "../common/table";
 import { Link } from "react-router-dom";
 
 class ReadyProductExportTable extends Component {
   render() {
-    const { rows, sortColumn, onSort, authorized } = this.props;
+    const { rows, sortColumn, onSort, authorized, t } = this.props;
 
     const columns = authorized
       ? [
-          { path: "model.name", label: "MODEL" },
-          { path: "model.sapCode", label: "SAP CODE" },
-          { path: "count", label: "SONI" },
+          { path: "model.name", label: t("tables:readyProductExportTable.columns.model") },
+          { path: "model.sapCode", label: t("tables:readyProductExportTable.columns.sapCode") },
+          { path: "count", label: t("tables:readyProductExportTable.columns.count") },
           {
             path: "edit",
             content: (readyProduct) => (
@@ -21,7 +22,7 @@ class ReadyProductExportTable extends Component {
                 state={{ data: readyProduct }}
                 className="btn btn-primary"
               >
-                CHIQIM
+                {t("tables:readyProductExportTable.actions.issue")}
               </Link>
             ),
           },
@@ -33,15 +34,15 @@ class ReadyProductExportTable extends Component {
                 onClick={() => this.props.onDelete(readyProduct)}
                 className="btn btn-danger"
               >
-                CHIQIM BARCHASINI
+                {t("tables:readyProductExportTable.actions.issueAll")}
               </button>
             ),
           },
         ]
       : [
-          { path: "model.name", label: "MODEL" },
-          { path: "model.sapCode", label: "SAP CODE" },
-          { path: "count", label: "SONI" },
+          { path: "model.name", label: t("tables:readyProductExportTable.columns.model") },
+          { path: "model.sapCode", label: t("tables:readyProductExportTable.columns.sapCode") },
+          { path: "count", label: t("tables:readyProductExportTable.columns.count") },
         ];
 
     return (
@@ -55,4 +56,4 @@ class ReadyProductExportTable extends Component {
   }
 }
 
-export default ReadyProductExportTable;
+export default withTranslation("tables")(ReadyProductExportTable);

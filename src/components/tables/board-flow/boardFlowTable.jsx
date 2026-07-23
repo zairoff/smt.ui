@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
 import Table from "../../common/table";
 
 /*
@@ -12,14 +13,14 @@ import Table from "../../common/table";
 class BoardFlowTable extends Component {
   columns = [];
   render() {
-    const { rows, sortColumn, onSort } = this.props;
+    const { rows, sortColumn, onSort, t } = this.props;
 
     const columns = [
-      { path: "qrCode", label: "QR" },
-      { path: "qrReader.name", label: "READER" },
-      { path: "model.name", label: "MODEL" },
-      { path: "model.sapCode", label: "SAP CODE" },
-      { path: "dateTime", label: "VAQT" },
+      { path: "qrCode", label: t("tables:boardFlowTable.columns.qrCode") },
+      { path: "qrReader.name", label: t("tables:boardFlowTable.columns.reader") },
+      { path: "model.name", label: t("tables:boardFlowTable.columns.model") },
+      { path: "model.sapCode", label: t("tables:boardFlowTable.columns.sapCode") },
+      { path: "dateTime", label: t("tables:boardFlowTable.columns.time") },
     ];
 
     return (
@@ -33,4 +34,4 @@ class BoardFlowTable extends Component {
   }
 }
 
-export default BoardFlowTable;
+export default withTranslation("tables")(BoardFlowTable);

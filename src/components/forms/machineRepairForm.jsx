@@ -6,6 +6,7 @@ import {
   getMachineRepairs,
 } from "../../services/machineRepairService";
 import Form from "./form";
+import { withTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import { paginate } from "../../utils/paginate";
 import ReactLoading from "react-loading";
@@ -123,6 +124,7 @@ class MachineRepairForm extends Form {
   };
 
   render() {
+    const { t } = this.props;
     const {
       data,
       repairers,
@@ -150,7 +152,10 @@ class MachineRepairForm extends Form {
               "Machine",
               machines,
               errors.machines,
-              this.handleSelectChange
+              this.handleSelectChange,
+              "id",
+              "name",
+              t("forms:fields.machine")
             )}
           </div>
           <div className="col">
@@ -160,13 +165,14 @@ class MachineRepairForm extends Form {
               errors.repairers,
               this.handleSelectChange,
               "employee.id",
-              "employee.fullName"
+              "employee.fullName",
+              t("forms:fields.repairer")
             )}
           </div>
           <div className="col">
             {this.renderInput(
               "createdDate",
-              "Repair Date",
+              t("forms:machineRepair.repairDate"),
               "",
               fields.createdDate,
               this.handleInputChange,
@@ -178,7 +184,7 @@ class MachineRepairForm extends Form {
           <div className="col">
             {this.renderInput(
               "notificationDate",
-              "Expire Date",
+              t("forms:machineRepair.expireDate"),
               "",
               fields.notificationDate,
               this.handleInputChange,
@@ -192,7 +198,7 @@ class MachineRepairForm extends Form {
             <div className="col">
               {this.renderTextArea(
                 "issue",
-                "Issue",
+                t("forms:machineRepair.issue"),
                 fields.issue,
                 this.handleInputChange
               )}
@@ -200,13 +206,13 @@ class MachineRepairForm extends Form {
             <div className="col">
               {this.renderTextArea(
                 "action",
-                "Action",
+                t("forms:machineRepair.action"),
                 fields.action,
                 this.handleInputChange
               )}
             </div>
             <div className="col-2 mt-4">
-              {this.renderButton("Save", "submit")}
+              {this.renderButton(t("common:buttons.save"), "submit")}
             </div>
           </div>
         </div>
@@ -232,4 +238,4 @@ class MachineRepairForm extends Form {
   }
 }
 
-export default MachineRepairForm;
+export default withTranslation(["forms", "common"])(MachineRepairForm);

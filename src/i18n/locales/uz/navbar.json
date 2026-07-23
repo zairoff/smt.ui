@@ -1,0 +1,85 @@
+{
+  "menu": {
+    "main": "Asosiy",
+    "management": "Boshqaruv",
+    "plans": "Rejalar",
+    "reports": "Hisobotlar",
+    "repairs": "Ta'mirlash",
+    "machines": "Stanoklar",
+    "boardFlow": "Plata oqimi",
+    "settings": "Sozlamalar",
+    "printer": "Printer"
+  },
+  "main": {
+    "dashboard": "Boshqaruv paneli",
+    "statics": "Statistika",
+    "planQuality": "Reja va sifat",
+    "ftq": "FTQ"
+  },
+  "management": {
+    "department": "Bo'lim",
+    "employeeDashboard": "Xodimlar paneli",
+    "employeeAdd": "Xodim qo'shish"
+  },
+  "plans": {
+    "plan": "Reja",
+    "planActivity": "Reja faoliyati",
+    "report": "Hisobot",
+    "planHourly": "Soatlik reja"
+  },
+  "reports": {
+    "report": "Hisobot",
+    "pcbReport": "Plata hisoboti"
+  },
+  "repairs": {
+    "repairer": "Ta'mirlovchi",
+    "repair": "Ta'mirlash"
+  },
+  "machines": {
+    "dashboard": "Boshqaruv paneli",
+    "machine": "Stanok",
+    "repairer": "Ta'mirlovchi",
+    "repair": "Ta'mirlash"
+  },
+  "boardFlow": {
+    "report": "Hisobot",
+    "flow": "Oqim",
+    "qrReader": "QR skaner",
+    "flowV2": "Oqim V2 (jonli)",
+    "reportV2": "Hisobot V2",
+    "qrReaderV2": "QR skaner V2"
+  },
+  "settings": {
+    "product": "Mahsulot",
+    "brand": "Brend",
+    "productBrand": "Mahsulot-brend",
+    "model": "Model",
+    "defect": "Nuqson",
+    "line": "Liniya",
+    "lineDefect": "Liniya-nuqson",
+    "component": "Komponent",
+    "componentConnect": "Komponentni bog'lash",
+    "componentBulk": "Komponent import"
+  },
+  "readyProduct": {
+    "title": "Ombor",
+    "import": "Kirish",
+    "export": "Chiqish",
+    "report": "Hisobot",
+    "transactions": "Transaksiyalar"
+  },
+  "returnProduct": {
+    "title": "Qaytgan mahsulotlar",
+    "import": "Kirish",
+    "export": "Chiqish",
+    "report": "Hisobot",
+    "transactions": "Transaksiyalar"
+  },
+  "printer": {
+    "qr": "QR"
+  },
+  "auth": {
+    "login": "Kirish",
+    "logout": "Chiqish"
+  }
+}

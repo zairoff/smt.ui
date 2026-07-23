@@ -1,19 +1,20 @@
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
 import Table from "../common/table";
 import { Link } from "react-router-dom";
 
 class ReadyProductTransactionsTable extends Component {
   columns = [];
   render() {
-    const { rows, sortColumn, onSort, authorized } = this.props;
+    const { rows, sortColumn, onSort, authorized, t } = this.props;
 
     const columns = authorized
       ? [
-          { path: "model.name", label: "MODEL" },
-          { path: "model.sapCode", label: "SAP CODE" },
-          { path: "model.barcode", label: "BAR CODE" },
-          { path: "date", label: "KIRISH" },
-          { path: "count", label: "SONI" },
+          { path: "model.name", label: t("tables:readyProductTransactionsTable.columns.model") },
+          { path: "model.sapCode", label: t("tables:readyProductTransactionsTable.columns.sapCode") },
+          { path: "model.barcode", label: t("tables:readyProductTransactionsTable.columns.barCode") },
+          { path: "date", label: t("tables:readyProductTransactionsTable.columns.receivedDate") },
+          { path: "count", label: t("tables:readyProductTransactionsTable.columns.count") },
           {
             path: "edit",
             content: (readyProduct) => (
@@ -24,7 +25,7 @@ class ReadyProductTransactionsTable extends Component {
                 state={{ data: readyProduct }}
                 className="btn btn-primary"
               >
-                O'ZGARTIRISH
+                {t("common:buttons.edit")}
               </Link>
             ),
           },
@@ -36,17 +37,17 @@ class ReadyProductTransactionsTable extends Component {
                 onClick={() => this.props.onDelete(readyProduct)}
                 className="btn btn-danger"
               >
-                Delete
+                {t("common:buttons.delete")}
               </button>
             ),
           },
         ]
       : [
-          { path: "model.name", label: "MODEL" },
-          { path: "model.sapCode", label: "SAP CODE" },
-          { path: "model.barcode", label: "BAR CODE" },
-          { path: "date", label: "KIRISH" },
-          { path: "count", label: "SONI" },
+          { path: "model.name", label: t("tables:readyProductTransactionsTable.columns.model") },
+          { path: "model.sapCode", label: t("tables:readyProductTransactionsTable.columns.sapCode") },
+          { path: "model.barcode", label: t("tables:readyProductTransactionsTable.columns.barCode") },
+          { path: "date", label: t("tables:readyProductTransactionsTable.columns.receivedDate") },
+          { path: "count", label: t("tables:readyProductTransactionsTable.columns.count") },
         ];
 
     return (
@@ -60,4 +61,4 @@ class ReadyProductTransactionsTable extends Component {
   }
 }
 
-export default ReadyProductTransactionsTable;
+export default withTranslation(["tables", "common"])(ReadyProductTransactionsTable);

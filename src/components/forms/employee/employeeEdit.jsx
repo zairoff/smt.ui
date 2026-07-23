@@ -1,5 +1,6 @@
 import React from "react";
 import Form from "../form";
+import { withTranslation } from "react-i18next";
 import ReactLoading from "react-loading";
 import Department from "../../common/department";
 import { toast } from "react-toastify";
@@ -112,7 +113,7 @@ class EmployeeEdit extends Form {
 
     try {
       await updateEmployee(this.props.params.empId, employee);
-      toast.info("Success!");
+      toast.info(this.props.t("forms:employee.successMessage"));
     } catch (ex) {
       toast.error(ex.response.data.message);
     } finally {
@@ -132,6 +133,7 @@ class EmployeeEdit extends Form {
   };
 
   render() {
+    const { t } = this.props;
     const { loading, imageFileName, fields, errors, departments } = this.state;
     return (
       <form
@@ -163,7 +165,7 @@ class EmployeeEdit extends Form {
         <div className="col">
           {this.renderInput(
             "name",
-            "Full Name",
+            t("forms:employee.fullName"),
             "",
             fields.name,
             this.handleInputChange,
@@ -173,7 +175,7 @@ class EmployeeEdit extends Form {
           <p className="mt-2"> </p>
           {this.renderInput(
             "department",
-            "Department",
+            t("forms:employee.department"),
             "",
             fields.department,
             this.handleInputChange,
@@ -183,7 +185,7 @@ class EmployeeEdit extends Form {
           <p className="mt-2"> </p>
           {this.renderInput(
             "position",
-            "Position",
+            t("forms:employee.position"),
             "",
             fields.position,
             this.handleInputChange,
@@ -193,7 +195,7 @@ class EmployeeEdit extends Form {
           <p className="mt-2"> </p>
           {this.renderInput(
             "phone",
-            "Phone",
+            t("forms:employee.phone"),
             "",
             fields.phone,
             this.handleInputChange,
@@ -204,7 +206,7 @@ class EmployeeEdit extends Form {
           <p className="mt-2"> </p>
           {this.renderInput(
             "birthday",
-            "Birthday",
+            t("forms:employee.birthday"),
             "",
             fields.birthday,
             this.handleInputChange,
@@ -214,12 +216,12 @@ class EmployeeEdit extends Form {
           )}
           {this.renderTextArea(
             "details",
-            "Additional info",
+            t("forms:employee.details"),
             fields.details,
             this.handleInputChange
           )}
           <p className="mt-2"> </p>
-          {this.renderButton("Save")}
+          {this.renderButton(t("common:buttons.save"))}
           <p className="mb-2"> </p>
         </div>
 
@@ -235,6 +237,10 @@ class EmployeeEdit extends Form {
   }
 }
 
+const TranslatedEmployeeEdit = withTranslation(["forms", "common"])(
+  EmployeeEdit
+);
+
 export default () => (
-  <EmployeeEdit params={useParams()} location={useLocation()} />
+  <TranslatedEmployeeEdit params={useParams()} location={useLocation()} />
 );

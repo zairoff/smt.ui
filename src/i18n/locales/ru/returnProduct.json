@@ -1,0 +1,37 @@
+{
+  "fields": {
+    "model": "Модель",
+    "sapCode": "Код SAP",
+    "barCode": "Штрихкод",
+    "warehouseQuantity": "Количество на складе",
+    "exportQuantity": "Количество на отгрузку"
+  },
+  "dateRange": {
+    "from": "От",
+    "to": "До"
+  },
+  "filterLabel": "Фильтр",
+  "excelButton": "Excel",
+  "updateSuccess": "Успешно изменено",
+  "errors": {
+    "modelNotFound": "Модель не найдена",
+    "enterExportQuantity": "Введите количество на отгрузку",
+    "exportExceedsWarehouse": "Количество на отгрузку не должно превышать остаток на складе",
+    "barcodeInvalid": "Неверный штрихкод"
+  },
+  "transactionTypeLabels": {
+    "importFromFactoryToBuffer": "Поступление в буфер (завод Ахангаран)",
+    "exportFromBufferToRepair": "Выход из буфера (в ремонт)",
+    "exportFromRepairToStore": "Выход из ремонта (на склад)",
+    "exportFromRepairToUtilize": "Выход из ремонта (склад, на утилизацию)",
+    "exportFromStoreToFactory": "Выход со склада (на завод Ахангаран)",
+    "exportFromStoreToFactoryShort": "Выход со склада (на завод)",
+    "exportFromStoreToUtilize": "Выход со склада (на утилизацию)"
+  },
+  "export": {
+    "destinationLabel": "Куда?"
+  },
+  "import": {
+    "title": "Возвращённые товары"
+  }
+}

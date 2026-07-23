@@ -14,6 +14,7 @@ import {
   getProductBrands,
 } from "../../services/productBrandService";
 import Form from "./form";
+import { withTranslation } from "react-i18next";
 import ReactLoading from "react-loading";
 
 class ProductBrandForm extends Form {
@@ -116,6 +117,7 @@ class ProductBrandForm extends Form {
   };
 
   render() {
+    const { t } = this.props;
     const {
       data: allData,
       pageSize,
@@ -157,21 +159,27 @@ class ProductBrandForm extends Form {
             "Product",
             fields.products,
             errors.products,
-            this.handleSelectChange
+            this.handleSelectChange,
+            "id",
+            "name",
+            t("forms:fields.product")
           )}
           <p className="mt-2"> </p>
           {this.renderSelect(
             "Brand",
             fields.brands,
             errors.brands,
-            this.handleSelectChange
+            this.handleSelectChange,
+            "id",
+            "name",
+            t("forms:fields.brand")
           )}
           <p className="mt-2"> </p>
-          {this.renderButton("Save")}
+          {this.renderButton(t("common:buttons.save"))}
         </div>
       </form>
     );
   }
 }
 
-export default ProductBrandForm;
+export default withTranslation(["forms", "common"])(ProductBrandForm);

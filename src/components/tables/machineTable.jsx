@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
 import Table from "../common/table";
 import config from "../../config.json";
 
@@ -25,7 +26,7 @@ class MachineTable extends Component {
           onClick={() => this.props.onDelete(machine)}
           className="btn btn-danger"
         >
-          Delete
+          {this.props.t("common:buttons.delete")}
         </button>
       ),
     },
@@ -43,4 +44,4 @@ class MachineTable extends Component {
   }
 }
 
-export default MachineTable;
+export default withTranslation("common")(MachineTable);

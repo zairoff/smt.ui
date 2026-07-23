@@ -1,6 +1,7 @@
 import React from "react";
 import ReactLoading from "react-loading";
 import _ from "lodash";
+import { withTranslation } from "react-i18next";
 import Form from "./form";
 import ModelTable from "../tables/modelTable";
 import { paginate } from "../../utils/paginate";
@@ -136,6 +137,7 @@ class ModelForm extends Form {
   };
 
   render() {
+    const { t } = this.props;
     const {
       data: allData,
       pageSize,
@@ -179,19 +181,25 @@ class ModelForm extends Form {
             "Product",
             products,
             errors.products,
-            this.handleSelectChange
+            this.handleSelectChange,
+            "id",
+            "name",
+            t("forms:fields.product")
           )}
           <p className="mt-2"> </p>
           {this.renderSelect(
             "Brand",
             brands,
             errors.brands,
-            this.handleSelectChange
+            this.handleSelectChange,
+            "id",
+            "name",
+            t("forms:fields.brand")
           )}
           <p className="mt-2"> </p>
           {this.renderInput(
             "model",
-            "Model",
+            t("forms:model.name"),
             "",
             fields.model,
             this.handleInputChange,
@@ -202,7 +210,7 @@ class ModelForm extends Form {
           <p className="mt-2"> </p>
           {this.renderInput(
             "barcode",
-            "Barcode",
+            t("forms:model.barcode"),
             "",
             fields.barcode,
             this.handleInputChange,
@@ -213,7 +221,7 @@ class ModelForm extends Form {
           <p className="mt-2"> </p>
           {this.renderInput(
             "sapCode",
-            "Sap code",
+            t("forms:model.sapCode"),
             "",
             fields.sapCode,
             this.handleInputChange,
@@ -224,7 +232,7 @@ class ModelForm extends Form {
           <p className="mt-2"> </p>
           {this.renderInput(
             "boardId",
-            "BoardID",
+            t("forms:model.boardId"),
             "",
             fields.boardId,
             this.handleInputChange,
@@ -233,11 +241,11 @@ class ModelForm extends Form {
             ""
           )}
           <p className="mt-2"> </p>
-          {this.renderButton("Save")}
+          {this.renderButton(t("common:buttons.save"))}
         </div>
       </form>
     );
   }
 }
 
-export default ModelForm;
+export default withTranslation(["forms", "common"])(ModelForm);
