@@ -1,6 +1,12 @@
 # Starts a bare X session running instruction-kiosk.sh, no desktop environment
-# required. Works on Raspberry Pi OS Lite. Change User/Group below if this Pi's
-# account isn't named "pi".
+# required. Works ONLY on Raspberry Pi OS Lite (no display manager already
+# running). If this Pi is running the full Desktop image instead, LightDM is
+# already running its own X server on :0 -- use lxde-autostart.example
+# instead of this file, or the two will fight over the display.
+#
+# Change User/Group below if this Pi's account isn't named "pi". Requires
+# console auto-login (raspi-config -> System Options -> Boot / Auto Login ->
+# Console Autologin) so the session's tty is available without a login prompt.
 
 [Unit]
 Description=Instruction display kiosk (Chromium fullscreen)
@@ -11,10 +17,14 @@ Wants=network-online.target
 User=pi
 Group=pi
 PAMName=login
+TTYPath=/dev/tty1
+StandardInput=tty
+StandardOutput=journal
+StandardError=journal
 Environment=DISPLAY=:0
-ExecStart=/usr/bin/xinit /usr/local/bin/instruction-kiosk.sh -- :0 -nocursor
+ExecStart=/usr/bin/xinit /usr/local/bin/instruction-kiosk.sh -- :0 vt1 -nolisten tcp
 Restart=always
 RestartSec=3
 
 [Install]
-WantedBy=graphical.target
+WantedBy=multi-user.target

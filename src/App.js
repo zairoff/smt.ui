@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import NavBar from "./components/navbar";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import ProductForm from "./components/forms/productForm";
 import ModelForm from "./components/forms/modelForm";
 import BrandForm from "./components/forms/brandForm";
@@ -66,6 +66,33 @@ import LineActiveModelForm from "./components/forms/lineActiveModelForm";
 import ModelInstructionForm from "./components/forms/modelInstructionForm";
 import InstructionDisplay from "./components/pcb-instruction/instructionDisplay";
 
+// Routes for the PCBA instruction-image feature render bare, with no navbar
+// or "Login" link — the admin pages are meant to be reachable without
+// signing in, and the kiosk display page runs unattended on Raspberry Pi
+// screens where any app chrome is unwanted.
+const BARE_ROUTE_PREFIXES = [
+  "/instruction-position",
+  "/line-active-model",
+  "/model-instruction",
+  "/instruction-display",
+];
+
+const AppChrome = ({ user, children }) => {
+  const location = useLocation();
+  const bare = BARE_ROUTE_PREFIXES.some((prefix) =>
+    location.pathname.startsWith(prefix)
+  );
+
+  if (bare) return <>{children}</>;
+
+  return (
+    <React.Fragment>
+      <NavBar user={user} />
+      <main className="container mt-4">{children}</main>
+    </React.Fragment>
+  );
+};
+
 class App extends Component {
   state = {};
 
@@ -83,8 +110,7 @@ class App extends Component {
     return (
       <React.Fragment>
         <ToastContainer />
-        <NavBar user={user} />
-        <main className="container mt-4">
+        <AppChrome user={user}>
           <Routes>
             <>
               <Route path="/product" element={<ProductForm />} />
@@ -243,7 +269,7 @@ class App extends Component {
               <Route path="/register" element={<Register />} />
             </>
           </Routes>
-        </main>
+        </AppChrome>
       </React.Fragment>
     );
   }

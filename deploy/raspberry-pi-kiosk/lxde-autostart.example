@@ -1,0 +1,16 @@
+# For Pis running the full Raspberry Pi OS "Desktop" image (LXDE/PIXEL, X11,
+# LightDM) rather than OS Lite. LightDM already runs its own X server and
+# session -- this file autostarts Chromium *inside* that session instead of
+# fighting it for the display, which is what the systemd+xinit path
+# (instruction-kiosk.service) would otherwise do.
+#
+# Copy this to ~/.config/lxsession/LXDE-pi/autostart (creating the directory
+# if needed). Note this REPLACES the default autostart list for this user,
+# not appends to it -- for a kiosk that's actually what you want, since it
+# also suppresses the taskbar/panel and desktop icons that would otherwise
+# be visible for a moment before Chromium covers them.
+
+@xset s off
+@xset -dpms
+@xset s noblank
+@/usr/local/bin/instruction-kiosk.sh
