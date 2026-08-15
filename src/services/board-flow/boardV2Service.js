@@ -26,9 +26,10 @@ export function getAllLineSnapshots(from, to) {
 }
 
 // The actual list of boards currently flagged (skipped a station / out of sequence).
-export function getFlaggedBoards(lineId) {
-  let query = endPoint + "/Flagged";
-  if (lineId) query += "?lineId=" + lineId;
+// Paged - response is { totalCount, items }.
+export function getFlaggedBoards(lineId, page = 1, pageSize = 10) {
+  let query = endPoint + "/Flagged?page=" + page + "&pageSize=" + pageSize;
+  if (lineId) query += "&lineId=" + lineId;
   return http.get(query);
 }
 

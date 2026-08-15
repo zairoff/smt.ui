@@ -123,6 +123,21 @@
       "sapPlace": "SAP location"
     }
   },
+  "componentBulkImportResultTable": {
+    "columns": {
+      "row": "Row",
+      "partNumber": "Part number",
+      "rCode": "R-code",
+      "status": "Status",
+      "message": "Message"
+    },
+    "status": {
+      "Created": "Created",
+      "Updated": "Updated",
+      "Failed": "Failed"
+    },
+    "empty": "Upload a file to see import results."
+  },
   "defectTable": {
     "columns": {
       "id": "ID",

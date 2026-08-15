@@ -123,6 +123,21 @@
       "sapPlace": "Место SAP"
     }
   },
+  "componentBulkImportResultTable": {
+    "columns": {
+      "row": "Строка",
+      "partNumber": "Номер детали",
+      "rCode": "R-код",
+      "status": "Статус",
+      "message": "Сообщение"
+    },
+    "status": {
+      "Created": "Создано",
+      "Updated": "Обновлено",
+      "Failed": "Ошибка"
+    },
+    "empty": "Загрузите файл, чтобы увидеть результаты импорта."
+  },
   "defectTable": {
     "columns": {
       "id": "ID",

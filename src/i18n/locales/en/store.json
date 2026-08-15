@@ -10,5 +10,13 @@
   },
   "componentPrint": {
     "printer": "PRINTER"
+  },
+  "componentBulkImport": {
+    "hint": "Upload an Excel file (.xlsx/.xls) with PartNumber, RCode and Specification columns.",
+    "emptyFile": "The selected file has no rows to import.",
+    "summary": "{{success}} of {{total}} rows imported successfully ({{failed}} failed).",
+    "total": "Total: {{count}}",
+    "success": "Success: {{count}}",
+    "failed": "Failed: {{count}}"
   }
 }

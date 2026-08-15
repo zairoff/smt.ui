@@ -10,5 +10,13 @@
   },
   "componentPrint": {
     "printer": "PRINTER"
+  },
+  "componentBulkImport": {
+    "hint": "PartNumber, RCode va Specification ustunlari mavjud Excel faylini (.xlsx/.xls) yuklang.",
+    "emptyFile": "Tanlangan faylda import qilinadigan qatorlar yo'q.",
+    "summary": "{{total}} qatordan {{success}} tasi muvaffaqiyatli import qilindi ({{failed}} tasi xato).",
+    "total": "Jami: {{count}}",
+    "success": "Muvaffaqiyatli: {{count}}",
+    "failed": "Xato: {{count}}"
   }
 }

@@ -17,7 +17,9 @@
     "emptyDefault": "Ma'lumot topilmadi."
   },
   "pagination": {
-    "ariaLabel": "Sahifalash"
+    "ariaLabel": "Sahifalash",
+    "previous": "Oldingi sahifa",
+    "next": "Keyingi sahifa"
   },
   "card": {
     "status": "Holat"

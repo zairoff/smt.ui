@@ -7,6 +7,7 @@ import { withTranslation } from "react-i18next";
 import { getDepartmentByHierarchyId } from "../../../services/departmentService";
 import {
   getEmployeeByDepartmentId,
+  getEmployeeByFullName,
   patchEmployee,
 } from "../../../services/employeeService";
 import Department from "../../common/department";
@@ -20,7 +21,7 @@ class EmployeeDashboard extends Form {
     sortColumn: { path: "", order: "asc" },
     departments: [],
     data: [],
-    fields: { department: "" },
+    fields: { department: "", search: "" },
     errors: {},
     loading: true,
     selected: { id: 0, departmentId: "", name: "" },
@@ -40,7 +41,11 @@ class EmployeeDashboard extends Form {
   }
 
   handleDepartmentClick = async (selected) => {
-    this.setState({ loading: true });
+    this.setState({
+      loading: true,
+      fields: { ...this.state.fields, search: "" },
+      currentPage: 1,
+    });
     try {
       const { data } = await getEmployeeByDepartmentId(
         selected.departmentId,
@@ -62,6 +67,29 @@ class EmployeeDashboard extends Form {
 
   handleSort = (sortColumn) => {
     this.setState({ sortColumn });
+  };
+
+  handleSearchChange = ({ currentTarget: input }) => {
+    const fields = { ...this.state.fields, search: input.value };
+    this.setState({ fields });
+  };
+
+  handleSearchKeyDown = async (e) => {
+    if (e.key !== "Enter") return;
+    e.preventDefault();
+
+    const search = this.state.fields.search.trim();
+    if (!search) return;
+
+    this.setState({ loading: true, currentPage: 1 });
+    try {
+      const { data } = await getEmployeeByFullName(search, true);
+      this.setState({ data });
+    } catch (ex) {
+      toast.error(ex.response.data.message);
+    } finally {
+      this.setState({ loading: false });
+    }
   };
 
   handlePageChange = (page) => {
@@ -121,11 +149,15 @@ class EmployeeDashboard extends Form {
             {this.renderInput(
               "search",
               "",
-              t("common:buttons.search"),
+              t("forms:employeeDashboard.searchPlaceholder"),
               fields.search,
-              this.handleInputChange,
+              this.handleSearchChange,
               errors.search,
-              true
+              false,
+              "text",
+              null,
+              false,
+              this.handleSearchKeyDown
             )}
             <p className="mt-2"> </p>
             <EmployeeTable

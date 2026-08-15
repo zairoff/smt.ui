@@ -24,6 +24,15 @@ export function getEmployeeByDepartmentId(departmentId, isActive) {
   return http.get(query);
 }
 
+export function getEmployeeByFullName(fullName, isActive) {
+  const query = endPoint
+    .concat("/GetByFullName?fullName=")
+    .concat(encodeURIComponent(fullName))
+    .concat("&isActive=")
+    .concat(isActive);
+  return http.get(query);
+}
+
 export function addEmployee(employee) {
   return http.post(endPoint, employee);
 }

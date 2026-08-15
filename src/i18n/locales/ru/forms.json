@@ -50,7 +50,8 @@
     "chooseImageWarning": "Пожалуйста, выберите изображение!"
   },
   "employeeDashboard": {
-    "addEmployeeLink": "ДОБАВИТЬ СОТРУДНИКА"
+    "addEmployeeLink": "ДОБАВИТЬ СОТРУДНИКА",
+    "searchPlaceholder": "Поиск по ФИО, нажмите Enter"
   },
   "hourlyPlan": {
     "date": "Дата",

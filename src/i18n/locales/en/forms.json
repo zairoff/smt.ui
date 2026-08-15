@@ -50,7 +50,8 @@
     "chooseImageWarning": "Please choose an image!"
   },
   "employeeDashboard": {
-    "addEmployeeLink": "ADD EMPLOYEE"
+    "addEmployeeLink": "ADD EMPLOYEE",
+    "searchPlaceholder": "Search by full name, press Enter"
   },
   "hourlyPlan": {
     "date": "Date",

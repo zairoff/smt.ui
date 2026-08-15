@@ -14,6 +14,8 @@ import { getQrReadersV2 } from "../../../services/board-flow/qrReaderV2Service";
 import { buildStages, terminalReaderIds } from "../../../utils/boardFlowStages";
 import BoardHistoryModal from "./boardHistoryModal";
 import StationBoardsModal from "./stationBoardsModal";
+import Pagination from "../../common/pagination";
+import Spinner from "../../common/spinner";
 
 const POLL_INTERVAL_MS = 20000;
 
@@ -23,7 +25,11 @@ class LineFlowBoard extends Form {
     readers: [],
     snapshots: [],
     flaggedBoards: [],
-    loading: false,
+    flaggedPage: 1,
+    flaggedPageSize: 10,
+    flaggedTotalCount: 0,
+    flaggedLoading: false,
+    loading: true,
     historyQrCode: "",
     showHistory: false,
     historyLoading: false,
@@ -67,21 +73,43 @@ class LineFlowBoard extends Form {
     if (this.pollTimer) clearInterval(this.pollTimer);
   }
 
+  fetchFlagged = async (page, silent = false) => {
+    if (!silent) this.setState({ flaggedLoading: true });
+    try {
+      const { flaggedPageSize } = this.state;
+      const { data } = await getFlaggedBoards(null, page, flaggedPageSize);
+      this.setState({
+        flaggedBoards: data.items,
+        flaggedTotalCount: data.totalCount,
+        flaggedPage: page,
+      });
+    } catch (ex) {
+      if (!silent) toast.error(ex.message);
+    } finally {
+      if (!silent) this.setState({ flaggedLoading: false });
+    }
+  };
+
   fetchAll = async (from, to, silent = false) => {
     if (!from || !to) return;
 
     if (!silent) this.setState({ loading: true });
     try {
-      const [{ data: snapshots }, { data: flaggedBoards }] = await Promise.all([
+      const { flaggedPage } = this.state;
+      const [{ data: snapshots }] = await Promise.all([
         getAllLineSnapshots(from, to),
-        getFlaggedBoards(null),
+        this.fetchFlagged(flaggedPage, silent),
       ]);
-      this.setState({ snapshots, flaggedBoards });
+      this.setState({ snapshots });
     } catch (ex) {
       if (!silent) toast.error(ex.message);
     } finally {
       if (!silent) this.setState({ loading: false });
     }
+  };
+
+  handleFlaggedPageChange = (page) => {
+    this.fetchFlagged(page);
   };
 
   doSubmit = async () => {
@@ -153,6 +181,10 @@ class LineFlowBoard extends Form {
       readers,
       snapshots,
       flaggedBoards,
+      flaggedPage,
+      flaggedPageSize,
+      flaggedTotalCount,
+      flaggedLoading,
       loading,
       historyQrCode,
       showHistory,
@@ -314,7 +346,8 @@ class LineFlowBoard extends Form {
           <div className="mt-4">
             <h5>
               {t("lineFlowBoard.flaggedBoardsTitle")}{" "}
-              {flaggedBoards.length > 0 && `(${flaggedBoards.length})`}
+              {flaggedTotalCount > 0 && `(${flaggedTotalCount})`}
+              {flaggedLoading && <Spinner small className="ms-2" />}
             </h5>
             <p className="text-muted small">
               {t("lineFlowBoard.flaggedBoardsHint")}
@@ -323,42 +356,50 @@ class LineFlowBoard extends Form {
               <p className="mb-0">{t("lineFlowBoard.noFlaggedBoards")}</p>
             )}
             {flaggedBoards.length > 0 && (
-              <table className="table table-striped">
-                <thead>
-                  <tr>
-                    <th>{t("lineFlowBoard.columns.line")}</th>
-                    <th>{t("lineFlowBoard.columns.qrCode")}</th>
-                    <th>{t("lineFlowBoard.columns.model")}</th>
-                    <th>{t("lineFlowBoard.columns.currentStation")}</th>
-                    <th>{t("lineFlowBoard.columns.lastUpdated")}</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {flaggedBoards.map((b) => (
-                    <tr key={b.id}>
-                      <td>{b.line ? b.line.name : ""}</td>
-                      <td>{b.qrCode}</td>
-                      <td>{b.model ? b.model.name : ""}</td>
-                      <td>
-                        {b.currentQrReader ? b.currentQrReader.name : ""}
-                      </td>
-                      <td>
-                        {format(new Date(b.updatedAt), "yyyy-MM-dd HH:mm:ss")}
-                      </td>
-                      <td>
-                        <button
-                          type="button"
-                          className="btn btn-sm btn-outline-primary"
-                          onClick={() => this.openHistory(b.qrCode)}
-                        >
-                          {t("shared.historyButton")}
-                        </button>
-                      </td>
+              <>
+                <table className="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>{t("lineFlowBoard.columns.line")}</th>
+                      <th>{t("lineFlowBoard.columns.qrCode")}</th>
+                      <th>{t("lineFlowBoard.columns.model")}</th>
+                      <th>{t("lineFlowBoard.columns.currentStation")}</th>
+                      <th>{t("lineFlowBoard.columns.lastUpdated")}</th>
+                      <th></th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {flaggedBoards.map((b) => (
+                      <tr key={b.id}>
+                        <td>{b.line ? b.line.name : ""}</td>
+                        <td>{b.qrCode}</td>
+                        <td>{b.model ? b.model.name : ""}</td>
+                        <td>
+                          {b.currentQrReader ? b.currentQrReader.name : ""}
+                        </td>
+                        <td>
+                          {format(new Date(b.updatedAt), "yyyy-MM-dd HH:mm:ss")}
+                        </td>
+                        <td>
+                          <button
+                            type="button"
+                            className="btn btn-sm btn-outline-primary"
+                            onClick={() => this.openHistory(b.qrCode)}
+                          >
+                            {t("shared.historyButton")}
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <Pagination
+                  itemsCount={flaggedTotalCount}
+                  pageSize={flaggedPageSize}
+                  currentPage={flaggedPage}
+                  onPageChange={this.handleFlaggedPageChange}
+                />
+              </>
             )}
           </div>
         </div>

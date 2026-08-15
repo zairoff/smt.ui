@@ -50,7 +50,8 @@
     "chooseImageWarning": "Rasmni tanlang!"
   },
   "employeeDashboard": {
-    "addEmployeeLink": "XODIM QO'SHISH"
+    "addEmployeeLink": "XODIM QO'SHISH",
+    "searchPlaceholder": "F.I.Sh. bo'yicha qidirish, Enter bosing"
   },
   "hourlyPlan": {
     "date": "Sana",

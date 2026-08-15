@@ -123,6 +123,21 @@
       "sapPlace": "SAP joyi"
     }
   },
+  "componentBulkImportResultTable": {
+    "columns": {
+      "row": "Qator",
+      "partNumber": "Qism raqami",
+      "rCode": "R-kod",
+      "status": "Holat",
+      "message": "Xabar"
+    },
+    "status": {
+      "Created": "Yaratildi",
+      "Updated": "Yangilandi",
+      "Failed": "Xato"
+    },
+    "empty": "Import natijalarini ko'rish uchun fayl yuklang."
+  },
   "defectTable": {
     "columns": {
       "id": "ID",

@@ -17,7 +17,9 @@
     "emptyDefault": "No records found."
   },
   "pagination": {
-    "ariaLabel": "Pagination"
+    "ariaLabel": "Pagination",
+    "previous": "Previous page",
+    "next": "Next page"
   },
   "card": {
     "status": "Status"

@@ -10,5 +10,13 @@
   },
   "componentPrint": {
     "printer": "ПРИНТЕР"
+  },
+  "componentBulkImport": {
+    "hint": "Загрузите файл Excel (.xlsx/.xls) со столбцами PartNumber, RCode и Specification.",
+    "emptyFile": "В выбранном файле нет строк для импорта.",
+    "summary": "Успешно импортировано {{success}} из {{total}} строк (ошибок: {{failed}}).",
+    "total": "Всего: {{count}}",
+    "success": "Успешно: {{count}}",
+    "failed": "Ошибок: {{count}}"
   }
 }
