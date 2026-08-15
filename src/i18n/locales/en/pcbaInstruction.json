@@ -1,0 +1,50 @@
+{
+  "instructionPosition": {
+    "lineRequired": "Please select a line",
+    "nameRequired": "Please enter a position name",
+    "columns": {
+      "line": "Line",
+      "name": "Position",
+      "order": "Order"
+    },
+    "addTitle": "Add position",
+    "nameLabel": "Position name",
+    "orderLabel": "Order",
+    "noPositionsYet": "No positions yet."
+  },
+  "lineActiveModel": {
+    "title": "Set active model",
+    "lineLabel": "Line",
+    "productLabel": "Product",
+    "brandLabel": "Brand",
+    "modelLabel": "Model",
+    "setButton": "Set active",
+    "currentTitle": "Currently running",
+    "noneSet": "No active model set",
+    "successMessage": "Active model updated",
+    "lineRequired": "Please select a line",
+    "modelRequired": "Please select a model",
+    "columns": {
+      "line": "Line",
+      "model": "Model",
+      "updatedAt": "Updated"
+    }
+  },
+  "modelInstruction": {
+    "lineLabel": "Line",
+    "productLabel": "Product",
+    "brandLabel": "Brand",
+    "modelLabel": "Model",
+    "selectPrompt": "Select a line and model to manage its position images.",
+    "noPositionsForLine": "This line has no positions yet — add them on the Instruction Positions page.",
+    "replaceLabel": "Click to upload/replace",
+    "removeLabel": "Remove",
+    "uploading": "Uploading..."
+  },
+  "instructionDisplay": {
+    "noActiveModel": "No active model set for this line yet.",
+    "noImage": "No image configured for this position yet.",
+    "positionNotFound": "Unknown position.",
+    "loading": "Loading..."
+  }
+}

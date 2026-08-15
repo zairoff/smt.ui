@@ -59,7 +59,10 @@
     "lineDefect": "Line-Defect",
     "component": "Component",
     "componentConnect": "Component connect",
-    "componentBulk": "Component bulk"
+    "componentBulk": "Component bulk",
+    "instructionPosition": "Instruction positions",
+    "lineActiveModel": "Line active model",
+    "modelInstruction": "Model instructions"
   },
   "readyProduct": {
     "title": "Warehouse",

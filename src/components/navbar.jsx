@@ -338,6 +338,24 @@ const NavBar = ({ user }) => {
                       {t("settings.componentBulk")}
                     </NavLink>
                   </li>
+                  <li>
+                    <hr className="dropdown-divider" />
+                  </li>
+                  <li>
+                    <NavLink to="/instruction-position" className="dropdown-item">
+                      {t("settings.instructionPosition")}
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/line-active-model" className="dropdown-item">
+                      {t("settings.lineActiveModel")}
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/model-instruction" className="dropdown-item">
+                      {t("settings.modelInstruction")}
+                    </NavLink>
+                  </li>
                 </ul>
               </li>
             )}

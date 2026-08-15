@@ -1,0 +1,50 @@
+{
+  "instructionPosition": {
+    "lineRequired": "Выберите линию",
+    "nameRequired": "Введите название позиции",
+    "columns": {
+      "line": "Линия",
+      "name": "Позиция",
+      "order": "Порядок"
+    },
+    "addTitle": "Добавить позицию",
+    "nameLabel": "Название позиции",
+    "orderLabel": "Порядок",
+    "noPositionsYet": "Позиций пока нет."
+  },
+  "lineActiveModel": {
+    "title": "Установить активную модель",
+    "lineLabel": "Линия",
+    "productLabel": "Продукт",
+    "brandLabel": "Бренд",
+    "modelLabel": "Модель",
+    "setButton": "Установить",
+    "currentTitle": "Сейчас выпускается",
+    "noneSet": "Активная модель не установлена",
+    "successMessage": "Активная модель обновлена",
+    "lineRequired": "Выберите линию",
+    "modelRequired": "Выберите модель",
+    "columns": {
+      "line": "Линия",
+      "model": "Модель",
+      "updatedAt": "Обновлено"
+    }
+  },
+  "modelInstruction": {
+    "lineLabel": "Линия",
+    "productLabel": "Продукт",
+    "brandLabel": "Бренд",
+    "modelLabel": "Модель",
+    "selectPrompt": "Выберите линию и модель, чтобы настроить изображения по позициям.",
+    "noPositionsForLine": "Для этой линии ещё нет позиций — добавьте их на странице «Позиции инструкций».",
+    "replaceLabel": "Нажмите, чтобы загрузить/заменить",
+    "removeLabel": "Удалить",
+    "uploading": "Загрузка..."
+  },
+  "instructionDisplay": {
+    "noActiveModel": "Для этой линии ещё не установлена активная модель.",
+    "noImage": "Для этой позиции ещё не настроено изображение.",
+    "positionNotFound": "Неизвестная позиция.",
+    "loading": "Загрузка..."
+  }
+}

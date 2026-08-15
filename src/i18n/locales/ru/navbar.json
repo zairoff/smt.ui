@@ -59,7 +59,10 @@
     "lineDefect": "Линия-дефект",
     "component": "Компонент",
     "componentConnect": "Связать компонент",
-    "componentBulk": "Массовый импорт компонентов"
+    "componentBulk": "Массовый импорт компонентов",
+    "instructionPosition": "Позиции инструкций",
+    "lineActiveModel": "Активная модель линии",
+    "modelInstruction": "Инструкции по моделям"
   },
   "readyProduct": {
     "title": "Склад",

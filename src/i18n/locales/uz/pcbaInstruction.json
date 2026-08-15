@@ -1,0 +1,50 @@
+{
+  "instructionPosition": {
+    "lineRequired": "Liniyani tanlang",
+    "nameRequired": "Pozitsiya nomini kiriting",
+    "columns": {
+      "line": "Liniya",
+      "name": "Pozitsiya",
+      "order": "Tartib"
+    },
+    "addTitle": "Pozitsiya qo'shish",
+    "nameLabel": "Pozitsiya nomi",
+    "orderLabel": "Tartib",
+    "noPositionsYet": "Hozircha pozitsiyalar yo'q."
+  },
+  "lineActiveModel": {
+    "title": "Faol modelni belgilash",
+    "lineLabel": "Liniya",
+    "productLabel": "Mahsulot",
+    "brandLabel": "Brend",
+    "modelLabel": "Model",
+    "setButton": "Belgilash",
+    "currentTitle": "Hozir ishlab chiqarilmoqda",
+    "noneSet": "Faol model belgilanmagan",
+    "successMessage": "Faol model yangilandi",
+    "lineRequired": "Liniyani tanlang",
+    "modelRequired": "Modelni tanlang",
+    "columns": {
+      "line": "Liniya",
+      "model": "Model",
+      "updatedAt": "Yangilangan"
+    }
+  },
+  "modelInstruction": {
+    "lineLabel": "Liniya",
+    "productLabel": "Mahsulot",
+    "brandLabel": "Brend",
+    "modelLabel": "Model",
+    "selectPrompt": "Pozitsiya rasmlarini sozlash uchun liniya va modelni tanlang.",
+    "noPositionsForLine": "Bu liniyada hali pozitsiyalar yo'q — ularni \"Ko'rsatma pozitsiyalari\" sahifasida qo'shing.",
+    "replaceLabel": "Yuklash/almashtirish uchun bosing",
+    "removeLabel": "O'chirish",
+    "uploading": "Yuklanmoqda..."
+  },
+  "instructionDisplay": {
+    "noActiveModel": "Bu liniya uchun hali faol model belgilanmagan.",
+    "noImage": "Bu pozitsiya uchun hali rasm sozlanmagan.",
+    "positionNotFound": "Noma'lum pozitsiya.",
+    "loading": "Yuklanmoqda..."
+  }
+}

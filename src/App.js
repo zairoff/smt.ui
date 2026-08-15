@@ -61,6 +61,10 @@ import BoardStatistics from "./components/board-flow/boardStatistics";
 import QrReaderV2 from "./components/board-flow/v2/qrReaderV2";
 import BoardReportV2 from "./components/board-flow/v2/boardReportV2";
 import LineFlowBoard from "./components/board-flow/v2/lineFlowBoard";
+import InstructionPositionForm from "./components/forms/instructionPositionForm";
+import LineActiveModelForm from "./components/forms/lineActiveModelForm";
+import ModelInstructionForm from "./components/forms/modelInstructionForm";
+import InstructionDisplay from "./components/pcb-instruction/instructionDisplay";
 
 class App extends Component {
   state = {};
@@ -212,6 +216,23 @@ class App extends Component {
               <Route path="/qr-reader-v2-add" element={<QrReaderV2 />} />
               <Route path="/board-report-v2" element={<BoardReportV2 />} />
               <Route path="/board-flow-v2" element={<LineFlowBoard />} />
+
+              <Route
+                path="/instruction-position"
+                element={<InstructionPositionForm />}
+              />
+              <Route
+                path="/line-active-model"
+                element={<LineActiveModelForm />}
+              />
+              <Route
+                path="/model-instruction"
+                element={<ModelInstructionForm />}
+              />
+              <Route
+                path="/instruction-display/:positionId"
+                element={<InstructionDisplay />}
+              />
 
               <Route path="/component-print" element={<ComponentPrint />} />
 

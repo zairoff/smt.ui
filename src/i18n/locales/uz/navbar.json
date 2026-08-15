@@ -59,7 +59,10 @@
     "lineDefect": "Liniya-nuqson",
     "component": "Komponent",
     "componentConnect": "Komponentni bog'lash",
-    "componentBulk": "Komponent import"
+    "componentBulk": "Komponent import",
+    "instructionPosition": "Ko'rsatma pozitsiyalari",
+    "lineActiveModel": "Liniya faol modeli",
+    "modelInstruction": "Model ko'rsatmalari"
   },
   "readyProduct": {
     "title": "Ombor",
