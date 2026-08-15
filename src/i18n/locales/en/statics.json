@@ -27,6 +27,8 @@
     "qualityDetailsTitle": "Quality details — {{date}}",
     "noPlanData": "No plan data for this date.",
     "noQualityData": "No quality data for this date.",
+    "threshold": "Threshold",
+    "thresholdNone": "None",
     "columns": {
       "line": "Line",
       "model": "Model",
@@ -38,7 +40,8 @@
     "chart": {
       "plan": "Plan",
       "produced": "Produced",
-      "quality": "Quality (FTQ %)"
+      "quality": "Quality (FTQ %)",
+      "threshold": "Threshold ({{value}}%)"
     }
   },
   "staticsForm": {

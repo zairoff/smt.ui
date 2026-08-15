@@ -27,6 +27,8 @@
     "qualityDetailsTitle": "Детали качества — {{date}}",
     "noPlanData": "Нет данных плана за эту дату.",
     "noQualityData": "Нет данных качества за эту дату.",
+    "threshold": "Порог",
+    "thresholdNone": "Нет",
     "columns": {
       "line": "Линия",
       "model": "Модель",
@@ -38,7 +40,8 @@
     "chart": {
       "plan": "План",
       "produced": "Произведено",
-      "quality": "Качество (FTQ %)"
+      "quality": "Качество (FTQ %)",
+      "threshold": "Порог ({{value}}%)"
     }
   },
   "staticsForm": {

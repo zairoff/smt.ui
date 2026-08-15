@@ -52,6 +52,7 @@ class PlanQualityStatics extends Form {
     qualityDetailDate: null,
     qualityDetails: [],
     qualityDetailLoading: false,
+    selectedThreshold: "-1",
   };
 
   async componentDidMount() {
@@ -187,6 +188,10 @@ class PlanQualityStatics extends Form {
     this.setState({ showQualityDetail: false });
   };
 
+  handleThresholdChange = ({ target }) => {
+    this.setState({ selectedThreshold: target.value });
+  };
+
   render() {
     const {
       fields,
@@ -202,8 +207,17 @@ class PlanQualityStatics extends Form {
       qualityDetailDate,
       qualityDetails,
       qualityDetailLoading,
+      selectedThreshold,
     } = this.state;
     const { t } = this.props;
+
+    const thresholdOptions = [
+      { id: -1, name: t("planQualityStatics.thresholdNone") },
+      ...[95, 96, 97, 98, 99, 100].map((value) => ({
+        id: value,
+        name: `${value}%`,
+      })),
+    ];
 
     const planChartData = {
       labels: planStatics.map((p) => format(new Date(p.date), "yyyy-MM-dd")),
@@ -221,21 +235,40 @@ class PlanQualityStatics extends Form {
       ],
     };
 
+    const qualityDatasets = [
+      {
+        label: t("planQualityStatics.chart.quality"),
+        data: qualityStatics.map((q) => (q.produced > 0 ? q.ftq : null)),
+        borderColor: "rgba(255, 99, 132, 1)",
+        backgroundColor: "rgba(255, 99, 132, 0.3)",
+        tension: 0.3,
+        spanGaps: true,
+        fill: true,
+        pointRadius: 4,
+        pointHoverRadius: 6,
+        pointHitRadius: 20,
+      },
+    ];
+
+    if (selectedThreshold && selectedThreshold !== "-1") {
+      qualityDatasets.push({
+        label: t("planQualityStatics.chart.threshold", {
+          value: selectedThreshold,
+        }),
+        data: qualityStatics.map(() => Number(selectedThreshold)),
+        borderColor: "rgba(255, 159, 64, 1)",
+        borderDash: [6, 6],
+        tension: 0,
+        fill: false,
+        pointRadius: 0,
+        pointHoverRadius: 0,
+        pointHitRadius: 0,
+      });
+    }
+
     const qualityChartData = {
       labels: qualityStatics.map((q) => format(new Date(q.date), "yyyy-MM-dd")),
-      datasets: [
-        {
-          label: t("planQualityStatics.chart.quality"),
-          data: qualityStatics.map((q) => q.ftq),
-          borderColor: "rgba(255, 99, 132, 1)",
-          backgroundColor: "rgba(255, 99, 132, 0.3)",
-          tension: 0.3,
-          fill: true,
-          pointRadius: 4,
-          pointHoverRadius: 6,
-          pointHitRadius: 20,
-        },
-      ],
+      datasets: qualityDatasets,
     };
 
     const chartOptions = {
@@ -328,10 +361,25 @@ class PlanQualityStatics extends Form {
               </div>
             </div>
             <div className="col-lg-6 mb-4">
-              <h5>{t("planQualityStatics.qualityTitle")}</h5>
-              <p className="text-muted small">
-                {t("planQualityStatics.qualityHint")}
-              </p>
+              <div className="d-flex justify-content-between align-items-start flex-wrap">
+                <div>
+                  <h5>{t("planQualityStatics.qualityTitle")}</h5>
+                  <p className="text-muted small">
+                    {t("planQualityStatics.qualityHint")}
+                  </p>
+                </div>
+                <div style={{ minWidth: "160px" }}>
+                  {this.renderSelect(
+                    "Threshold",
+                    thresholdOptions,
+                    "",
+                    this.handleThresholdChange,
+                    "id",
+                    "name",
+                    t("planQualityStatics.threshold")
+                  )}
+                </div>
+              </div>
               <div style={{ height: "70vh" }}>
                 <Line data={qualityChartData} options={qualityChartOptions} />
               </div>

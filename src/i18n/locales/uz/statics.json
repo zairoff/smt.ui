@@ -27,6 +27,8 @@
     "qualityDetailsTitle": "Sifat tafsilotlari — {{date}}",
     "noPlanData": "Bu sana uchun reja ma'lumotlari yo'q.",
     "noQualityData": "Bu sana uchun sifat ma'lumotlari yo'q.",
+    "threshold": "Chegara",
+    "thresholdNone": "Yo'q",
     "columns": {
       "line": "Liniya",
       "model": "Model",
@@ -38,7 +40,8 @@
     "chart": {
       "plan": "Reja",
       "produced": "Ishlab chiqarildi",
-      "quality": "Sifat (FTQ %)"
+      "quality": "Sifat (FTQ %)",
+      "threshold": "Chegara ({{value}}%)"
     }
   },
   "staticsForm": {
