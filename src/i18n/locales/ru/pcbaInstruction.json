@@ -3,14 +3,17 @@
     "lineRequired": "Выберите линию",
     "nameRequired": "Введите название позиции",
     "columns": {
+      "id": "Id",
       "line": "Линия",
       "name": "Позиция",
-      "order": "Порядок"
+      "order": "Порядок",
+      "kioskUrl": "URL киоска"
     },
     "addTitle": "Добавить позицию",
     "nameLabel": "Название позиции",
     "orderLabel": "Порядок",
-    "noPositionsYet": "Позиций пока нет."
+    "noPositionsYet": "Позиций пока нет.",
+    "kioskUrlHint": "Каждый Raspberry Pi настраивается по столбцу Id (не по названию) — используйте столбец «URL киоска» для настройки каждого устройства."
   },
   "lineActiveModel": {
     "title": "Установить активную модель",

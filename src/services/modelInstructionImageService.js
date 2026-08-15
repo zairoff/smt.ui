@@ -8,6 +8,11 @@ export function getInstructionImagesByModel(modelId) {
   return http.get(query);
 }
 
+export function getInstructionImagesByPosition(positionId) {
+  const query = endPoint.concat("/GetByPosition?positionId=").concat(positionId);
+  return http.get(query);
+}
+
 export function getCurrentInstructionByPosition(positionId) {
   const query = endPoint.concat("/GetCurrentByPosition?positionId=").concat(positionId);
   return http.get(query);

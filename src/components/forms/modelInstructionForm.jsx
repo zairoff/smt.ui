@@ -287,7 +287,9 @@ class ModelInstructionForm extends Form {
             );
             return (
               <div className="col-3 mb-4 text-center" key={p.id}>
-                <div className="fw-bold mb-1">{p.name}</div>
+                <div className="fw-bold mb-1">
+                  {p.name} <span className="text-muted">(#{p.id})</span>
+                </div>
                 <img
                   src={
                     image

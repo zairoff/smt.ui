@@ -3,14 +3,17 @@
     "lineRequired": "Please select a line",
     "nameRequired": "Please enter a position name",
     "columns": {
+      "id": "Id",
       "line": "Line",
       "name": "Position",
-      "order": "Order"
+      "order": "Order",
+      "kioskUrl": "Kiosk URL"
     },
     "addTitle": "Add position",
     "nameLabel": "Position name",
     "orderLabel": "Order",
-    "noPositionsYet": "No positions yet."
+    "noPositionsYet": "No positions yet.",
+    "kioskUrlHint": "The Id column (not the name) is what each Raspberry Pi is configured with — use the Kiosk URL column to set up each device."
   },
   "lineActiveModel": {
     "title": "Set active model",

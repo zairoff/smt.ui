@@ -3,14 +3,17 @@
     "lineRequired": "Liniyani tanlang",
     "nameRequired": "Pozitsiya nomini kiriting",
     "columns": {
+      "id": "Id",
       "line": "Liniya",
       "name": "Pozitsiya",
-      "order": "Tartib"
+      "order": "Tartib",
+      "kioskUrl": "Kiosk URL"
     },
     "addTitle": "Pozitsiya qo'shish",
     "nameLabel": "Pozitsiya nomi",
     "orderLabel": "Tartib",
-    "noPositionsYet": "Hozircha pozitsiyalar yo'q."
+    "noPositionsYet": "Hozircha pozitsiyalar yo'q.",
+    "kioskUrlHint": "Har bir Raspberry Pi nomi bo'yicha emas, Id ustuni bo'yicha sozlanadi — har bir qurilmani sozlash uchun \"Kiosk URL\" ustunidan foydalaning."
   },
   "lineActiveModel": {
     "title": "Faol modelni belgilash",

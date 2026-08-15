@@ -139,21 +139,30 @@ class InstructionPositionForm extends Form {
           <ReactLoading className="loading" type="spin" color="blue" />
         )}
         <div className="col mt-4">
+          <p className="text-muted small">
+            {t("pcbaInstruction:instructionPosition.kioskUrlHint")}
+          </p>
           <table className="table table-striped">
             <thead>
               <tr>
+                <th>{t("pcbaInstruction:instructionPosition.columns.id")}</th>
                 <th>{t("pcbaInstruction:instructionPosition.columns.line")}</th>
                 <th>{t("pcbaInstruction:instructionPosition.columns.name")}</th>
                 <th>{t("pcbaInstruction:instructionPosition.columns.order")}</th>
+                <th>{t("pcbaInstruction:instructionPosition.columns.kioskUrl")}</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
               {rows.map((r) => (
                 <tr key={r.id}>
+                  <td>{r.id}</td>
                   <td>{r.lineName}</td>
                   <td>{r.name}</td>
                   <td>{r.order}</td>
+                  <td>
+                    <code>{`/instruction-display/${r.id}`}</code>
+                  </td>
                   <td>
                     <button
                       type="button"
@@ -167,7 +176,7 @@ class InstructionPositionForm extends Form {
               ))}
               {rows.length === 0 && (
                 <tr>
-                  <td colSpan="4" className="text-muted">
+                  <td colSpan="6" className="text-muted">
                     {t("pcbaInstruction:instructionPosition.noPositionsYet")}
                   </td>
                 </tr>

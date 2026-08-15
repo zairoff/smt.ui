@@ -1,0 +1,20 @@
+# Starts a bare X session running instruction-kiosk.sh, no desktop environment
+# required. Works on Raspberry Pi OS Lite. Change User/Group below if this Pi's
+# account isn't named "pi".
+
+[Unit]
+Description=Instruction display kiosk (Chromium fullscreen)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=pi
+Group=pi
+PAMName=login
+Environment=DISPLAY=:0
+ExecStart=/usr/bin/xinit /usr/local/bin/instruction-kiosk.sh -- :0 -nocursor
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=graphical.target

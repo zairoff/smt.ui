@@ -1,0 +1,17 @@
+# Copy this file to /boot/instruction-display.conf (or, on newer Raspberry Pi OS
+# releases where /boot is split, /boot/firmware/instruction-display.conf) on each
+# Pi's SD card before first boot.
+#
+# The /boot partition is plain FAT32, so it can be edited from Windows/Mac/Linux
+# with just a card reader -- no need to SSH into each Pi individually. Flash the
+# same SD card image for all positions, then edit only this one file per card
+# before it goes on the wall.
+
+# Which seat this Pi is mounted at. Must match an InstructionPosition id
+# configured in the SMT admin UI at /instruction-position (hover the row, or
+# check the network tab, to find a position's numeric id).
+POSITION_ID=1
+
+# Where the smt-ui app is hosted, no trailing slash. This is the FRONTEND's
+# base URL (wherever `npm run build`'s output is served), not the API's.
+BASE_URL=http://192.168.0.103:8085
