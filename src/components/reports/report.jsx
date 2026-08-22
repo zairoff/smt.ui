@@ -35,6 +35,7 @@ class Report extends Form {
     lines: [],
     defects: [],
     selectedItem: { productId: "", brandId: "", modelId: "", lineId: "" },
+    selectedModel: null,
     data: [],
     errors: {},
     loading: true,
@@ -77,6 +78,7 @@ class Report extends Form {
             const brands = productBrands.map((p) => p.brand);
             this.setState({
               fields: { barcode: "" },
+              errors: {},
               brands,
               productBrands,
               selectedItem: {
@@ -85,6 +87,7 @@ class Report extends Form {
                 modelId: "",
                 lineId: "",
               },
+              selectedModel: null,
               models: [],
               loading: false,
             });
@@ -108,7 +111,9 @@ class Report extends Form {
 
             this.setState({
               fields: { barcode: "" },
+              errors: {},
               selectedItem,
+              selectedModel: null,
               models,
               loading: false,
             });
@@ -120,9 +125,13 @@ class Report extends Form {
           selectedItem.modelId = id;
           selectedItem.lineId = null;
 
+          const selectedModel = this.state.models.find((m) => m.id == id);
+
           this.setState({
             selectedItem,
+            selectedModel,
             fields: { barcode: "" },
+            errors: {},
             loading: false,
           });
           break;
@@ -158,11 +167,42 @@ class Report extends Form {
     }
   };
 
+  isDuplicatedBarcode(value) {
+    const trimmed = value.trim();
+    const { length } = trimmed;
+    if (length === 0 || length % 2 !== 0) return false;
+
+    const half = length / 2;
+    return trimmed.slice(0, half) === trimmed.slice(half);
+  }
+
+  getBarcodeError(value) {
+    const { selectedModel } = this.state;
+
+    if (!value) return null;
+
+    if (this.isDuplicatedBarcode(value)) {
+      return this.props.t("report.doubleScanWarning");
+    }
+
+    if (selectedModel && selectedModel.barcode) {
+      const prefix = selectedModel.barcode.trim().toUpperCase();
+      if (!value.trim().toUpperCase().startsWith(prefix)) {
+        return this.props.t("report.barcodeMismatchWarning", { prefix });
+      }
+    }
+
+    return null;
+  }
+
   handleCustomInputChange = async ({ currentTarget: input }) => {
     const { value } = input;
 
     const errors = { ...this.state.errors };
-    delete errors[input.id];
+    const error = this.getBarcodeError(value);
+    if (error) errors[input.id] = error;
+    else delete errors[input.id];
+
     const fields = { ...this.state.fields };
     fields[input.id] = value;
     this.setState({ fields, errors, isActiveBarcode: false });
@@ -177,6 +217,13 @@ class Report extends Form {
       Object.values(selectedItem).every((x) => x === null || x === "")
     ) {
       toast.warning(this.props.t("report.selectModelWarning"));
+      return;
+    }
+
+    const barcodeError = this.getBarcodeError(fields.barcode);
+    if (barcodeError) {
+      toast.warning(barcodeError);
+      this.setState({ errors: { ...this.state.errors, barcode: barcodeError } });
       return;
     }
 
@@ -212,7 +259,9 @@ class Report extends Form {
   };
 
   handleButtonClear = () => {
-    this.setState({ fields: { barcode: "" } });
+    const errors = { ...this.state.errors };
+    delete errors.barcode;
+    this.setState({ fields: { barcode: "" }, errors });
   };
 
   handleButtonRemont = async () => {
@@ -394,6 +443,7 @@ class Report extends Form {
                   value={defect.name}
                   id={defect.id}
                   reports={data}
+                  disabled={!fields.barcode || !!errors.barcode}
                 ></ButtonBadge>
               ))}
             </div>

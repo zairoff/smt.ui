@@ -50,6 +50,8 @@
     "clear": "CLEAR",
     "total": "TOTAL:",
     "remont": "REPAIR",
-    "selectModelWarning": "Choose a model and scan the barcode"
+    "selectModelWarning": "Choose a model and scan the barcode",
+    "doubleScanWarning": "Barcode looks scanned twice, please scan again",
+    "barcodeMismatchWarning": "Barcode does not match the selected model (expected prefix: {{prefix}})"
   }
 }
