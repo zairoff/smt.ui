@@ -17,6 +17,9 @@
     "summary": "{{total}} qatordan {{success}} tasi muvaffaqiyatli import qilindi ({{failed}} tasi xato).",
     "total": "Jami: {{count}}",
     "success": "Muvaffaqiyatli: {{count}}",
-    "failed": "Xato: {{count}}"
+    "failed": "Xato: {{count}}",
+    "syncHint": "Yoki ulangan Google jadvalidan bevosita sinxronlang. Har safar faqat yangi qo'shilgan qatorlar import qilinadi.",
+    "syncButton": "Google Sheet'dan sinxronlash",
+    "emptySheet": "Import qilinadigan yangi qator yo'q — barchasi allaqachon sinxronlangan."
   }
 }

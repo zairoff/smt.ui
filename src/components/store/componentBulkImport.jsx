@@ -4,7 +4,10 @@ import { withTranslation } from "react-i18next";
 import Form from "../forms/form";
 import { toast } from "react-toastify";
 import * as XLSX from "xlsx";
-import { addComponents } from "../../services/componentService";
+import {
+  addComponents,
+  syncComponentsFromSheet,
+} from "../../services/componentService";
 import ComponentBulkImportResultTable from "../tables/componentBulkImportResultTable";
 
 const REQUIRED_COLUMNS = [
@@ -49,33 +52,56 @@ class ComponentBulkImport extends Form {
       );
 
       const { data: results } = await addComponents(rows);
-      const rowsWithId = results.map((result) => ({ ...result, id: result.row }));
-
-      this.setState({ results: rowsWithId });
-
-      const failed = rowsWithId.filter((r) => r.status === "Failed").length;
-      if (failed > 0) {
-        toast.warning(
-          this.props.t("componentBulkImport.summary", {
-            total: rowsWithId.length,
-            success: rowsWithId.length - failed,
-            failed,
-          })
-        );
-      } else {
-        toast.success(
-          this.props.t("componentBulkImport.summary", {
-            total: rowsWithId.length,
-            success: rowsWithId.length,
-            failed: 0,
-          })
-        );
-      }
+      this._applyResults(results);
     } catch (ex) {
       toast.error(this.props.t("common:errors.unexpected"));
     } finally {
       this.setState({ loading: false });
       if (this.fileInputRef.current) this.fileInputRef.current.value = "";
+    }
+  };
+
+  _handleSheetSync = async () => {
+    this.setState({ loading: true, results: [] });
+
+    try {
+      const { data: results } = await syncComponentsFromSheet();
+
+      if (results.length === 0) {
+        toast.error(this.props.t("componentBulkImport.emptySheet"));
+        return;
+      }
+
+      this._applyResults(results);
+    } catch (ex) {
+      toast.error(this.props.t("common:errors.unexpected"));
+    } finally {
+      this.setState({ loading: false });
+    }
+  };
+
+  _applyResults = (results) => {
+    const rowsWithId = results.map((result) => ({ ...result, id: result.row }));
+
+    this.setState({ results: rowsWithId });
+
+    const failed = rowsWithId.filter((r) => r.status === "Failed").length;
+    if (failed > 0) {
+      toast.warning(
+        this.props.t("componentBulkImport.summary", {
+          total: rowsWithId.length,
+          success: rowsWithId.length - failed,
+          failed,
+        })
+      );
+    } else {
+      toast.success(
+        this.props.t("componentBulkImport.summary", {
+          total: rowsWithId.length,
+          success: rowsWithId.length,
+          failed: 0,
+        })
+      );
     }
   };
 
@@ -98,6 +124,16 @@ class ComponentBulkImport extends Form {
             type="file"
             disabled={loading}
           />
+
+          <p className="mt-3 mb-1">{t("componentBulkImport.syncHint")}</p>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={this._handleSheetSync}
+            disabled={loading}
+          >
+            {t("componentBulkImport.syncButton")}
+          </button>
 
           {loading && (
             <ReactLoading className="loading" type="spin" color="blue" />

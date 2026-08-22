@@ -17,6 +17,9 @@
     "summary": "{{success}} of {{total}} rows imported successfully ({{failed}} failed).",
     "total": "Total: {{count}}",
     "success": "Success: {{count}}",
-    "failed": "Failed: {{count}}"
+    "failed": "Failed: {{count}}",
+    "syncHint": "Or sync directly from the connected Google Sheet. Only newly added rows are imported each time.",
+    "syncButton": "Sync from Google Sheet",
+    "emptySheet": "No new rows to import — everything is already up to date."
   }
 }

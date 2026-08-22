@@ -19,6 +19,10 @@ export function addComponents(components) {
   return http.post(endPoint + "/bulk", components);
 }
 
+export function syncComponentsFromSheet() {
+  return http.post(endPoint + "/sync-from-sheet");
+}
+
 export function connectComponents(components) {
   return http.post(endPoint + "/connect", components);
 }
