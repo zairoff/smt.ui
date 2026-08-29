@@ -103,6 +103,7 @@ class App extends Component {
 
   render() {
     const { user } = this.state;
+    const authorized = user !== "" && user != undefined;
     return (
       <React.Fragment>
         <ToastContainer />
@@ -167,11 +168,15 @@ class App extends Component {
               <Route path="/repair-history" element={<RepairHistory />} />
               <Route
                 path="/ready-product-import"
-                element={<ReadyProductImportForm />}
+                element={
+                  <ReadyProductImportForm user={user} authorized={authorized} />
+                }
               />
               <Route
                 path="/ready-product-export"
-                element={<ReadyProductExportForm />}
+                element={
+                  <ReadyProductExportForm user={user} authorized={authorized} />
+                }
               />
               <Route
                 path="/ready-product-export/:id"
@@ -188,7 +193,7 @@ class App extends Component {
 
               <Route
                 path="/ready-product-transactions"
-                element={<ReadyProductTransactions />}
+                element={<ReadyProductTransactions user={user} />}
               />
 
               <Route
@@ -198,12 +203,12 @@ class App extends Component {
 
               <Route
                 path="/returned-product-import"
-                element={<ReturnProductImport />}
+                element={<ReturnProductImport user={user} />}
               />
 
               <Route
                 path="/returned-product-export"
-                element={<ReturnProductExport />}
+                element={<ReturnProductExport user={user} />}
               />
 
               <Route
@@ -213,7 +218,7 @@ class App extends Component {
 
               <Route
                 path="/returned-product-transactions"
-                element={<ReturnProductTransactions />}
+                element={<ReturnProductTransactions user={user} />}
               />
 
               <Route

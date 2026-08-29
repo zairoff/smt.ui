@@ -17,6 +17,7 @@ class ReturnProductTransactions extends Form {
     dateTo: "",
     errors: {},
     loading: false,
+    authorized: false,
     sortColumn: { path: "", order: "asc" },
     fields: { from: "", to: "" },
     transactionType: "",
@@ -32,6 +33,11 @@ class ReturnProductTransactions extends Form {
       { id: 4, name: t("transactionTypeLabels.exportFromStoreToFactory") },
       { id: 6, name: t("transactionTypeLabels.exportFromStoreToUtilize") },
     ];
+  }
+
+  async componentDidMount() {
+    const { user } = this.props;
+    this.setState({ authorized: user != null });
   }
 
   handleFilterChange = async ({ target }) => {
@@ -81,7 +87,7 @@ class ReturnProductTransactions extends Form {
   };
 
   render() {
-    const { data, sortColumn, fields, loading } = this.state;
+    const { data, sortColumn, fields, loading, authorized } = this.state;
     const { t } = this.props;
 
     return (
@@ -145,6 +151,7 @@ class ReturnProductTransactions extends Form {
           onSort={this.handleSort}
           sortColumn={sortColumn}
           onDelete={this.handleDelete}
+          authorized={authorized}
         />
       </>
     );
