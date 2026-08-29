@@ -15,7 +15,6 @@
       "time": "Time",
       "barcode": "Barcode",
       "model": "Model",
-      "line": "Line",
       "employee": "Repairer",
       "status": "Status"
     },
@@ -35,7 +34,6 @@
     "columns": {
       "barcode": "Barcode",
       "model": "Model",
-      "line": "Line",
       "employee": "Repairer",
       "firstScannedDate": "First scanned",
       "lastConfirmedDate": "Last confirmed"

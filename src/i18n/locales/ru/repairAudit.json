@@ -15,7 +15,6 @@
       "time": "Время",
       "barcode": "Штрихкод",
       "model": "Модель",
-      "line": "Линия",
       "employee": "Ремонтник",
       "status": "Статус"
     },
@@ -35,7 +34,6 @@
     "columns": {
       "barcode": "Штрихкод",
       "model": "Модель",
-      "line": "Линия",
       "employee": "Ремонтник",
       "firstScannedDate": "Первое сканирование",
       "lastConfirmedDate": "Последнее подтверждение"

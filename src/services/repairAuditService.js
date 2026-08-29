@@ -15,11 +15,9 @@ export function getRepairAudit(id) {
   return http.get(repairAuditUrl(id));
 }
 
-export function getRepairAuditsByDateRange(from, to, modelId, lineId) {
+export function getRepairAuditsByDateRange(from, to, modelId) {
   const query = endPoint.concat(
-    `/GetByDateRange?from=${from}&to=${to}${modelId ? `&modelId=${modelId}` : ""}${
-      lineId ? `&lineId=${lineId}` : ""
-    }`
+    `/GetByDateRange?from=${from}&to=${to}${modelId ? `&modelId=${modelId}` : ""}`
   );
   return http.get(query);
 }

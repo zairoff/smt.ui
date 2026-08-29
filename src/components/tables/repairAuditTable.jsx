@@ -6,7 +6,6 @@ class RepairAuditTable extends Component {
   columns = [
     { path: "barcode", label: this.props.t("repairAudit:report.columns.barcode") },
     { path: "modelName", label: this.props.t("repairAudit:report.columns.model") },
-    { path: "lineName", label: this.props.t("repairAudit:report.columns.line") },
     { path: "employee", label: this.props.t("repairAudit:report.columns.employee") },
     {
       path: "firstScannedDate",

@@ -15,7 +15,6 @@
       "time": "Vaqt",
       "barcode": "Shtrix-kod",
       "model": "Model",
-      "line": "Liniya",
       "employee": "Ta'mirlovchi",
       "status": "Holat"
     },
@@ -35,7 +34,6 @@
     "columns": {
       "barcode": "Shtrix-kod",
       "model": "Model",
-      "line": "Liniya",
       "employee": "Ta'mirlovchi",
       "firstScannedDate": "Birinchi skanerlangan",
       "lastConfirmedDate": "Oxirgi tasdiqlangan"
