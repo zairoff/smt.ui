@@ -59,39 +59,37 @@ const NavBar = ({ user }) => {
               </ul>
             </li>
 
-            {user && (
-              <li className="nav-item dropdown">
-                <button
-                  type="button"
-                  className="nav-link dropdown-toggle border-0 bg-transparent"
-                  id="navbarDropdownManagement"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  {t("menu.management")}
-                </button>
-                <ul
-                  className="dropdown-menu"
-                  aria-labelledby="navbarDropdownManagement"
-                >
-                  <li>
-                    <NavLink to="/department" className="dropdown-item">
-                      {t("management.department")}
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/employee-dashboard" className="dropdown-item">
-                      {t("management.employeeDashboard")}
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/employee-add" className="dropdown-item">
-                      {t("management.employeeAdd")}
-                    </NavLink>
-                  </li>
-                </ul>
-              </li>
-            )}
+            <li className="nav-item dropdown">
+              <button
+                type="button"
+                className="nav-link dropdown-toggle border-0 bg-transparent"
+                id="navbarDropdownManagement"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                {t("menu.management")}
+              </button>
+              <ul
+                className="dropdown-menu"
+                aria-labelledby="navbarDropdownManagement"
+              >
+                <li>
+                  <NavLink to="/department" className="dropdown-item">
+                    {t("management.department")}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/employee-dashboard" className="dropdown-item">
+                    {t("management.employeeDashboard")}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/employee-add" className="dropdown-item">
+                    {t("management.employeeAdd")}
+                  </NavLink>
+                </li>
+              </ul>
+            </li>
 
             <li className="nav-item dropdown">
               <button
@@ -165,13 +163,11 @@ const NavBar = ({ user }) => {
                 className="dropdown-menu"
                 aria-labelledby="navbarDropdownRepairs"
               >
-                {user && (
-                  <li>
-                    <NavLink to="/pcb-repairer" className="dropdown-item">
-                      {t("repairs.repairer")}
-                    </NavLink>
-                  </li>
-                )}
+                <li>
+                  <NavLink to="/pcb-repairer" className="dropdown-item">
+                    {t("repairs.repairer")}
+                  </NavLink>
+                </li>
                 <li>
                   <NavLink to="/pcb-repair" className="dropdown-item">
                     {t("repairs.repair")}
@@ -200,20 +196,16 @@ const NavBar = ({ user }) => {
                   </NavLink>
                 </li>
 
-                {user && (
-                  <>
-                    <li>
-                      <NavLink to="/machine" className="dropdown-item">
-                        {t("machines.machine")}
-                      </NavLink>
-                    </li>
-                    <li>
-                      <NavLink to="/machine-repairer" className="dropdown-item">
-                        {t("machines.repairer")}
-                      </NavLink>
-                    </li>
-                  </>
-                )}
+                <li>
+                  <NavLink to="/machine" className="dropdown-item">
+                    {t("machines.machine")}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/machine-repairer" className="dropdown-item">
+                    {t("machines.repairer")}
+                  </NavLink>
+                </li>
 
                 <li>
                   <NavLink to="/machine-repair" className="dropdown-item">
@@ -273,92 +265,90 @@ const NavBar = ({ user }) => {
               </ul>
             </li>
 
-            {user && (
-              <li className="nav-item dropdown">
-                <button
-                  type="button"
-                  className="nav-link dropdown-toggle border-0 bg-transparent"
-                  id="navbarDropdownSettings"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  {t("menu.settings")}
-                </button>
-                <ul
-                  className="dropdown-menu"
-                  aria-labelledby="navbarDropdownSettings"
-                >
-                  <li>
-                    <NavLink to="/product" className="dropdown-item">
-                      {t("settings.product")}
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/brand" className="dropdown-item">
-                      {t("settings.brand")}
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/productBrand" className="dropdown-item">
-                      {t("settings.productBrand")}
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/model" className="dropdown-item">
-                      {t("settings.model")}
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/defect" className="dropdown-item">
-                      {t("settings.defect")}
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/line" className="dropdown-item">
-                      {t("settings.line")}
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/lineDefect" className="dropdown-item">
-                      {t("settings.lineDefect")}
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/component" className="dropdown-item">
-                      {t("settings.component")}
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/component-connect" className="dropdown-item">
-                      {t("settings.componentConnect")}
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/component-import" className="dropdown-item">
-                      {t("settings.componentBulk")}
-                    </NavLink>
-                  </li>
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-                  <li>
-                    <NavLink to="/instruction-position" className="dropdown-item">
-                      {t("settings.instructionPosition")}
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/line-active-model" className="dropdown-item">
-                      {t("settings.lineActiveModel")}
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/model-instruction" className="dropdown-item">
-                      {t("settings.modelInstruction")}
-                    </NavLink>
-                  </li>
-                </ul>
-              </li>
-            )}
+            <li className="nav-item dropdown">
+              <button
+                type="button"
+                className="nav-link dropdown-toggle border-0 bg-transparent"
+                id="navbarDropdownSettings"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                {t("menu.settings")}
+              </button>
+              <ul
+                className="dropdown-menu"
+                aria-labelledby="navbarDropdownSettings"
+              >
+                <li>
+                  <NavLink to="/product" className="dropdown-item">
+                    {t("settings.product")}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/brand" className="dropdown-item">
+                    {t("settings.brand")}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/productBrand" className="dropdown-item">
+                    {t("settings.productBrand")}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/model" className="dropdown-item">
+                    {t("settings.model")}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/defect" className="dropdown-item">
+                    {t("settings.defect")}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/line" className="dropdown-item">
+                    {t("settings.line")}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/lineDefect" className="dropdown-item">
+                    {t("settings.lineDefect")}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/component" className="dropdown-item">
+                    {t("settings.component")}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/component-connect" className="dropdown-item">
+                    {t("settings.componentConnect")}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/component-import" className="dropdown-item">
+                    {t("settings.componentBulk")}
+                  </NavLink>
+                </li>
+                <li>
+                  <hr className="dropdown-divider" />
+                </li>
+                <li>
+                  <NavLink to="/instruction-position" className="dropdown-item">
+                    {t("settings.instructionPosition")}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/line-active-model" className="dropdown-item">
+                    {t("settings.lineActiveModel")}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/model-instruction" className="dropdown-item">
+                    {t("settings.modelInstruction")}
+                  </NavLink>
+                </li>
+              </ul>
+            </li>
             <li className="nav-item dropdown">
               <button
                 type="button"
@@ -388,16 +378,14 @@ const NavBar = ({ user }) => {
                     {t("readyProduct.report")}
                   </NavLink>
                 </li>
-                {user && (
-                  <li>
-                    <NavLink
-                      to="/ready-product-transactions"
-                      className="dropdown-item"
-                    >
-                      {t("readyProduct.transactions")}
-                    </NavLink>
-                  </li>
-                )}
+                <li>
+                  <NavLink
+                    to="/ready-product-transactions"
+                    className="dropdown-item"
+                  >
+                    {t("readyProduct.transactions")}
+                  </NavLink>
+                </li>
               </ul>
             </li>
             <li className="nav-item dropdown">

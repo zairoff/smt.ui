@@ -40,7 +40,6 @@ class ReturnProductImport extends Form {
     imports: [],
     errors: {},
     loading: false,
-    authorized: false,
   };
 
   componentDidUpdate() {
@@ -52,8 +51,7 @@ class ReturnProductImport extends Form {
   }
 
   async componentDidMount() {
-    const { user } = this.props;
-    this.setState({ loading: true, authorized: user != null });
+    this.setState({ loading: true });
     try {
       const today = format(new Date(), "yyyy-MM-dd HH:mm:ss");
       const { data } = await getReturnedProductByDate(today, 1); // ImportFromFactoryToBuffer
@@ -186,8 +184,7 @@ class ReturnProductImport extends Form {
   };
 
   render() {
-    const { imports, sortColumn, loading, fields, errors, authorized } =
-      this.state;
+    const { imports, sortColumn, loading, fields, errors } = this.state;
     const { t } = this.props;
     return (
       <div className="row">
@@ -218,7 +215,6 @@ class ReturnProductImport extends Form {
             onSort={this.handleSort}
             sortColumn={sortColumn}
             onDelete={this.handleDelete}
-            authorized={authorized}
           />
         </div>
       </div>

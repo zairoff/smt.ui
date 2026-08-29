@@ -19,7 +19,6 @@ class ReadyProductTransactions extends Form {
     dateTo: "",
     errors: {},
     loading: false,
-    authorized: false,
     sortColumn: { path: "", order: "asc" },
     fields: { from: "", to: "" },
     transactionType: "",
@@ -31,11 +30,6 @@ class ReadyProductTransactions extends Form {
       { id: 1, name: t("transactions.filters.import") },
       { id: 2, name: t("transactions.filters.export") },
     ];
-  }
-
-  async componentDidMount() {
-    const { user } = this.props;
-    this.setState({ authorized: user != null });
   }
 
   handleFilterChange = async ({ target }) => {
@@ -81,7 +75,7 @@ class ReadyProductTransactions extends Form {
   };
 
   render() {
-    const { data, sortColumn, fields, loading, authorized } = this.state;
+    const { data, sortColumn, fields, loading } = this.state;
     const { t } = this.props;
 
     return (
@@ -145,7 +139,6 @@ class ReadyProductTransactions extends Form {
           onSort={this.handleSort}
           sortColumn={sortColumn}
           onDelete={this.handleDelete}
-          authorized={authorized}
         />
       </>
     );

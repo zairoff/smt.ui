@@ -18,7 +18,6 @@ class ReturnProductReport extends Form {
     dateTo: "",
     errors: {},
     loading: false,
-    authorized: false,
     sortColumn: { path: "", order: "asc" },
     fields: { from: "", to: "" },
     transactionType: "",
@@ -66,7 +65,7 @@ class ReturnProductReport extends Form {
   handleDelete = async ({ id }) => {};
 
   render() {
-    const { data, sortColumn, fields, loading, authorized } = this.state;
+    const { data, sortColumn, fields, loading } = this.state;
     const { t } = this.props;
 
     const reports = data.map((d) => ({

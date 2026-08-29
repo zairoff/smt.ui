@@ -66,16 +66,11 @@ import LineActiveModelForm from "./components/forms/lineActiveModelForm";
 import ModelInstructionForm from "./components/forms/modelInstructionForm";
 import InstructionDisplay from "./components/pcb-instruction/instructionDisplay";
 
-// Routes for the PCBA instruction-image feature render bare, with no navbar
-// or "Login" link — the admin pages are meant to be reachable without
-// signing in, and the kiosk display page runs unattended on Raspberry Pi
-// screens where any app chrome is unwanted.
-const BARE_ROUTE_PREFIXES = [
-  "/instruction-position",
-  "/line-active-model",
-  "/model-instruction",
-  "/instruction-display",
-];
+// The kiosk display page runs unattended on Raspberry Pi screens, where any
+// app chrome (navbar, login link) is unwanted, so it renders bare. The
+// instruction-position/line-active-model/model-instruction admin pages are
+// normal app pages and keep the navbar.
+const BARE_ROUTE_PREFIXES = ["/instruction-display"];
 
 const AppChrome = ({ user, children }) => {
   const location = useLocation();
@@ -106,7 +101,6 @@ class App extends Component {
 
   render() {
     const { user } = this.state;
-    const authorized = user !== "" && user != undefined;
     return (
       <React.Fragment>
         <ToastContainer />
@@ -166,15 +160,11 @@ class App extends Component {
               <Route path="/repair-history" element={<RepairHistory />} />
               <Route
                 path="/ready-product-import"
-                element={
-                  <ReadyProductImportForm user={user} authorized={authorized} />
-                }
+                element={<ReadyProductImportForm />}
               />
               <Route
                 path="/ready-product-export"
-                element={
-                  <ReadyProductExportForm user={user} authorized={authorized} />
-                }
+                element={<ReadyProductExportForm />}
               />
               <Route
                 path="/ready-product-export/:id"
@@ -191,7 +181,7 @@ class App extends Component {
 
               <Route
                 path="/ready-product-transactions"
-                element={<ReadyProductTransactions user={user} />}
+                element={<ReadyProductTransactions />}
               />
 
               <Route
@@ -201,12 +191,12 @@ class App extends Component {
 
               <Route
                 path="/returned-product-import"
-                element={<ReturnProductImport user={user} />}
+                element={<ReturnProductImport />}
               />
 
               <Route
                 path="/returned-product-export"
-                element={<ReturnProductExport user={user} />}
+                element={<ReturnProductExport />}
               />
 
               <Route
@@ -216,7 +206,7 @@ class App extends Component {
 
               <Route
                 path="/returned-product-transactions"
-                element={<ReturnProductTransactions user={user} />}
+                element={<ReturnProductTransactions />}
               />
 
               <Route

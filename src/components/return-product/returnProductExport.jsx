@@ -39,7 +39,6 @@ class ReturnProductExport extends Form {
     data: [],
     loading: false,
     sortColumn: { path: "", order: "asc" },
-    authorized: false,
     selectedTransactionType: "",
     fields: { export: "" },
   };
@@ -150,11 +149,6 @@ class ReturnProductExport extends Form {
     }
   };
 
-  async componentDidMount() {
-    const { user } = this.props;
-    this.setState({ authorized: user != null });
-  }
-
   handleDelete = async (transaction) => {
     try {
       const { selectedTransactionType } = this.state;
@@ -192,15 +186,8 @@ class ReturnProductExport extends Form {
   };
 
   render() {
-    const {
-      data,
-      sortColumn,
-      loading,
-      authorized,
-      fields,
-      errors,
-      selectedTransactionType,
-    } = this.state;
+    const { data, sortColumn, loading, fields, errors, selectedTransactionType } =
+      this.state;
     const { t } = this.props;
 
     return (
@@ -239,7 +226,6 @@ class ReturnProductExport extends Form {
               onSort={this.handleSort}
               sortColumn={sortColumn}
               onDelete={this.handleDelete}
-              authorized={authorized}
               transactionType={selectedTransactionType}
             />
           </div>

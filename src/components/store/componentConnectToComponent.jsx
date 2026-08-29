@@ -23,7 +23,6 @@ class ComponentConnectToComponent extends Form {
     imports: [],
     errors: {},
     loading: false,
-    authorized: false,
   };
 
   async componentDidMount() {}
@@ -60,8 +59,7 @@ class ComponentConnectToComponent extends Form {
   };
 
   render() {
-    const { imports, sortColumn, loading, fields, errors, authorized } =
-      this.state;
+    const { imports, sortColumn, loading } = this.state;
 
     return (
       <div className="row">
@@ -80,7 +78,6 @@ class ComponentConnectToComponent extends Form {
             onSort={this.handleSort}
             sortColumn={sortColumn}
             onDelete={this.handleDelete}
-            authorized={authorized}
           />
         </div>
       </div>
