@@ -23,6 +23,7 @@ import { format } from "date-fns";
 
 class Report extends Form {
   barcodeRef = React.createRef();
+  submitting = false;
 
   state = {
     fields: {
@@ -40,6 +41,7 @@ class Report extends Form {
     errors: {},
     loading: true,
     isActiveBarcode: false,
+    isSubmitting: false,
     sortColumn: { path: "", order: "asc" },
     currentPage: 1,
     pageSize: 25,
@@ -227,8 +229,21 @@ class Report extends Form {
       return;
     }
 
+    if (this.submitting) return;
+
+    const barcode = fields.barcode.trim();
+
+    if (data.some((d) => d.barcode === barcode)) {
+      toast.warning(this.props.t("report.duplicateBarcodeWarning"));
+      this.setState({ isActiveBarcode: true });
+      return;
+    }
+
+    this.submitting = true;
+    this.setState({ isSubmitting: true });
+
     const report = {
-      barcode: fields.barcode,
+      barcode,
       lineId: lineId,
       defectId: defect,
       modelId: modelId,
@@ -255,6 +270,9 @@ class Report extends Form {
           fields: { barcode: "" },
         });
       }
+    } finally {
+      this.submitting = false;
+      this.setState({ isSubmitting: false });
     }
   };
 
@@ -337,6 +355,7 @@ class Report extends Form {
       pageSize,
       loading,
       isActiveBarcode,
+      isSubmitting,
     } = this.state;
 
     const sortedRows = _.orderBy(data, [sortColumn.path], [sortColumn.order]);
@@ -443,7 +462,7 @@ class Report extends Form {
                   value={defect.name}
                   id={defect.id}
                   reports={data}
-                  disabled={!fields.barcode || !!errors.barcode}
+                  disabled={!fields.barcode || !!errors.barcode || isSubmitting}
                 ></ButtonBadge>
               ))}
             </div>

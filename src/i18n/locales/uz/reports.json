@@ -52,6 +52,7 @@
     "remont": "TA'MIRLASH",
     "selectModelWarning": "Modelni tanlang va shtrix-kodni skanerlang",
     "doubleScanWarning": "Shtrix-kod ikki marta skanerlangandek ko'rinadi, qayta skanerlang",
-    "barcodeMismatchWarning": "Shtrix-kod tanlangan modelga mos kelmadi (kutilgan prefiks: {{prefix}})"
+    "barcodeMismatchWarning": "Shtrix-kod tanlangan modelga mos kelmadi (kutilgan prefiks: {{prefix}})",
+    "duplicateBarcodeWarning": "Bu shtrix-kod ro'yxatda allaqachon bor, qayta skanerlashdan oldin uni ta'mirlang"
   }
 }

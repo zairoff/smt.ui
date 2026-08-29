@@ -52,6 +52,7 @@
     "remont": "REPAIR",
     "selectModelWarning": "Choose a model and scan the barcode",
     "doubleScanWarning": "Barcode looks scanned twice, please scan again",
-    "barcodeMismatchWarning": "Barcode does not match the selected model (expected prefix: {{prefix}})"
+    "barcodeMismatchWarning": "Barcode does not match the selected model (expected prefix: {{prefix}})",
+    "duplicateBarcodeWarning": "This barcode is already in the list, repair it before scanning it again"
   }
 }
