@@ -1,0 +1,44 @@
+{
+  "scan": {
+    "title": "Board audit - scan",
+    "repairer": "Repairer",
+    "selectRepairerPlaceholder": "Select repairer",
+    "scanPlaceholder": "Scan barcode...",
+    "selectRepairerWarning": "Select the repairer first",
+    "counted": "{{barcode}} counted",
+    "reconfirmed": "{{barcode}} re-confirmed",
+    "notFound": "Barcode not found or already repaired",
+    "sessionTitle": "This session",
+    "totalBoards": "Total: {{count}}",
+    "noBoardsYet": "No boards scanned yet.",
+    "columns": {
+      "time": "Time",
+      "barcode": "Barcode",
+      "model": "Model",
+      "line": "Line",
+      "employee": "Repairer",
+      "status": "Status"
+    },
+    "statusNew": "Counted",
+    "statusReconfirmed": "Re-confirmed"
+  },
+  "report": {
+    "title": "Board audit - report",
+    "from": "From",
+    "to": "To",
+    "search": "SEARCH",
+    "total": "TOTAL:",
+    "summaryTitle": "By model",
+    "summaryModel": "Model",
+    "summaryCount": "Count",
+    "listTitle": "Boards",
+    "columns": {
+      "barcode": "Barcode",
+      "model": "Model",
+      "line": "Line",
+      "employee": "Repairer",
+      "firstScannedDate": "First scanned",
+      "lastConfirmedDate": "Last confirmed"
+    }
+  }
+}

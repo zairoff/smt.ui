@@ -1,0 +1,44 @@
+{
+  "scan": {
+    "title": "Plata auditi - skanerlash",
+    "repairer": "Ta'mirlovchi",
+    "selectRepairerPlaceholder": "Ta'mirlovchini tanlang",
+    "scanPlaceholder": "Shtrix-kodni skanerlang...",
+    "selectRepairerWarning": "Avval ta'mirlovchini tanlang",
+    "counted": "{{barcode}} hisoblandi",
+    "reconfirmed": "{{barcode}} qayta tasdiqlandi",
+    "notFound": "Shtrix-kod topilmadi yoki allaqachon ta'mirlangan",
+    "sessionTitle": "Joriy sessiya",
+    "totalBoards": "Jami: {{count}}",
+    "noBoardsYet": "Hali hech narsa skanerlanmagan.",
+    "columns": {
+      "time": "Vaqt",
+      "barcode": "Shtrix-kod",
+      "model": "Model",
+      "line": "Liniya",
+      "employee": "Ta'mirlovchi",
+      "status": "Holat"
+    },
+    "statusNew": "Hisoblandi",
+    "statusReconfirmed": "Qayta tasdiqlandi"
+  },
+  "report": {
+    "title": "Plata auditi - hisobot",
+    "from": "Dan",
+    "to": "Gacha",
+    "search": "QIDIRISH",
+    "total": "JAMI:",
+    "summaryTitle": "Modellar bo'yicha",
+    "summaryModel": "Model",
+    "summaryCount": "Soni",
+    "listTitle": "Platalar",
+    "columns": {
+      "barcode": "Shtrix-kod",
+      "model": "Model",
+      "line": "Liniya",
+      "employee": "Ta'mirlovchi",
+      "firstScannedDate": "Birinchi skanerlangan",
+      "lastConfirmedDate": "Oxirgi tasdiqlangan"
+    }
+  }
+}

@@ -33,7 +33,9 @@
   },
   "repairs": {
     "repairer": "Ta'mirlovchi",
-    "repair": "Ta'mirlash"
+    "repair": "Ta'mirlash",
+    "auditScan": "Plata auditi (skanerlash)",
+    "auditReport": "Plata auditi (hisobot)"
   },
   "machines": {
     "dashboard": "Boshqaruv paneli",

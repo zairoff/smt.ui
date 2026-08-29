@@ -65,6 +65,8 @@ import InstructionPositionForm from "./components/forms/instructionPositionForm"
 import LineActiveModelForm from "./components/forms/lineActiveModelForm";
 import ModelInstructionForm from "./components/forms/modelInstructionForm";
 import InstructionDisplay from "./components/pcb-instruction/instructionDisplay";
+import RepairAuditScan from "./components/repair-audit/repairAuditScan";
+import RepairAuditReport from "./components/repair-audit/repairAuditReport";
 
 // The kiosk display page runs unattended on Raspberry Pi screens, where any
 // app chrome (navbar, login link) is unwanted, so it renders bare. The
@@ -131,6 +133,11 @@ class App extends Component {
 
               <Route path="/report" element={<Report />} />
               <Route path="/pcb-repair" element={<Repair />} />
+              <Route path="/repair-audit-scan" element={<RepairAuditScan />} />
+              <Route
+                path="/repair-audit-report"
+                element={<RepairAuditReport />}
+              />
               <Route path="/machine-repair" element={<MachineRepairForm />} />
               <Route path="/machine-dashboard" element={<MachineDashborad />} />
               <Route path="/pcb-report" element={<PcbReport />} />

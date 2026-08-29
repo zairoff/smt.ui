@@ -12,6 +12,7 @@ import enReadyProduct from "./locales/en/readyProduct.json";
 import enReturnProduct from "./locales/en/returnProduct.json";
 import enMachines from "./locales/en/machines.json";
 import enPcbaInstruction from "./locales/en/pcbaInstruction.json";
+import enRepairAudit from "./locales/en/repairAudit.json";
 
 import ruCommon from "./locales/ru/common.json";
 import ruNavbar from "./locales/ru/navbar.json";
@@ -25,6 +26,7 @@ import ruReadyProduct from "./locales/ru/readyProduct.json";
 import ruReturnProduct from "./locales/ru/returnProduct.json";
 import ruMachines from "./locales/ru/machines.json";
 import ruPcbaInstruction from "./locales/ru/pcbaInstruction.json";
+import ruRepairAudit from "./locales/ru/repairAudit.json";
 
 import uzCommon from "./locales/uz/common.json";
 import uzNavbar from "./locales/uz/navbar.json";
@@ -38,6 +40,7 @@ import uzReadyProduct from "./locales/uz/readyProduct.json";
 import uzReturnProduct from "./locales/uz/returnProduct.json";
 import uzMachines from "./locales/uz/machines.json";
 import uzPcbaInstruction from "./locales/uz/pcbaInstruction.json";
+import uzRepairAudit from "./locales/uz/repairAudit.json";
 
 import { getStoredLanguage } from "./languageStorage";
 
@@ -57,6 +60,7 @@ const resources = {
     returnProduct: enReturnProduct,
     machines: enMachines,
     pcbaInstruction: enPcbaInstruction,
+    repairAudit: enRepairAudit,
   },
   ru: {
     common: ruCommon,
@@ -71,6 +75,7 @@ const resources = {
     returnProduct: ruReturnProduct,
     machines: ruMachines,
     pcbaInstruction: ruPcbaInstruction,
+    repairAudit: ruRepairAudit,
   },
   uz: {
     common: uzCommon,
@@ -85,6 +90,7 @@ const resources = {
     returnProduct: uzReturnProduct,
     machines: uzMachines,
     pcbaInstruction: uzPcbaInstruction,
+    repairAudit: uzRepairAudit,
   },
 };
 
@@ -113,6 +119,7 @@ i18n.use(initReactI18next).init({
     "returnProduct",
     "machines",
     "pcbaInstruction",
+    "repairAudit",
   ],
   defaultNS: "common",
   interpolation: { escapeValue: false },

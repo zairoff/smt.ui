@@ -173,6 +173,16 @@ const NavBar = ({ user }) => {
                     {t("repairs.repair")}
                   </NavLink>
                 </li>
+                <li>
+                  <NavLink to="/repair-audit-scan" className="dropdown-item">
+                    {t("repairs.auditScan")}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/repair-audit-report" className="dropdown-item">
+                    {t("repairs.auditReport")}
+                  </NavLink>
+                </li>
               </ul>
             </li>
 

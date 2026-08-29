@@ -33,7 +33,9 @@
   },
   "repairs": {
     "repairer": "Ремонтник",
-    "repair": "Ремонт"
+    "repair": "Ремонт",
+    "auditScan": "Аудит плат (скан)",
+    "auditReport": "Аудит плат (отчёт)"
   },
   "machines": {
     "dashboard": "Панель управления",

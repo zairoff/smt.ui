@@ -33,7 +33,9 @@
   },
   "repairs": {
     "repairer": "Repairer",
-    "repair": "Repair"
+    "repair": "Repair",
+    "auditScan": "Board audit (scan)",
+    "auditReport": "Board audit (report)"
   },
   "machines": {
     "dashboard": "Dashboard",
