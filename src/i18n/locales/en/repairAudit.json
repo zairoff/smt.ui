@@ -7,7 +7,7 @@
     "selectRepairerWarning": "Select the repairer first",
     "counted": "{{barcode}} counted",
     "reconfirmed": "{{barcode}} re-confirmed",
-    "notFound": "Barcode not found or already repaired",
+    "notFound": "Barcode does not match any known board model",
     "sessionTitle": "This session",
     "totalBoards": "Total: {{count}}",
     "noBoardsYet": "No boards scanned yet.",
@@ -15,6 +15,7 @@
       "time": "Time",
       "barcode": "Barcode",
       "model": "Model",
+      "sapCode": "SAP code",
       "employee": "Repairer",
       "status": "Status"
     },
@@ -34,6 +35,7 @@
     "columns": {
       "barcode": "Barcode",
       "model": "Model",
+      "sapCode": "SAP code",
       "employee": "Repairer",
       "firstScannedDate": "First scanned",
       "lastConfirmedDate": "Last confirmed"

@@ -70,6 +70,7 @@ class RepairAuditScan extends Form {
         time: format(new Date(), "yyyy-MM-dd HH:mm:ss"),
         barcode: result.barcode,
         modelName: result.modelName,
+        sapCode: result.sapCode,
         employee: result.employee,
         reconfirmed: result.reconfirmed,
       };
@@ -149,6 +150,7 @@ class RepairAuditScan extends Form {
                 <th>{t("repairAudit:scan.columns.time")}</th>
                 <th>{t("repairAudit:scan.columns.barcode")}</th>
                 <th>{t("repairAudit:scan.columns.model")}</th>
+                <th>{t("repairAudit:scan.columns.sapCode")}</th>
                 <th>{t("repairAudit:scan.columns.employee")}</th>
                 <th>{t("repairAudit:scan.columns.status")}</th>
               </tr>
@@ -159,6 +161,7 @@ class RepairAuditScan extends Form {
                   <td>{s.time}</td>
                   <td>{s.barcode}</td>
                   <td>{s.modelName}</td>
+                  <td>{s.sapCode}</td>
                   <td>{s.employee}</td>
                   <td>
                     <span
@@ -177,7 +180,7 @@ class RepairAuditScan extends Form {
               ))}
               {scans.length === 0 && (
                 <tr>
-                  <td colSpan="5">{t("repairAudit:scan.noBoardsYet")}</td>
+                  <td colSpan="6">{t("repairAudit:scan.noBoardsYet")}</td>
                 </tr>
               )}
             </tbody>

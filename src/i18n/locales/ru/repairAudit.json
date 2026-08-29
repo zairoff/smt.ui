@@ -7,7 +7,7 @@
     "selectRepairerWarning": "Сначала выберите ремонтника",
     "counted": "{{barcode}} учтён",
     "reconfirmed": "{{barcode}} подтверждён повторно",
-    "notFound": "Штрихкод не найден или уже отремонтирован",
+    "notFound": "Штрихкод не соответствует ни одной известной модели",
     "sessionTitle": "Текущая сессия",
     "totalBoards": "Всего: {{count}}",
     "noBoardsYet": "Пока ничего не отсканировано.",
@@ -15,6 +15,7 @@
       "time": "Время",
       "barcode": "Штрихкод",
       "model": "Модель",
+      "sapCode": "SAP код",
       "employee": "Ремонтник",
       "status": "Статус"
     },
@@ -34,6 +35,7 @@
     "columns": {
       "barcode": "Штрихкод",
       "model": "Модель",
+      "sapCode": "SAP код",
       "employee": "Ремонтник",
       "firstScannedDate": "Первое сканирование",
       "lastConfirmedDate": "Последнее подтверждение"

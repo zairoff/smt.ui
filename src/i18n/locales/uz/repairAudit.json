@@ -7,7 +7,7 @@
     "selectRepairerWarning": "Avval ta'mirlovchini tanlang",
     "counted": "{{barcode}} hisoblandi",
     "reconfirmed": "{{barcode}} qayta tasdiqlandi",
-    "notFound": "Shtrix-kod topilmadi yoki allaqachon ta'mirlangan",
+    "notFound": "Shtrix-kod hech qanday ma'lum modelga mos kelmadi",
     "sessionTitle": "Joriy sessiya",
     "totalBoards": "Jami: {{count}}",
     "noBoardsYet": "Hali hech narsa skanerlanmagan.",
@@ -15,6 +15,7 @@
       "time": "Vaqt",
       "barcode": "Shtrix-kod",
       "model": "Model",
+      "sapCode": "SAP kodi",
       "employee": "Ta'mirlovchi",
       "status": "Holat"
     },
@@ -34,6 +35,7 @@
     "columns": {
       "barcode": "Shtrix-kod",
       "model": "Model",
+      "sapCode": "SAP kodi",
       "employee": "Ta'mirlovchi",
       "firstScannedDate": "Birinchi skanerlangan",
       "lastConfirmedDate": "Oxirgi tasdiqlangan"
