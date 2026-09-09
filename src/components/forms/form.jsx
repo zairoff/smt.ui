@@ -136,7 +136,8 @@ class Form extends Component {
     onChange,
     propertyKey = "id",
     propertyValue = "name",
-    label = undefined
+    label = undefined,
+    value = undefined
   ) {
     return (
       <Select
@@ -147,6 +148,7 @@ class Form extends Component {
         propertyKey={propertyKey}
         propertyValue={propertyValue}
         label={label}
+        value={value}
       />
     );
   }

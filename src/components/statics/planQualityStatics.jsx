@@ -61,6 +61,7 @@ class PlanQualityStatics extends Form {
 
     this.setState({ fields: { from, to } });
 
+    let selectedLine = this.state.selectedLine;
     try {
       const { data } = await getLines();
       const lines = [
@@ -68,12 +69,17 @@ class PlanQualityStatics extends Form {
         ...data,
       ];
 
-      this.setState({ lines });
+      const defaultLine = data.find(
+        (l) => l.name && l.name.toLowerCase() === "qc-1"
+      );
+      if (defaultLine) selectedLine = String(defaultLine.id);
+
+      this.setState({ lines, selectedLine });
     } catch (ex) {
       toast.error(ex.message);
     }
 
-    await this.fetchStatics(from, to, this.state.selectedLine);
+    await this.fetchStatics(from, to, selectedLine);
   }
 
   handleLineChange = ({ target }) => {
@@ -208,12 +214,13 @@ class PlanQualityStatics extends Form {
       qualityDetails,
       qualityDetailLoading,
       selectedThreshold,
+      selectedLine,
     } = this.state;
     const { t } = this.props;
 
     const thresholdOptions = [
       { id: -1, name: t("planQualityStatics.thresholdNone") },
-      ...[95, 96, 97, 98, 99, 100].map((value) => ({
+      ...[99.5, 99.6, 99.7, 99.8, 99.9, 100].map((value) => ({
         id: value,
         name: `${value}%`,
       })),
@@ -340,7 +347,8 @@ class PlanQualityStatics extends Form {
                   this.handleLineChange,
                   "id",
                   "name",
-                  t("planQualityStatics.line")
+                  t("planQualityStatics.line"),
+                  selectedLine
                 )}
               </div>
               <div className="col-2">

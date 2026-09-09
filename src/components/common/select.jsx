@@ -9,12 +9,14 @@ const Select = ({
   onChange,
   propertyKey,
   propertyValue,
+  value,
 }) => {
   return (
     <div className="form-group">
       <label htmlFor={name}>{label || name}</label>
       <select
         onChange={onChange}
+        value={value}
         name={name}
         id={name}
         required={true}
