@@ -1,4 +1,9 @@
 {
+  "types": {
+    "type": "Type",
+    "audit": "Audit",
+    "utilization": "Utilization"
+  },
   "scan": {
     "title": "Board audit - scan",
     "repairer": "Repairer",
@@ -27,6 +32,8 @@
     "from": "From",
     "to": "To",
     "search": "SEARCH",
+    "export": "EXPORT TO EXCEL",
+    "exportEmptyWarning": "Nothing to export - search first",
     "total": "TOTAL:",
     "summaryTitle": "By model",
     "summaryModel": "Model",

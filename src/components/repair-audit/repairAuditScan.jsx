@@ -5,7 +5,10 @@ import { withTranslation } from "react-i18next";
 import { format } from "date-fns";
 import Form from "../forms/form";
 import { getPcbRepairers } from "../../services/pcbRepairerService";
-import { scanRepairAudit } from "../../services/repairAuditService";
+import {
+  scanRepairAudit,
+  REPAIR_AUDIT_TYPE,
+} from "../../services/repairAuditService";
 
 let nextRowKey = 0;
 
@@ -16,6 +19,7 @@ class RepairAuditScan extends Form {
     fields: { barcode: "" },
     repairers: [],
     employee: "",
+    type: REPAIR_AUDIT_TYPE.AUDIT,
     scans: [],
     errors: {},
     loading: true,
@@ -46,12 +50,13 @@ class RepairAuditScan extends Form {
   handleSelectChange = ({ target }) => {
     const { name, value } = target;
     if (name === "Repairer") this.setState({ employee: value });
+    if (name === "Type") this.setState({ type: Number(value), scans: [] });
   };
 
   handleInputKeyPress = async (e) => {
     if (e.key !== "Enter") return;
 
-    const { employee, scans } = this.state;
+    const { employee, type, scans } = this.state;
     const barcode = e.target.value;
     const { t } = this.props;
 
@@ -64,7 +69,7 @@ class RepairAuditScan extends Form {
 
     this.setState({ loading: true });
     try {
-      const { data: result } = await scanRepairAudit(barcode, employee);
+      const { data: result } = await scanRepairAudit(barcode, employee, type);
       const scan = {
         key: nextRowKey++,
         time: format(new Date(), "yyyy-MM-dd HH:mm:ss"),
@@ -108,7 +113,25 @@ class RepairAuditScan extends Form {
           <h5>{t("repairAudit:scan.title")}</h5>
         </div>
 
-        <div className="col-4">
+        <div className="col-3">
+          {this.renderSelect(
+            "Type",
+            [
+              { id: REPAIR_AUDIT_TYPE.AUDIT, name: t("repairAudit:types.audit") },
+              {
+                id: REPAIR_AUDIT_TYPE.UTILIZATION,
+                name: t("repairAudit:types.utilization"),
+              },
+            ],
+            errors.type,
+            this.handleSelectChange,
+            "id",
+            "name",
+            t("repairAudit:types.type")
+          )}
+        </div>
+
+        <div className="col-3">
           {this.renderSelect(
             "Repairer",
             repairers,
@@ -147,20 +170,19 @@ class RepairAuditScan extends Form {
           <table className="table table-striped">
             <thead>
               <tr>
-                <th>{t("repairAudit:scan.columns.time")}</th>
-                <th>{t("repairAudit:scan.columns.barcode")}</th>
                 <th>{t("repairAudit:scan.columns.model")}</th>
+                <th>{t("repairAudit:scan.columns.barcode")}</th>
                 <th>{t("repairAudit:scan.columns.sapCode")}</th>
                 <th>{t("repairAudit:scan.columns.employee")}</th>
                 <th>{t("repairAudit:scan.columns.status")}</th>
+                <th>{t("repairAudit:scan.columns.time")}</th>
               </tr>
             </thead>
             <tbody>
               {scans.map((s) => (
                 <tr key={s.key}>
-                  <td>{s.time}</td>
-                  <td>{s.barcode}</td>
                   <td>{s.modelName}</td>
+                  <td>{s.barcode}</td>
                   <td>{s.sapCode}</td>
                   <td>{s.employee}</td>
                   <td>
@@ -176,6 +198,7 @@ class RepairAuditScan extends Form {
                       )}
                     </span>
                   </td>
+                  <td>{s.time}</td>
                 </tr>
               ))}
               {scans.length === 0 && (

@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { withTranslation } from "react-i18next";
 import { format, startOfMonth } from "date-fns";
 import _ from "lodash";
+import * as XLSX from "xlsx";
 import Form from "../forms/form";
 import RepairAuditTable from "../tables/repairAuditTable";
 import Pagination from "../common/pagination";
@@ -11,6 +12,7 @@ import { paginate } from "../../utils/paginate";
 import {
   getRepairAuditsByDateRange,
   deleteRepairAudit,
+  REPAIR_AUDIT_TYPE,
 } from "../../services/repairAuditService";
 
 class RepairAuditReport extends Form {
@@ -20,6 +22,7 @@ class RepairAuditReport extends Form {
       from: format(startOfMonth(new Date()), "yyyy-MM-dd"),
       to: format(new Date(), "yyyy-MM-dd"),
     },
+    type: REPAIR_AUDIT_TYPE.AUDIT,
     data: [],
     currentPage: 1,
     pageSize: 25,
@@ -31,17 +34,72 @@ class RepairAuditReport extends Form {
     this.handleSearch();
   }
 
+  handleTypeChange = ({ target }) => {
+    this.setState({ type: Number(target.value) }, this.handleSearch);
+  };
+
   handleSearch = async () => {
     const { from, to } = this.state.fields;
+    const { type } = this.state;
     this.setState({ loading: true });
     try {
-      const { data } = await getRepairAuditsByDateRange(from, to);
+      const { data } = await getRepairAuditsByDateRange(from, to, type);
       this.setState({ data, currentPage: 1 });
     } catch (ex) {
       toast.error(this.props.t("common:errors.unexpected"));
     } finally {
       this.setState({ loading: false });
     }
+  };
+
+  handleExport = () => {
+    const { data, fields, type } = this.state;
+    const { t } = this.props;
+
+    if (data.length === 0) {
+      toast.warning(t("repairAudit:report.exportEmptyWarning"));
+      return;
+    }
+
+    const typeLabel = t(
+      type === REPAIR_AUDIT_TYPE.UTILIZATION
+        ? "repairAudit:types.utilization"
+        : "repairAudit:types.audit"
+    );
+
+    const byModel = _.chain(data)
+      .groupBy("modelName")
+      .map((items, modelName) => ({ modelName, count: items.length }))
+      .orderBy(["modelName"], ["asc"])
+      .value();
+
+    const summaryRows = byModel.map((m) => ({
+      [t("repairAudit:report.summaryModel")]: m.modelName,
+      [t("repairAudit:report.summaryCount")]: m.count,
+    }));
+
+    const boardRows = data.map((d) => ({
+      [t("repairAudit:report.columns.model")]: d.modelName,
+      [t("repairAudit:report.columns.barcode")]: d.barcode,
+      [t("repairAudit:report.columns.sapCode")]: d.sapCode,
+      [t("repairAudit:report.columns.employee")]: d.employee,
+      [t("repairAudit:report.columns.firstScannedDate")]: d.firstScannedDate,
+      [t("repairAudit:report.columns.lastConfirmedDate")]: d.lastConfirmedDate,
+    }));
+
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(
+      workbook,
+      XLSX.utils.json_to_sheet(summaryRows),
+      t("repairAudit:report.summaryTitle")
+    );
+    XLSX.utils.book_append_sheet(
+      workbook,
+      XLSX.utils.json_to_sheet(boardRows),
+      t("repairAudit:report.listTitle")
+    );
+
+    XLSX.writeFile(workbook, `${typeLabel}_${fields.from}_${fields.to}.xlsx`);
   };
 
   handleDelete = async ({ id }) => {
@@ -92,6 +150,24 @@ class RepairAuditReport extends Form {
         </div>
 
         <div className="col-2">
+          {this.renderSelect(
+            "Type",
+            [
+              { id: REPAIR_AUDIT_TYPE.AUDIT, name: t("repairAudit:types.audit") },
+              {
+                id: REPAIR_AUDIT_TYPE.UTILIZATION,
+                name: t("repairAudit:types.utilization"),
+              },
+            ],
+            errors.type,
+            this.handleTypeChange,
+            "id",
+            "name",
+            t("repairAudit:types.type")
+          )}
+        </div>
+
+        <div className="col-2">
           {this.renderInput(
             "from",
             t("repairAudit:report.from"),
@@ -117,6 +193,14 @@ class RepairAuditReport extends Form {
         </div>
         <div className="col-2 mt-4">
           {this.renderButton(t("repairAudit:report.search"), "button", this.handleSearch)}
+        </div>
+        <div className="col-2 mt-4">
+          {this.renderButton(
+            t("repairAudit:report.export"),
+            "button",
+            this.handleExport,
+            "btn btn-success btn-block btn-lg w-100"
+          )}
         </div>
 
         <div className="col-12 mt-3 d-flex align-items-center justify-content-between">

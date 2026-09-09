@@ -1,4 +1,9 @@
 {
+  "types": {
+    "type": "Turi",
+    "audit": "Audit",
+    "utilization": "Utilizatsiya"
+  },
   "scan": {
     "title": "Plata auditi - skanerlash",
     "repairer": "Ta'mirlovchi",
@@ -27,6 +32,8 @@
     "from": "Dan",
     "to": "Gacha",
     "search": "QIDIRISH",
+    "export": "EXCELGA YUKLASH",
+    "exportEmptyWarning": "Yuklash uchun ma'lumot yo'q - avval qidiring",
     "total": "JAMI:",
     "summaryTitle": "Modellar bo'yicha",
     "summaryModel": "Model",

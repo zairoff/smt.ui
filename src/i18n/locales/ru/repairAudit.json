@@ -1,4 +1,9 @@
 {
+  "types": {
+    "type": "Тип",
+    "audit": "Аудит",
+    "utilization": "Утилизация"
+  },
   "scan": {
     "title": "Аудит плат - сканирование",
     "repairer": "Ремонтник",
@@ -27,6 +32,8 @@
     "from": "С",
     "to": "По",
     "search": "ПОИСК",
+    "export": "ЭКСПОРТ В EXCEL",
+    "exportEmptyWarning": "Нечего экспортировать - сначала выполните поиск",
     "total": "ВСЕГО:",
     "summaryTitle": "По моделям",
     "summaryModel": "Модель",
