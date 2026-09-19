@@ -6,7 +6,7 @@ import TableHeader from "./tableHeader";
 const Table = ({
   columns,
   rows,
-  sortColumn,
+  sortColumn = {},
   onSort,
   loading = false,
   error = null,

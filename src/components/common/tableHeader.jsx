@@ -22,7 +22,7 @@ class TableHeader extends Component {
   renderSortIcon = (column) => {
     const { sortColumn } = this.props;
 
-    if (column.path !== sortColumn.path) return null;
+    if (!sortColumn || column.path !== sortColumn.path) return null;
     if (sortColumn.order === "asc")
       return (
         <FontAwesomeIcon className="ms-2" icon={faSortAsc}></FontAwesomeIcon>
