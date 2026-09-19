@@ -327,15 +327,6 @@ class ReturnProductExport extends Form {
               false,
               this.handleExportKeyPress
             )}
-            <p className="mt-2"> </p>
-            <ReturnedProductExportTable
-              rows={data}
-              onSort={this.handleSort}
-              sortColumn={sortColumn}
-              onDelete={this.handleDelete}
-              authorized={authorized}
-              transactionType={selectedTransactionType}
-            />
           </div>
         </div>
 
@@ -364,6 +355,19 @@ class ReturnProductExport extends Form {
             </div>
           </div>
         )}
+
+        <div className="row mb-4">
+          <div className="col">
+            <ReturnedProductExportTable
+              rows={data}
+              onSort={this.handleSort}
+              sortColumn={sortColumn}
+              onDelete={this.handleDelete}
+              authorized={authorized}
+              transactionType={selectedTransactionType}
+            />
+          </div>
+        </div>
       </>
     );
   }
