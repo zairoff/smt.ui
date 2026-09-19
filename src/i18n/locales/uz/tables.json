@@ -56,6 +56,20 @@
       "issueAll": "Barchasini chiqarish"
     }
   },
+  "scannedBoardsTable": {
+    "columns": {
+      "model": "Model",
+      "sapCode": "SAP kodi",
+      "serialCode": "Seriya kodi",
+      "barCode": "Shtrix-kod",
+      "count": "Soni",
+      "status": "Holati"
+    },
+    "missingBadge": "Omborda yo'q",
+    "okBadge": "OK",
+    "remove": "O'chirish",
+    "empty": "Hali plata skanerlanmagan"
+  },
   "returnedProductExportTransactionsTable": {
     "columns": {
       "index": "Raqami",

@@ -17,7 +17,8 @@
     "modelNotFound": "Модель не найдена",
     "enterExportQuantity": "Введите количество на отгрузку",
     "exportExceedsWarehouse": "Количество на отгрузку не должно превышать остаток на складе",
-    "barcodeInvalid": "Неверный штрихкод"
+    "barcodeInvalid": "Неверный штрихкод",
+    "selectDestinationFirst": "Сначала выберите пункт назначения"
   },
   "transactionTypeLabels": {
     "importFromFactoryToBuffer": "Поступление в буфер (завод Ахангаран)",
@@ -29,7 +30,28 @@
     "exportFromStoreToUtilize": "Выход со склада (на утилизацию)"
   },
   "export": {
-    "destinationLabel": "Куда?"
+    "destinationLabel": "Куда?",
+    "scannedBoardsTitle": "Отсканированные платы",
+    "exportToExcelButton": "Экспорт в Excel",
+    "emptyScanWarning": "Сначала отсканируйте хотя бы одну плату",
+    "exportSuccess": "Платы списаны со склада, файл Excel сформирован",
+    "partialFailureWarning": "Не удалось списать {{count}} плат(ы) со склада",
+    "excel": {
+      "title": "SMT Remontdan TV zavodga",
+      "subtitle": "ARTEL TV platalar",
+      "columns": {
+        "model": "Modeli",
+        "serialCode": "Seria raqami",
+        "sapCode": "SAP",
+        "count": "Soni"
+      },
+      "unit": "dona",
+      "missingLabel": "#Н/Д",
+      "footerCode": "BO3BPAT",
+      "sheetName": "Платы",
+      "esdText": "ATTENTION\nESD PROTECTED AREA\nOBSERVE PRECAUTIONS FOR HANDLING ELECTROSTATIC DISCHARGE SENSITIVE DEVICES",
+      "fragileText": "FRAGILE\nDO NOT DROP"
+    }
   },
   "import": {
     "title": "Возвращённые товары"

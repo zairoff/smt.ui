@@ -17,7 +17,8 @@
     "modelNotFound": "Model not found",
     "enterExportQuantity": "Enter the export quantity",
     "exportExceedsWarehouse": "Export quantity cannot exceed the warehouse quantity",
-    "barcodeInvalid": "Invalid barcode"
+    "barcodeInvalid": "Invalid barcode",
+    "selectDestinationFirst": "Select a destination before scanning"
   },
   "transactionTypeLabels": {
     "importFromFactoryToBuffer": "Inbound to buffer (Oxangaron factory)",
@@ -29,7 +30,28 @@
     "exportFromStoreToUtilize": "Outbound from warehouse (to utilization)"
   },
   "export": {
-    "destinationLabel": "Where to?"
+    "destinationLabel": "Where to?",
+    "scannedBoardsTitle": "Scanned boards",
+    "exportToExcelButton": "Export to Excel",
+    "emptyScanWarning": "Scan at least one board first",
+    "exportSuccess": "Boards were deducted from the store and the Excel file was generated",
+    "partialFailureWarning": "{{count}} board(s) could not be deducted from the store",
+    "excel": {
+      "title": "SMT Remontdan TV zavodga",
+      "subtitle": "ARTEL TV platalar",
+      "columns": {
+        "model": "Modeli",
+        "serialCode": "Seria raqami",
+        "sapCode": "SAP",
+        "count": "Soni"
+      },
+      "unit": "dona",
+      "missingLabel": "#N/A",
+      "footerCode": "BO3BPAT",
+      "sheetName": "Boards",
+      "esdText": "ATTENTION\nESD PROTECTED AREA\nOBSERVE PRECAUTIONS FOR HANDLING ELECTROSTATIC DISCHARGE SENSITIVE DEVICES",
+      "fragileText": "FRAGILE\nDO NOT DROP"
+    }
   },
   "import": {
     "title": "Returned products"

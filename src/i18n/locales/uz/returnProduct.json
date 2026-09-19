@@ -17,7 +17,8 @@
     "modelNotFound": "Model topilmadi",
     "enterExportQuantity": "Chiqim sonini kiriting",
     "exportExceedsWarehouse": "Chiqim soni ombordagi miqdordan ko'p bo'lmasligi kerak",
-    "barcodeInvalid": "Shtrix kod noto'g'ri"
+    "barcodeInvalid": "Shtrix kod noto'g'ri",
+    "selectDestinationFirst": "Avval qayerga ekanini tanlang"
   },
   "transactionTypeLabels": {
     "importFromFactoryToBuffer": "Bufferga kirish (zavod Oxangaron)",
@@ -29,7 +30,28 @@
     "exportFromStoreToUtilize": "Ombordan chiqish (utilizatsiyaga)"
   },
   "export": {
-    "destinationLabel": "Qaerga?"
+    "destinationLabel": "Qaerga?",
+    "scannedBoardsTitle": "Skanerlangan platalar",
+    "exportToExcelButton": "Excelga chiqarish",
+    "emptyScanWarning": "Avval kamida bitta plata skanerlang",
+    "exportSuccess": "Platalar ombordan chiqarildi va Excel fayli tayyorlandi",
+    "partialFailureWarning": "{{count}} ta plata ombordan chiqarilmadi",
+    "excel": {
+      "title": "SMT Remontdan TV zavodga",
+      "subtitle": "ARTEL TV platalar",
+      "columns": {
+        "model": "Modeli",
+        "serialCode": "Seria raqami",
+        "sapCode": "SAP",
+        "count": "Soni"
+      },
+      "unit": "dona",
+      "missingLabel": "#Н/Д",
+      "footerCode": "BO3BPAT",
+      "sheetName": "Platalar",
+      "esdText": "ATTENTION\nESD PROTECTED AREA\nOBSERVE PRECAUTIONS FOR HANDLING ELECTROSTATIC DISCHARGE SENSITIVE DEVICES",
+      "fragileText": "FRAGILE\nDO NOT DROP"
+    }
   },
   "import": {
     "title": "Qaytgan mahsulotlar"

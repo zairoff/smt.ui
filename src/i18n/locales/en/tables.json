@@ -56,6 +56,20 @@
       "issueAll": "Issue all"
     }
   },
+  "scannedBoardsTable": {
+    "columns": {
+      "model": "Model",
+      "sapCode": "SAP code",
+      "serialCode": "Serial code",
+      "barCode": "Barcode",
+      "count": "Quantity",
+      "status": "Status"
+    },
+    "missingBadge": "Not in store",
+    "okBadge": "OK",
+    "remove": "Remove",
+    "empty": "No boards scanned yet"
+  },
   "returnedProductExportTransactionsTable": {
     "columns": {
       "index": "No.",

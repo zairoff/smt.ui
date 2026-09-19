@@ -56,6 +56,20 @@
       "issueAll": "Списать всё"
     }
   },
+  "scannedBoardsTable": {
+    "columns": {
+      "model": "Модель",
+      "sapCode": "SAP-код",
+      "serialCode": "Серийный код",
+      "barCode": "Штрихкод",
+      "count": "Количество",
+      "status": "Статус"
+    },
+    "missingBadge": "Нет на складе",
+    "okBadge": "ОК",
+    "remove": "Удалить",
+    "empty": "Ещё нет отсканированных плат"
+  },
   "returnedProductExportTransactionsTable": {
     "columns": {
       "index": "№",

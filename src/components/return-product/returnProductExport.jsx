@@ -12,10 +12,12 @@ import {
   getUtilizeState,
 } from "../../services/returnedProductTransactionService";
 import ReturnedProductExportTable from "../tables/ReturnedProductExportTable";
+import ScannedBoardsTable from "../tables/ScannedBoardsTable";
 import {
   getModelByBarcode,
   getModelBySapCode,
 } from "../../services/modelService";
+import { exportScannedBoardsToExcel } from "../../utils/returnedProductExcelExport";
 
 /**
     public enum ReturnedProductTransactionType
@@ -37,6 +39,7 @@ class ReturnProductExport extends Form {
   state = {
     errors: {},
     data: [],
+    scannedBoards: [],
     loading: false,
     sortColumn: { path: "", order: "asc" },
     authorized: false,
@@ -72,7 +75,12 @@ class ReturnProductExport extends Form {
         let fiveLetterCode = "";
 
         const barcode = e.target.value;
-        const { selectedTransactionType, data } = this.state;
+        const { selectedTransactionType } = this.state;
+
+        if (selectedTransactionType === "") {
+          toast.warning(t("errors.selectDestinationFirst"));
+          return;
+        }
 
         if (
           barcode.length == 14 &&
@@ -99,54 +107,91 @@ class ReturnProductExport extends Form {
           fields: { export: "" },
         });
 
-        const { data: model } =
-          sapCode != "" && count != 0
-            ? getModelBySapCode
-            : await getModelByBarcode(fiveLetterCode);
-        if (model === "" || model === undefined) {
-          toast.warning(t("errors.modelNotFound"));
-          return;
+        let model;
+        try {
+          const response =
+            sapCode !== "" && count != 0
+              ? await getModelBySapCode(sapCode)
+              : await getModelByBarcode(fiveLetterCode);
+          model = response.data;
+        } catch {
+          model = undefined;
         }
 
-        const currentModel = data.filter((x) => x.model.id == model.id);
+        const missing = model === "" || model === undefined || model === null;
 
-        console.log("currentModel", currentModel);
-        console.log("selectedTransactionType", selectedTransactionType);
-
-        if (
-          currentModel == null ||
-          currentModel == undefined ||
-          currentModel == ""
-        ) {
-          toast.warning(t("errors.modelNotFound"));
-          return;
-        }
-
-        const returnedProductTransaction = {
+        const scannedBoard = {
+          id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
           barcode,
-          modelId: model.id,
-          count,
-          TransactionType: parseInt(selectedTransactionType), // ImportFromFactoryToBuffer
+          modelId: missing ? null : model.id,
+          modelName: missing ? t("errors.modelNotFound") : model.name,
+          sapCode: missing ? sapCode : model.sapCode,
+          serialCode: fiveLetterCode,
+          count: parseInt(count) || 0,
+          missing,
         };
 
-        await exportReturnedProduct(returnedProductTransaction);
-
-        const { data: newData } = await getState(
-          parseInt(selectedTransactionType)
-        );
-
-        this.setState({
-          fields: {
-            export: "",
-          },
-          data: newData,
-          loading: false,
-        });
+        this.setState((prevState) => ({
+          fields: { export: "" },
+          scannedBoards: [...prevState.scannedBoards, scannedBoard],
+        }));
       } catch (ex) {
-        toast.error(ex.response.data.message);
+        toast.error(ex.response?.data?.message || this.props.t("common:errors.unexpected"));
       } finally {
         this.setState({ loading: false });
       }
+    }
+  };
+
+  handleRemoveScanned = (id) => {
+    this.setState((prevState) => ({
+      scannedBoards: prevState.scannedBoards.filter((b) => b.id !== id),
+    }));
+  };
+
+  handleExportToExcel = async () => {
+    const { t } = this.props;
+    const { scannedBoards, selectedTransactionType } = this.state;
+
+    if (scannedBoards.length === 0) {
+      toast.warning(t("export.emptyScanWarning"));
+      return;
+    }
+
+    this.setState({ loading: true });
+    try {
+      const committable = scannedBoards.filter((b) => !b.missing);
+      const results = await Promise.allSettled(
+        committable.map((b) =>
+          exportReturnedProduct({
+            barcode: b.barcode,
+            modelId: b.modelId,
+            count: b.count,
+            TransactionType: parseInt(selectedTransactionType),
+          })
+        )
+      );
+
+      const failedCount = results.filter((r) => r.status === "rejected").length;
+      if (failedCount > 0) {
+        toast.error(t("export.partialFailureWarning", { count: failedCount }));
+      }
+
+      const destinationLabel =
+        this.filters.find((f) => f.id === parseInt(selectedTransactionType))?.name || "";
+
+      await exportScannedBoardsToExcel(scannedBoards, destinationLabel, t);
+
+      const { data } = await getState(parseInt(selectedTransactionType));
+
+      this.setState({ data, scannedBoards: [] });
+      if (failedCount === 0) {
+        toast.success(t("export.exportSuccess"));
+      }
+    } catch (ex) {
+      toast.error(this.props.t("common:errors.unexpected"));
+    } finally {
+      this.setState({ loading: false });
     }
   };
 
@@ -183,7 +228,7 @@ class ReturnProductExport extends Form {
 
       const { data } = await getState(parseInt(id));
 
-      this.setState({ data, selectedTransactionType: id });
+      this.setState({ data, selectedTransactionType: id, scannedBoards: [] });
     } catch (ex) {
       toast(ex.response.data.message);
     } finally {
@@ -194,6 +239,7 @@ class ReturnProductExport extends Form {
   render() {
     const {
       data,
+      scannedBoards,
       sortColumn,
       loading,
       authorized,
@@ -241,6 +287,28 @@ class ReturnProductExport extends Form {
               onDelete={this.handleDelete}
               authorized={authorized}
               transactionType={selectedTransactionType}
+            />
+          </div>
+        </div>
+
+        <div className="row mb-4">
+          <div className="col">
+            <div className="d-flex align-items-center justify-content-between mb-2">
+              <h5 className="mb-0">
+                {t("export.scannedBoardsTitle")} ({scannedBoards.length})
+              </h5>
+              <button
+                type="button"
+                className="btn btn-success"
+                disabled={scannedBoards.length === 0}
+                onClick={this.handleExportToExcel}
+              >
+                {t("export.exportToExcelButton")}
+              </button>
+            </div>
+            <ScannedBoardsTable
+              rows={scannedBoards}
+              onRemove={this.handleRemoveScanned}
             />
           </div>
         </div>
