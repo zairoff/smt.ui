@@ -58,6 +58,13 @@ class ReturnProductExport extends Form {
     ];
   }
 
+  // Only exports leaving repair (to store or to utilization) go through the
+  // scan-then-batch-export-to-Excel flow; other destinations keep the
+  // original instant per-scan deduction.
+  get excelExportTransactionTypes() {
+    return [2, 3];
+  }
+
   componentDidUpdate() {
     this.setFocusOnBarcode();
   }
@@ -75,7 +82,7 @@ class ReturnProductExport extends Form {
         let fiveLetterCode = "";
 
         const barcode = e.target.value;
-        const { selectedTransactionType } = this.state;
+        const { selectedTransactionType, data } = this.state;
 
         if (selectedTransactionType === "") {
           toast.warning(t("errors.selectDestinationFirst"));
@@ -118,23 +125,64 @@ class ReturnProductExport extends Form {
           model = undefined;
         }
 
-        const missing = model === "" || model === undefined || model === null;
+        const usesScanList = this.excelExportTransactionTypes.includes(
+          parseInt(selectedTransactionType)
+        );
 
-        const scannedBoard = {
-          id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+        if (usesScanList) {
+          const missing = model === "" || model === undefined || model === null;
+
+          const scannedBoard = {
+            id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+            barcode,
+            modelId: missing ? null : model.id,
+            modelName: missing ? t("errors.modelNotFound") : model.name,
+            sapCode: missing ? sapCode : model.sapCode,
+            serialCode: fiveLetterCode,
+            count: parseInt(count) || 0,
+            missing,
+          };
+
+          this.setState((prevState) => ({
+            fields: { export: "" },
+            scannedBoards: [...prevState.scannedBoards, scannedBoard],
+          }));
+          return;
+        }
+
+        if (model === "" || model === undefined || model === null) {
+          toast.warning(t("errors.modelNotFound"));
+          return;
+        }
+
+        const currentModel = data.filter((x) => x.model.id == model.id);
+
+        if (
+          currentModel == null ||
+          currentModel == undefined ||
+          currentModel == ""
+        ) {
+          toast.warning(t("errors.modelNotFound"));
+          return;
+        }
+
+        const returnedProductTransaction = {
           barcode,
-          modelId: missing ? null : model.id,
-          modelName: missing ? t("errors.modelNotFound") : model.name,
-          sapCode: missing ? sapCode : model.sapCode,
-          serialCode: fiveLetterCode,
-          count: parseInt(count) || 0,
-          missing,
+          modelId: model.id,
+          count,
+          TransactionType: parseInt(selectedTransactionType),
         };
 
-        this.setState((prevState) => ({
+        await exportReturnedProduct(returnedProductTransaction);
+
+        const { data: newData } = await getState(
+          parseInt(selectedTransactionType)
+        );
+
+        this.setState({
           fields: { export: "" },
-          scannedBoards: [...prevState.scannedBoards, scannedBoard],
-        }));
+          data: newData,
+        });
       } catch (ex) {
         toast.error(ex.response?.data?.message || this.props.t("common:errors.unexpected"));
       } finally {
@@ -291,27 +339,31 @@ class ReturnProductExport extends Form {
           </div>
         </div>
 
-        <div className="row mb-4">
-          <div className="col">
-            <div className="d-flex align-items-center justify-content-between mb-2">
-              <h5 className="mb-0">
-                {t("export.scannedBoardsTitle")} ({scannedBoards.length})
-              </h5>
-              <button
-                type="button"
-                className="btn btn-success"
-                disabled={scannedBoards.length === 0}
-                onClick={this.handleExportToExcel}
-              >
-                {t("export.exportToExcelButton")}
-              </button>
+        {this.excelExportTransactionTypes.includes(
+          parseInt(selectedTransactionType)
+        ) && (
+          <div className="row mb-4">
+            <div className="col">
+              <div className="d-flex align-items-center justify-content-between mb-2">
+                <h5 className="mb-0">
+                  {t("export.scannedBoardsTitle")} ({scannedBoards.length})
+                </h5>
+                <button
+                  type="button"
+                  className="btn btn-success"
+                  disabled={scannedBoards.length === 0}
+                  onClick={this.handleExportToExcel}
+                >
+                  {t("export.exportToExcelButton")}
+                </button>
+              </div>
+              <ScannedBoardsTable
+                rows={scannedBoards}
+                onRemove={this.handleRemoveScanned}
+              />
             </div>
-            <ScannedBoardsTable
-              rows={scannedBoards}
-              onRemove={this.handleRemoveScanned}
-            />
           </div>
-        </div>
+        )}
       </>
     );
   }
