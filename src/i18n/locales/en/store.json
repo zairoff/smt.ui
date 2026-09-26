@@ -46,7 +46,9 @@
     "noOpenRequests": "No open requests.",
     "noPendingItems": "No pending items.",
     "noLine": "No line",
-    "transferSuccess": "Selected components transferred."
+    "transferSuccess": "Selected components transferred.",
+    "soundToggle": "🔔 Sound",
+    "newRequestNotification": "New component request received."
   },
   "componentRequestReport": {
     "line": "Line",

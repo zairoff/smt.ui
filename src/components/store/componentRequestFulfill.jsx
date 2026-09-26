@@ -3,6 +3,7 @@ import ReactLoading from "react-loading";
 import { toast } from "react-toastify";
 import { withTranslation } from "react-i18next";
 import Table from "../common/table";
+import { playChime } from "../../utils/chime";
 import {
   getOpenComponentRequests,
   markItemNotFound,
@@ -10,11 +11,23 @@ import {
 } from "../../services/componentRequestService";
 
 const REFRESH_INTERVAL_MS = 20000;
+const SOUND_ENABLED_STORAGE_KEY = "componentRequestFulfill.soundEnabled";
+
+function loadSoundPreference() {
+  try {
+    return localStorage.getItem(SOUND_ENABLED_STORAGE_KEY) !== "false";
+  } catch {
+    return true;
+  }
+}
 
 class ComponentRequestFulfill extends Component {
+  knownPendingItemIds = null;
+
   state = {
     requests: [],
     selectedItemIds: [],
+    soundEnabled: loadSoundPreference(),
     loading: false,
   };
 
@@ -27,7 +40,21 @@ class ComponentRequestFulfill extends Component {
     clearInterval(this.intervalId);
   }
 
+  handleToggleSound = () => {
+    this.setState((prevState) => {
+      const soundEnabled = !prevState.soundEnabled;
+      try {
+        localStorage.setItem(SOUND_ENABLED_STORAGE_KEY, String(soundEnabled));
+      } catch {
+        // localStorage unavailable - the toggle still works for this session.
+      }
+      if (soundEnabled) playChime();
+      return { soundEnabled };
+    });
+  };
+
   load = async () => {
+    const { t } = this.props;
     this.setState({ loading: true });
     try {
       const { data: requests } = await getOpenComponentRequests();
@@ -38,6 +65,18 @@ class ComponentRequestFulfill extends Component {
             .map((i) => i.id)
         )
       );
+
+      const isFirstLoad = this.knownPendingItemIds === null;
+      const hasNewArrival =
+        !isFirstLoad &&
+        [...pendingIds].some((id) => !this.knownPendingItemIds.has(id));
+      this.knownPendingItemIds = pendingIds;
+
+      if (hasNewArrival) {
+        toast.info(t("componentRequestFulfill.newRequestNotification"));
+        if (this.state.soundEnabled) playChime();
+      }
+
       this.setState((prevState) => ({
         requests,
         selectedItemIds: prevState.selectedItemIds.filter((id) =>
@@ -143,7 +182,7 @@ class ComponentRequestFulfill extends Component {
 
   render() {
     const { t } = this.props;
-    const { requests, selectedItemIds, loading } = this.state;
+    const { requests, selectedItemIds, soundEnabled, loading } = this.state;
 
     return (
       <div className="m-2">
@@ -154,7 +193,23 @@ class ComponentRequestFulfill extends Component {
           <h5 className="mb-0">
             {t("componentRequestFulfill.title")} ({requests.length})
           </h5>
-          <div>
+          <div className="d-flex align-items-center">
+            <div className="form-check form-switch me-3">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                role="switch"
+                id="componentRequestFulfillSound"
+                checked={soundEnabled}
+                onChange={this.handleToggleSound}
+              />
+              <label
+                className="form-check-label"
+                htmlFor="componentRequestFulfillSound"
+              >
+                {t("componentRequestFulfill.soundToggle")}
+              </label>
+            </div>
             <button
               type="button"
               className="btn btn-outline-primary me-2"

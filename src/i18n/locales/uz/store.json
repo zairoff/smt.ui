@@ -46,7 +46,9 @@
     "noOpenRequests": "Ochiq so'rovlar yo'q.",
     "noPendingItems": "Kutilayotgan band yo'q.",
     "noLine": "Liniyasiz",
-    "transferSuccess": "Tanlangan komponentlar topshirildi."
+    "transferSuccess": "Tanlangan komponentlar topshirildi.",
+    "soundToggle": "🔔 Ovoz",
+    "newRequestNotification": "Yangi komponent so'rovi qabul qilindi."
   },
   "componentRequestReport": {
     "line": "Liniya",

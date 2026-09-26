@@ -46,7 +46,9 @@
     "noOpenRequests": "Нет открытых запросов.",
     "noPendingItems": "Нет ожидающих позиций.",
     "noLine": "Без линии",
-    "transferSuccess": "Выбранные компоненты переданы."
+    "transferSuccess": "Выбранные компоненты переданы.",
+    "soundToggle": "🔔 Звук",
+    "newRequestNotification": "Получен новый запрос компонента."
   },
   "componentRequestReport": {
     "line": "Линия",
