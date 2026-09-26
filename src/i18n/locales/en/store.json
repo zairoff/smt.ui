@@ -21,5 +21,54 @@
     "syncHint": "Or sync directly from the connected Google Sheet. Only newly added rows are imported each time.",
     "syncButton": "Sync from Google Sheet",
     "emptySheet": "No new rows to import — everything is already up to date."
+  },
+  "componentRequestAdd": {
+    "line": "Line",
+    "component": "Component",
+    "scanPlaceholder": "Scan or type R code / component code",
+    "addItem": "Add item",
+    "submit": "Submit request",
+    "rCode": "R code",
+    "partNumber": "Part number",
+    "remove": "Remove",
+    "emptyItemsWarning": "Add at least one component before submitting.",
+    "submitSuccess": "Request submitted.",
+    "notFound": "No component found for \"{{query}}\".",
+    "alreadyAdded": "That component is already in the list."
+  },
+  "componentRequestFulfill": {
+    "title": "Open component requests",
+    "refresh": "Refresh",
+    "transferSelected": "Transfer selected",
+    "notFound": "Not found",
+    "rCode": "R code",
+    "partNumber": "Part number",
+    "noOpenRequests": "No open requests.",
+    "noPendingItems": "No pending items.",
+    "noLine": "No line",
+    "transferSuccess": "Selected components transferred."
+  },
+  "componentRequestReport": {
+    "line": "Line",
+    "rCode": "R code",
+    "partNumber": "Part number",
+    "status": "Status",
+    "requested": "Requested",
+    "transferred": "Transferred",
+    "duration": "Duration",
+    "durationValue": "{{value}} min",
+    "totalRequests": "Total requests",
+    "totalItems": "Total items",
+    "notFound": "Not found",
+    "pending": "Pending",
+    "avgDuration": "Avg. time to transfer",
+    "allLines": "All lines",
+    "fromDate": "From",
+    "toDate": "To",
+    "statusLabels": {
+      "Requested": "Pending",
+      "Transferred": "Transferred",
+      "NotFound": "Not found"
+    }
   }
 }

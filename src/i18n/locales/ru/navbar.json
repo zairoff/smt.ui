@@ -80,6 +80,12 @@
     "report": "Отчёт",
     "transactions": "Транзакции"
   },
+  "componentRequest": {
+    "title": "Запросы компонентов",
+    "add": "Запрос компонентов",
+    "fulfill": "Обработка запросов",
+    "report": "Отчёт"
+  },
   "printer": {
     "qr": "QR"
   },

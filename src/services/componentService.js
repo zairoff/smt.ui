@@ -30,3 +30,7 @@ export function connectComponents(components) {
 export function deleteComponent(id) {
   return http.delete(`${endPoint}/${id}`);
 }
+
+export function searchComponent(query) {
+  return http.get(endPoint + "/search?query=" + encodeURIComponent(query));
+}

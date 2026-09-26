@@ -80,6 +80,12 @@
     "report": "Report",
     "transactions": "Transactions"
   },
+  "componentRequest": {
+    "title": "Component Requests",
+    "add": "Request components",
+    "fulfill": "Fulfill requests",
+    "report": "Report"
+  },
   "printer": {
     "qr": "QR"
   },

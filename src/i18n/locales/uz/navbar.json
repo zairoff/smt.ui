@@ -80,6 +80,12 @@
     "report": "Hisobot",
     "transactions": "Transaksiyalar"
   },
+  "componentRequest": {
+    "title": "Komponent so'rovlari",
+    "add": "Komponent so'rash",
+    "fulfill": "So'rovlarni bajarish",
+    "report": "Hisobot"
+  },
   "printer": {
     "qr": "QR"
   },

@@ -467,6 +467,44 @@ const NavBar = ({ user }) => {
               <button
                 type="button"
                 className="nav-link dropdown-toggle border-0 bg-transparent"
+                id="navbarDropdownComponentRequest"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                {t("componentRequest.title")}
+              </button>
+              <ul
+                className="dropdown-menu"
+                aria-labelledby="navbarDropdownComponentRequest"
+              >
+                <li>
+                  <NavLink to="/component-request" className="dropdown-item">
+                    {t("componentRequest.add")}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/component-request-fulfill"
+                    className="dropdown-item"
+                  >
+                    {t("componentRequest.fulfill")}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/component-request-report"
+                    className="dropdown-item"
+                  >
+                    {t("componentRequest.report")}
+                  </NavLink>
+                </li>
+              </ul>
+            </li>
+
+            <li className="nav-item dropdown">
+              <button
+                type="button"
+                className="nav-link dropdown-toggle border-0 bg-transparent"
                 id="navbarDropdownPrinter"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"

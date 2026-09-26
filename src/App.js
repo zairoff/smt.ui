@@ -55,6 +55,9 @@ import ComponentBulkImport from "./components/store/componentBulkImport";
 import ComponentPrint from "./components/store/componentPrint";
 import ComponentAdd from "./components/store/componentAdd";
 import ComponentConnectToComponent from "./components/store/componentConnectToComponent";
+import ComponentRequestAdd from "./components/store/componentRequestAdd";
+import ComponentRequestFulfill from "./components/store/componentRequestFulfill";
+import ComponentRequestReport from "./components/store/componentRequestReport";
 import QrReader from "./components/board-flow/qrReader";
 import BoardReport from "./components/board-flow/boardReport";
 import BoardStatistics from "./components/board-flow/boardStatistics";
@@ -236,6 +239,21 @@ class App extends Component {
               <Route
                 path="/component-import"
                 element={<ComponentBulkImport />}
+              />
+
+              <Route
+                path="/component-request"
+                element={<ComponentRequestAdd />}
+              />
+
+              <Route
+                path="/component-request-fulfill"
+                element={<ComponentRequestFulfill />}
+              />
+
+              <Route
+                path="/component-request-report"
+                element={<ComponentRequestReport />}
               />
 
               <Route path="/qr-reader-add" element={<QrReader />} />

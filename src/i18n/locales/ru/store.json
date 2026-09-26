@@ -21,5 +21,54 @@
     "syncHint": "Или синхронизируйте напрямую с подключённой Google-таблицей. Каждый раз импортируются только новые строки.",
     "syncButton": "Синхронизировать из Google Sheet",
     "emptySheet": "Нет новых строк для импорта — всё уже синхронизировано."
+  },
+  "componentRequestAdd": {
+    "line": "Линия",
+    "component": "Компонент",
+    "scanPlaceholder": "Отсканируйте или введите R-код / код компонента",
+    "addItem": "Добавить",
+    "submit": "Отправить запрос",
+    "rCode": "R-код",
+    "partNumber": "Номер детали",
+    "remove": "Удалить",
+    "emptyItemsWarning": "Добавьте хотя бы один компонент перед отправкой.",
+    "submitSuccess": "Запрос отправлен.",
+    "notFound": "Компонент не найден для «{{query}}».",
+    "alreadyAdded": "Этот компонент уже в списке."
+  },
+  "componentRequestFulfill": {
+    "title": "Открытые запросы компонентов",
+    "refresh": "Обновить",
+    "transferSelected": "Передать выбранные",
+    "notFound": "Не найдено",
+    "rCode": "R-код",
+    "partNumber": "Номер детали",
+    "noOpenRequests": "Нет открытых запросов.",
+    "noPendingItems": "Нет ожидающих позиций.",
+    "noLine": "Без линии",
+    "transferSuccess": "Выбранные компоненты переданы."
+  },
+  "componentRequestReport": {
+    "line": "Линия",
+    "rCode": "R-код",
+    "partNumber": "Номер детали",
+    "status": "Статус",
+    "requested": "Запрошено",
+    "transferred": "Передано",
+    "duration": "Длительность",
+    "durationValue": "{{value}} мин",
+    "totalRequests": "Всего запросов",
+    "totalItems": "Всего позиций",
+    "notFound": "Не найдено",
+    "pending": "В ожидании",
+    "avgDuration": "Ср. время передачи",
+    "allLines": "Все линии",
+    "fromDate": "С",
+    "toDate": "По",
+    "statusLabels": {
+      "Requested": "В ожидании",
+      "Transferred": "Передано",
+      "NotFound": "Не найдено"
+    }
   }
 }

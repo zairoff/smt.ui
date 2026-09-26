@@ -21,5 +21,54 @@
     "syncHint": "Yoki ulangan Google jadvalidan bevosita sinxronlang. Har safar faqat yangi qo'shilgan qatorlar import qilinadi.",
     "syncButton": "Google Sheet'dan sinxronlash",
     "emptySheet": "Import qilinadigan yangi qator yo'q — barchasi allaqachon sinxronlangan."
+  },
+  "componentRequestAdd": {
+    "line": "Liniya",
+    "component": "Komponent",
+    "scanPlaceholder": "R-kod / komponent kodini skanerlang yoki yozing",
+    "addItem": "Qo'shish",
+    "submit": "So'rovni yuborish",
+    "rCode": "R-kod",
+    "partNumber": "Detal raqami",
+    "remove": "O'chirish",
+    "emptyItemsWarning": "Yuborishdan oldin kamida bitta komponent qo'shing.",
+    "submitSuccess": "So'rov yuborildi.",
+    "notFound": "\"{{query}}\" uchun komponent topilmadi.",
+    "alreadyAdded": "Bu komponent allaqachon ro'yxatda."
+  },
+  "componentRequestFulfill": {
+    "title": "Ochiq komponent so'rovlari",
+    "refresh": "Yangilash",
+    "transferSelected": "Tanlanganlarni topshirish",
+    "notFound": "Topilmadi",
+    "rCode": "R-kod",
+    "partNumber": "Detal raqami",
+    "noOpenRequests": "Ochiq so'rovlar yo'q.",
+    "noPendingItems": "Kutilayotgan band yo'q.",
+    "noLine": "Liniyasiz",
+    "transferSuccess": "Tanlangan komponentlar topshirildi."
+  },
+  "componentRequestReport": {
+    "line": "Liniya",
+    "rCode": "R-kod",
+    "partNumber": "Detal raqami",
+    "status": "Holat",
+    "requested": "So'ralgan",
+    "transferred": "Topshirilgan",
+    "duration": "Davomiyligi",
+    "durationValue": "{{value}} daq",
+    "totalRequests": "Jami so'rovlar",
+    "totalItems": "Jami bandlar",
+    "notFound": "Topilmadi",
+    "pending": "Kutilmoqda",
+    "avgDuration": "O'rtacha topshirish vaqti",
+    "allLines": "Barcha liniyalar",
+    "fromDate": "Dan",
+    "toDate": "Gacha",
+    "statusLabels": {
+      "Requested": "Kutilmoqda",
+      "Transferred": "Topshirilgan",
+      "NotFound": "Topilmadi"
+    }
   }
 }
