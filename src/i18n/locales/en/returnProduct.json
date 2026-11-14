@@ -36,6 +36,7 @@
     "emptyScanWarning": "Scan at least one board first",
     "exportSuccess": "Boards were deducted from the store and the Excel file was generated",
     "partialFailureWarning": "{{count}} board(s) could not be deducted from the store",
+    "alreadyExportedWarning": "These boards were already exported from another device",
     "excel": {
       "title": "SMT Remontdan TV zavodga",
       "subtitle": "ARTEL TV platalar",

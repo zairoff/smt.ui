@@ -36,6 +36,7 @@
     "emptyScanWarning": "Сначала отсканируйте хотя бы одну плату",
     "exportSuccess": "Платы списаны со склада, файл Excel сформирован",
     "partialFailureWarning": "Не удалось списать {{count}} плат(ы) со склада",
+    "alreadyExportedWarning": "Эти платы уже были выгружены с другого устройства",
     "excel": {
       "title": "SMT Remontdan TV zavodga",
       "subtitle": "ARTEL TV platalar",

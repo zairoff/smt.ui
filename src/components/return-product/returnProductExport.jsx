@@ -18,6 +18,15 @@ import {
   getModelBySapCode,
 } from "../../services/modelService";
 import { exportScannedBoardsToExcel } from "../../utils/returnedProductExcelExport";
+import {
+  addReturnedProductScan,
+  claimReturnedProductScans,
+  deleteReturnedProductScan,
+  getReturnedProductScans,
+  pollReturnedProductScans,
+} from "../../services/returnedProductScanService";
+
+const SCAN_POLL_INTERVAL_MS = 5000;
 
 /**
     public enum ReturnedProductTransactionType
@@ -64,6 +73,69 @@ class ReturnProductExport extends Form {
   get excelExportTransactionTypes() {
     return [2, 3];
   }
+
+  usesScanList(transactionType) {
+    return this.excelExportTransactionTypes.includes(parseInt(transactionType));
+  }
+
+  // The scan list lives on the server so that scanning can be started on one
+  // device (e.g. a phone) and continued/exported on another. It's shared per
+  // destination and polled while a scan-list destination is selected.
+  toScannedBoard = (scan) => {
+    const missing = scan.modelId == null;
+    return {
+      ...scan,
+      modelName: missing ? this.props.t("errors.modelNotFound") : scan.modelName,
+      missing,
+    };
+  };
+
+  // Bumped on every local change to the scan list so an in-flight poll that
+  // started before the change doesn't overwrite it with stale data.
+  scanListVersion = 0;
+
+  setScannedBoards(scans) {
+    this.scanListVersion++;
+    this.setState({ scannedBoards: scans.map(this.toScannedBoard) });
+  }
+
+  startScanPolling() {
+    this.stopScanPolling();
+    this.scanPollTimer = setInterval(this.pollScannedBoards, SCAN_POLL_INTERVAL_MS);
+  }
+
+  stopScanPolling() {
+    clearInterval(this.scanPollTimer);
+    this.scanPollTimer = null;
+  }
+
+  pollScannedBoards = async () => {
+    const { selectedTransactionType, loading } = this.state;
+    if (loading || document.hidden || !this.usesScanList(selectedTransactionType)) {
+      return;
+    }
+
+    const version = this.scanListVersion;
+    try {
+      const { data: scans } = await pollReturnedProductScans(
+        parseInt(selectedTransactionType)
+      );
+
+      if (
+        version !== this.scanListVersion ||
+        selectedTransactionType !== this.state.selectedTransactionType
+      ) {
+        return;
+      }
+
+      const sameList =
+        scans.map((s) => s.id).join() ===
+        this.state.scannedBoards.map((b) => b.id).join();
+      if (!sameList) this.setScannedBoards(scans);
+    } catch {
+      // Try again on the next tick.
+    }
+  };
 
   componentDidUpdate() {
     this.setFocusOnBarcode();
@@ -125,27 +197,22 @@ class ReturnProductExport extends Form {
           model = undefined;
         }
 
-        const usesScanList = this.excelExportTransactionTypes.includes(
-          parseInt(selectedTransactionType)
-        );
-
-        if (usesScanList) {
+        if (this.usesScanList(selectedTransactionType)) {
           const missing = model === "" || model === undefined || model === null;
 
-          const scannedBoard = {
-            id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+          const { data: scan } = await addReturnedProductScan({
             barcode,
             modelId: missing ? null : model.id,
-            modelName: missing ? t("errors.modelNotFound") : model.name,
             sapCode: missing ? sapCode : model.sapCode,
             serialCode: fiveLetterCode,
             count: parseInt(count) || 0,
-            missing,
-          };
+            transactionType: parseInt(selectedTransactionType),
+          });
 
+          this.scanListVersion++;
           this.setState((prevState) => ({
             fields: { export: "" },
-            scannedBoards: [...prevState.scannedBoards, scannedBoard],
+            scannedBoards: [...prevState.scannedBoards, this.toScannedBoard(scan)],
           }));
           return;
         }
@@ -191,7 +258,18 @@ class ReturnProductExport extends Form {
     }
   };
 
-  handleRemoveScanned = (id) => {
+  handleRemoveScanned = async (id) => {
+    try {
+      await deleteReturnedProductScan(id);
+    } catch (ex) {
+      // Already removed (e.g. from another device); just drop it locally.
+      if (ex.response?.status !== 404) {
+        if (ex.response) toast.error(ex.response.data?.message || this.props.t("common:errors.unexpected"));
+        return;
+      }
+    }
+
+    this.scanListVersion++;
     this.setState((prevState) => ({
       scannedBoards: prevState.scannedBoards.filter((b) => b.id !== id),
     }));
@@ -199,15 +277,32 @@ class ReturnProductExport extends Form {
 
   handleExportToExcel = async () => {
     const { t } = this.props;
-    const { scannedBoards, selectedTransactionType } = this.state;
+    const { selectedTransactionType } = this.state;
+    const transactionType = parseInt(selectedTransactionType);
 
-    if (scannedBoards.length === 0) {
+    if (this.state.scannedBoards.length === 0) {
       toast.warning(t("export.emptyScanWarning"));
       return;
     }
 
     this.setState({ loading: true });
     try {
+      // Take the scans off the shared list first; only the ones we got back
+      // are exported, so another device exporting at the same time can't
+      // deduct the same boards twice.
+      const { data: claimed } = await claimReturnedProductScans(
+        transactionType,
+        this.state.scannedBoards.map((b) => b.id)
+      );
+      const scannedBoards = claimed.map(this.toScannedBoard);
+
+      if (scannedBoards.length === 0) {
+        toast.warning(t("export.alreadyExportedWarning"));
+        const { data: scans } = await getReturnedProductScans(transactionType);
+        this.setScannedBoards(scans);
+        return;
+      }
+
       const committable = scannedBoards.filter((b) => !b.missing);
       const results = await Promise.allSettled(
         committable.map((b) =>
@@ -230,14 +325,18 @@ class ReturnProductExport extends Form {
 
       await exportScannedBoardsToExcel(scannedBoards, destinationLabel, t);
 
-      const { data } = await getState(parseInt(selectedTransactionType));
+      const { data } = await getState(transactionType);
+      // Re-read rather than clearing: boards scanned on another device while
+      // we were exporting stay on the list.
+      const { data: scans } = await getReturnedProductScans(transactionType);
 
-      this.setState({ data, scannedBoards: [] });
+      this.setState({ data });
+      this.setScannedBoards(scans);
       if (failedCount === 0) {
         toast.success(t("export.exportSuccess"));
       }
     } catch (ex) {
-      toast.error(this.props.t("common:errors.unexpected"));
+      toast.error(ex.response?.data?.message || this.props.t("common:errors.unexpected"));
     } finally {
       this.setState({ loading: false });
     }
@@ -246,6 +345,10 @@ class ReturnProductExport extends Form {
   async componentDidMount() {
     const { user } = this.props;
     this.setState({ authorized: user != null });
+  }
+
+  componentWillUnmount() {
+    this.stopScanPolling();
   }
 
   handleDelete = async (transaction) => {
@@ -274,9 +377,17 @@ class ReturnProductExport extends Form {
     try {
       this.setState({ loading: true });
 
-      const { data } = await getState(parseInt(id));
+      this.stopScanPolling();
 
-      this.setState({ data, selectedTransactionType: id, scannedBoards: [] });
+      const { data } = await getState(parseInt(id));
+      const scans = this.usesScanList(id)
+        ? (await getReturnedProductScans(parseInt(id))).data
+        : [];
+
+      this.setState({ data, selectedTransactionType: id });
+      this.setScannedBoards(scans);
+
+      if (this.usesScanList(id)) this.startScanPolling();
     } catch (ex) {
       toast(ex.response.data.message);
     } finally {

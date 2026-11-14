@@ -36,6 +36,7 @@
     "emptyScanWarning": "Avval kamida bitta plata skanerlang",
     "exportSuccess": "Platalar ombordan chiqarildi va Excel fayli tayyorlandi",
     "partialFailureWarning": "{{count}} ta plata ombordan chiqarilmadi",
+    "alreadyExportedWarning": "Bu platalar boshqa qurilmadan allaqachon chiqarilgan",
     "excel": {
       "title": "SMT Remontdan TV zavodga",
       "subtitle": "ARTEL TV platalar",
