@@ -1,11 +1,12 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import i18n from "../i18n/i18n";
+import { getValidToken } from "./authToken";
 
 // Most endpoints are anonymous, but newer ones (feeder verification) require a
 // logged-in user so actions are attributable - send the token whenever there is one.
 axios.interceptors.request.use((request) => {
-  const token = localStorage.getItem("token");
+  const token = getValidToken();
   if (token && !request.headers.Authorization) {
     request.headers.Authorization = `Bearer ${token}`;
   }

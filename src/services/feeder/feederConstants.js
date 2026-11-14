@@ -30,13 +30,14 @@ export const statusBadge = (status) =>
   }[status]);
 
 // Roles allowed to change machine layouts and activate setups (FeederRoles.SetupManagers
-// on the backend). The JWT "role" claim is a string for one role, an array for several.
-const SETUP_MANAGER_ROLES = ["Admin", "Engineer"];
+// on the backend, where roles are lower case). The JWT "role" claim is a string for one
+// role, an array for several.
+const SETUP_MANAGER_ROLES = ["admin", "engineer"];
 
 export function isSetupManager(user) {
   if (!user || !user.role) return false;
   const roles = Array.isArray(user.role) ? user.role : [user.role];
-  return roles.some((role) => SETUP_MANAGER_ROLES.includes(role));
+  return roles.some((role) => SETUP_MANAGER_ROLES.includes(String(role).toLowerCase()));
 }
 
 export const formatDate = (value) =>

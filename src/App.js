@@ -9,7 +9,7 @@ import Login from "./components/forms/login";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Register from "./components/forms/register";
-import jwtDecode from "jwt-decode";
+import { getCurrentUser } from "./services/authToken";
 import DefectForm from "./components/forms/defectForm";
 import LineForm from "./components/forms/lineForm";
 import LineDefectForm from "./components/forms/lineDefectForm";
@@ -103,12 +103,21 @@ class App extends Component {
   state = {};
 
   componentDidMount() {
-    try {
-      const jwt = localStorage.getItem("token");
-      const user = jwtDecode(jwt);
-      this.setState({ user });
-    } catch (ex) {}
+    this.loadUser();
+    // Tokens expire after an hour - re-check periodically so the navbar and the
+    // role-gated pages stop treating an expired session as logged in.
+    this.expiryTimer = setInterval(this.loadUser, 60 * 1000);
   }
+
+  componentWillUnmount() {
+    clearInterval(this.expiryTimer);
+  }
+
+  loadUser = () => {
+    const user = getCurrentUser();
+    if ((user && user.exp) !== (this.state.user && this.state.user.exp))
+      this.setState({ user });
+  };
 
   render() {
     const { user } = this.state;
