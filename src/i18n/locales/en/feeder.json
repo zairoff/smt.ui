@@ -27,10 +27,6 @@
     "active": "Active",
     "archived": "Archived"
   },
-  "errors": {
-    "loginRequired": "Please log in first",
-    "forbidden": "Only engineers can do this"
-  },
   "machine": {
     "title": "Line machine",
     "name": "Machine name",
@@ -38,7 +34,6 @@
     "create": "Create machine",
     "saved": "Saved",
     "noMachine": "This line has no machine yet. Create it first - modules and feeders are added by the first Excel import or below.",
-    "readOnly": "View only - changing the machine layout requires the Engineer role.",
     "modules": "Modules",
     "noModules": "No modules yet.",
     "moduleName": "Module (e.g. M1)",
@@ -117,7 +112,6 @@
     "activatedBy": "activated by {{user}} at {{date}}",
     "activate": "Activate",
     "rollback": "Activate again (rollback)",
-    "activateNeedsEngineer": "Activation requires the Engineer role.",
     "activateTitle": "Activate this setup?",
     "activateMessage": "It becomes the setup operators verify against on this line. The currently active version is archived.",
     "activated": "v{{version}} is now active",

@@ -18,7 +18,6 @@ import {
   statusKey,
   statusBadge,
   sideKey,
-  isSetupManager,
   errorMessage,
   formatDate,
 } from "../../services/feeder/feederConstants";
@@ -62,7 +61,7 @@ class FeederSetupDetail extends Form {
       const { data: lines } = await getLines();
       this.setState({ lines: lines.filter((l) => l.isActive !== false) });
     } catch (ex) {
-      toast.error(errorMessage(ex, this.props.t));
+      toast.error(errorMessage(ex));
     }
     await this.load();
   }
@@ -83,7 +82,7 @@ class FeederSetupDetail extends Form {
       const tab = setup && setup.status === SETUP_STATUS.DRAFT && diff && diff.againstSetupId ? "diff" : "items";
       this.setState({ setup: setup || null, diff, tab });
     } catch (ex) {
-      toast.error(errorMessage(ex, this.props.t));
+      toast.error(errorMessage(ex));
     } finally {
       this.setState({ loading: false });
     }
@@ -98,7 +97,7 @@ class FeederSetupDetail extends Form {
       if (afterSuccess) afterSuccess(data);
       else await this.load();
     } catch (ex) {
-      toast.error(errorMessage(ex, t));
+      toast.error(errorMessage(ex));
       this.setState({ loading: false });
     }
   }
@@ -126,7 +125,7 @@ class FeederSetupDetail extends Form {
     );
   };
 
-  renderHeader(setup, canManage) {
+  renderHeader(setup) {
     const { t } = this.props;
     const { lines, copyLineId } = this.state;
     const otherLines = lines.filter((l) => l.id !== setup.lineId);
@@ -150,13 +149,10 @@ class FeederSetupDetail extends Form {
           </div>
 
           <div className="d-flex flex-wrap gap-2 align-items-center">
-            {setup.status !== SETUP_STATUS.ACTIVE && canManage && (
+            {setup.status !== SETUP_STATUS.ACTIVE && (
               <button type="button" className="btn btn-success" onClick={this.handleActivate}>
                 {setup.status === SETUP_STATUS.ARCHIVED ? t("feeder:detail.rollback") : t("feeder:detail.activate")}
               </button>
-            )}
-            {setup.status !== SETUP_STATUS.ACTIVE && !canManage && (
-              <span className="text-muted small">{t("feeder:detail.activateNeedsEngineer")}</span>
             )}
             {setup.status === SETUP_STATUS.DRAFT && (
               <button type="button" className="btn btn-outline-danger" onClick={this.handleDelete}>
@@ -286,7 +282,7 @@ class FeederSetupDetail extends Form {
   }
 
   render() {
-    const { t, user } = this.props;
+    const { t } = this.props;
     const { setup, diff, tab, loading, confirmAction } = this.state;
 
     return (
@@ -318,7 +314,7 @@ class FeederSetupDetail extends Form {
 
         {setup && (
           <div className="col-12">
-            {this.renderHeader(setup, isSetupManager(user))}
+            {this.renderHeader(setup)}
 
             <ul className="nav nav-tabs mb-3">
               <li className="nav-item">

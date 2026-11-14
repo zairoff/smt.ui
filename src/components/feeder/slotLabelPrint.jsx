@@ -43,7 +43,7 @@ class SlotLabelPrint extends Component {
       ((data && data.modules) || []).forEach((m) => (selectedModules[m.id] = true));
       this.setState({ machine: data || null, selectedModules });
     } catch (ex) {
-      this.setState({ error: errorMessage(ex, this.props.t) });
+      this.setState({ error: errorMessage(ex) });
     } finally {
       this.setState({ loading: false });
     }

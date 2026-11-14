@@ -302,11 +302,11 @@ class App extends Component {
               />
               <Route
                 path="/feeder-setup/:id"
-                element={<FeederSetupDetail user={user} />}
+                element={<FeederSetupDetail />}
               />
               <Route
                 path="/feeder-machine"
-                element={<LineMachinePage user={user} />}
+                element={<LineMachinePage />}
               />
               <Route
                 path="/feeder-slot-labels/:lineId"

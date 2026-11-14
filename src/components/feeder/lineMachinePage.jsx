@@ -15,13 +15,12 @@ import {
 import {
   MACHINE_VENDOR,
   vendorKey,
-  isSetupManager,
   errorMessage,
 } from "../../services/feeder/feederConstants";
 
-// Machine layout of a line: modules and their feeder slots. Engineers edit it;
-// everyone else sees it read-only. Slots usually get created by the first Excel
-// import, so this page is mostly for fixing layouts and printing slot stickers.
+// Machine layout of a line: modules and their feeder slots. Slots usually get
+// created by the first Excel import, so this page is mostly for fixing layouts
+// and printing slot stickers.
 class LineMachinePage extends Form {
   state = {
     lines: [],
@@ -41,7 +40,7 @@ class LineMachinePage extends Form {
       const { data: lines } = await getLines();
       this.setState({ lines: lines.filter((l) => l.isActive !== false) });
     } catch (ex) {
-      toast.error(errorMessage(ex, this.props.t));
+      toast.error(errorMessage(ex));
     } finally {
       this.setState({ loading: false });
     }
@@ -59,7 +58,7 @@ class LineMachinePage extends Form {
       const { data } = await getLineMachine(lineId);
       this.applyMachine(data || null);
     } catch (ex) {
-      toast.error(errorMessage(ex, this.props.t));
+      toast.error(errorMessage(ex));
     } finally {
       this.setState({ loading: false });
     }
@@ -90,7 +89,7 @@ class LineMachinePage extends Form {
       if (successKey) toast.success(t(successKey));
       return true;
     } catch (ex) {
-      toast.error(errorMessage(ex, t));
+      toast.error(errorMessage(ex));
       return false;
     } finally {
       this.setState({ loading: false });
@@ -155,7 +154,7 @@ class LineMachinePage extends Form {
     });
   }
 
-  renderMachineForm(canEdit) {
+  renderMachineForm() {
     const { t } = this.props;
     const { machine, machineForm } = this.state;
 
@@ -167,7 +166,6 @@ class LineMachinePage extends Form {
             className="form-control form-control-lg"
             value={machineForm.name}
             placeholder="NXT-III / NPM-W2"
-            disabled={!canEdit}
             required
             onChange={(e) =>
               this.setState({ machineForm: { ...machineForm, name: e.target.value } })
@@ -179,7 +177,6 @@ class LineMachinePage extends Form {
           <select
             className="form-select form-select-lg"
             value={machineForm.vendor}
-            disabled={!canEdit}
             onChange={(e) =>
               this.setState({ machineForm: { ...machineForm, vendor: e.target.value } })
             }
@@ -191,18 +188,16 @@ class LineMachinePage extends Form {
             ))}
           </select>
         </div>
-        {canEdit && (
-          <div className="col-md-3">
-            <button type="submit" className="btn btn-primary btn-lg w-100">
-              {machine ? t("feeder:common.save") : t("feeder:machine.create")}
-            </button>
-          </div>
-        )}
+        <div className="col-md-3">
+          <button type="submit" className="btn btn-primary btn-lg w-100">
+            {machine ? t("feeder:common.save") : t("feeder:machine.create")}
+          </button>
+        </div>
       </form>
     );
   }
 
-  renderModule(module, canEdit) {
+  renderModule(module) {
     const { t } = this.props;
     const edit = this.state.moduleEdits[module.id] || {};
     const range = this.state.slotRanges[module.id] || { from: "", to: "" };
@@ -211,36 +206,30 @@ class LineMachinePage extends Form {
     return (
       <div key={module.id} className="card mb-3">
         <div className="card-header d-flex flex-wrap gap-2 align-items-center">
-          {canEdit ? (
-            <>
-              <input
-                className="form-control form-control-sm fw-bold"
-                style={{ width: 110 }}
-                value={edit.name || ""}
-                onChange={(e) => this.setNested("moduleEdits", module.id, "name", e.target.value)}
-                aria-label={t("feeder:machine.moduleName")}
-              />
-              <input
-                type="number"
-                className="form-control form-control-sm"
-                style={{ width: 80 }}
-                value={edit.order}
-                onChange={(e) => this.setNested("moduleEdits", module.id, "order", e.target.value)}
-                aria-label={t("feeder:machine.moduleOrder")}
-                title={t("feeder:machine.moduleOrder")}
-              />
-              <button
-                type="button"
-                className="btn btn-sm btn-outline-primary"
-                disabled={edit.name === module.name && Number(edit.order) === module.order}
-                onClick={() => this.handleUpdateModule(module.id)}
-              >
-                {t("feeder:common.save")}
-              </button>
-            </>
-          ) : (
-            <strong>{module.name}</strong>
-          )}
+          <input
+            className="form-control form-control-sm fw-bold"
+            style={{ width: 110 }}
+            value={edit.name || ""}
+            onChange={(e) => this.setNested("moduleEdits", module.id, "name", e.target.value)}
+            aria-label={t("feeder:machine.moduleName")}
+          />
+          <input
+            type="number"
+            className="form-control form-control-sm"
+            style={{ width: 80 }}
+            value={edit.order}
+            onChange={(e) => this.setNested("moduleEdits", module.id, "order", e.target.value)}
+            aria-label={t("feeder:machine.moduleOrder")}
+            title={t("feeder:machine.moduleOrder")}
+          />
+          <button
+            type="button"
+            className="btn btn-sm btn-outline-primary"
+            disabled={edit.name === module.name && Number(edit.order) === module.order}
+            onClick={() => this.handleUpdateModule(module.id)}
+          >
+            {t("feeder:common.save")}
+          </button>
           <span className="ms-auto text-muted small">
             {t("feeder:machine.slotCount", { active: activeCount, total: module.slots.length })}
           </span>
@@ -255,11 +244,10 @@ class LineMachinePage extends Form {
                   slot.isActive ? "btn-outline-success" : "btn-outline-secondary text-decoration-line-through"
                 }`}
                 style={{ minWidth: 48 }}
-                disabled={!canEdit}
                 title={
                   slot.slotCode +
                   (slot.currentRCode ? ` - ${slot.currentRCode}` : "") +
-                  (canEdit ? ` (${t(slot.isActive ? "feeder:machine.clickToDisable" : "feeder:machine.clickToEnable")})` : "")
+                  ` (${t(slot.isActive ? "feeder:machine.clickToDisable" : "feeder:machine.clickToEnable")})`
                 }
                 onClick={() => this.handleToggleSlot(slot)}
               >
@@ -270,47 +258,44 @@ class LineMachinePage extends Form {
               <span className="text-muted">{t("feeder:machine.noSlots")}</span>
             )}
           </div>
-          {canEdit && (
-            <div className="d-flex gap-2 align-items-center">
-              <span className="small">{t("feeder:machine.addSlots")}</span>
-              <input
-                type="number"
-                min="1"
-                className="form-control form-control-sm"
-                style={{ width: 80 }}
-                placeholder={t("feeder:machine.from")}
-                value={range.from}
-                onChange={(e) => this.setNested("slotRanges", module.id, "from", e.target.value)}
-              />
-              <span>-</span>
-              <input
-                type="number"
-                min="1"
-                className="form-control form-control-sm"
-                style={{ width: 80 }}
-                placeholder={t("feeder:machine.to")}
-                value={range.to}
-                onChange={(e) => this.setNested("slotRanges", module.id, "to", e.target.value)}
-              />
-              <button
-                type="button"
-                className="btn btn-sm btn-outline-primary"
-                disabled={!range.from || !range.to}
-                onClick={() => this.handleAddSlots(module.id)}
-              >
-                {t("feeder:common.add")}
-              </button>
-            </div>
-          )}
+          <div className="d-flex gap-2 align-items-center">
+            <span className="small">{t("feeder:machine.addSlots")}</span>
+            <input
+              type="number"
+              min="1"
+              className="form-control form-control-sm"
+              style={{ width: 80 }}
+              placeholder={t("feeder:machine.from")}
+              value={range.from}
+              onChange={(e) => this.setNested("slotRanges", module.id, "from", e.target.value)}
+            />
+            <span>-</span>
+            <input
+              type="number"
+              min="1"
+              className="form-control form-control-sm"
+              style={{ width: 80 }}
+              placeholder={t("feeder:machine.to")}
+              value={range.to}
+              onChange={(e) => this.setNested("slotRanges", module.id, "to", e.target.value)}
+            />
+            <button
+              type="button"
+              className="btn btn-sm btn-outline-primary"
+              disabled={!range.from || !range.to}
+              onClick={() => this.handleAddSlots(module.id)}
+            >
+              {t("feeder:common.add")}
+            </button>
+          </div>
         </div>
       </div>
     );
   }
 
   render() {
-    const { t, user } = this.props;
+    const { t } = this.props;
     const { lines, lineId, machine, newModule, loading } = this.state;
-    const canEdit = isSetupManager(user);
 
     return (
       <div className="row">
@@ -343,50 +328,42 @@ class LineMachinePage extends Form {
           )}
         </div>
 
-        {!canEdit && (
-          <div className="col-12">
-            <div className="alert alert-secondary py-2">{t("feeder:machine.readOnly")}</div>
-          </div>
-        )}
-
         {lineId && !loading && (
           <div className="col-12">
             {!machine && (
               <div className="alert alert-info">{t("feeder:machine.noMachine")}</div>
             )}
-            {this.renderMachineForm(canEdit)}
+            {this.renderMachineForm()}
 
             {machine && (
               <>
                 <h6 className="mt-2">{t("feeder:machine.modules")}</h6>
-                {machine.modules.map((m) => this.renderModule(m, canEdit))}
+                {machine.modules.map((m) => this.renderModule(m))}
                 {machine.modules.length === 0 && (
                   <p className="text-muted">{t("feeder:machine.noModules")}</p>
                 )}
 
-                {canEdit && (
-                  <form className="d-flex gap-2 align-items-center mb-4" onSubmit={this.handleAddModule}>
-                    <input
-                      className="form-control"
-                      style={{ width: 160 }}
-                      placeholder={t("feeder:machine.moduleName")}
-                      value={newModule.name}
-                      required
-                      onChange={(e) => this.setState({ newModule: { ...newModule, name: e.target.value } })}
-                    />
-                    <input
-                      type="number"
-                      className="form-control"
-                      style={{ width: 110 }}
-                      placeholder={t("feeder:machine.moduleOrder")}
-                      value={newModule.order}
-                      onChange={(e) => this.setState({ newModule: { ...newModule, order: e.target.value } })}
-                    />
-                    <button type="submit" className="btn btn-outline-primary">
-                      {t("feeder:machine.addModule")}
-                    </button>
-                  </form>
-                )}
+                <form className="d-flex gap-2 align-items-center mb-4" onSubmit={this.handleAddModule}>
+                  <input
+                    className="form-control"
+                    style={{ width: 160 }}
+                    placeholder={t("feeder:machine.moduleName")}
+                    value={newModule.name}
+                    required
+                    onChange={(e) => this.setState({ newModule: { ...newModule, name: e.target.value } })}
+                  />
+                  <input
+                    type="number"
+                    className="form-control"
+                    style={{ width: 110 }}
+                    placeholder={t("feeder:machine.moduleOrder")}
+                    value={newModule.order}
+                    onChange={(e) => this.setState({ newModule: { ...newModule, order: e.target.value } })}
+                  />
+                  <button type="submit" className="btn btn-outline-primary">
+                    {t("feeder:machine.addModule")}
+                  </button>
+                </form>
               </>
             )}
           </div>

@@ -32,7 +32,7 @@ class FeederSetupList extends Form {
       const { data: lines } = await getLines();
       this.setState({ lines: lines.filter((l) => l.isActive !== false) });
     } catch (ex) {
-      toast.error(errorMessage(ex, this.props.t));
+      toast.error(errorMessage(ex));
     }
     await this.loadSetups();
   }
@@ -47,7 +47,7 @@ class FeederSetupList extends Form {
       });
       this.setState({ setups });
     } catch (ex) {
-      toast.error(errorMessage(ex, this.props.t));
+      toast.error(errorMessage(ex));
     } finally {
       this.setState({ loading: false });
     }

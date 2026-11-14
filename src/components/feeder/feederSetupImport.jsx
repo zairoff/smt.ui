@@ -50,7 +50,7 @@ class FeederSetupImport extends Form {
         models: models.filter((m) => m.isActive !== false),
       });
     } catch (ex) {
-      toast.error(errorMessage(ex, this.props.t));
+      toast.error(errorMessage(ex));
     } finally {
       this.setState({ loading: false });
     }
@@ -100,7 +100,7 @@ class FeederSetupImport extends Form {
       this.setState({ preview });
     } catch (ex) {
       this.setState({ preview: null });
-      toast.error(errorMessage(ex, this.props.t));
+      toast.error(errorMessage(ex));
     } finally {
       this.setState({ loading: false });
     }
@@ -114,7 +114,7 @@ class FeederSetupImport extends Form {
       toast.success(t("feeder:import.saved", { version: setup.version }));
       navigate(`/feeder-setup/${setup.id}`);
     } catch (ex) {
-      toast.error(errorMessage(ex, t));
+      toast.error(errorMessage(ex));
       this.setState({ loading: false });
     }
   };

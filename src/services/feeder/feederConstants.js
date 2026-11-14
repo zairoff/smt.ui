@@ -29,23 +29,10 @@ export const statusBadge = (status) =>
     [SETUP_STATUS.ARCHIVED]: "bg-secondary",
   }[status]);
 
-// Roles allowed to change machine layouts and activate setups (FeederRoles.SetupManagers
-// on the backend, where roles are lower case). The JWT "role" claim is a string for one
-// role, an array for several.
-const SETUP_MANAGER_ROLES = ["admin", "engineer"];
-
-export function isSetupManager(user) {
-  if (!user || !user.role) return false;
-  const roles = Array.isArray(user.role) ? user.role : [user.role];
-  return roles.some((role) => SETUP_MANAGER_ROLES.includes(String(role).toLowerCase()));
-}
-
 export const formatDate = (value) =>
   value ? format(new Date(value), "yyyy-MM-dd HH:mm") : "";
 
-export function errorMessage(ex, t) {
-  if (ex.response && ex.response.status === 401) return t("feeder:errors.loginRequired");
-  if (ex.response && ex.response.status === 403) return t("feeder:errors.forbidden");
+export function errorMessage(ex) {
   return (
     (ex.response && ex.response.data && ex.response.data.message) || ex.message
   );

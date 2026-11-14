@@ -27,10 +27,6 @@
     "active": "Faol",
     "archived": "Arxivda"
   },
-  "errors": {
-    "loginRequired": "Avval tizimga kiring",
-    "forbidden": "Buni faqat muhandis qila oladi"
-  },
   "machine": {
     "title": "Liniya stanogi",
     "name": "Stanok nomi",
@@ -38,7 +34,6 @@
     "create": "Stanok yaratish",
     "saved": "Saqlandi",
     "noMachine": "Bu liniyada hali stanok yo'q. Avval uni yarating - modul va fiderlar birinchi Excel importida yoki quyida qo'shiladi.",
-    "readOnly": "Faqat ko'rish - stanok tuzilishini faqat muhandis o'zgartira oladi.",
     "modules": "Modullar",
     "noModules": "Hali modul yo'q.",
     "moduleName": "Modul (masalan M1)",
@@ -117,7 +112,6 @@
     "activatedBy": "{{user}} faollashtirdi, {{date}}",
     "activate": "Faollashtirish",
     "rollback": "Qayta faollashtirish (orqaga qaytarish)",
-    "activateNeedsEngineer": "Faollashtirishni faqat muhandis qila oladi.",
     "activateTitle": "Bu jadval faollashtirilsinmi?",
     "activateMessage": "Operatorlar bu liniyada katushkalarni shu jadval bo'yicha tekshiradi. Hozirgi faol versiya arxivga o'tadi.",
     "activated": "v{{version}} endi faol",
