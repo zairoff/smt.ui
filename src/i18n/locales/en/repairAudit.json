@@ -13,7 +13,7 @@
     "counted": "{{barcode}} counted",
     "reconfirmed": "{{barcode}} re-confirmed",
     "notFound": "Barcode does not match any known board model",
-    "sessionTitle": "This session",
+    "sessionTitle": "Scanned today",
     "totalBoards": "Total: {{count}}",
     "noBoardsYet": "No boards scanned yet.",
     "columns": {

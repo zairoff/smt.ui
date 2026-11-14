@@ -13,7 +13,7 @@
     "counted": "{{barcode}} учтён",
     "reconfirmed": "{{barcode}} подтверждён повторно",
     "notFound": "Штрихкод не соответствует ни одной известной модели",
-    "sessionTitle": "Текущая сессия",
+    "sessionTitle": "Отсканировано сегодня",
     "totalBoards": "Всего: {{count}}",
     "noBoardsYet": "Пока ничего не отсканировано.",
     "columns": {

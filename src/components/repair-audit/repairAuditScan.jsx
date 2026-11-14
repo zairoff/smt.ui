@@ -6,11 +6,32 @@ import { format } from "date-fns";
 import Form from "../forms/form";
 import { getPcbRepairers } from "../../services/pcbRepairerService";
 import {
+  getRepairAuditsByDateRange,
+  pollRepairAuditsByDateRange,
   scanRepairAudit,
   REPAIR_AUDIT_TYPE,
 } from "../../services/repairAuditService";
 
-let nextRowKey = 0;
+const SCAN_POLL_INTERVAL_MS = 5000;
+
+const today = () => format(new Date(), "yyyy-MM-dd");
+
+// The scan list is today's audits of the selected type as stored on the
+// server, so scanning can be started on one device (e.g. a phone) and
+// continued on another. A board counts once a day; it shows as re-confirmed
+// when it was first scanned on an earlier day.
+const toScanRow = (audit) => ({
+  id: audit.id,
+  time: audit.lastConfirmedDate,
+  barcode: audit.barcode,
+  modelName: audit.modelName,
+  sapCode: audit.sapCode,
+  employee: audit.employee,
+  reconfirmed: audit.firstScannedDate.slice(0, 10) < today(),
+});
+
+const newestFirst = (a, b) =>
+  b.time.localeCompare(a.time) || b.id - a.id;
 
 class RepairAuditScan extends Form {
   barcodeRef = React.createRef();
@@ -29,13 +50,51 @@ class RepairAuditScan extends Form {
     try {
       const { data: repairers } = await getPcbRepairers();
       this.setState({ repairers });
+      await this.loadScans(this.state.type);
     } catch (ex) {
       toast.error(this.props.t("common:errors.unexpected"));
     } finally {
       this.setState({ loading: false });
       this.setFocusOnBarcode();
     }
+
+    this.scanPollTimer = setInterval(this.pollScans, SCAN_POLL_INTERVAL_MS);
   }
+
+  componentWillUnmount() {
+    clearInterval(this.scanPollTimer);
+  }
+
+  // Bumped on every local change to the scan list so an in-flight poll that
+  // started before the change doesn't overwrite it with stale data.
+  scanListVersion = 0;
+
+  setScans(audits) {
+    this.scanListVersion++;
+    this.setState({ scans: audits.map(toScanRow).sort(newestFirst) });
+  }
+
+  async loadScans(type) {
+    const { data } = await getRepairAuditsByDateRange(today(), today(), type);
+    if (type === this.state.type) this.setScans(data);
+  }
+
+  pollScans = async () => {
+    const { type, loading } = this.state;
+    if (loading || document.hidden) return;
+
+    const version = this.scanListVersion;
+    try {
+      const { data } = await pollRepairAuditsByDateRange(today(), today(), type);
+      if (version !== this.scanListVersion || type !== this.state.type) return;
+
+      const rows = data.map(toScanRow).sort(newestFirst);
+      const key = (list) => list.map((s) => `${s.id}|${s.time}|${s.employee}`).join();
+      if (key(rows) !== key(this.state.scans)) this.setScans(data);
+    } catch {
+      // Try again on the next tick.
+    }
+  };
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.employee !== this.state.employee) {
@@ -47,16 +106,27 @@ class RepairAuditScan extends Form {
     if (this.barcodeRef.current) this.barcodeRef.current.focus();
   }
 
-  handleSelectChange = ({ target }) => {
+  handleSelectChange = async ({ target }) => {
     const { name, value } = target;
     if (name === "Repairer") this.setState({ employee: value });
-    if (name === "Type") this.setState({ type: Number(value), scans: [] });
+    if (name === "Type") {
+      const type = Number(value);
+      this.scanListVersion++;
+      this.setState({ type, scans: [], loading: true });
+      try {
+        await this.loadScans(type);
+      } catch (ex) {
+        toast.error(this.props.t("common:errors.unexpected"));
+      } finally {
+        this.setState({ loading: false });
+      }
+    }
   };
 
   handleInputKeyPress = async (e) => {
     if (e.key !== "Enter") return;
 
-    const { employee, type, scans } = this.state;
+    const { employee, type } = this.state;
     const barcode = e.target.value;
     const { t } = this.props;
 
@@ -70,16 +140,12 @@ class RepairAuditScan extends Form {
     this.setState({ loading: true });
     try {
       const { data: result } = await scanRepairAudit(barcode, employee, type);
-      const scan = {
-        key: nextRowKey++,
-        time: format(new Date(), "yyyy-MM-dd HH:mm:ss"),
-        barcode: result.barcode,
-        modelName: result.modelName,
-        sapCode: result.sapCode,
-        employee: result.employee,
-        reconfirmed: result.reconfirmed,
-      };
-      this.setState({ scans: [scan, ...scans] });
+      // A board already on today's list is re-scanned in place, not added twice.
+      const scan = toScanRow(result);
+      this.scanListVersion++;
+      this.setState((prevState) => ({
+        scans: [scan, ...prevState.scans.filter((s) => s.id !== scan.id)],
+      }));
       toast.success(
         t(
           result.reconfirmed
@@ -180,7 +246,7 @@ class RepairAuditScan extends Form {
             </thead>
             <tbody>
               {scans.map((s) => (
-                <tr key={s.key}>
+                <tr key={s.id}>
                   <td>{s.modelName}</td>
                   <td>{s.barcode}</td>
                   <td>{s.sapCode}</td>

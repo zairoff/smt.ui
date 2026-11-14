@@ -1,7 +1,12 @@
+import axios from "axios";
 import config from "../config.json";
 import http from "./httpService";
 
 const endPoint = config.apiUrl + "repairaudit";
+
+// Separate instance so background polling doesn't hit the global error toast
+// on every tick while the connection is down.
+const quietHttp = axios.create();
 
 // Matches SMT.Domain.RepairAuditType
 export const REPAIR_AUDIT_TYPE = {
@@ -28,6 +33,12 @@ export function getRepairAuditsByDateRange(from, to, type, modelId) {
     }`
   );
   return http.get(query);
+}
+
+export function pollRepairAuditsByDateRange(from, to, type) {
+  return quietHttp.get(
+    endPoint.concat(`/GetByDateRange?from=${from}&to=${to}&type=${type}`)
+  );
 }
 
 export function scanRepairAudit(barcode, employee, type) {

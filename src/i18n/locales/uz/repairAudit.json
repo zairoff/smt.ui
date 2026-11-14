@@ -13,7 +13,7 @@
     "counted": "{{barcode}} hisoblandi",
     "reconfirmed": "{{barcode}} qayta tasdiqlandi",
     "notFound": "Shtrix-kod hech qanday ma'lum modelga mos kelmadi",
-    "sessionTitle": "Joriy sessiya",
+    "sessionTitle": "Bugun skanerlangan",
     "totalBoards": "Jami: {{count}}",
     "noBoardsYet": "Hali hech narsa skanerlanmagan.",
     "columns": {
