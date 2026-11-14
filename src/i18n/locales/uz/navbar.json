@@ -1,5 +1,6 @@
 {
   "feeder": {
+    "station": "Operator posti",
     "setups": "Fider jadvallari",
     "import": "Jadval import qilish",
     "machine": "Liniya stanogi va stikerlar"

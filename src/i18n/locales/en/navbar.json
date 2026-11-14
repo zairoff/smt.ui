@@ -1,5 +1,6 @@
 {
   "feeder": {
+    "station": "Operator station",
     "setups": "Feeder setups",
     "import": "Import setup",
     "machine": "Line machine & stickers"

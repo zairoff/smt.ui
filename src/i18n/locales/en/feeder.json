@@ -139,5 +139,42 @@
     "changed": "Changed",
     "unchanged": "Unchanged",
     "noChanges": "No changes."
+  },
+  "station": {
+    "pickLine": "Operator station - choose the line",
+    "pickLineHint": "The station opens full-screen. On the line PC you can bookmark it directly.",
+    "setup": "Setup",
+    "selectSetup": "Select model / side...",
+    "selectSetupFirst": "Select the model (setup) first",
+    "noSetups": "This line has no active feeder setup. Import one and activate it.",
+    "scanReel": "Scan the reel",
+    "scanReelPlaceholder": "Scan the reel QR...",
+    "scanSlotPlaceholder": "Scan the feeder sticker...",
+    "scanInput": "Scanner input",
+    "nowScanSlot": "Put the reel there and scan the feeder sticker",
+    "rescanSlot": "Move the reel and scan the feeder sticker again",
+    "scanReelFirst": "Scan the reel first, then the feeder sticker",
+    "module": "Module",
+    "feeder": "Feeder",
+    "alternate": "Alternate part number {{partNumber}} - same component",
+    "correctPlace": "Correct place:",
+    "scannedSlot": "You scanned {{slot}}",
+    "slotIsFor": "that feeder is for {{rCode}}",
+    "cancel": "Cancel",
+    "history": {
+      "time": "Time",
+      "result": "Result",
+      "reason": "Reason",
+      "empty": "No scans yet."
+    }
+  },
+  "ngReasons": {
+    "UnknownReel": "Unknown component",
+    "UnknownSlot": "Unknown feeder sticker",
+    "WrongSlot": "Wrong feeder!",
+    "NotInSetup": "This component is not in this model",
+    "NoActiveSetup": "Setup changed - select the model again",
+    "DuplicateReel": "Reel already loaded elsewhere",
+    "WrongLine": "Sticker belongs to another line"
   }
 }

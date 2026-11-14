@@ -383,6 +383,14 @@ const NavBar = ({ user }) => {
               </button>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdownFeeder">
                 <li>
+                  <NavLink to="/feeder-station" className="dropdown-item">
+                    {t("feeder.station")}
+                  </NavLink>
+                </li>
+                <li>
+                  <hr className="dropdown-divider" />
+                </li>
+                <li>
                   <NavLink to="/feeder-setup" className="dropdown-item">
                     {t("feeder.setups")}
                   </NavLink>

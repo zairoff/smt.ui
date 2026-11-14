@@ -75,13 +75,20 @@ import SlotLabelPrint from "./components/feeder/slotLabelPrint";
 import FeederSetupList from "./components/feeder/feederSetupList";
 import FeederSetupImport from "./components/feeder/feederSetupImport";
 import FeederSetupDetail from "./components/feeder/feederSetupDetail";
+import FeederStation from "./components/feeder/feederStation";
+import FeederStationPicker from "./components/feeder/feederStationPicker";
 
 // The kiosk display page runs unattended on Raspberry Pi screens, where any
 // app chrome (navbar, login link) is unwanted, so it renders bare. The
 // instruction-position/line-active-model/model-instruction admin pages are
 // normal app pages and keep the navbar. The slot sticker sheet is bare so it
-// prints without the navbar.
-const BARE_ROUTE_PREFIXES = ["/instruction-display", "/feeder-slot-labels"];
+// prints without the navbar, and the feeder operator station (/feeder-station/:lineId)
+// runs full-screen on the line PC; its line picker (/feeder-station) keeps the navbar.
+const BARE_ROUTE_PREFIXES = [
+  "/instruction-display",
+  "/feeder-slot-labels",
+  "/feeder-station/",
+];
 
 const AppChrome = ({ user, children }) => {
   const location = useLocation();
@@ -311,6 +318,11 @@ class App extends Component {
               <Route
                 path="/feeder-slot-labels/:lineId"
                 element={<SlotLabelPrint />}
+              />
+              <Route path="/feeder-station" element={<FeederStationPicker />} />
+              <Route
+                path="/feeder-station/:lineId"
+                element={<FeederStation />}
               />
 
               <Route path="/component-print" element={<ComponentPrint />} />

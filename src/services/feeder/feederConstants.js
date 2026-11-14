@@ -10,6 +10,23 @@ export const SETUP_STATUS = { DRAFT: 0, ACTIVE: 1, ARCHIVED: 2 };
 
 export const DIFF_CHANGE = { UNCHANGED: 0, ADDED: 1, REMOVED: 2, CHANGED: 3 };
 
+export const SCAN_RESULT = { OK: 0, OK_ALTERNATE: 1, NG: 2 };
+
+export const NG_REASON = {
+  1: "UnknownReel",
+  2: "UnknownSlot",
+  3: "WrongSlot",
+  4: "NotInSetup",
+  5: "NoActiveSetup",
+  6: "DuplicateReel",
+  7: "WrongLine",
+};
+
+// Slot stickers carry codes like FS-3-M2-07 (FeederCodes.SlotCodePrefix on the backend).
+export const isSlotCode = (code) => /^FS-/i.test((code || "").trim());
+
+export const slotLabel = (target) => (target ? `${target.moduleName} · ${target.slotNumber}` : "");
+
 export const vendorKey = (vendor) =>
   vendor === MACHINE_VENDOR.PANASONIC ? "panasonic" : "fuji";
 

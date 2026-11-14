@@ -139,5 +139,42 @@
     "changed": "O'zgardi",
     "unchanged": "O'zgarmadi",
     "noChanges": "O'zgarishlar yo'q."
+  },
+  "station": {
+    "pickLine": "Operator posti - liniyani tanlang",
+    "pickLineHint": "Post butun ekranda ochiladi. Liniya kompyuterida uni xatcho'pga qo'shish mumkin.",
+    "setup": "Jadval",
+    "selectSetup": "Model / tomonni tanlang...",
+    "selectSetupFirst": "Avval modelni (jadvalni) tanlang",
+    "noSetups": "Bu liniyada faol fider jadvali yo'q. Jadvalni import qilib faollashtiring.",
+    "scanReel": "Katushkani skanerlang",
+    "scanReelPlaceholder": "Katushka QR kodini skanerlang...",
+    "scanSlotPlaceholder": "Fider stikerini skanerlang...",
+    "scanInput": "Skaner maydoni",
+    "nowScanSlot": "Katushkani shu joyga qo'ying va fider stikerini skanerlang",
+    "rescanSlot": "Katushkani to'g'ri joyga qo'yib, fider stikerini qayta skanerlang",
+    "scanReelFirst": "Avval katushkani, keyin fider stikerini skanerlang",
+    "module": "Modul",
+    "feeder": "Fider",
+    "alternate": "Analog {{partNumber}} - o'sha detal",
+    "correctPlace": "To'g'ri joy:",
+    "scannedSlot": "Skanerlangan: {{slot}}",
+    "slotIsFor": "bu fider {{rCode}} uchun",
+    "cancel": "Bekor qilish",
+    "history": {
+      "time": "Vaqt",
+      "result": "Natija",
+      "reason": "Sabab",
+      "empty": "Hali skanerlanmagan."
+    }
+  },
+  "ngReasons": {
+    "UnknownReel": "DETAL MAVJUD EMAS",
+    "UnknownSlot": "Noma'lum fider stikeri",
+    "WrongSlot": "FIDER MOS EMAS!",
+    "NotInSetup": "Bu detal ushbu modelda yo'q",
+    "NoActiveSetup": "Jadval o'zgardi - modelni qayta tanlang",
+    "DuplicateReel": "Katushka boshqa joyga o'rnatilgan",
+    "WrongLine": "Stiker boshqa liniyaga tegishli"
   }
 }
