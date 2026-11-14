@@ -6,9 +6,10 @@ import Form from "./form";
 import ModelTable from "../tables/modelTable";
 import { paginate } from "../../utils/paginate";
 import Pagination from "../common/pagination";
+import StatusFilter, { filterByStatus } from "../common/statusFilter";
 import {
   addModel,
-  deleteModel,
+  setModelStatus,
   getModelByProductBrandId,
 } from "../../services/modelService";
 import {
@@ -33,6 +34,7 @@ class ModelForm extends Form {
     brands: [],
     selectedBrand: "",
     currentPage: 1,
+    statusFilter: "active",
     selectedItem: { id: "", value: "" },
     pageSize: 25,
     data: [],
@@ -51,29 +53,26 @@ class ModelForm extends Form {
     }
   }
 
-  handleDelete = async ({ id }) => {
+  handleToggleStatus = async ({ id, isActive }) => {
     const clone = [...this.state.data];
-    const { currentPage } = this.state;
-    const data = clone.filter((d) => d.id !== id);
-    if (this.currentPageCheck(data))
-      this.setState({ data, currentPage: currentPage - 1, loading: true });
-    else this.setState({ data, loading: true });
+    const data = clone.map((d) =>
+      d.id === id ? { ...d, isActive: !isActive } : d
+    );
+    this.setState({ data, loading: true });
 
     try {
-      await deleteModel(id);
+      await setModelStatus(id, !isActive);
     } catch (ex) {
       this.setState({ data: clone });
-      toast.error(ex.message);
+      toast.error(ex.response?.data?.message || ex.message);
     } finally {
       this.setState({ loading: false });
     }
   };
 
-  currentPageCheck(data) {
-    const { pageSize } = this.state;
-
-    return data.length % pageSize == 0;
-  }
+  handleStatusFilterChange = (statusFilter) => {
+    this.setState({ statusFilter, currentPage: 1 });
+  };
 
   handleSelectChange = async ({ target }) => {
     const { name, value } = target;
@@ -94,8 +93,15 @@ class ModelForm extends Form {
           const { selectedProduct } = this.state;
           const { data: productBrand } =
             await getProductBrandByProductAndBrandId(selectedProduct, value);
-          const { data } = await getModelByProductBrandId(productBrand.id);
-          this.setState({ data, productBrand });
+          const [{ data: active }, { data: disabled }] = await Promise.all([
+            getModelByProductBrandId(productBrand.id, true),
+            getModelByProductBrandId(productBrand.id, false),
+          ]);
+          this.setState({
+            data: [...active, ...disabled],
+            productBrand,
+            currentPage: 1,
+          });
           break;
         default:
           break;
@@ -141,8 +147,8 @@ class ModelForm extends Form {
     const {
       data: allData,
       pageSize,
-      currentPage,
       sortColumn,
+      statusFilter,
       fields,
       products,
       brands,
@@ -150,9 +156,15 @@ class ModelForm extends Form {
       loading,
     } = this.state;
 
-    const itemsCount = allData.length;
+    const filteredData = filterByStatus(allData, statusFilter);
+    const itemsCount = filteredData.length;
+    // Toggling a row can remove it from the current filter; keep the page in range.
+    const currentPage = Math.min(
+      this.state.currentPage,
+      Math.max(1, Math.ceil(itemsCount / pageSize))
+    );
     const sortedData = _.orderBy(
-      allData,
+      filteredData,
       [sortColumn.path],
       [sortColumn.order]
     );
@@ -163,10 +175,15 @@ class ModelForm extends Form {
       <form className="m-2 row" onSubmit={this.handleSubmit}>
         {loading && <ReactLoading className="test" type="spin" color="blue" />}
         <div className="col mt-4">
+          <StatusFilter
+            rows={allData}
+            value={statusFilter}
+            onChange={this.handleStatusFilterChange}
+          />
           <ModelTable
             rows={data}
             sortColumn={sortColumn}
-            onDelete={this.handleDelete}
+            onToggleStatus={this.handleToggleStatus}
             onSort={this.handleSort}
           />
           <Pagination

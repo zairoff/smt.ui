@@ -14,6 +14,15 @@ class ModelTable extends Component {
     { path: "sapCode", label: this.props.t("tables:modelTable.columns.sapCode") },
     { path: "barcode", label: this.props.t("tables:modelTable.columns.barCode") },
     {
+      path: "isActive",
+      label: this.props.t("tables:modelTable.columns.status"),
+      content: (model) => (
+        <span className={"badge " + (model.isActive ? "bg-success" : "bg-secondary")}>
+          {this.props.t(model.isActive ? "common:status.active" : "common:status.disabled")}
+        </span>
+      ),
+    },
+    {
       path: "edit",
       content: (model) => (
         <Link
@@ -29,13 +38,13 @@ class ModelTable extends Component {
     },
     {
       path: "button",
-      content: (productBrand) => (
+      content: (model) => (
         <button
           type="button"
-          onClick={() => this.props.onDelete(productBrand)}
-          className="btn btn-danger"
+          onClick={() => this.props.onToggleStatus(model)}
+          className={model.isActive ? "btn btn-outline-danger" : "btn btn-success"}
         >
-          {this.props.t("common:buttons.delete")}
+          {this.props.t(model.isActive ? "common:buttons.disable" : "common:buttons.enable")}
         </button>
       ),
     },

@@ -6,7 +6,9 @@
     "edit": "Edit",
     "close": "Close",
     "search": "Search",
-    "add": "Add"
+    "add": "Add",
+    "enable": "Enable",
+    "disable": "Disable"
   },
   "confirmDelete": {
     "title": "Confirm delete",
@@ -26,6 +28,12 @@
   },
   "department": {
     "treeAriaLabel": "Department navigation tree"
+  },
+  "status": {
+    "label": "Status",
+    "active": "Active",
+    "disabled": "Disabled",
+    "all": "All"
   },
   "errors": {
     "unexpected": "An unexpected error occurred."

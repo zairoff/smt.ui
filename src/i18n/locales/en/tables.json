@@ -155,7 +155,8 @@
   "defectTable": {
     "columns": {
       "id": "ID",
-      "name": "Defect"
+      "name": "Defect",
+      "status": "Status"
     }
   },
   "detailedDefectTable": {
@@ -219,7 +220,8 @@
       "model": "Model",
       "boardId": "Board ID",
       "sapCode": "SAP code",
-      "barCode": "Barcode"
+      "barCode": "Barcode",
+      "status": "Status"
     }
   },
   "planTable": {

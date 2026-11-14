@@ -155,7 +155,8 @@
   "defectTable": {
     "columns": {
       "id": "ID",
-      "name": "Nuqson"
+      "name": "Nuqson",
+      "status": "Holat"
     }
   },
   "detailedDefectTable": {
@@ -219,7 +220,8 @@
       "model": "Model",
       "boardId": "Plata ID",
       "sapCode": "SAP kodi",
-      "barCode": "Shtrix-kod"
+      "barCode": "Shtrix-kod",
+      "status": "Holat"
     }
   },
   "planTable": {

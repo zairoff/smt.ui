@@ -30,11 +30,17 @@ export function getModelByBarcode(barcode) {
   return http.get(query);
 }
 
-export function getModelByProductBrandId(id) {
+// isActive defaults to true on the backend, so callers that only want
+// selectable (produced) models can omit it.
+export function getModelByProductBrandId(id, isActive) {
   const query = endPoint
     .concat("/GetByProductBrandId?productBrandId=")
     .concat(id);
-  return http.get(query);
+  return http.get(query, { params: { isActive } });
+}
+
+export function setModelStatus(id, isActive) {
+  return http.put(`${modelUrl(id)}/status`, null, { params: { isActive } });
 }
 
 export function addModel(model) {

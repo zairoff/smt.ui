@@ -155,7 +155,8 @@
   "defectTable": {
     "columns": {
       "id": "ID",
-      "name": "Дефект"
+      "name": "Дефект",
+      "status": "Статус"
     }
   },
   "detailedDefectTable": {
@@ -219,7 +220,8 @@
       "model": "Модель",
       "boardId": "ID платы",
       "sapCode": "SAP-код",
-      "barCode": "Штрихкод"
+      "barCode": "Штрихкод",
+      "status": "Статус"
     }
   },
   "planTable": {

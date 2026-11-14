@@ -6,7 +6,9 @@
     "edit": "Tahrirlash",
     "close": "Yopish",
     "search": "Qidirish",
-    "add": "Qo'shish"
+    "add": "Qo'shish",
+    "enable": "Yoqish",
+    "disable": "O'chirib qo'yish"
   },
   "confirmDelete": {
     "title": "O'chirishni tasdiqlang",
@@ -26,6 +28,12 @@
   },
   "department": {
     "treeAriaLabel": "Bo'limlar bo'yicha navigatsiya daraxti"
+  },
+  "status": {
+    "label": "Holat",
+    "active": "Faol",
+    "disabled": "O'chirilgan",
+    "all": "Barchasi"
   },
   "errors": {
     "unexpected": "Kutilmagan xatolik yuz berdi."

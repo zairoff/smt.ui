@@ -7,8 +7,14 @@ function defectUrl(id) {
   return `${endPoint}/${id}`;
 }
 
-export function getDefects() {
-  return http.get(endPoint);
+// isActive defaults to true on the backend, so callers that only want
+// selectable defects can omit it.
+export function getDefects(isActive) {
+  return http.get(endPoint, { params: { isActive } });
+}
+
+export function setDefectStatus(id, isActive) {
+  return http.put(`${defectUrl(id)}/status`, null, { params: { isActive } });
 }
 
 export function getDefect(id) {

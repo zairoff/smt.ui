@@ -9,16 +9,18 @@ import { withTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import {
   addDefect,
-  deleteDefect,
+  setDefectStatus,
   getDefects,
 } from "../../services/defectService";
 import DefectTable from "../tables/defectTable";
+import StatusFilter, { filterByStatus } from "../common/statusFilter";
 
 class DefectForm extends Form {
   state = {
     sortColumn: { path: "", order: "asc" },
     fields: { defect: "" },
     currentPage: 1,
+    statusFilter: "active",
     pageSize: 15,
     data: [],
     errors: {},
@@ -27,8 +29,11 @@ class DefectForm extends Form {
 
   async componentDidMount() {
     try {
-      const { data } = await getDefects();
-      this.setState({ data });
+      const [{ data: active }, { data: disabled }] = await Promise.all([
+        getDefects(true),
+        getDefects(false),
+      ]);
+      this.setState({ data: [...active, ...disabled] });
     } catch (ex) {
       toast(ex.response.data.message);
     } finally {
@@ -50,16 +55,15 @@ class DefectForm extends Form {
     }
   };
 
-  handleDelete = async ({ id }) => {
+  handleToggleStatus = async ({ id, isActive }) => {
     const clone = [...this.state.data];
-    const { currentPage } = this.state;
-    const data = clone.filter((d) => d.id !== id);
-    if (this.currentPageCheck(data))
-      this.setState({ data, currentPage: currentPage - 1, loading: true });
-    else this.setState({ data, loading: true });
+    const data = clone.map((d) =>
+      d.id === id ? { ...d, isActive: !isActive } : d
+    );
+    this.setState({ data, loading: true });
 
     try {
-      await deleteDefect(id);
+      await setDefectStatus(id, !isActive);
     } catch (ex) {
       this.setState({ data: clone });
       this.catchExceptionMessage(ex, "defect");
@@ -68,11 +72,9 @@ class DefectForm extends Form {
     }
   };
 
-  currentPageCheck(data) {
-    const { pageSize } = this.state;
-
-    return data.length % pageSize == 0;
-  }
+  handleStatusFilterChange = (statusFilter) => {
+    this.setState({ statusFilter, currentPage: 1 });
+  };
 
   handleSort = (sortColumn) => {
     this.setState({ sortColumn });
@@ -86,15 +88,21 @@ class DefectForm extends Form {
     const {
       data: allRows,
       pageSize,
-      currentPage,
       sortColumn,
+      statusFilter,
       loading,
       fields,
       errors,
     } = this.state;
 
+    const filteredRows = filterByStatus(allRows, statusFilter);
+    // Toggling a row can remove it from the current filter; keep the page in range.
+    const currentPage = Math.min(
+      this.state.currentPage,
+      Math.max(1, Math.ceil(filteredRows.length / pageSize))
+    );
     const sortedRows = _.orderBy(
-      allRows,
+      filteredRows,
       [sortColumn.path],
       [sortColumn.order]
     );
@@ -103,14 +111,19 @@ class DefectForm extends Form {
       <form className="m-2 row " onSubmit={this.handleSubmit}>
         {loading && <ReactLoading className="test" type="spin" color="blue" />}
         <div className="col mt-4">
+          <StatusFilter
+            rows={allRows}
+            value={statusFilter}
+            onChange={this.handleStatusFilterChange}
+          />
           <DefectTable
             rows={rows}
             onSort={this.handleSort}
             sortColumn={sortColumn}
-            onDelete={this.handleDelete}
+            onToggleStatus={this.handleToggleStatus}
           />
           <Pagination
-            itemsCount={allRows.length}
+            itemsCount={filteredRows.length}
             pageSize={pageSize}
             currentPage={currentPage}
             onPageChange={this.handlePageChange}

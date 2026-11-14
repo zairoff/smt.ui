@@ -8,14 +8,23 @@ class DefectTable extends Component {
     { path: "id", label: this.props.t("tables:defectTable.columns.id") },
     { path: "name", label: this.props.t("tables:defectTable.columns.name") },
     {
+      path: "isActive",
+      label: this.props.t("tables:defectTable.columns.status"),
+      content: (defect) => (
+        <span className={"badge " + (defect.isActive ? "bg-success" : "bg-secondary")}>
+          {this.props.t(defect.isActive ? "common:status.active" : "common:status.disabled")}
+        </span>
+      ),
+    },
+    {
       path: "button",
-      content: (brand) => (
+      content: (defect) => (
         <button
           type="button"
-          onClick={() => this.props.onDelete(brand)}
-          className="btn btn-danger"
+          onClick={() => this.props.onToggleStatus(defect)}
+          className={defect.isActive ? "btn btn-outline-danger" : "btn btn-success"}
         >
-          {this.props.t("common:buttons.delete")}
+          {this.props.t(defect.isActive ? "common:buttons.disable" : "common:buttons.enable")}
         </button>
       ),
     },
