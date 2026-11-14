@@ -375,6 +375,34 @@ const NavBar = ({ user }) => {
               <button
                 type="button"
                 className="nav-link dropdown-toggle border-0 bg-transparent"
+                id="navbarDropdownFeeder"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                {t("menu.feeder")}
+              </button>
+              <ul className="dropdown-menu" aria-labelledby="navbarDropdownFeeder">
+                <li>
+                  <NavLink to="/feeder-setup" className="dropdown-item">
+                    {t("feeder.setups")}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/feeder-setup-import" className="dropdown-item">
+                    {t("feeder.import")}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/feeder-machine" className="dropdown-item">
+                    {t("feeder.machine")}
+                  </NavLink>
+                </li>
+              </ul>
+            </li>
+            <li className="nav-item dropdown">
+              <button
+                type="button"
+                className="nav-link dropdown-toggle border-0 bg-transparent"
                 id="navbarDropdownReadyProduct"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"

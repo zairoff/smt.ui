@@ -13,6 +13,7 @@ import enReturnProduct from "./locales/en/returnProduct.json";
 import enMachines from "./locales/en/machines.json";
 import enPcbaInstruction from "./locales/en/pcbaInstruction.json";
 import enRepairAudit from "./locales/en/repairAudit.json";
+import enFeeder from "./locales/en/feeder.json";
 
 import ruCommon from "./locales/ru/common.json";
 import ruNavbar from "./locales/ru/navbar.json";
@@ -27,6 +28,7 @@ import ruReturnProduct from "./locales/ru/returnProduct.json";
 import ruMachines from "./locales/ru/machines.json";
 import ruPcbaInstruction from "./locales/ru/pcbaInstruction.json";
 import ruRepairAudit from "./locales/ru/repairAudit.json";
+import ruFeeder from "./locales/ru/feeder.json";
 
 import uzCommon from "./locales/uz/common.json";
 import uzNavbar from "./locales/uz/navbar.json";
@@ -41,6 +43,7 @@ import uzReturnProduct from "./locales/uz/returnProduct.json";
 import uzMachines from "./locales/uz/machines.json";
 import uzPcbaInstruction from "./locales/uz/pcbaInstruction.json";
 import uzRepairAudit from "./locales/uz/repairAudit.json";
+import uzFeeder from "./locales/uz/feeder.json";
 
 import { getStoredLanguage } from "./languageStorage";
 
@@ -61,6 +64,7 @@ const resources = {
     machines: enMachines,
     pcbaInstruction: enPcbaInstruction,
     repairAudit: enRepairAudit,
+    feeder: enFeeder,
   },
   ru: {
     common: ruCommon,
@@ -76,6 +80,7 @@ const resources = {
     machines: ruMachines,
     pcbaInstruction: ruPcbaInstruction,
     repairAudit: ruRepairAudit,
+    feeder: ruFeeder,
   },
   uz: {
     common: uzCommon,
@@ -91,6 +96,7 @@ const resources = {
     machines: uzMachines,
     pcbaInstruction: uzPcbaInstruction,
     repairAudit: uzRepairAudit,
+    feeder: uzFeeder,
   },
 };
 
@@ -120,6 +126,7 @@ i18n.use(initReactI18next).init({
     "machines",
     "pcbaInstruction",
     "repairAudit",
+    "feeder",
   ],
   defaultNS: "common",
   interpolation: { escapeValue: false },

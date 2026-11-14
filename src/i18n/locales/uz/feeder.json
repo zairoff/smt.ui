@@ -1,0 +1,149 @@
+{
+  "common": {
+    "line": "Liniya",
+    "model": "Model",
+    "side": "Plata tomoni",
+    "module": "Modul",
+    "feeder": "Fider",
+    "rcode": "RCode",
+    "specification": "Spetsifikatsiya",
+    "slotCode": "Joy kodi",
+    "status": "Holat",
+    "version": "Versiya",
+    "save": "Saqlash",
+    "add": "Qo'shish",
+    "loading": "Yuklanmoqda..."
+  },
+  "vendor": {
+    "fuji": "FUJI",
+    "panasonic": "Panasonic"
+  },
+  "side": {
+    "top": "Yuqori (Top)",
+    "bottom": "Pastki (Bottom)"
+  },
+  "status": {
+    "draft": "Qoralama",
+    "active": "Faol",
+    "archived": "Arxivda"
+  },
+  "errors": {
+    "loginRequired": "Avval tizimga kiring",
+    "forbidden": "Buni faqat muhandis qila oladi"
+  },
+  "machine": {
+    "title": "Liniya stanogi",
+    "name": "Stanok nomi",
+    "vendor": "Ishlab chiqaruvchi",
+    "create": "Stanok yaratish",
+    "saved": "Saqlandi",
+    "noMachine": "Bu liniyada hali stanok yo'q. Avval uni yarating - modul va fiderlar birinchi Excel importida yoki quyida qo'shiladi.",
+    "readOnly": "Faqat ko'rish - stanok tuzilishini faqat muhandis o'zgartira oladi.",
+    "modules": "Modullar",
+    "noModules": "Hali modul yo'q.",
+    "moduleName": "Modul (masalan M1)",
+    "moduleOrder": "Tartib",
+    "addModule": "Modul qo'shish",
+    "slotCount": "Fiderlar: {{total}} tadan {{active}} tasi faol",
+    "noSlots": "Hali fider yo'q.",
+    "addSlots": "Fider qo'shish",
+    "from": "Dan",
+    "to": "Gacha",
+    "clickToDisable": "o'chirish uchun bosing",
+    "clickToEnable": "yoqish uchun bosing",
+    "printStickers": "Joy stikerlarini chop etish"
+  },
+  "labels": {
+    "title": "Joy stikerlari",
+    "onlyActive": "Faqat faol fiderlar",
+    "count": "Stikerlar: {{count}}",
+    "print": "Chop etish"
+  },
+  "import": {
+    "title": "Fider jadvalini import qilish",
+    "hint": "Modul | Fider | Kod ustunli Excel (eski model-changer kabi). Kod - part raqami, RCode yoki skanerlangan katushka QR kodi. Saqlash tugmasini bosmaguningizcha hech narsa saqlanmaydi.",
+    "modelPlaceholder": "Modelni yozib qidiring",
+    "file": "Excel fayl",
+    "unreadableFile": "Faylni o'qib bo'lmadi",
+    "emptyFile": "Faylda qatorlar topilmadi",
+    "headerNotDetected": "Sarlavha qatori aniqlanmadi - A, B, C ustunlari Modul, Fider, Kod sifatida o'qiladi.",
+    "selectLineAndModel": "Faylni tekshirish uchun liniya va modelni tanlang.",
+    "rowsCount": "Qatorlar: {{count}}",
+    "errorCount": "Xatolar: {{count}}",
+    "warningCount": "Ogohlantirishlar: {{count}}",
+    "nextVersion": "v{{version}} sifatida saqlanadi",
+    "activeVersion": "hozir faol: v{{version}}",
+    "noActiveVersion": "hali faol versiya yo'q",
+    "newSlots": "yangi fiderlar: {{count}}",
+    "newModules": "yangi modullar: {{modules}}",
+    "saveDraft": "v{{version}} qoralama sifatida saqlash",
+    "saved": "v{{version}} qoralama saqlandi",
+    "recheck": "Qayta tekshirish",
+    "reset": "Tozalash",
+    "onlyIssues": "Faqat muammoli qatorlar",
+    "fixErrors": "Excel fayldagi qizil qatorlarni tuzating va faylni qayta tanlang.",
+    "noIssues": "Muammoli qatorlar yo'q.",
+    "columns": {
+      "row": "Qator",
+      "code": "Fayldagi kod",
+      "issues": "Muammolar"
+    }
+  },
+  "issues": {
+    "MissingValue": "Modul, fider yoki kod bo'sh",
+    "UnknownCode": "Detal topilmadi",
+    "AmbiguousCode": "Part raqami bir nechta detalga tegishli - RCode kiriting",
+    "DuplicateSlot": "Bitta fider ikki marta ko'rsatilgan",
+    "InactiveSlot": "Fider o'chirilgan",
+    "DuplicateComponent": "Bitta detal bir nechta fiderda",
+    "NewModule": "Yangi modul yaratiladi",
+    "NewSlot": "Yangi fider yaratiladi",
+    "NoMachine": "Bu liniyada stanok yo'q - uni «Liniya stanogi» sahifasida yarating.",
+    "NoRows": "Faylda qatorlar yo'q."
+  },
+  "setups": {
+    "title": "Fider jadvallari",
+    "importNew": "Jadval import qilish",
+    "allStatuses": "Hammasi",
+    "searchModel": "Model qidirish",
+    "items": "Fiderlar",
+    "created": "Yaratilgan",
+    "activated": "Faollashtirilgan",
+    "empty": "Jadvallar topilmadi."
+  },
+  "detail": {
+    "notFound": "Jadval topilmadi.",
+    "createdBy": "{{user}} import qildi, {{date}}",
+    "activatedBy": "{{user}} faollashtirdi, {{date}}",
+    "activate": "Faollashtirish",
+    "rollback": "Qayta faollashtirish (orqaga qaytarish)",
+    "activateNeedsEngineer": "Faollashtirishni faqat muhandis qila oladi.",
+    "activateTitle": "Bu jadval faollashtirilsinmi?",
+    "activateMessage": "Operatorlar bu liniyada katushkalarni shu jadval bo'yicha tekshiradi. Hozirgi faol versiya arxivga o'tadi.",
+    "activated": "v{{version}} endi faol",
+    "deleteDraft": "Qoralamani o'chirish",
+    "deleteTitle": "Qoralama o'chirilsinmi?",
+    "deleteMessage": "Qoralama va uning fiderlar ro'yxati o'chiriladi. Import orqali yaratilgan fiderlar stanokda qoladi.",
+    "deleted": "Qoralama o'chirildi",
+    "copyTo": "Liniyaga nusxalash...",
+    "copy": "Nusxalash",
+    "copied": "v{{version}} qoralama sifatida nusxalandi",
+    "itemsTab": "Fiderlar ({{count}})",
+    "diffTab": "O'zgarishlar",
+    "partNumbers": "Part raqamlari",
+    "importedCode": "Fayldagi kod"
+  },
+  "diff": {
+    "against": "v{{version}} bilan solishtirildi",
+    "firstVersion": "Birinchi versiya - solishtiradigan narsa yo'q",
+    "hideUnchanged": "O'zgarmaganlarni yashirish",
+    "change": "O'zgarish",
+    "before": "Oldin",
+    "after": "Keyin",
+    "added": "Qo'shildi",
+    "removed": "Olib tashlandi",
+    "changed": "O'zgardi",
+    "unchanged": "O'zgarmadi",
+    "noChanges": "O'zgarishlar yo'q."
+  }
+}

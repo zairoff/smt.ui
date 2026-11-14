@@ -70,12 +70,18 @@ import ModelInstructionForm from "./components/forms/modelInstructionForm";
 import InstructionDisplay from "./components/pcb-instruction/instructionDisplay";
 import RepairAuditScan from "./components/repair-audit/repairAuditScan";
 import RepairAuditReport from "./components/repair-audit/repairAuditReport";
+import LineMachinePage from "./components/feeder/lineMachinePage";
+import SlotLabelPrint from "./components/feeder/slotLabelPrint";
+import FeederSetupList from "./components/feeder/feederSetupList";
+import FeederSetupImport from "./components/feeder/feederSetupImport";
+import FeederSetupDetail from "./components/feeder/feederSetupDetail";
 
 // The kiosk display page runs unattended on Raspberry Pi screens, where any
 // app chrome (navbar, login link) is unwanted, so it renders bare. The
 // instruction-position/line-active-model/model-instruction admin pages are
-// normal app pages and keep the navbar.
-const BARE_ROUTE_PREFIXES = ["/instruction-display"];
+// normal app pages and keep the navbar. The slot sticker sheet is bare so it
+// prints without the navbar.
+const BARE_ROUTE_PREFIXES = ["/instruction-display", "/feeder-slot-labels"];
 
 const AppChrome = ({ user, children }) => {
   const location = useLocation();
@@ -278,6 +284,24 @@ class App extends Component {
               <Route
                 path="/instruction-display/:positionId"
                 element={<InstructionDisplay />}
+              />
+
+              <Route path="/feeder-setup" element={<FeederSetupList />} />
+              <Route
+                path="/feeder-setup-import"
+                element={<FeederSetupImport />}
+              />
+              <Route
+                path="/feeder-setup/:id"
+                element={<FeederSetupDetail user={user} />}
+              />
+              <Route
+                path="/feeder-machine"
+                element={<LineMachinePage user={user} />}
+              />
+              <Route
+                path="/feeder-slot-labels/:lineId"
+                element={<SlotLabelPrint />}
               />
 
               <Route path="/component-print" element={<ComponentPrint />} />

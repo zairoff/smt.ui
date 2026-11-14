@@ -1,0 +1,149 @@
+{
+  "common": {
+    "line": "Line",
+    "model": "Model",
+    "side": "Board side",
+    "module": "Module",
+    "feeder": "Feeder",
+    "rcode": "RCode",
+    "specification": "Specification",
+    "slotCode": "Slot code",
+    "status": "Status",
+    "version": "Version",
+    "save": "Save",
+    "add": "Add",
+    "loading": "Loading..."
+  },
+  "vendor": {
+    "fuji": "FUJI",
+    "panasonic": "Panasonic"
+  },
+  "side": {
+    "top": "Top",
+    "bottom": "Bottom"
+  },
+  "status": {
+    "draft": "Draft",
+    "active": "Active",
+    "archived": "Archived"
+  },
+  "errors": {
+    "loginRequired": "Please log in first",
+    "forbidden": "Only engineers can do this"
+  },
+  "machine": {
+    "title": "Line machine",
+    "name": "Machine name",
+    "vendor": "Vendor",
+    "create": "Create machine",
+    "saved": "Saved",
+    "noMachine": "This line has no machine yet. Create it first - modules and feeders are added by the first Excel import or below.",
+    "readOnly": "View only - changing the machine layout requires the Engineer role.",
+    "modules": "Modules",
+    "noModules": "No modules yet.",
+    "moduleName": "Module (e.g. M1)",
+    "moduleOrder": "Order",
+    "addModule": "Add module",
+    "slotCount": "Feeders: {{active}} active / {{total}}",
+    "noSlots": "No feeders yet.",
+    "addSlots": "Add feeders",
+    "from": "From",
+    "to": "To",
+    "clickToDisable": "click to disable",
+    "clickToEnable": "click to enable",
+    "printStickers": "Print slot stickers"
+  },
+  "labels": {
+    "title": "Slot stickers",
+    "onlyActive": "Only active feeders",
+    "count": "Stickers: {{count}}",
+    "print": "Print"
+  },
+  "import": {
+    "title": "Import feeder setup",
+    "hint": "Excel with columns Module | Feeder | Code (as in the old model-changer). Code can be a part number, an RCode or a scanned reel QR. Nothing is saved until you press Save.",
+    "modelPlaceholder": "Type to search a model",
+    "file": "Excel file",
+    "unreadableFile": "The file could not be read",
+    "emptyFile": "No rows found in the file",
+    "headerNotDetected": "Header row not recognized - reading columns A, B, C as Module, Feeder, Code.",
+    "selectLineAndModel": "Select the line and model to check the file.",
+    "rowsCount": "Rows: {{count}}",
+    "errorCount": "Errors: {{count}}",
+    "warningCount": "Warnings: {{count}}",
+    "nextVersion": "Will be saved as v{{version}}",
+    "activeVersion": "active now: v{{version}}",
+    "noActiveVersion": "no active version yet",
+    "newSlots": "new feeders: {{count}}",
+    "newModules": "new modules: {{modules}}",
+    "saveDraft": "Save as draft v{{version}}",
+    "saved": "Draft v{{version}} saved",
+    "recheck": "Check again",
+    "reset": "Clear",
+    "onlyIssues": "Only rows with issues",
+    "fixErrors": "Fix the red rows in the Excel file and choose it again.",
+    "noIssues": "No rows with issues.",
+    "columns": {
+      "row": "Row",
+      "code": "Code in file",
+      "issues": "Issues"
+    }
+  },
+  "issues": {
+    "MissingValue": "Module, feeder or code is empty",
+    "UnknownCode": "Unknown component",
+    "AmbiguousCode": "Part number belongs to several components - use the RCode",
+    "DuplicateSlot": "Same feeder used twice",
+    "InactiveSlot": "Feeder is disabled",
+    "DuplicateComponent": "Same component in several feeders",
+    "NewModule": "New module will be created",
+    "NewSlot": "New feeder will be created",
+    "NoMachine": "This line has no machine yet - create it on the Line machine page.",
+    "NoRows": "The file has no rows."
+  },
+  "setups": {
+    "title": "Feeder setups",
+    "importNew": "Import setup",
+    "allStatuses": "All",
+    "searchModel": "Search model",
+    "items": "Feeders",
+    "created": "Created",
+    "activated": "Activated",
+    "empty": "No setups found."
+  },
+  "detail": {
+    "notFound": "Setup not found.",
+    "createdBy": "Imported by {{user}} at {{date}}",
+    "activatedBy": "activated by {{user}} at {{date}}",
+    "activate": "Activate",
+    "rollback": "Activate again (rollback)",
+    "activateNeedsEngineer": "Activation requires the Engineer role.",
+    "activateTitle": "Activate this setup?",
+    "activateMessage": "It becomes the setup operators verify against on this line. The currently active version is archived.",
+    "activated": "v{{version}} is now active",
+    "deleteDraft": "Delete draft",
+    "deleteTitle": "Delete this draft?",
+    "deleteMessage": "The draft and its feeder list are removed. Feeders created by the import stay on the machine.",
+    "deleted": "Draft deleted",
+    "copyTo": "Copy to line...",
+    "copy": "Copy",
+    "copied": "Copied as draft v{{version}}",
+    "itemsTab": "Feeders ({{count}})",
+    "diffTab": "Changes",
+    "partNumbers": "Part numbers",
+    "importedCode": "Code in file"
+  },
+  "diff": {
+    "against": "Compared with v{{version}}",
+    "firstVersion": "First version - nothing to compare with",
+    "hideUnchanged": "Hide unchanged",
+    "change": "Change",
+    "before": "Before",
+    "after": "After",
+    "added": "Added",
+    "removed": "Removed",
+    "changed": "Changed",
+    "unchanged": "Unchanged",
+    "noChanges": "No changes."
+  }
+}

@@ -1,5 +1,11 @@
 {
+  "feeder": {
+    "setups": "Feeder setups",
+    "import": "Import setup",
+    "machine": "Line machine & stickers"
+  },
   "menu": {
+    "feeder": "Feeders",
     "main": "Main",
     "management": "Management",
     "plans": "Plans",

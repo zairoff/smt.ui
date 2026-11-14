@@ -1,5 +1,11 @@
 {
+  "feeder": {
+    "setups": "Fider jadvallari",
+    "import": "Jadval import qilish",
+    "machine": "Liniya stanogi va stikerlar"
+  },
   "menu": {
+    "feeder": "Fiderlar",
     "main": "Asosiy",
     "management": "Boshqaruv",
     "plans": "Rejalar",

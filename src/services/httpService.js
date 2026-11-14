@@ -2,6 +2,16 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import i18n from "../i18n/i18n";
 
+// Most endpoints are anonymous, but newer ones (feeder verification) require a
+// logged-in user so actions are attributable - send the token whenever there is one.
+axios.interceptors.request.use((request) => {
+  const token = localStorage.getItem("token");
+  if (token && !request.headers.Authorization) {
+    request.headers.Authorization = `Bearer ${token}`;
+  }
+  return request;
+});
+
 axios.interceptors.response.use(null, (error) => {
   const expectedError =
     error.response &&
