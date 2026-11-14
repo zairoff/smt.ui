@@ -218,7 +218,6 @@
       "product": "Продукт",
       "brand": "Бренд",
       "model": "Модель",
-      "boardId": "ID платы",
       "sapCode": "SAP-код",
       "barCode": "Штрихкод",
       "status": "Статус"

@@ -10,7 +10,6 @@ class ModelTable extends Component {
     { path: "productBrand.product.name", label: this.props.t("tables:modelTable.columns.product") },
     { path: "productBrand.brand.name", label: this.props.t("tables:modelTable.columns.brand") },
     { path: "name", label: this.props.t("tables:modelTable.columns.model") },
-    { path: "boardId", label: this.props.t("tables:modelTable.columns.boardId") },
     { path: "sapCode", label: this.props.t("tables:modelTable.columns.sapCode") },
     { path: "barcode", label: this.props.t("tables:modelTable.columns.barCode") },
     {

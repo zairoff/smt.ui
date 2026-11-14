@@ -218,7 +218,6 @@
       "product": "Product",
       "brand": "Brand",
       "model": "Model",
-      "boardId": "Board ID",
       "sapCode": "SAP code",
       "barCode": "Barcode",
       "status": "Status"

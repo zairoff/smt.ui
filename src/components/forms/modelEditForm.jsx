@@ -13,7 +13,6 @@ class ModelEditForm extends Form {
       name: "",
       barcode: "",
       sapCode: "",
-      boardId: "",
     },
     productBrand: {},
     brandId: "",
@@ -24,14 +23,13 @@ class ModelEditForm extends Form {
 
   async componentDidMount() {
     const { data } = this.props.location.state;
-    const { id, name, barcode, sapCode, boardId, productBrand } = data;
+    const { id, name, barcode, sapCode, productBrand } = data;
     this.setState({
       fields: {
         id,
         name,
         barcode,
         sapCode,
-        boardId,
       },
       productBrand,
       loading: false,
@@ -40,7 +38,7 @@ class ModelEditForm extends Form {
 
   handleSubmit = async () => {
     const { fields } = this.state;
-    const { id, name, barcode, sapCode, boardId } = fields;
+    const { id, name, barcode, sapCode } = fields;
 
     if (
       name === "" ||
@@ -48,9 +46,7 @@ class ModelEditForm extends Form {
       barcode === "" ||
       barcode === undefined ||
       sapCode === "" ||
-      sapCode === undefined ||
-      boardId === "" ||
-      boardId === undefined
+      sapCode === undefined
     ) {
       toast.warning(this.props.t("forms:messages.fillRequiredFields"));
       return;
@@ -61,7 +57,6 @@ class ModelEditForm extends Form {
         name,
         barcode,
         sapCode,
-        boardId,
       };
       await updateModel(id, modelUpdate);
       this.setState({ loading: false });
@@ -110,17 +105,6 @@ class ModelEditForm extends Form {
               fields.sapCode,
               this.handleInputChange,
               errors.sapCode,
-              true,
-              ""
-            )}
-            <p className="mt-2"> </p>
-            {this.renderInput(
-              "boardId",
-              t("forms:model.boardId"),
-              "",
-              fields.boardId,
-              this.handleInputChange,
-              errors.boardId,
               true,
               ""
             )}
