@@ -1,6 +1,6 @@
 FROM node:17.9.1-alpine3.15 AS build-stage
 WORKDIR /app
-COPY package*.json ./
+COPY package*.json .npmrc ./
 RUN npm install
 COPY . .
 RUN npm run build
