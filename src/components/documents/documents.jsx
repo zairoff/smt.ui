@@ -15,25 +15,17 @@ import {
   deleteEntry,
 } from "../../services/documentService";
 import { userHasRole } from "../../services/authToken";
+import FilePreview, { previewKind, tabType, MAX_INLINE_PREVIEW_BYTES } from "./filePreview";
 
-// Only types that cannot run script are opened in a browser tab; everything else
-// (including .html/.svg, which would run inside the app's origin) is downloaded.
-const PREVIEW_TYPES = {
-  pdf: "application/pdf",
-  png: "image/png",
-  jpg: "image/jpeg",
-  jpeg: "image/jpeg",
-  gif: "image/gif",
-  bmp: "image/bmp",
-  webp: "image/webp",
-  txt: "text/plain",
-  csv: "text/plain",
-  log: "text/plain",
-};
-
-function previewType(name) {
-  const ext = name.split(".").pop().toLowerCase();
-  return PREVIEW_TYPES[ext];
+function saveBlob(blob, name) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = name;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 60 * 1000);
 }
 
 export function formatSize(bytes) {
@@ -65,6 +57,8 @@ class Documents extends Component {
     newFolder: null, // folder name being typed, or null when the box is closed
     renaming: null, // { name, value }
     dragOver: false,
+    viewing: null, // { name, blob } shown in the preview dialog
+    opening: null, // name of the file being fetched for preview
   };
 
   fileInput = React.createRef();
@@ -124,27 +118,42 @@ class Documents extends Component {
     const { owner, path } = this.state;
     try {
       const { data } = await downloadFile(owner, joinPath(path, entry.name));
-      const url = URL.createObjectURL(data);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = entry.name;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 60 * 1000);
+      saveBlob(data, entry.name);
     } catch (ex) {
       this.setState({ error: this.accessError(ex) || t("errors.download") });
     }
   };
 
-  preview = async (entry) => {
+  preview = (entry) => {
+    if (previewKind(entry.name) === "tab") return this.previewInTab(entry);
+    return this.previewInPage(entry);
+  };
+
+  // Excel, Word and text files are parsed in the browser and shown in a dialog.
+  previewInPage = async (entry) => {
+    const { t } = this.props;
+    const { owner, path } = this.state;
+    if (entry.size > MAX_INLINE_PREVIEW_BYTES)
+      return this.setState({ error: t("preview.tooLarge", { maxMb: MAX_INLINE_PREVIEW_BYTES / 1024 / 1024 }) });
+
+    this.setState({ opening: entry.name });
+    try {
+      const { data } = await downloadFile(owner, joinPath(path, entry.name));
+      this.setState({ viewing: { name: entry.name, blob: data }, opening: null });
+    } catch (ex) {
+      this.setState({ opening: null, error: this.accessError(ex) || t("errors.download") });
+    }
+  };
+
+  // PDFs, images and video open in the browser's own viewer.
+  previewInTab = async (entry) => {
     const { t } = this.props;
     const { owner, path } = this.state;
     // Open the tab now, inside the click, or the popup blocker stops it.
     const tab = window.open("", "_blank");
     try {
       const { data } = await downloadFile(owner, joinPath(path, entry.name));
-      const blob = new Blob([data], { type: previewType(entry.name) });
+      const blob = new Blob([data], { type: tabType(entry.name) });
       const url = URL.createObjectURL(blob);
       if (tab) tab.location.href = url;
       setTimeout(() => URL.revokeObjectURL(url), 5 * 60 * 1000);
@@ -445,7 +454,7 @@ class Documents extends Component {
         </button>
       );
 
-    return previewType(entry.name) ? (
+    return previewKind(entry.name) ? (
       <button type="button" className="btn btn-link p-0 text-start" onClick={() => this.preview(entry)}>
         <InsertDriveFileOutlinedIcon fontSize="small" className="me-2" />
         {entry.name}
@@ -487,6 +496,16 @@ class Documents extends Component {
                   {new Date(entry.modified).toLocaleString(i18n.language)}
                 </td>
                 <td className="text-end text-nowrap">
+                  {!entry.isFolder && previewKind(entry.name) && (
+                    <button
+                      type="button"
+                      className="btn btn-outline-success btn-sm me-1"
+                      disabled={this.state.opening === entry.name}
+                      onClick={() => this.preview(entry)}
+                    >
+                      {this.state.opening === entry.name ? t("preview.opening") : t("preview.view")}
+                    </button>
+                  )}
                   {!entry.isFolder && (
                     <button type="button" className="btn btn-outline-primary btn-sm me-1" onClick={() => this.download(entry)}>
                       {t("download")}
@@ -564,6 +583,15 @@ class Documents extends Component {
             )}
           </div>
         </div>
+
+        {this.state.viewing && (
+          <FilePreview
+            name={this.state.viewing.name}
+            blob={this.state.viewing.blob}
+            onDownload={() => saveBlob(this.state.viewing.blob, this.state.viewing.name)}
+            onClose={() => this.setState({ viewing: null })}
+          />
+        )}
       </div>
     );
   }

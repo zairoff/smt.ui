@@ -21,6 +21,16 @@
   "replaceConfirm": "«{{name}}» bu papkada allaqachon bor. Almashtirilsinmi? Eski faylni qaytarib bo'lmaydi.",
   "deleteFileConfirm": "«{{name}}» o'chirilsinmi? Buni qaytarib bo'lmaydi.",
   "deleteFolderConfirm": "«{{name}}» papkasi va undagi hamma narsa o'chirilsinmi? Buni qaytarib bo'lmaydi.",
+  "preview": {
+    "view": "Ko'rish",
+    "opening": "Ochilmoqda...",
+    "close": "Yopish",
+    "failed": "Bu faylni brauzerda ko'rsatib bo'lmadi. Ochish uchun yuklab oling.",
+    "tooLarge": "{{maxMb}} MB dan katta fayllarni brauzerda ko'rib bo'lmaydi. Yuklab oling.",
+    "textTruncated": "Fayl uzun - faqat boshi ko'rsatilgan. Hammasini ko'rish uchun yuklab oling.",
+    "sheetTruncated": "Birinchi {{rows}} qator va {{cols}} ustun ko'rsatilgan. Hammasini ko'rish uchun yuklab oling.",
+    "emptySheet": "Bu varaq bo'sh."
+  },
   "errors": {
     "login": "Xodimlar hujjatlarini ko'rish uchun tizimga kiring.",
     "noAccess": "Hisobingizda hujjat papkalariga ruxsat yo'q. Administratorga murojaat qiling.",

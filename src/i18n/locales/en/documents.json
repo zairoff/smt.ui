@@ -21,6 +21,16 @@
   "replaceConfirm": "\"{{name}}\" already exists here. Replace it? The old file cannot be recovered.",
   "deleteFileConfirm": "Delete \"{{name}}\"? This cannot be undone.",
   "deleteFolderConfirm": "Delete folder \"{{name}}\" and everything in it? This cannot be undone.",
+  "preview": {
+    "view": "View",
+    "opening": "Opening...",
+    "close": "Close",
+    "failed": "This file could not be shown in the browser. Download it to open it.",
+    "tooLarge": "Files over {{maxMb}} MB are too big to view in the browser. Download it instead.",
+    "textTruncated": "The file is long - only the beginning is shown. Download it to see everything.",
+    "sheetTruncated": "Showing the first {{rows}} rows and {{cols}} columns. Download the file to see everything.",
+    "emptySheet": "This sheet is empty."
+  },
   "errors": {
     "login": "Please log in to see staff documents.",
     "noAccess": "Your account has no document folder access. Ask an admin to add you.",
