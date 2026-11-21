@@ -77,6 +77,9 @@ import FeederSetupImport from "./components/feeder/feederSetupImport";
 import FeederSetupDetail from "./components/feeder/feederSetupDetail";
 import FeederStation from "./components/feeder/feederStation";
 import FeederStationPicker from "./components/feeder/feederStationPicker";
+import DataAssistant from "./components/assistant/dataAssistant";
+import Documents from "./components/documents/documents";
+import DocumentStaff from "./components/documents/documentStaff";
 
 // The kiosk display page runs unattended on Raspberry Pi screens, where any
 // app chrome (navbar, login link) is unwanted, so it renders bare. The
@@ -174,6 +177,9 @@ class App extends Component {
                 element={<PlanQualityStatics />}
               />
               <Route path="/ftq" element={<FtqReport />} />
+              <Route path="/assistant" element={<DataAssistant user={user} />} />
+              <Route path="/documents" element={<Documents user={user} />} />
+              <Route path="/documents/staff" element={<DocumentStaff user={user} />} />
               <Route path="*" element={<FtqReport />} />
               <Route path="/plan" element={<Plan />} />
               <Route

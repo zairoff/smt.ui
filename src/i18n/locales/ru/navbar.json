@@ -6,6 +6,7 @@
     "machine": "Автомат линии и наклейки"
   },
   "menu": {
+    "documents": "Документы",
     "feeder": "Фидеры",
     "main": "Главная",
     "management": "Управление",
@@ -21,7 +22,8 @@
     "dashboard": "Панель управления",
     "statics": "Статистика",
     "planQuality": "План и качество",
-    "ftq": "FTQ"
+    "ftq": "FTQ",
+    "assistant": "Спросите данные"
   },
   "management": {
     "department": "Отдел",

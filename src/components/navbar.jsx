@@ -56,6 +56,13 @@ const NavBar = ({ user }) => {
                     {t("main.ftq")}
                   </NavLink>
                 </li>
+                {user && (
+                  <li>
+                    <NavLink to="/assistant" className="dropdown-item">
+                      {t("main.assistant")}
+                    </NavLink>
+                  </li>
+                )}
               </ul>
             </li>
 
@@ -558,6 +565,14 @@ const NavBar = ({ user }) => {
                 </li>
               </ul>
             </li>
+
+            {user && (
+              <li className="nav-item">
+                <NavLink to="/documents" className="nav-link">
+                  {t("menu.documents")}
+                </NavLink>
+              </li>
+            )}
           </ul>
 
           <ul className="navbar-nav ms-auto">

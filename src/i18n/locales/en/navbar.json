@@ -6,6 +6,7 @@
     "machine": "Line machine & stickers"
   },
   "menu": {
+    "documents": "Documents",
     "feeder": "Feeders",
     "main": "Main",
     "management": "Management",
@@ -21,7 +22,8 @@
     "dashboard": "Dashboard",
     "statics": "Statics",
     "planQuality": "Plan & Quality",
-    "ftq": "FTQ"
+    "ftq": "FTQ",
+    "assistant": "Ask your data"
   },
   "management": {
     "department": "Department",

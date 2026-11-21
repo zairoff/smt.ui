@@ -14,6 +14,8 @@ import enMachines from "./locales/en/machines.json";
 import enPcbaInstruction from "./locales/en/pcbaInstruction.json";
 import enRepairAudit from "./locales/en/repairAudit.json";
 import enFeeder from "./locales/en/feeder.json";
+import enAssistant from "./locales/en/assistant.json";
+import enDocuments from "./locales/en/documents.json";
 
 import ruCommon from "./locales/ru/common.json";
 import ruNavbar from "./locales/ru/navbar.json";
@@ -29,6 +31,8 @@ import ruMachines from "./locales/ru/machines.json";
 import ruPcbaInstruction from "./locales/ru/pcbaInstruction.json";
 import ruRepairAudit from "./locales/ru/repairAudit.json";
 import ruFeeder from "./locales/ru/feeder.json";
+import ruAssistant from "./locales/ru/assistant.json";
+import ruDocuments from "./locales/ru/documents.json";
 
 import uzCommon from "./locales/uz/common.json";
 import uzNavbar from "./locales/uz/navbar.json";
@@ -44,6 +48,8 @@ import uzMachines from "./locales/uz/machines.json";
 import uzPcbaInstruction from "./locales/uz/pcbaInstruction.json";
 import uzRepairAudit from "./locales/uz/repairAudit.json";
 import uzFeeder from "./locales/uz/feeder.json";
+import uzAssistant from "./locales/uz/assistant.json";
+import uzDocuments from "./locales/uz/documents.json";
 
 import { getStoredLanguage } from "./languageStorage";
 
@@ -65,6 +71,8 @@ const resources = {
     pcbaInstruction: enPcbaInstruction,
     repairAudit: enRepairAudit,
     feeder: enFeeder,
+    assistant: enAssistant,
+    documents: enDocuments,
   },
   ru: {
     common: ruCommon,
@@ -81,6 +89,8 @@ const resources = {
     pcbaInstruction: ruPcbaInstruction,
     repairAudit: ruRepairAudit,
     feeder: ruFeeder,
+    assistant: ruAssistant,
+    documents: ruDocuments,
   },
   uz: {
     common: uzCommon,
@@ -97,6 +107,8 @@ const resources = {
     pcbaInstruction: uzPcbaInstruction,
     repairAudit: uzRepairAudit,
     feeder: uzFeeder,
+    assistant: uzAssistant,
+    documents: uzDocuments,
   },
 };
 
@@ -127,6 +139,8 @@ i18n.use(initReactI18next).init({
     "pcbaInstruction",
     "repairAudit",
     "feeder",
+    "assistant",
+    "documents",
   ],
   defaultNS: "common",
   interpolation: { escapeValue: false },

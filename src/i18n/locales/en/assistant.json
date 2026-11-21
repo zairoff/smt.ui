@@ -1,0 +1,18 @@
+{
+  "title": "Ask your data",
+  "intro": "Ask about plans, output, defects and FTQ in your own words. Answers are built from the factory's statistics.",
+  "placeholder": "e.g. Which line had the lowest FTQ last week?",
+  "ask": "Ask",
+  "thinking": "Looking at the data...",
+  "sources": "Data used",
+  "newChat": "New conversation",
+  "disclaimer": "AI-generated answer - check important figures in the reports.",
+  "example1": "What were the top 5 defects yesterday?",
+  "example2": "Which line had the lowest FTQ last week?",
+  "example3": "How did we do against plan this month?",
+  "example4": "Which model had the most defects this month?",
+  "errors": {
+    "login": "Please log in to use the data assistant.",
+    "generic": "Something went wrong. Please try again."
+  }
+}

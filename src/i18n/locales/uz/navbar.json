@@ -6,6 +6,7 @@
     "machine": "Liniya stanogi va stikerlar"
   },
   "menu": {
+    "documents": "Hujjatlar",
     "feeder": "Fiderlar",
     "main": "Asosiy",
     "management": "Boshqaruv",
@@ -21,7 +22,8 @@
     "dashboard": "Boshqaruv paneli",
     "statics": "Statistika",
     "planQuality": "Reja va sifat",
-    "ftq": "FTQ"
+    "ftq": "FTQ",
+    "assistant": "Ma'lumotlardan so'rang"
   },
   "management": {
     "department": "Bo'lim",

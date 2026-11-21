@@ -15,6 +15,14 @@ export function getValidToken() {
   return null;
 }
 
+// The JWT's "role" claim is a string for one role and an array for several.
+// Role names exist in both cases ("admin"/"Admin"), so compare case-insensitively.
+export function userHasRole(user, role) {
+  if (!user || !user.role) return false;
+  const roles = Array.isArray(user.role) ? user.role : [user.role];
+  return roles.some((r) => String(r).toLowerCase() === role.toLowerCase());
+}
+
 export function getCurrentUser() {
   const token = getValidToken();
   return token ? jwtDecode(token) : undefined;

@@ -1,0 +1,18 @@
+{
+  "title": "Ma'lumotlardan so'rang",
+  "intro": "Rejalar, ishlab chiqarish, nuqsonlar va FTQ haqida o'z so'zlaringiz bilan so'rang. Javoblar zavod statistikasi asosida tuziladi.",
+  "placeholder": "masalan: O'tgan hafta qaysi liniyada FTQ eng past bo'ldi?",
+  "ask": "So'rash",
+  "thinking": "Ma'lumotlar ko'rib chiqilmoqda...",
+  "sources": "Foydalanilgan ma'lumotlar",
+  "newChat": "Yangi suhbat",
+  "disclaimer": "Javob sun'iy intellekt tomonidan yaratilgan - muhim raqamlarni hisobotlarda tekshiring.",
+  "example1": "Kecha eng ko'p uchragan 5 ta nuqson qaysilar?",
+  "example2": "O'tgan hafta qaysi liniyada FTQ eng past bo'ldi?",
+  "example3": "Bu oy reja qanday bajarilmoqda?",
+  "example4": "Bu oy qaysi modelda eng ko'p nuqson bo'ldi?",
+  "errors": {
+    "login": "Assistentdan foydalanish uchun tizimga kiring.",
+    "generic": "Xatolik yuz berdi. Qaytadan urinib ko'ring."
+  }
+}
