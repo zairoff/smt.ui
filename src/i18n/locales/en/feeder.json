@@ -46,7 +46,9 @@
     "to": "To",
     "clickToDisable": "click to disable",
     "clickToEnable": "click to enable",
-    "printStickers": "Print slot stickers"
+    "printStickers": "Print slot stickers",
+    "requireSlotScan": "Require feeder sticker scan after the reel",
+    "requireSlotScanHint": "Off: the station shows where the reel goes (like the old model-changer). On: the operator must also scan the feeder sticker - use only with scanners set to centering/picklist mode, feeder positions are very close together."
   },
   "labels": {
     "title": "Slot stickers",
@@ -166,7 +168,9 @@
       "result": "Result",
       "reason": "Reason",
       "empty": "No scans yet."
-    }
+    },
+    "putReelHere": "Put the reel into this feeder, then scan the next reel",
+    "slotScanOff": "Feeder sticker scanning is off for this line - just scan the next reel"
   },
   "ngReasons": {
     "UnknownReel": "Unknown component",

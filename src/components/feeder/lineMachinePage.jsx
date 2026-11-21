@@ -26,7 +26,7 @@ class LineMachinePage extends Form {
     lines: [],
     lineId: "",
     machine: null,
-    machineForm: { name: "", vendor: MACHINE_VENDOR.FUJI },
+    machineForm: { name: "", vendor: MACHINE_VENDOR.FUJI, requireSlotScan: false },
     newModule: { name: "", order: "" },
     moduleEdits: {},
     slotRanges: {},
@@ -74,8 +74,8 @@ class LineMachinePage extends Form {
       machine,
       moduleEdits,
       machineForm: machine
-        ? { name: machine.name, vendor: machine.vendor }
-        : { name: "", vendor: MACHINE_VENDOR.FUJI },
+        ? { name: machine.name, vendor: machine.vendor, requireSlotScan: !!machine.requireSlotScan }
+        : { name: "", vendor: MACHINE_VENDOR.FUJI, requireSlotScan: false },
     });
   }
 
@@ -105,6 +105,7 @@ class LineMachinePage extends Form {
           lineId: Number(lineId),
           name: machineForm.name,
           vendor: Number(machineForm.vendor),
+          requireSlotScan: machineForm.requireSlotScan,
         }),
       "feeder:machine.saved"
     );
@@ -192,6 +193,20 @@ class LineMachinePage extends Form {
           <button type="submit" className="btn btn-primary btn-lg w-100">
             {machine ? t("feeder:common.save") : t("feeder:machine.create")}
           </button>
+        </div>
+        <div className="col-12">
+          <label className="form-check-label">
+            <input
+              type="checkbox"
+              className="form-check-input me-2"
+              checked={machineForm.requireSlotScan}
+              onChange={(e) =>
+                this.setState({ machineForm: { ...machineForm, requireSlotScan: e.target.checked } })
+              }
+            />
+            {t("feeder:machine.requireSlotScan")}
+          </label>
+          <div className="form-text">{t("feeder:machine.requireSlotScanHint")}</div>
         </div>
       </form>
     );

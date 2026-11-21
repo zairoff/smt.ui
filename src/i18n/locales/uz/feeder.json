@@ -46,7 +46,9 @@
     "to": "Gacha",
     "clickToDisable": "o'chirish uchun bosing",
     "clickToEnable": "yoqish uchun bosing",
-    "printStickers": "Joy stikerlarini chop etish"
+    "printStickers": "Joy stikerlarini chop etish",
+    "requireSlotScan": "Katushkadan keyin fider stikerini skanerlash majburiy",
+    "requireSlotScanHint": "O'chiq: post katushka qayerga qo'yilishini ko'rsatadi (eski model-changer kabi). Yoqiq: operator fider stikerini ham skanerlaydi - faqat nishon rejimidagi (centering/picklist) skaner bilan ishlating, fider joylari juda yaqin."
   },
   "labels": {
     "title": "Joy stikerlari",
@@ -166,7 +168,9 @@
       "result": "Natija",
       "reason": "Sabab",
       "empty": "Hali skanerlanmagan."
-    }
+    },
+    "putReelHere": "Katushkani shu fiderga qo'ying va keyingi katushkani skanerlang",
+    "slotScanOff": "Bu liniyada fider stikerini skanerlash o'chirilgan - keyingi katushkani skanerlang"
   },
   "ngReasons": {
     "UnknownReel": "DETAL MAVJUD EMAS",

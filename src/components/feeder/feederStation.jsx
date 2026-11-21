@@ -148,23 +148,34 @@ class FeederStation extends Component {
     else await this.handleReelScan(code);
   };
 
+  get requireSlotScan() {
+    return !!(this.state.station && this.state.station.requireSlotScan);
+  }
+
   async handleReelScan(reelCode) {
     const { setupId } = this.state;
     this.setState({ busy: true });
     try {
       const { data: lookup } = await lookupReel({ lineId: this.lineId, setupId: Number(setupId), reelCode });
 
+      const kind = lookup.isAlternate ? "alternate" : "target";
+
       if (lookup.result === SCAN_RESULT.NG) {
         playNg();
         this.countResult(lookup.result);
         this.setState({ pending: null, panel: { kind: "ng", response: lookup } });
         await this.afterNg(lookup);
-      } else {
+        await this.loadHistory();
+      } else if (this.requireSlotScan) {
         playBeep();
-        this.setState({
-          pending: { reelCode, lookup },
-          panel: { kind: lookup.isAlternate ? "alternate" : "target", response: lookup },
-        });
+        this.setState({ pending: { reelCode, lookup }, panel: { kind, response: lookup } });
+      } else {
+        // No sticker step on this line: showing where the reel goes is the whole scan
+        // (the backend has already logged it), ready for the next reel.
+        playOk();
+        this.countResult(lookup.result);
+        this.setState({ pending: null, panel: { kind, response: lookup, placed: true } });
+        await this.loadHistory();
       }
     } catch (ex) {
       this.showError(ex);
@@ -175,6 +186,11 @@ class FeederStation extends Component {
 
   async handleSlotScan(slotCode) {
     const { pending, setupId } = this.state;
+    if (!this.requireSlotScan) {
+      playBeep();
+      this.setState({ panel: { kind: "warn", messageKey: "feeder:station.slotScanOff" } });
+      return;
+    }
     if (!pending) {
       playBeep();
       this.setState({ panel: { kind: "warn", messageKey: "feeder:station.scanReelFirst" } });
@@ -248,7 +264,9 @@ class FeederStation extends Component {
                 ⚠ {t("feeder:station.alternate", { partNumber: r.reelPartNumber })}
               </div>
             )}
-            <div className="fs-2 mt-3">➜ {t("feeder:station.nowScanSlot")}</div>
+            <div className="fs-2 mt-3">
+              ➜ {t(panel.placed ? "feeder:station.putReelHere" : "feeder:station.nowScanSlot")}
+            </div>
           </>
         );
         break;
