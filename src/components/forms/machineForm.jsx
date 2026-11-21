@@ -13,7 +13,7 @@ import {
 } from "../../services/machineService";
 import MachineTable from "../tables/machineTable";
 import { addFile } from "../../services/fileService";
-import config from "../../config.json";
+import config from "../../appConfig";
 
 class MachineForm extends Form {
   inputFile = React.createRef();

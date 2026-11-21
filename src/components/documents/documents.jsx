@@ -286,7 +286,7 @@ class Documents extends Component {
           >
             <span className="text-truncate">
               <FolderOutlinedIcon fontSize="small" className="me-2" />
-              {o.username}
+              {o.title || o.username}
             </span>
             {o.username === me && (
               <span className="badge bg-success ms-2">{t("mine")}</span>
@@ -297,19 +297,25 @@ class Documents extends Component {
     );
   }
 
+  ownerTitle(username) {
+    const found = this.state.owners.find((o) => o.username === username);
+    return (found && found.title) || username;
+  }
+
   renderBreadcrumb() {
     const { owner, path } = this.state;
     const parts = path ? path.split("/") : [];
+    const title = this.ownerTitle(owner);
     return (
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb mb-2">
           <li className={"breadcrumb-item" + (parts.length ? "" : " active")}>
             {parts.length ? (
               <button type="button" className="btn btn-link p-0" onClick={() => this.open(owner, "")}>
-                {owner}
+                {title}
               </button>
             ) : (
-              owner
+              title
             )}
           </li>
           {parts.map((part, i) => {

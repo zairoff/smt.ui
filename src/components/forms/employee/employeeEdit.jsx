@@ -6,7 +6,7 @@ import Department from "../../common/department";
 import { toast } from "react-toastify";
 import { getEmployee, updateEmployee } from "../../../services/employeeService";
 import { useParams, useLocation } from "react-router-dom";
-import config from "../../../config.json";
+import config from "../../../appConfig";
 import { addFile } from "../../../services/fileService";
 import { getDepartmentByHierarchyId } from "../../../services/departmentService";
 

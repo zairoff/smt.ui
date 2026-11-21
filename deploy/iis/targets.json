@@ -1,0 +1,14 @@
+[
+  {
+    "name": "smt-frontend",
+    "path": "D:/www/smt-frontend",
+    "apiUrl": "http://192.168.0.103:8085/api/",
+    "fileUrl": "http://192.168.0.103:8085/images/"
+  },
+  {
+    "name": "smt-frontend-domen",
+    "path": "D:/www/smt-frontend-domen",
+    "apiUrl": "http://10.74.50.29:8086/api/",
+    "fileUrl": "http://10.74.50.29:8086/images/"
+  }
+]

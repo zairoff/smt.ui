@@ -23,7 +23,7 @@ import {
 import { getLines } from "../../services/lineService";
 import { getEmployeeByDepartmentId } from "../../services/employeeService";
 import { getDepartments } from "../../services/departmentService";
-import config from "../../config.json";
+import config from "../../appConfig";
 import PcbCard from "./pcbCard";
 import { format } from 'date-fns';
 import { withTranslation } from "react-i18next";

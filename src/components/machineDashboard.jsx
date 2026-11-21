@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { getMachines } from "../services/machineService";
 import Card from "./common/card";
 import MachineCard from "./machineCard";
-import config from "../config.json";
+import config from "../appConfig";
 
 class MachineDashborad extends Component {
   state = {

@@ -58,6 +58,10 @@
     "remove": "Remove",
     "removeConfirm": "Remove {{name}}'s login? Their files stay on the server but disappear from this page.",
     "removed": "{{name}} removed.",
-    "reloginHint": "Changes take effect the next time the person logs in."
+    "reloginHint": "Changes take effect the next time the person logs in.",
+    "folderTitle": "Folder name",
+    "folderTitlePlaceholder": "e.g. 1 Метрология",
+    "renameTitle": "Rename folder",
+    "renameTitlePrompt": "Folder name for {{name}} (start with the step number, e.g. \"1 Метрология\"):"
   }
 }

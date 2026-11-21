@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
 import Table from "../common/table";
-import config from "../../config.json";
+import config from "../../appConfig";
 import { Link } from "react-router-dom";
 
 const fileUrl = config.fileUrl;

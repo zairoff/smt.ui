@@ -6,6 +6,7 @@ import {
   createStaff,
   resetStaffPassword,
   deleteStaff,
+  setStaffTitle,
 } from "../../services/documentService";
 import { userHasRole } from "../../services/authToken";
 
@@ -19,7 +20,7 @@ function errorMessage(ex, fallback) {
 class DocumentStaff extends Component {
   state = {
     staff: [],
-    form: { username: "", password: "", isAdmin: false },
+    form: { title: "", username: "", password: "", isAdmin: false },
     saving: false,
     error: null,
     notice: null,
@@ -50,7 +51,7 @@ class DocumentStaff extends Component {
     try {
       const { data } = await createStaff({ ...form, username: form.username.trim() });
       this.setState({
-        form: { username: "", password: "", isAdmin: false },
+        form: { title: "", username: "", password: "", isAdmin: false },
         notice: data.existingAccount
           ? t("staff.addedExisting", { name: data.username })
           : t("staff.added", { name: data.username }),
@@ -60,6 +61,22 @@ class DocumentStaff extends Component {
       this.setState({ error: errorMessage(ex, t("errors.generic")) });
     } finally {
       this.setState({ saving: false });
+    }
+  };
+
+  renameTitle = async (staffMember) => {
+    const { t } = this.props;
+    const title = window.prompt(
+      t("staff.renameTitlePrompt", { name: staffMember.username }),
+      staffMember.title || ""
+    );
+    if (title === null) return;
+    this.setState({ error: null, notice: null });
+    try {
+      await setStaffTitle(staffMember.username, title);
+      this.load();
+    } catch (ex) {
+      this.setState({ error: errorMessage(ex, t("errors.generic")) });
     }
   };
 
@@ -114,6 +131,15 @@ class DocumentStaff extends Component {
           <h5>{t("staff.add")}</h5>
           <div className="row g-2 align-items-end">
             <div className="col-md-4">
+              <label className="form-label">{t("staff.folderTitle")}</label>
+              <input
+                className="form-control"
+                placeholder={t("staff.folderTitlePlaceholder")}
+                value={form.title}
+                onChange={(e) => this.setField("title", e.target.value)}
+              />
+            </div>
+            <div className="col-md-2">
               <label className="form-label">{t("staff.username")}</label>
               <input
                 className="form-control"
@@ -122,7 +148,7 @@ class DocumentStaff extends Component {
                 required
               />
             </div>
-            <div className="col-md-4">
+            <div className="col-md-2">
               <label className="form-label">{t("staff.password")}</label>
               <input
                 className="form-control"
@@ -158,6 +184,7 @@ class DocumentStaff extends Component {
         <table className="table table-sm align-middle">
           <thead>
             <tr>
+              <th>{t("staff.folderTitle")}</th>
               <th>{t("staff.username")}</th>
               <th>{t("staff.role")}</th>
               <th></th>
@@ -166,14 +193,22 @@ class DocumentStaff extends Component {
           <tbody>
             {staff.length === 0 && (
               <tr>
-                <td colSpan={3} className="text-muted">{t("noStaff")}</td>
+                <td colSpan={4} className="text-muted">{t("noStaff")}</td>
               </tr>
             )}
             {staff.map((s) => (
               <tr key={s.username}>
+                <td>{s.title || s.username}</td>
                 <td>{s.username}</td>
                 <td>{s.isAdmin ? t("staff.admin") : t("staff.engineer")}</td>
                 <td className="text-end text-nowrap">
+                  <button
+                    type="button"
+                    className="btn btn-outline-secondary btn-sm me-1"
+                    onClick={() => this.renameTitle(s)}
+                  >
+                    {t("staff.renameTitle")}
+                  </button>
                   <button
                     type="button"
                     className="btn btn-outline-secondary btn-sm me-1"

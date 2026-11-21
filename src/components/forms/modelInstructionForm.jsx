@@ -3,7 +3,7 @@ import ReactLoading from "react-loading";
 import Form from "./form";
 import { withTranslation } from "react-i18next";
 import { toast } from "react-toastify";
-import config from "../../config.json";
+import config from "../../appConfig";
 import { getLines } from "../../services/lineService";
 import { getProducts } from "../../services/productService";
 import { getProductBrandByProductId } from "../../services/productBrandService";

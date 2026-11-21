@@ -1,4 +1,4 @@
-import config from "../config.json";
+import config from "../appConfig";
 import http from "./httpService";
 
 const endPoint = config.apiUrl + "modelinstructionimage";

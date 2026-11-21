@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { useParams } from "react-router-dom";
 import { withTranslation } from "react-i18next";
-import config from "../../config.json";
+import config from "../../appConfig";
 import { getCurrentInstructionByPosition } from "../../services/modelInstructionImageService";
 
 const POLL_INTERVAL_MS = 20000;

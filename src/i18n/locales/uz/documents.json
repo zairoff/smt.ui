@@ -58,6 +58,10 @@
     "remove": "O'chirish",
     "removeConfirm": "{{name}} logini o'chirilsinmi? Fayllari serverda qoladi, lekin bu sahifadan yo'qoladi.",
     "removed": "{{name}} o'chirildi.",
-    "reloginHint": "O'zgarishlar xodim keyingi safar tizimga kirganda kuchga kiradi."
+    "reloginHint": "O'zgarishlar xodim keyingi safar tizimga kirganda kuchga kiradi.",
+    "folderTitle": "Papka nomi",
+    "folderTitlePlaceholder": "masalan, 1 Метрология",
+    "renameTitle": "Papka nomini o'zgartirish",
+    "renameTitlePrompt": "{{name}} uchun papka nomi (bosqich raqami bilan boshlang, masalan «1 Метрология»):"
   }
 }

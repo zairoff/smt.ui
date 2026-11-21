@@ -17,7 +17,8 @@ jest.mock("../../services/documentService", () => ({
 }));
 
 const owners = [
-  { username: "ali", isAdmin: false },
+  // "title" is what the page shows; folders arrive already sorted by step number.
+  { username: "ali", title: "1 Метрология", isAdmin: false },
   { username: "bob", isAdmin: false },
 ];
 
@@ -61,7 +62,7 @@ test("other people's folders are view-only", async () => {
   renderPage({ username: "bob", role: "Engineer" });
   await screen.findByText("gerber.zip");
 
-  fireEvent.click(screen.getByText("ali"));
+  fireEvent.click(screen.getByText("1 Метрология"));
 
   expect(await screen.findByText(/View only/)).toBeInTheDocument();
   expect(listFolder).toHaveBeenLastCalledWith("ali", "");
@@ -101,4 +102,14 @@ test("formats sizes", () => {
   expect(formatSize(500)).toBe("500 B");
   expect(formatSize(2048)).toBe("2.0 KB");
   expect(formatSize(5 * 1024 * 1024)).toBe("5.0 MB");
+});
+
+test("shows folder titles instead of logins", async () => {
+  renderPage({ username: "bob", role: "Engineer" });
+  await screen.findByText("gerber.zip");
+
+  expect(screen.getByText("1 Метрология")).toBeInTheDocument();
+  expect(screen.queryByText("ali")).not.toBeInTheDocument();
+  fireEvent.click(screen.getByText("1 Метрология"));
+  await waitFor(() => expect(listFolder).toHaveBeenLastCalledWith("ali", ""));
 });

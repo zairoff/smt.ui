@@ -1,4 +1,4 @@
-import config from "../config.json";
+import config from "../appConfig";
 import http from "./httpService";
 
 const endPoint = config.apiUrl + "document";
@@ -53,9 +53,14 @@ export function getStaff() {
   return http.get(endPoint + "/staff");
 }
 
-// Response: { username, isAdmin, existingAccount }
-export function createStaff({ username, password, isAdmin }) {
-  return http.post(endPoint + "/staff", { username, password, isAdmin });
+// title: folder display name, e.g. "1 Метрология" (the leading number sets the order).
+// Response: { username, title, isAdmin, existingAccount }
+export function createStaff({ username, password, title, isAdmin }) {
+  return http.post(endPoint + "/staff", { username, password, title, isAdmin });
+}
+
+export function setStaffTitle(username, title) {
+  return http.put(endPoint + "/staff/title", { title }, { params: { username } });
 }
 
 export function resetStaffPassword(username, password) {

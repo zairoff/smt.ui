@@ -7,7 +7,7 @@ import { getDepartmentByHierarchyId } from "../../../services/departmentService"
 import { toast } from "react-toastify";
 import { addEmployee } from "../../../services/employeeService";
 import { addFile } from "../../../services/fileService";
-import config from "../../../config.json";
+import config from "../../../appConfig";
 
 class EmployeeAdd extends Form {
   inputFile = React.createRef();

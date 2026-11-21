@@ -1,5 +1,5 @@
 import axios from "axios";
-import config from "../config.json";
+import config from "../appConfig";
 import http from "./httpService";
 
 // Pending (not yet exported) scans for /returned-product-export, stored on the
