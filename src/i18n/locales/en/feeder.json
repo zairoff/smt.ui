@@ -153,23 +153,13 @@
     "scanReelPlaceholder": "Scan the reel QR...",
     "scanSlotPlaceholder": "Scan the feeder sticker...",
     "scanInput": "Scanner input",
-    "nowScanSlot": "Put the reel there and scan the feeder sticker",
-    "rescanSlot": "Move the reel and scan the feeder sticker again",
     "scanReelFirst": "Scan the reel first, then the feeder sticker",
     "module": "Module",
     "feeder": "Feeder",
     "alternate": "Alternate part number {{partNumber}} - same component",
-    "correctPlace": "Correct place:",
     "scannedSlot": "You scanned {{slot}}",
     "slotIsFor": "that feeder is for {{rCode}}",
     "cancel": "Cancel",
-    "history": {
-      "time": "Time",
-      "result": "Result",
-      "reason": "Reason",
-      "empty": "No scans yet."
-    },
-    "putReelHere": "Put the reel into this feeder, then scan the next reel",
     "slotScanOff": "Feeder sticker scanning is off for this line - just scan the next reel"
   },
   "ngReasons": {

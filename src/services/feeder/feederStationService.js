@@ -7,10 +7,6 @@ export function getFeederStation(lineId) {
   return http.get(`${endPoint}/${lineId}`);
 }
 
-export function getRecentScans(lineId, take = 15) {
-  return http.get(`${endPoint}/${lineId}/scans`, { params: { take } });
-}
-
 // scan: { lineId, setupId, reelCode }
 export function lookupReel(scan) {
   return http.post(`${endPoint}/lookup`, scan);

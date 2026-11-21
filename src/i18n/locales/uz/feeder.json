@@ -153,23 +153,13 @@
     "scanReelPlaceholder": "Katushka QR kodini skanerlang...",
     "scanSlotPlaceholder": "Fider stikerini skanerlang...",
     "scanInput": "Skaner maydoni",
-    "nowScanSlot": "Katushkani shu joyga qo'ying va fider stikerini skanerlang",
-    "rescanSlot": "Katushkani to'g'ri joyga qo'yib, fider stikerini qayta skanerlang",
     "scanReelFirst": "Avval katushkani, keyin fider stikerini skanerlang",
     "module": "Modul",
     "feeder": "Fider",
     "alternate": "Analog {{partNumber}} - o'sha detal",
-    "correctPlace": "To'g'ri joy:",
     "scannedSlot": "Skanerlangan: {{slot}}",
     "slotIsFor": "bu fider {{rCode}} uchun",
     "cancel": "Bekor qilish",
-    "history": {
-      "time": "Vaqt",
-      "result": "Natija",
-      "reason": "Sabab",
-      "empty": "Hali skanerlanmagan."
-    },
-    "putReelHere": "Katushkani shu fiderga qo'ying va keyingi katushkani skanerlang",
     "slotScanOff": "Bu liniyada fider stikerini skanerlash o'chirilgan - keyingi katushkani skanerlang"
   },
   "ngReasons": {

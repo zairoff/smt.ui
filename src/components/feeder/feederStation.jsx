@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import { useParams } from "react-router-dom";
 import { withTranslation } from "react-i18next";
-import { format } from "date-fns";
 import {
   getFeederStation,
-  getRecentScans,
   lookupReel,
   verifyReel,
 } from "../../services/feeder/feederStationService";
@@ -30,6 +28,9 @@ const PANEL = {
   ng: { bg: "#b91c1c", fg: "#fff" },
   warn: { bg: "#c2410c", fg: "#fff" },
 };
+
+// Main MODUL / FIDER / OK / NG text: as large as the screen height allows.
+const HUGE = "clamp(6rem, 30vh, 22rem)";
 
 // After a wrong sticker the reel stays pending: the operator moves it and rescans the sticker only.
 const RETRY_SLOT_REASONS = ["WrongSlot", "UnknownSlot", "WrongLine"];
@@ -61,7 +62,6 @@ class FeederStation extends Component {
     pending: null,
     // panel: { kind, ... } what the big panel shows
     panel: { kind: "idle" },
-    history: [],
     counts: { ok: 0, ng: 0 },
     busy: false,
     error: null,
@@ -93,7 +93,6 @@ class FeederStation extends Component {
       const { data: station } = await getFeederStation(this.lineId);
       const setupId = this.pickSetup(station, keepSelection ? this.state.setupId : "");
       this.setState({ station, setupId, error: null });
-      await this.loadHistory();
     } catch (ex) {
       this.setState({ error: errorMessage(ex) });
     }
@@ -112,13 +111,6 @@ class FeederStation extends Component {
     if (forActiveModel) return String(forActiveModel.setupId);
     if (station.setups.length === 1) return String(station.setups[0].setupId);
     return "";
-  }
-
-  async loadHistory() {
-    try {
-      const { data: history } = await getRecentScans(this.lineId, 15);
-      this.setState({ history });
-    } catch (ex) {}
   }
 
   handleSetupChange = (e) => {
@@ -165,7 +157,6 @@ class FeederStation extends Component {
         this.countResult(lookup.result);
         this.setState({ pending: null, panel: { kind: "ng", response: lookup } });
         await this.afterNg(lookup);
-        await this.loadHistory();
       } else if (this.requireSlotScan) {
         playBeep();
         this.setState({ pending: { reelCode, lookup }, panel: { kind, response: lookup } });
@@ -175,7 +166,6 @@ class FeederStation extends Component {
         playOk();
         this.countResult(lookup.result);
         this.setState({ pending: null, panel: { kind, response: lookup, placed: true } });
-        await this.loadHistory();
       }
     } catch (ex) {
       this.showError(ex);
@@ -217,7 +207,6 @@ class FeederStation extends Component {
         playOk();
         this.setState({ pending: null, panel: { kind: "ok", response: result } });
       }
-      await this.loadHistory();
     } catch (ex) {
       this.showError(ex);
     } finally {
@@ -245,7 +234,7 @@ class FeederStation extends Component {
 
   renderPanel() {
     const { t } = this.props;
-    const { panel, pending } = this.state;
+    const { panel } = this.state;
     const colors = PANEL[panel.kind];
     const r = panel.response;
 
@@ -256,17 +245,12 @@ class FeederStation extends Component {
         content = (
           <>
             {this.renderTargets(r.targets)}
-            <div className="fs-3 mt-2">
+            <div className="fs-2 mt-2">
               {r.rCode} · {r.specification}
             </div>
             {panel.kind === "alternate" && (
-              <div className="fs-4 fw-bold mt-2">
-                ⚠ {t("feeder:station.alternate", { partNumber: r.reelPartNumber })}
-              </div>
+              <div className="fs-2 fw-bold">⚠ {t("feeder:station.alternate", { partNumber: r.reelPartNumber })}</div>
             )}
-            <div className="fs-2 mt-3">
-              ➜ {t(panel.placed ? "feeder:station.putReelHere" : "feeder:station.nowScanSlot")}
-            </div>
           </>
         );
         break;
@@ -274,13 +258,10 @@ class FeederStation extends Component {
       case "ok":
         content = (
           <>
-            <div style={{ fontSize: "8rem", fontWeight: 800, lineHeight: 1 }}>OK</div>
-            <div className="fs-1 fw-bold">{slotLabel(r.scannedSlot)}</div>
-            <div className="fs-3">
-              {r.rCode} · {r.specification}
-            </div>
+            <div style={{ fontSize: HUGE, fontWeight: 800, lineHeight: 1 }}>OK</div>
+            <div style={{ fontSize: "clamp(2.5rem, 8vh, 6rem)", fontWeight: 700 }}>{slotLabel(r.scannedSlot)}</div>
             {r.isAlternate && (
-              <div className="fs-4 mt-2">⚠ {t("feeder:station.alternate", { partNumber: r.reelPartNumber })}</div>
+              <div className="fs-2">⚠ {t("feeder:station.alternate", { partNumber: r.reelPartNumber })}</div>
             )}
           </>
         );
@@ -288,46 +269,40 @@ class FeederStation extends Component {
 
       case "ng": {
         const reason = NG_REASON[r.ngReason];
+        const showTargets = r.targets && r.targets.length > 0;
         content = (
           <>
-            <div style={{ fontSize: "7rem", fontWeight: 800, lineHeight: 1 }}>NG</div>
-            <div className="fs-1 fw-bold">{t(`feeder:ngReasons.${reason}`)}</div>
-            {r.rCode && (
-              <div className="fs-3">
-                {r.rCode} · {r.specification}
-              </div>
-            )}
+            <div style={{ fontSize: showTargets ? "clamp(4rem, 14vh, 10rem)" : HUGE, fontWeight: 800, lineHeight: 1 }}>
+              NG
+            </div>
+            <div style={{ fontSize: "clamp(2rem, 6vh, 4.5rem)", fontWeight: 700 }}>{t(`feeder:ngReasons.${reason}`)}</div>
             {reason === "WrongSlot" && (
-              <div className="fs-3 mt-2">
+              <div className="fs-2">
                 {t("feeder:station.scannedSlot", { slot: slotLabel(r.scannedSlot) })}
                 {r.scannedSlotExpectedRCode &&
                   " - " + t("feeder:station.slotIsFor", { rCode: r.scannedSlotExpectedRCode })}
               </div>
             )}
-            {r.targets && r.targets.length > 0 && (
-              <div className="mt-3">
-                <div className="fs-3">{t("feeder:station.correctPlace")}</div>
-                {this.renderTargets(r.targets, "4.5rem")}
-              </div>
-            )}
-            {panel.retry && pending && <div className="fs-2 mt-3">➜ {t("feeder:station.rescanSlot")}</div>}
+            {showTargets && <div className="mt-2">{this.renderTargets(r.targets, true)}</div>}
           </>
         );
         break;
       }
 
       case "warn":
-        content = <div className="fs-1 fw-bold">{panel.text || t(panel.messageKey)}</div>;
+        content = <div style={{ fontSize: "clamp(2rem, 7vh, 5rem)", fontWeight: 700 }}>{panel.text || t(panel.messageKey)}</div>;
         break;
 
       default:
-        content = <div style={{ fontSize: "3.5rem", fontWeight: 700 }}>{t("feeder:station.scanReel")}</div>;
+        content = (
+          <div style={{ fontSize: "clamp(3rem, 12vh, 8rem)", fontWeight: 700 }}>{t("feeder:station.scanReel")}</div>
+        );
     }
 
     return (
       <div
-        className="d-flex flex-column justify-content-center align-items-center text-center rounded-3 p-4"
-        style={{ background: colors.bg, color: colors.fg, minHeight: "55vh" }}
+        className="flex-grow-1 d-flex flex-column justify-content-center align-items-center text-center rounded-3 p-3"
+        style={{ background: colors.bg, color: colors.fg }}
         role="status"
         aria-live="assertive"
       >
@@ -336,62 +311,24 @@ class FeederStation extends Component {
     );
   }
 
-  renderTargets(targets, size = "6.5rem") {
+  // MODUL / FIDER as large as the screen allows; smaller when the component sits in several
+  // feeders or under an NG headline.
+  renderTargets(targets, compact = false) {
     const { t } = this.props;
+    const size = compact || targets.length > 1 ? "clamp(4rem, 15vh, 11rem)" : HUGE;
 
     return targets.map((target) => (
-      <div key={target.feederSlotId} className="d-flex gap-5 justify-content-center" style={{ lineHeight: 1.05 }}>
+      <div key={target.feederSlotId} className="d-flex justify-content-center" style={{ gap: "6vw", lineHeight: 1 }}>
         <div>
-          <div className="fs-3 text-uppercase">{t("feeder:station.module")}</div>
+          <div className="fs-2 text-uppercase">{t("feeder:station.module")}</div>
           <div style={{ fontSize: size, fontWeight: 800 }}>{target.moduleName}</div>
         </div>
         <div>
-          <div className="fs-3 text-uppercase">{t("feeder:station.feeder")}</div>
+          <div className="fs-2 text-uppercase">{t("feeder:station.feeder")}</div>
           <div style={{ fontSize: size, fontWeight: 800 }}>{target.slotNumber}</div>
         </div>
       </div>
     ));
-  }
-
-  renderHistory() {
-    const { t } = this.props;
-    const { history } = this.state;
-
-    return (
-      <table className="table table-sm table-dark table-striped mb-0 small">
-        <thead>
-          <tr>
-            <th>{t("feeder:station.history.time")}</th>
-            <th>{t("feeder:station.history.result")}</th>
-            <th>{t("feeder:common.module")} · {t("feeder:common.feeder")}</th>
-            <th>{t("feeder:common.rcode")}</th>
-            <th>{t("feeder:station.history.reason")}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {history.map((h) => (
-            <tr key={h.id}>
-              <td>{format(new Date(h.createdAt), "HH:mm:ss")}</td>
-              <td>
-                <span className={`badge ${h.result === SCAN_RESULT.NG ? "bg-danger" : h.result === SCAN_RESULT.OK_ALTERNATE ? "bg-warning text-dark" : "bg-success"}`}>
-                  {h.result === SCAN_RESULT.NG ? "NG" : "OK"}
-                </span>
-              </td>
-              <td>{h.moduleName ? `${h.moduleName} · ${h.slotNumber}` : h.rawSlotCode || ""}</td>
-              <td>{h.scannedRCode || h.reelPartNumber || ""}</td>
-              <td>{h.ngReason ? t(`feeder:ngReasons.${NG_REASON[h.ngReason]}`) : ""}</td>
-            </tr>
-          ))}
-          {history.length === 0 && (
-            <tr>
-              <td colSpan="5" className="text-muted">
-                {t("feeder:station.history.empty")}
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-    );
   }
 
   render() {
@@ -400,20 +337,17 @@ class FeederStation extends Component {
 
     return (
       <div
-        className="min-vh-100 p-3 d-flex flex-column gap-3"
+        className="vh-100 p-2 d-flex flex-column gap-2"
         style={{ background: "#111827", color: "#f9fafb" }}
         onClick={() => setTimeout(this.keepFocus, 0)}
       >
-        <div className="d-flex flex-wrap align-items-center gap-3">
-          <div className="fs-3 fw-bold">
-            {station ? station.lineName : "..."}
-            {station && station.machineName && <span className="fs-5 fw-normal ms-2">({station.machineName})</span>}
-          </div>
+        <div className="d-flex align-items-center gap-2">
+          <div className="fs-3 fw-bold text-nowrap">{station ? station.lineName : "..."}</div>
 
           {station && (
             <select
               className="form-select form-select-lg"
-              style={{ maxWidth: 420 }}
+              style={{ maxWidth: 340 }}
               value={setupId}
               onChange={this.handleSetupChange}
               aria-label={t("feeder:station.setup")}
@@ -427,23 +361,9 @@ class FeederStation extends Component {
             </select>
           )}
 
-          <div className="ms-auto d-flex gap-2 fs-5">
-            <span className="badge bg-success">OK: {counts.ok}</span>
-            <span className="badge bg-danger">NG: {counts.ng}</span>
-          </div>
-        </div>
-
-        {error && <div className="alert alert-danger mb-0">{error}</div>}
-        {station && station.setups.length === 0 && (
-          <div className="alert alert-warning mb-0">{t("feeder:station.noSetups")}</div>
-        )}
-
-        {this.renderPanel()}
-
-        <div className="d-flex gap-2 align-items-center">
           <input
             ref={this.inputRef}
-            className="form-control form-control-lg"
+            className="form-control form-control-lg flex-grow-1"
             value={scanText}
             autoFocus
             autoComplete="off"
@@ -461,9 +381,17 @@ class FeederStation extends Component {
               {t("feeder:station.cancel")}
             </button>
           )}
+
+          <span className="badge bg-success fs-5">OK: {counts.ok}</span>
+          <span className="badge bg-danger fs-5">NG: {counts.ng}</span>
         </div>
 
-        {this.renderHistory()}
+        {error && <div className="alert alert-danger mb-0 py-2">{error}</div>}
+        {station && station.setups.length === 0 && (
+          <div className="alert alert-warning mb-0 py-2">{t("feeder:station.noSetups")}</div>
+        )}
+
+        {this.renderPanel()}
       </div>
     );
   }
